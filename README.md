@@ -360,8 +360,6 @@ pip-audit
 - **Domain Documentation:** `docs/` - Domain-specific reference materials
   - `FACTIONS.md` - Faction system overview
   - `WORKFLOWS.md` - Workflow overview
-  - `DAEDELUS_CONSTITUTION.md` - Historical reference (superseded by unified Constitution)
-  - `DEUS_MANDATE.md` - Historical reference (superseded by unified Constitution)
 
 ### Agent-Specific Documentation
 

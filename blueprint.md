@@ -590,10 +590,9 @@ logos/
 │       └── agent_select.py       # Agent selection within mode
 │
 ├── docs/
-│   ├── DAEDELUS_CONSTITUTION.md
-│   ├── DEUS_MANDATE.md
 │   ├── FACTIONS.md
 │   └── WORKFLOWS.md
+├── CONSTITUTION.md                  # Unified LOGOS Federation Constitution
 │
 └── tests/
     ├── conftest.py
