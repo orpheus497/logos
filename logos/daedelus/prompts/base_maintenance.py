@@ -23,6 +23,7 @@ MAINTENANCE_BASE_PROMPT = """
 3.  **FOSS Compliance:** 100% Free and Open Source Software only.
 4.  **Documentation Sync:**
     * If you change code, you MUST update the relevant comments and `.devdocs/`.
+5.  **Date and Time Stamping (Non-Negotiable):** ALL documentation entries MUST include date and time stamps in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ). Date-only stamps are NOT acceptable—time must always be included. Missing or incomplete timestamps are constitutional violations.
 
 ---
 

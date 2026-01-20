@@ -79,8 +79,12 @@ def main() -> int:
         ##Action purpose: Handle Ctrl+C gracefully
         print("\n\nExiting LOGOS...")
         return 0
+    except (OSError, ValueError, FileNotFoundError) as e:
+        ##Action purpose: Handle specific expected errors (file I/O, validation, missing files)
+        display_error("Error occurred", str(e))
+        return 1
     except Exception as e:
-        ##Action purpose: Handle unexpected errors
+        ##Action purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error occurred", str(e))
         return 1
 

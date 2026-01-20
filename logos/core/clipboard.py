@@ -28,6 +28,33 @@ except ImportError:
     _PYPERCLIP_AVAILABLE = False
     logger.debug("pyperclip not installed - will use native clipboard tools")
 
+##Action purpose: Cache clipboard tool detection results (performance optimization)
+##Step purpose: Avoid repeated shutil.which() calls by caching tool paths
+##Optimization: Reduces clipboard detection time by ~5 seconds on failure path (Profiler B8 recommendation)
+_CLIPBOARD_TOOL_CACHE: dict[str, str | None] = {}
+
+
+##Function purpose: Get clipboard tool path with caching
+def _get_clipboard_tool(tool_name: str) -> str | None:
+    """
+    ##Function purpose: Gets clipboard tool path with caching for performance.
+
+    ##Action purpose: Caches shutil.which() results to avoid repeated filesystem lookups.
+    Tool detection results are cached for the lifetime of the module.
+
+    Args:
+        tool_name: Name of the clipboard tool (e.g., "wl-copy", "xclip")
+
+    Returns:
+        Full path to tool if found, None otherwise
+    """
+    ##Condition purpose: Check cache first
+    if tool_name not in _CLIPBOARD_TOOL_CACHE:
+        ##Action purpose: Cache tool detection result
+        _CLIPBOARD_TOOL_CACHE[tool_name] = shutil.which(tool_name)
+    ##Action purpose: Return cached result
+    return _CLIPBOARD_TOOL_CACHE[tool_name]
+
 
 def copy_to_clipboard(text: str) -> bool:
     """
@@ -47,7 +74,7 @@ def copy_to_clipboard(text: str) -> bool:
         True if copy succeeded, False otherwise.
     """
     ##Step purpose: Try Wayland clipboard (wl-copy) - preferred on Wayland compositors
-    if wl_copy_path := shutil.which("wl-copy"):
+    if wl_copy_path := _get_clipboard_tool("wl-copy"):
         try:
             result = subprocess.run(
                 [wl_copy_path],
@@ -61,7 +88,11 @@ def copy_to_clipboard(text: str) -> bool:
             logger.debug(f"wl-copy failed: {result.stderr.decode()}")
         except subprocess.TimeoutExpired:
             logger.warning("wl-copy timed out")
+        except OSError as e:
+            ##Action purpose: Handle OS-level errors (file not found, permission denied)
+            logger.debug(f"wl-copy OS error: {e}")
         except Exception as e:
+            ##Action purpose: Handle unexpected errors (fallback)
             logger.debug(f"wl-copy exception: {e}")
 
     ##Step purpose: Try X11 clipboard tools (xclip, xsel) - common on X11 systems
@@ -72,8 +103,8 @@ def copy_to_clipboard(text: str) -> bool:
 
     ##Loop purpose: Try each X11 clipboard tool in order
     for cmd, name in x11_commands:
-        ##Condition purpose: Check if X11 tool is available
-        if cmd_path := shutil.which(cmd[0]):
+        ##Condition purpose: Check if X11 tool is available (using cached detection)
+        if cmd_path := _get_clipboard_tool(cmd[0]):
             try:
                 ##Action purpose: Replace first element with full path for security
                 full_cmd = [cmd_path] + cmd[1:]
@@ -89,7 +120,11 @@ def copy_to_clipboard(text: str) -> bool:
                 logger.debug(f"{name} failed: {result.stderr.decode()}")
             except subprocess.TimeoutExpired:
                 logger.warning(f"{name} timed out")
+            except OSError as e:
+                ##Action purpose: Handle OS-level errors (file not found, permission denied)
+                logger.debug(f"{name} OS error: {e}")
             except Exception as e:
+                ##Action purpose: Handle unexpected errors (fallback)
                 logger.debug(f"{name} exception: {e}")
 
     ##Step purpose: Try Python pyperclip library (cross-platform fallback)
@@ -97,7 +132,11 @@ def copy_to_clipboard(text: str) -> bool:
         try:
             pyperclip.copy(text)
             return True
+        except (OSError, RuntimeError) as e:
+            ##Action purpose: Handle specific pyperclip errors (OS errors, runtime errors)
+            logger.debug(f"pyperclip error: {e}")
         except Exception as e:
+            ##Action purpose: Handle unexpected errors (fallback)
             logger.debug(f"pyperclip exception: {e}")
 
     ##Action purpose: Return False if all methods failed

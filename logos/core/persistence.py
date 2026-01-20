@@ -39,7 +39,9 @@ def read_config(config_path: Path) -> dict[str, Any] | None:
         ##Action purpose: Read and parse YAML file
         with config_path.open("r", encoding="utf-8") as f:
             ##Action purpose: Load YAML content as dictionary
-            return yaml.safe_load(f) or {}
+            ##Fix: Return None for empty file instead of empty dict to preserve error distinction
+            data = yaml.safe_load(f)
+            return data if data is not None else None
     except (OSError, yaml.YAMLError):
         ##Error purpose: Handle YAML parsing or file I/O errors
         ##Action purpose: Return None on error (caller can handle)

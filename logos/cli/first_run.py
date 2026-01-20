@@ -154,7 +154,11 @@ def run_first_run_wizard() -> bool:
         ##Action purpose: Handle Ctrl+C gracefully
         print("\n\nFirst-run wizard cancelled.")
         return False
+    except (OSError, ValueError, KeyError) as e:
+        ##Action purpose: Handle specific expected errors (file I/O, validation, key lookup)
+        display_error("Error in first-run wizard", str(e))
+        return False
     except Exception as e:
-        ##Action purpose: Handle unexpected errors
+        ##Action purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error in first-run wizard", str(e))
         return False

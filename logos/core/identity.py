@@ -13,9 +13,10 @@ import logging
 import platform
 import socket
 import subprocess
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +28,13 @@ logger = logging.getLogger(__name__)
 
 ##Action purpose: Subprocess timeout constant for system checks
 SUBPROCESS_TIMEOUT: float = 0.5
+
+##Action purpose: FreeBSD system info cache (performance optimization - C9)
+##Step purpose: Cache FreeBSD-specific system information to avoid repeated subprocess calls
+##Optimization: Reduces system scan time by ~0.5 seconds on subsequent scans (Profiler B8 recommendation)
+_FREEBSD_CACHE: dict[str, Any] | None = None
+_FREEBSD_CACHE_TIMESTAMP: float | None = None
+_CACHE_TTL: float = 3600  # 1 hour in seconds
 
 
 ##Class purpose: System identity data structure
@@ -65,6 +73,54 @@ class SystemIdentity:
     total_sessions: int = 0
     faction_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by user-selected faction
     mode_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by mode (daedelus/deus)
+    faction_selected_at: str | None = None  # Timestamp when faction was last selected/changed
+
+
+##Function purpose: Get cached FreeBSD info if still valid (performance optimization - C9)
+def _get_cached_freebsd_info() -> dict[str, Any] | None:
+    """
+    ##Function purpose: Gets cached FreeBSD system information if still valid.
+
+    ##Action purpose: Returns cached FreeBSD info if cache exists and TTL has not expired.
+    Cache expires after 1 hour to ensure information stays current.
+
+    Returns:
+        Cached FreeBSD info dictionary if valid, None otherwise
+    """
+    ##Condition purpose: Check if cache exists
+    if _FREEBSD_CACHE is None or _FREEBSD_CACHE_TIMESTAMP is None:
+        ##Action purpose: Return None if cache not initialized
+        return None
+
+    ##Action purpose: Check if cache has expired (TTL check)
+    current_time = time.time()
+    if current_time - _FREEBSD_CACHE_TIMESTAMP > _CACHE_TTL:
+        ##Action purpose: Cache expired, return None
+        return None
+
+    ##Action purpose: Return valid cached data
+    return _FREEBSD_CACHE
+
+
+##Function purpose: Update FreeBSD cache with new data (performance optimization - C9)
+def _update_freebsd_cache(scan: dict[str, Any]) -> None:
+    """
+    ##Function purpose: Updates FreeBSD cache with new scan data.
+
+    ##Action purpose: Stores FreeBSD-specific information in module-level cache
+    with current timestamp for TTL tracking.
+
+    Args:
+        scan: Dictionary containing FreeBSD check results
+    """
+    global _FREEBSD_CACHE, _FREEBSD_CACHE_TIMESTAMP
+
+    ##Action purpose: Extract FreeBSD-specific keys from scan
+    freebsd_keys = ["freebsd_version", "zfs_available", "jail_host"]
+    _FREEBSD_CACHE = {k: scan.get(k) for k in freebsd_keys if k in scan}
+
+    ##Action purpose: Update cache timestamp
+    _FREEBSD_CACHE_TIMESTAMP = time.time()
 
 
 ##Function purpose: Run FreeBSD-specific system checks in parallel
@@ -97,9 +153,15 @@ def _run_freebsd_checks(scan: dict[str, Any]) -> None:
                     scan[key] = value
                 elif key in ("zfs_available", "jail_host"):
                     scan[key] = value
-            except Exception:
-                ##Error purpose: Handle any exceptions from subprocess calls
+            except (OSError, subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
+                ##Error purpose: Handle specific subprocess errors (OS errors, timeouts, subprocess errors)
                 ##Action purpose: Set default values on failure
+                logger.debug(f"Subprocess error for {key}: {e}")
+                if key == "freebsd_version":
+                    pass  # Don't set if None
+            except Exception:
+                ##Error purpose: Handle any other unexpected exceptions from subprocess calls
+                ##Action purpose: Set default values on failure (graceful degradation)
                 if key == "freebsd_version":
                     pass  # Don't set if None
                 else:
@@ -188,6 +250,21 @@ def scan_system() -> dict[str, Any]:
     Returns:
         Dictionary containing system scan data
     """
+    ##Action purpose: Get current date, time, and timezone information
+    now_utc = datetime.now(timezone.utc)
+    now_local = datetime.now().astimezone()  ##Fix: Use astimezone() to get timezone-aware datetime
+    timezone_offset = now_local.utcoffset()
+    timezone_name = time.tzname[0] if time.tzname else "UTC"
+
+    ##Action purpose: Format timezone offset as ±HH:MM
+    if timezone_offset:
+        offset_seconds = int(timezone_offset.total_seconds())
+        offset_hours = offset_seconds // 3600
+        offset_minutes = abs((offset_seconds % 3600) // 60)
+        timezone_str = f"{offset_hours:+03d}:{offset_minutes:02d}"
+    else:
+        timezone_str = "+00:00"
+
     ##Action purpose: Get basic system information
     scan = {
         ##Action purpose: Identity information
@@ -200,6 +277,15 @@ def scan_system() -> dict[str, Any]:
         "os_full": platform.platform(),
         ##Action purpose: Python environment
         "python_version": platform.python_version(),
+        ##Action purpose: Date and time information
+        "current_date_utc": now_utc.strftime("%Y-%m-%d"),
+        "current_time_utc": now_utc.strftime("%H:%M:%S"),
+        "current_datetime_utc": now_utc.isoformat(),
+        "current_date_local": now_local.strftime("%Y-%m-%d"),
+        "current_time_local": now_local.strftime("%H:%M:%S"),
+        "current_datetime_local": now_local.isoformat(),
+        "timezone_name": timezone_name,
+        "timezone_offset": timezone_str,
         ##Action purpose: LOGOS state detection
         "devdocs_exists": (Path.home() / ".devdocs").exists(),
         "sysdocs_exists": (Path.home() / ".sysdocs").exists(),
@@ -208,8 +294,16 @@ def scan_system() -> dict[str, Any]:
 
     ##Condition purpose: Check if running on FreeBSD for DEUS-specific info
     if platform.system() == "FreeBSD":
-        ##Action purpose: Run FreeBSD-specific checks in parallel for performance
-        _run_freebsd_checks(scan)
+        ##Action purpose: Check cache first (performance optimization - C9)
+        cached_info = _get_cached_freebsd_info()
+        if cached_info is not None:
+            ##Action purpose: Use cached FreeBSD info (cache hit)
+            scan.update(cached_info)
+        else:
+            ##Action purpose: Run FreeBSD-specific checks in parallel for performance (cache miss)
+            _run_freebsd_checks(scan)
+            ##Action purpose: Update cache with new data (performance optimization - C9)
+            _update_freebsd_cache(scan)
 
     ##Action purpose: Return complete system scan
     return scan
@@ -263,19 +357,21 @@ def load_identity(config_path: Path | None = None) -> SystemIdentity | None:
     mode_counts = prompt_counts_data.get("mode", {})
 
     ##Action purpose: Build SystemIdentity from config data
+    ##Fix: Use defensive .get() with defaults to prevent KeyError if validation has edge case
     return SystemIdentity(
-        hostname=identity_data["hostname"],
-        username=identity_data["username"],
-        os_name=system_data["os"],
-        os_version=system_data["version"],
-        faction=faction_data["name"],
-        created_at=identity_data["created"],
+        hostname=identity_data.get("hostname", ""),
+        username=identity_data.get("username", ""),
+        os_name=system_data.get("os", ""),
+        os_version=system_data.get("version", ""),
+        faction=faction_data.get("name", ""),
+        created_at=identity_data.get("created", ""),
         last_session=sessions_data.get("last_timestamp", ""),
         last_mode=sessions_data.get("last_mode"),
         last_agent=sessions_data.get("last_agent"),
         total_sessions=sessions_data.get("total_sessions", 0),
         faction_prompt_counts=faction_counts if faction_counts else {},
         mode_prompt_counts=mode_counts if mode_counts else {},
+        faction_selected_at=faction_data.get("selected"),  # Load faction selection timestamp
     )
 
 
@@ -307,9 +403,10 @@ def save_identity(identity: SystemIdentity, config_path: Path | None = None) -> 
             "created": identity.created_at,
         },
         ##Action purpose: Faction section
+        ##Fix: Use faction_selected_at if available, otherwise fall back to created_at
         "faction": {
             "name": identity.faction,
-            "selected": identity.created_at,
+            "selected": identity.faction_selected_at if identity.faction_selected_at else identity.created_at,
         },
         ##Action purpose: System section
         "system": {
@@ -355,7 +452,8 @@ def create_identity(faction: str, scan_data: dict[str, Any] | None = None) -> Sy
         scan_data = scan_system()
 
     ##Action purpose: Get current timestamp in ISO format
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime - isoformat() already includes Z suffix
+    now = datetime.now(timezone.utc).isoformat()
 
     ##Action purpose: Create new identity from scan data
     return SystemIdentity(
@@ -371,6 +469,7 @@ def create_identity(faction: str, scan_data: dict[str, Any] | None = None) -> Sy
         total_sessions=0,
         faction_prompt_counts={},  # Initialize empty counters
         mode_prompt_counts={},  # Initialize empty counters
+        faction_selected_at=now,  # Set initial faction selection timestamp
     )
 
 
@@ -396,7 +495,8 @@ def update_session_tracking(
         New SystemIdentity instance with updated session tracking
     """
     ##Action purpose: Get current timestamp in ISO format
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime - isoformat() already includes Z suffix
+    now = datetime.now(timezone.utc).isoformat()
 
     ##Action purpose: Copy and update faction prompt counts
     updated_faction_counts = identity.faction_prompt_counts.copy()

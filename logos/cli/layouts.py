@@ -8,8 +8,11 @@ agent selection, and other CLI interfaces.
 using the UI component library.
 """
 
+import textwrap
+
 from logos.core.constants import Colors, UILayout
 from logos.core.factions import FACTIONS
+from logos.core.identity import SystemIdentity
 from logos.core.types import AgentGroup, WelcomeScreenContext
 from logos.core.ui import (
     UIColors,
@@ -22,6 +25,78 @@ from logos.core.ui import (
 )
 
 
+##Function purpose: Wrap text to fit within specified width
+def _wrap_text(text: str, width: int) -> list[str]:
+    """
+    ##Function purpose: Wraps text to fit within specified width.
+
+    ##Action purpose: Breaks long text into multiple lines that fit within
+    the specified width, preserving word boundaries.
+
+    Args:
+        text: Text to wrap
+        width: Maximum width per line
+
+    Returns:
+        List of wrapped lines
+    """
+    ##Action purpose: Use textwrap to break text into lines
+    wrapped_lines = textwrap.wrap(text, width=width, break_long_words=False, break_on_hyphens=False)
+    ##Condition purpose: Return wrapped lines or single line if empty
+    return wrapped_lines if wrapped_lines else [text]
+
+
+##Function purpose: Get ASCII art banner for LOGOS
+def get_logos_banner() -> list[str]:
+    """
+    ##Function purpose: Returns ASCII art banner for "LOGOS" word.
+
+    ##Action purpose: Provides beautiful ASCII art representation of the LOGOS
+    federation name for display at the top of all screens using box-drawing characters.
+
+    Returns:
+        List of strings representing the ASCII art banner
+    """
+    ##Action purpose: Create impressive ASCII art banner for LOGOS using box-drawing characters
+    ##Action purpose: Clear, readable banner that spells "LOGOS" clearly
+    banner = [
+        "╔╗       ╔═══╗   ╔═══╗  ╔══════╗",
+        "║║      ║╔═╗║  ║╔═╗║ ║╔════╝",
+        "║║      ║║ ║║  ║║ ║║ ║╚═══╗",
+        "║║      ║║ ║║  ║║ ║║ ║╔════╝",
+        "║╚═══╗  ║╚═╝║  ║╚═╝║ ║╚═════╗",
+        "╚════╝  ╚═══╝  ╚═══╝ ╚══════╝",
+        "",
+        "    L      O      G      O      S",
+    ]
+    return banner
+
+
+##Function purpose: Display LOGOS banner
+def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> None:
+    """
+    ##Function purpose: Displays the LOGOS ASCII art banner.
+
+    ##Action purpose: Prints the LOGOS banner centered within the specified width,
+    using the provided color.
+
+    Args:
+        width: Total width for centering
+        color: ANSI color code for the banner
+    """
+    ##Action purpose: Get banner lines
+    banner_lines = get_logos_banner()
+    reset = Colors.RESET
+
+    ##Loop purpose: Print each banner line centered
+    for line in banner_lines:
+        ##Action purpose: Calculate padding for centering
+        padding = (width - len(line)) // 2
+        ##Action purpose: Print centered banner line with color
+        print(" " * padding + color + line + reset)
+    print()  # Extra spacing after banner
+
+
 ##Function purpose: Get ASCII art logo for a faction
 def get_faction_logo(faction_key: str) -> list[str]:
     """
@@ -31,57 +106,63 @@ def get_faction_logo(faction_key: str) -> list[str]:
     faction that aligns with their philosophical identity.
 
     Args:
-        faction_key: Faction identifier ("daedelus", "deus", "revanchist", "orphic", "technomancer")
+        faction_key: Faction identifier ("daedalus", "deus", "revanchist", "orphic", "technomancer")
+        Note: "daedelus" is a mode name, "daedalus" is the faction key in FACTIONS dictionary
 
     Returns:
         List of strings representing the ASCII art logo
     """
-    ##Action purpose: Define ASCII art logos for each faction (all 15 chars wide for alignment)
+    ##Action purpose: Define unique ASCII art logos for each faction (all exactly 20 chars wide for perfect alignment)
     logos = {
-        ##Action purpose: Daedelus logo - craftsmanship, tools, building (hammer and anvil)
-        "daedelus": [
-            "     ╔═══╗",
-            "    ╔╝ ⚒ ╚╗",
-            "   ╔╝ ═══ ╚╗",
-            "  ╔╝  ═══  ╚╗",
-            " ╔╝  CRAFT  ╚╗",
-            " ╚═══════════╝",
-        ],
-        ##Action purpose: DEUS logo - sovereignty, authority, control (crown/throne)
-        "deus": [
-            "   ╔═══════╗",
-            "  ╔╝   ║   ╚╗",
-            " ╔╝    ║    ╚╗",
-            "╔╝  ═══╬═══  ╚╗",
-            "╚══════╩══════╝",
-            "   SOVEREIGN",
-        ],
-        ##Action purpose: Revanchist logo - traditional, human-focused, shield (protective)
+        ##Action purpose: Revanchist logo - traditional, human-focused, shield (protective, minimal autonomy)
+        ##Action purpose: Shield design representing protection and human-first philosophy
         "revanchist": [
-            "     ╔═══╗",
-            "    ╔╝ ║ ╚╗",
-            "   ╔╝  ║  ╚╗",
-            "  ╔╝   ║   ╚╗",
-            " ╔╝  HUMAN  ╚╗",
-            " ╚═══════════╝",
+            "     ╔═══════╗      ",  # 20 chars - Shield with cross
+            "    ╔╝  ║ ║  ╚╗     ",  # 20 chars
+            "   ╔╝   ║ ║   ╚╗    ",  # 20 chars
+            "  ╔╝    ║ ║    ╚╗   ",  # 20 chars
+            " ╔╝    HUMAN   ╚╗   ",  # 20 chars
+            " ╚═══════════════╝  ",  # 20 chars
         ],
-        ##Action purpose: Orphic logo - balance, harmony, connection (yin-yang inspired)
+        ##Action purpose: Daedalus logo - craftsmanship, tools, building (low autonomy, careful monitoring)
+        ##Action purpose: Hammer and anvil representing craftsmanship and careful work
+        "daedelus": [
+            "   ╔═══════════╗    ",  # 20 chars - Workshop
+            "  ╔╝  ⚒   ⚒   ╚╗    ",  # 20 chars - Tools
+            " ╔╝   ═══ ═══   ╚╗  ",  # 20 chars - Workbench
+            "╔╝   CRAFTING   ╚╗  ",  # 20 chars - Craft text
+            "╚════════════════╝  ",  # 20 chars - Base
+            "    ║ TOOLS ║       ",  # 20 chars - Label
+        ],
+        ##Action purpose: Orphic logo - balance, harmony, connection (balanced autonomy, yin-yang inspired)
+        ##Action purpose: Yin-yang symbol representing balance and harmony
         "orphic": [
-            "     ╔═══╗",
-            "    ╔╝ ═ ╚╗",
-            "   ╔╝  ╬  ╚╗",
-            "  ╔╝   ═   ╚╗",
-            " ╔╝ BALANCE ╚╗",
-            " ╚═══════════╝",
+            "   ╔═══════════╗    ",  # 20 chars - Circle
+            "  ╔╝  ════ ═══ ╝╗   ",  # 20 chars - Yin-yang
+            " ╔╝   ╬═══╬    ╚╗   ",  # 20 chars - Balance
+            "╔╝   BALANCE   ╚╗   ",  # 20 chars - Text
+            "╚════════════════╝  ",  # 20 chars - Base
+            "    ═══ ╬ ═══       ",  # 20 chars - Symbol
         ],
-        ##Action purpose: Technomancer logo - futuristic, tech, transformation (circuit/network)
+        ##Action purpose: Technomancer logo - futuristic, tech, transformation (high autonomy, circuit/network)
+        ##Action purpose: Circuit board pattern representing technology and transformation
         "technomancer": [
-            "   ╔═══════╗",
-            "  ╔╝ ═══ ╚╗",
-            " ╔╝  ═══  ╚╗",
-            "╔╝ ═══════ ╚╗",
-            "╚════════════╝",
-            "  TRANSFORM",
+            "  ╔═════════════╗   ",  # 20 chars - Circuit
+            " ╔╝ ════ ════  ╚╗   ",  # 20 chars - Nodes
+            "╔╝  ════ ════   ╚╗  ",  # 20 chars - Network
+            "╚═════════════════╝ ",  # 20 chars - Base
+            "   TRANSFORM        ",  # 20 chars - Text
+            "  ════ ╬ ════       ",  # 20 chars - Tech symbol
+        ],
+        ##Action purpose: DEUS logo - sovereignty, authority, control (maximum autonomy, crown/throne)
+        ##Action purpose: Crown design representing sovereignty and authority
+        "deus": [
+            "  ╔═════════════╗   ",  # 20 chars - Crown base
+            " ╔╝     ║║      ╚╗  ",  # 20 chars - Crown top
+            "╔╝      ║║       ╚╗ ",  # 20 chars - Authority
+            "╚═══ ═══╬╬═══ ════╝ ",  # 20 chars - Throne
+            "    SOVEREIGN       ",  # 20 chars - Text
+            "   ════╩╩═══        ",  # 20 chars - Base
         ],
     }
 
@@ -90,7 +171,7 @@ def get_faction_logo(faction_key: str) -> list[str]:
 
 
 ##Function purpose: Display faction logo with color
-def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: int = 70) -> None:
+def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: int = 100) -> None:
     """
     ##Function purpose: Displays faction ASCII art logo with specified color.
 
@@ -122,10 +203,117 @@ def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: i
 
 
 ##Function purpose: Display all faction logos with counters
+##Function purpose: Render a single row of logos line by line
+def _render_logo_row(
+    logos: list[list[str]],
+    logo_keys: list[str],
+    faction_keys: list[str],
+    current_faction: str,
+    width: int,
+    spacing: int,
+) -> None:
+    """
+    ##Function purpose: Renders a single row of logos line by line.
+
+    ##Action purpose: Prints each line of logos with proper spacing and colors,
+    handling the mode/faction key distinction when logo_keys and faction_keys differ.
+
+    Args:
+        logos: List of logo line lists (one per logo)
+        logo_keys: List of logo keys (for logo lookup)
+        faction_keys: List of faction keys (for faction data lookup and color comparison)
+        current_faction: Currently selected faction key
+        width: Total display width
+        spacing: Space between logos
+    """
+    ui = UIColors
+    reset = Colors.RESET
+
+    ##Loop purpose: Print each line of logos
+    for line_idx in range(UILayout.LOGO_HEIGHT):  # All logos are 6 lines tall (standardized)
+        line_parts = []
+        ##Loop purpose: Build line with all logos
+        for logo_idx, logo_lines in enumerate(logos):
+            ##Action purpose: Use faction key for color comparison (preserves mode/faction distinction)
+            faction_key = faction_keys[logo_idx]
+            ##Condition purpose: Choose color based on current faction
+            logo_color = ui.GOLD if faction_key == current_faction else ui.WHITE
+            ##Action purpose: Get logo line or empty string
+            logo_line = logo_lines[line_idx] if line_idx < len(logo_lines) else ""
+            ##Action purpose: Add logo line with color
+            line_parts.append((logo_line, logo_color))
+
+        ##Action purpose: Calculate spacing and print combined line
+        total_logo_width = sum(len(part[0]) for part in line_parts)
+        total_spacing = spacing * (len(line_parts) - 1)
+        left_padding = (width - total_logo_width - total_spacing) // 2
+
+        ##Action purpose: Build and print the line
+        combined_line = " " * left_padding
+        for i, (logo_line, logo_color) in enumerate(line_parts):
+            if i > 0:
+                combined_line += " " * spacing
+            combined_line += logo_color + logo_line + reset
+        print(combined_line)
+
+
+##Function purpose: Print counters below a row of logos
+def _print_logo_counters(
+    logo_keys: list[str],
+    faction_keys: list[str],
+    faction_prompt_counts: dict[str, int],
+    current_faction: str,
+    width: int,
+    logo_width: int,
+    spacing: int,
+) -> None:
+    """
+    ##Function purpose: Prints prompt counters below a row of logos.
+
+    ##Action purpose: Displays prompt counts centered below each logo, using
+    faction keys (not logo keys) for count lookup to preserve mode/faction distinction.
+
+    Args:
+        logo_keys: List of logo keys (for reference, not used for lookup)
+        faction_keys: List of faction keys (for count lookup and color comparison)
+        faction_prompt_counts: Dictionary mapping faction keys to prompt counts
+        current_faction: Currently selected faction key
+        width: Total display width
+        logo_width: Width of each logo
+        spacing: Space between logos
+    """
+    ui = UIColors
+    reset = Colors.RESET
+
+    ##Action purpose: Calculate counter line padding
+    num_logos = len(faction_keys)
+    total_logo_width = logo_width * num_logos
+    total_spacing = spacing * (num_logos - 1)
+    counter_line = " " * ((width - (total_logo_width + total_spacing)) // 2)
+
+    ##Loop purpose: Build counter line for each logo
+    for i, faction_key in enumerate(faction_keys):
+        if i > 0:
+            counter_line += " " * spacing
+        count = faction_prompt_counts.get(faction_key, 0)
+        counter_color = ui.GOLD if faction_key == current_faction else ui.WHITE
+        ##Action purpose: Center counter within logo width
+        counter_padding = (logo_width - len(str(count))) // 2
+        counter_line += (
+            " " * counter_padding
+            + counter_color
+            + f"{count}"
+            + reset
+            + " " * (logo_width - counter_padding - len(str(count)))
+        )
+    print(counter_line)
+    print()  # Extra spacing
+
+
 def display_faction_logos_with_counters(
     current_faction: str,
     faction_prompt_counts: dict[str, int],
-    width: int = 70,
+    width: int = 100,
 ) -> None:
     """
     ##Function purpose: Displays all 5 faction logos with prompt counters.
@@ -140,12 +328,9 @@ def display_faction_logos_with_counters(
         width: Total display width
     """
     ui = UIColors
-    reset = Colors.RESET
-
-    ##Action purpose: Define all faction keys in display order
 
     ##Step purpose: Calculate layout for 5 logos (2 rows: 3 on top, 2 on bottom)
-    logo_width = UILayout.LOGO_WIDTH  # Width of each logo (standardized)
+    logo_width = UILayout.LOGO_WIDTH  # Width of each logo (standardized, now 20 chars)
     spacing = UILayout.LOGO_SPACING  # Space between logos
 
     ##Step purpose: Print header
@@ -162,110 +347,38 @@ def display_faction_logos_with_counters(
         logo_lines = get_faction_logo(faction_key)
         ##Condition purpose: Use empty list if logo not found
         if not logo_lines:
-            logo_lines = [""] * 6
+            logo_lines = [""] * UILayout.LOGO_HEIGHT
         row1_logos.append(logo_lines)
 
-    ##Loop purpose: Print first row line by line
-    for line_idx in range(6):  # All logos are 6 lines tall
-        line_parts = []
-        ##Loop purpose: Build line with all three logos
-        for logo_idx, logo_lines in enumerate(row1_logos):
-            faction_key = row1_factions[logo_idx]
-            ##Condition purpose: Choose color based on current faction
-            logo_color = ui.GOLD if faction_key == current_faction else ui.WHITE
-            ##Action purpose: Get logo line or empty string
-            logo_line = logo_lines[line_idx] if line_idx < len(logo_lines) else ""
-            ##Action purpose: Add logo line with color
-            line_parts.append((logo_line, logo_color))
+    ##Action purpose: Render first row of logos
+    _render_logo_row(row1_logos, row1_factions, row1_factions, current_faction, width, spacing)
 
-        ##Action purpose: Calculate spacing and print combined line
-        total_logo_width = sum(len(part[0]) for part in line_parts)
-        total_spacing = spacing * (len(line_parts) - 1)
-        left_padding = (width - total_logo_width - total_spacing) // 2
+    ##Action purpose: Print counters for first row
+    _print_logo_counters(
+        row1_factions, row1_factions, faction_prompt_counts, current_faction, width, logo_width, spacing
+    )
 
-        ##Action purpose: Build and print the line
-        combined_line = " " * left_padding
-        for i, (logo_line, logo_color) in enumerate(line_parts):
-            if i > 0:
-                combined_line += " " * spacing
-            combined_line += logo_color + logo_line + reset
-        print(combined_line)
-
-    ##Step purpose: Print counters for first row
-    counter_line = " " * ((width - (logo_width * 3 + spacing * 2)) // 2)  # Center the counters
-    for i, faction_key in enumerate(row1_factions):
-        if i > 0:
-            counter_line += " " * spacing
-        count = faction_prompt_counts.get(faction_key, 0)
-        counter_color = ui.GOLD if faction_key == current_faction else ui.WHITE
-        ##Action purpose: Center counter within logo width
-        counter_padding = (logo_width - len(str(count))) // 2
-        counter_line += (
-            " " * counter_padding
-            + counter_color
-            + f"{count}"
-            + reset
-            + " " * (logo_width - counter_padding - len(str(count)))
-        )
-    print(counter_line)
-    print()  # Extra spacing
-
-    ##Step purpose: Display second row (2 logos: Daedelus, DEUS)
-    row2_factions = ["daedelus", "deus"]
+    ##Step purpose: Display second row (2 logos: Daedalus, DEUS)
+    ##Note: Using "daedelus" for logo lookup (mode name), but "daedalus" for faction data lookup
+    row2_factions = ["daedelus", "deus"]  # Logo keys (mode names for display)
+    row2_faction_keys = ["daedalus", "deus"]  # Faction keys for FACTIONS dictionary lookup
     row2_logos = []
 
     ##Loop purpose: Collect logos for second row
-    for faction_key in row2_factions:
-        logo_lines = get_faction_logo(faction_key)
+    for logo_key in row2_factions:
+        logo_lines = get_faction_logo(logo_key)
         ##Condition purpose: Use empty list if logo not found
         if not logo_lines:
-            logo_lines = [""] * 6
+            logo_lines = [""] * UILayout.LOGO_HEIGHT
         row2_logos.append(logo_lines)
 
-    ##Loop purpose: Print second row line by line
-    for line_idx in range(6):  # All logos are 6 lines tall
-        line_parts = []
-        ##Loop purpose: Build line with both logos
-        for logo_idx, logo_lines in enumerate(row2_logos):
-            faction_key = row2_factions[logo_idx]
-            ##Condition purpose: Choose color based on current faction
-            logo_color = ui.GOLD if faction_key == current_faction else ui.WHITE
-            ##Action purpose: Get logo line or empty string
-            logo_line = logo_lines[line_idx] if line_idx < len(logo_lines) else ""
-            ##Action purpose: Add logo line with color
-            line_parts.append((logo_line, logo_color))
+    ##Action purpose: Render second row of logos (preserves mode/faction key distinction)
+    _render_logo_row(row2_logos, row2_factions, row2_faction_keys, current_faction, width, spacing)
 
-        ##Action purpose: Calculate spacing and print combined line
-        total_logo_width = sum(len(part[0]) for part in line_parts)
-        total_spacing = spacing * (len(line_parts) - 1)
-        left_padding = (width - total_logo_width - total_spacing) // 2
-
-        ##Action purpose: Build and print the line
-        combined_line = " " * left_padding
-        for i, (logo_line, logo_color) in enumerate(line_parts):
-            if i > 0:
-                combined_line += " " * spacing
-            combined_line += logo_color + logo_line + reset
-        print(combined_line)
-
-    ##Step purpose: Print counters for second row
-    counter_line = " " * ((width - (logo_width * 2 + spacing)) // 2)  # Center the counters
-    for i, faction_key in enumerate(row2_factions):
-        if i > 0:
-            counter_line += " " * spacing
-        count = faction_prompt_counts.get(faction_key, 0)
-        counter_color = ui.GOLD if faction_key == current_faction else ui.WHITE
-        ##Action purpose: Center counter within logo width
-        counter_padding = (logo_width - len(str(count))) // 2
-        counter_line += (
-            " " * counter_padding
-            + counter_color
-            + f"{count}"
-            + reset
-            + " " * (logo_width - counter_padding - len(str(count)))
-        )
-    print(counter_line)
-    print()  # Extra spacing
+    ##Action purpose: Print counters for second row (uses faction keys for lookup)
+    _print_logo_counters(
+        row2_factions, row2_faction_keys, faction_prompt_counts, current_faction, width, logo_width, spacing
+    )
 
 
 ##Function purpose: Display the LOGOS welcome screen
@@ -308,8 +421,11 @@ def display_welcome_screen(
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
-    ##Step purpose: Create top border with title
-    title = "THE LOGOS FEDERATION"
+    ##Step purpose: Display LOGOS banner at top
+    display_logos_banner(width, ui.PRIMARY)
+
+    ##Step purpose: Create top border with subtitle
+    title = "THE FEDERATION"
     top, _ = create_box(width, title, ui.PRIMARY, ui.BOLD + ui.PRIMARY)
     print(top)
 
@@ -364,6 +480,9 @@ def display_mode_selection() -> None:
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
+    ##Step purpose: Display LOGOS banner at top
+    display_logos_banner(width, ui.PRIMARY)
+
     ##Step purpose: Create mode selection box
     lines = [
         "",
@@ -380,6 +499,77 @@ def display_mode_selection() -> None:
     print_box(width, lines, title="SELECT MODE", border_color=ui.PRIMARY)
 
 
+##Function purpose: Get LOGOS banner lines (helper for batching)
+def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> list[str]:
+    """
+    ##Function purpose: Gets LOGOS banner lines for batching (performance optimization).
+
+    ##Action purpose: Returns banner lines as a list instead of printing directly,
+    allowing batch output operations for improved performance.
+
+    Args:
+        width: Total width for centering
+        color: ANSI color code for the banner
+
+    Returns:
+        List of banner lines with formatting
+    """
+    ##Action purpose: Get banner lines
+    banner_lines = get_logos_banner()
+    reset = Colors.RESET
+    output_lines = []
+
+    ##Loop purpose: Build each banner line centered
+    for line in banner_lines:
+        ##Action purpose: Calculate padding for centering
+        padding = (width - len(line)) // 2
+        ##Action purpose: Build centered banner line with color
+        output_lines.append(" " * padding + color + line + reset)
+    output_lines.append("")  # Extra spacing after banner
+
+    ##Action purpose: Return banner lines
+    return output_lines
+
+
+##Function purpose: Get faction logo lines (helper for batching)
+def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width: int = 100) -> list[str]:
+    """
+    ##Function purpose: Gets faction logo lines for batching (performance optimization).
+
+    ##Action purpose: Returns logo lines as a list instead of printing directly,
+    allowing batch output operations for improved performance.
+
+    Args:
+        faction_key: Faction identifier
+        color: ANSI color code for the logo
+        width: Total width for centering
+
+    Returns:
+        List of logo lines with formatting
+    """
+    ##Action purpose: Get logo lines
+    logo_lines = get_faction_logo(faction_key)
+    output_lines = []
+
+    ##Condition purpose: Check if logo exists
+    if not logo_lines:
+        ##Action purpose: Return empty list if no logo found
+        return output_lines
+
+    ##Action purpose: Get reset code
+    reset = Colors.RESET
+
+    ##Loop purpose: Build each logo line centered
+    for line in logo_lines:
+        ##Action purpose: Calculate padding for centering
+        padding = (width - len(line)) // 2
+        ##Action purpose: Build centered logo line with color
+        output_lines.append(" " * padding + color + line + reset)
+
+    ##Action purpose: Return logo lines
+    return output_lines
+
+
 ##Function purpose: Display agent selection menu
 def display_agent_menu(
     mode: str,
@@ -392,6 +582,7 @@ def display_agent_menu(
 
     ##Action purpose: Creates a formatted agent selection interface
     with color-coded groups, clear organization, and chosen faction logo.
+    ##Optimization: Uses batched output (single print operation) for improved performance (C9 optimization).
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -402,6 +593,12 @@ def display_agent_menu(
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
+    ##Action purpose: Collect all output lines for batch printing (performance optimization)
+    output_lines = []
+
+    ##Step purpose: Collect LOGOS banner lines
+    output_lines.extend(_get_logos_banner_lines(width, ui.PRIMARY))
+
     ##Step purpose: Create header with mode and faction
     mode_title = "DAEDELUS" if mode == "daedelus" else "DEUS"
     if faction_name:
@@ -409,39 +606,42 @@ def display_agent_menu(
     else:
         title = mode_title
 
-    ##Step purpose: Print top border
+    ##Step purpose: Collect top border
     top, _ = create_box(width, title, ui.PRIMARY, ui.BOLD + ui.PRIMARY)
-    print(top)
+    output_lines.append(top)
 
-    ##Step purpose: Display chosen faction logo if available
+    ##Step purpose: Collect chosen faction logo if available
     if faction_key:
-        print(create_content_line("", width))  # Spacing
-        ##Action purpose: Display faction logo in gold
-        display_faction_logo(faction_key, color=ui.GOLD, width=width)
-        print(create_content_line("", width))  # Spacing
+        output_lines.append(create_content_line("", width))  # Spacing
+        ##Action purpose: Collect faction logo lines in gold
+        output_lines.extend(_get_faction_logo_lines(faction_key, color=ui.GOLD, width=width))
+        output_lines.append(create_content_line("", width))  # Spacing
 
-    ##Step purpose: Display agent groups
+    ##Step purpose: Collect agent groups
     for group in agent_groups:
-        ##Action purpose: Print group header
+        ##Action purpose: Collect group header
         group_header = f"GROUP {group.id}: {group.name} ({group.category})"
-        print(create_content_line("", width))  # Spacing
-        print(create_content_line(group_header, width, color=group.color))
-        print(create_content_line(f"Purpose: {group.purpose}", width, color=ui.CYAN))
+        output_lines.append(create_content_line("", width))  # Spacing
+        output_lines.append(create_content_line(group_header, width, color=group.color))
+        output_lines.append(create_content_line(f"Purpose: {group.purpose}", width, color=ui.CYAN))
 
-        ##Step purpose: Display agents in group
+        ##Step purpose: Collect agents in group
         for key, agent in group.agents.items():
             agent_line = f"{key}. {agent.name:<30} ({agent.desc})"
-            print(create_content_line(agent_line, width, color=ui.WHITE))
+            output_lines.append(create_content_line(agent_line, width, color=ui.WHITE))
 
-    ##Step purpose: Print system options
-    print(create_content_line("", width))  # Spacing
-    print(create_content_line("[ SYSTEM ]", width, color=ui.WHITE))
-    print(create_content_line("  0. Exit", width, color=ui.WHITE))
+    ##Step purpose: Collect system options
+    output_lines.append(create_content_line("", width))  # Spacing
+    output_lines.append(create_content_line("[ SYSTEM ]", width, color=ui.WHITE))
+    output_lines.append(create_content_line("  0. Exit", width, color=ui.WHITE))
 
-    ##Step purpose: Print bottom border
+    ##Step purpose: Collect bottom border
     _, bottom = create_box(width, None, ui.PRIMARY)
-    print(bottom)
-    print()  # Extra spacing
+    output_lines.append(bottom)
+    output_lines.append("")  # Extra spacing
+
+    ##Action purpose: Print all lines in single operation (performance optimization - C9)
+    print("\n".join(output_lines))
 
 
 ##Function purpose: Display first-run wizard
@@ -461,6 +661,9 @@ def display_first_run_wizard(
     """
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
+
+    ##Step purpose: Display LOGOS banner at top
+    display_logos_banner(width, ui.PRIMARY)
 
     ##Step purpose: Display welcome header
     print_header("LOGOS FEDERATION - FIRST RUN SETUP", width, color=ui.PRIMARY)
@@ -503,6 +706,111 @@ def display_first_run_wizard(
     print()
 
 
+##Function purpose: Display system information
+def display_system_info(identity: SystemIdentity) -> None:
+    """
+    ##Function purpose: Displays comprehensive system information.
+
+    ##Action purpose: Shows system identity, date/time/timezone, and system
+    capabilities in a formatted display box.
+
+    Args:
+        identity: SystemIdentity instance with system information
+    """
+    import time
+    from datetime import datetime, timezone
+
+    from logos.core.identity import scan_system
+
+    width = UILayout.DISPLAY_WIDTH
+    ui = UIColors
+
+    ##Action purpose: Get current date/time/timezone information
+    now_utc = datetime.now(timezone.utc)
+    now_local = datetime.now().astimezone()  ##Fix: Use astimezone() to get timezone-aware datetime
+    timezone_offset = now_local.utcoffset()
+    timezone_name = time.tzname[0] if time.tzname else "UTC"
+
+    ##Action purpose: Format timezone offset as ±HH:MM
+    if timezone_offset:
+        offset_seconds = int(timezone_offset.total_seconds())
+        offset_hours = offset_seconds // 3600
+        offset_minutes = abs((offset_seconds % 3600) // 60)
+        timezone_str = f"{offset_hours:+03d}:{offset_minutes:02d}"
+    else:
+        timezone_str = "+00:00"
+
+    ##Action purpose: Scan system for additional information
+    scan_data = scan_system()
+
+    ##Action purpose: Build system info lines
+    info_lines = [
+        "System Identity:",
+        "",
+        f"Hostname: {identity.hostname}",
+        f"Username: {identity.username}",
+        f"OS: {identity.os_name} {identity.os_version}",
+        "",
+        "Date and Time:",
+        "",
+        f"UTC Date: {now_utc.strftime('%Y-%m-%d')}",
+        f"UTC Time: {now_utc.strftime('%H:%M:%S')}",
+        ##Fix: isoformat() on timezone-aware UTC datetime already includes Z suffix
+        f"UTC DateTime: {now_utc.isoformat()}",
+        "",
+        f"Local Date: {now_local.strftime('%Y-%m-%d')}",
+        f"Local Time: {now_local.strftime('%H:%M:%S')}",
+        f"Local DateTime: {now_local.isoformat()}",
+        "",
+        f"Timezone: {timezone_name} ({timezone_str})",
+        "",
+        "Python Environment:",
+        "",
+        f"Python Version: {scan_data.get('python_version', 'Unknown')}",
+        "",
+        "LOGOS State:",
+        "",
+    ]
+
+    ##Action purpose: Add LOGOS state information
+    if scan_data.get("logos_config_exists"):
+        info_lines.append("✓ LOGOS configuration exists")
+    else:
+        info_lines.append("✗ LOGOS configuration not found")
+
+    if scan_data.get("devdocs_exists"):
+        info_lines.append("✓ Development docs exist")
+    else:
+        info_lines.append("✗ Development docs not found")
+
+    if scan_data.get("sysdocs_exists"):
+        info_lines.append("✓ System docs exist")
+    else:
+        info_lines.append("✗ System docs not found")
+
+    ##Action purpose: Add FreeBSD-specific info if available
+    if scan_data.get("freebsd_version"):
+        info_lines.append("")
+        info_lines.append("FreeBSD Information:")
+        info_lines.append("")
+        info_lines.append(f"FreeBSD Version: {scan_data.get('freebsd_version')}")
+        if scan_data.get("zfs_available"):
+            info_lines.append("✓ ZFS available")
+        if scan_data.get("jail_host"):
+            info_lines.append("✓ Jail host detected")
+
+    ##Action purpose: Display system info in formatted box
+    print_header("SYSTEM INFORMATION", width, color=ui.PRIMARY)
+    print()
+    print_box(
+        width,
+        info_lines,
+        title="SYSTEM DETAILS",
+        border_color=ui.INFO,
+    )
+    print()
+
+
 ##Function purpose: Display agent prompt result
 def display_agent_result(
     agent_name: str,
@@ -529,6 +837,9 @@ def display_agent_result(
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
+    ##Step purpose: Display LOGOS banner at top
+    display_logos_banner(width, ui.PRIMARY)
+
     ##Step purpose: Display result header
     agent_title = f"Group {agent_group} - {agent_name}"
     print_header(agent_title, width, color=ui.PRIMARY)
@@ -549,7 +860,11 @@ def display_agent_result(
     if show_prompt and prompt_text:
         print()
         print(f"{ui.BOLD}Full Prompt:{Colors.RESET}")
-        print(prompt_text)
+        ##Action purpose: Wrap prompt text to fit within display width
+        prompt_lines = _wrap_text(prompt_text, width - UILayout.PROMPT_PADDING)  # Apply padding for text wrapping
+        ##Loop purpose: Print each wrapped line
+        for line in prompt_lines:
+            print(line)
 
     print()
 
@@ -607,7 +922,8 @@ def display_faction_statistics(
     ]
 
     ##Loop purpose: Display faction counts in order (show all, even if 0)
-    for faction_key in ["revanchist", "orphic", "technomancer", "daedelus", "deus"]:
+    ##Note: Use faction keys (not mode names) for FACTIONS lookup
+    for faction_key in ["revanchist", "orphic", "technomancer", "daedalus", "deus"]:
         count = faction_prompt_counts.get(faction_key, 0)
         faction = FACTIONS.get(faction_key)
         faction_name = faction.name if faction else faction_key.title()

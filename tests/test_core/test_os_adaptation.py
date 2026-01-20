@@ -4,15 +4,12 @@
 Tests DEUS prompt OS adaptation for Linux systems.
 """
 
-import pytest
 from logos.core.prompts import _adapt_deus_prompt_for_os
 
 
 ##Function purpose: Test OS adaptation for Linux
 def test_adapt_deus_prompt_linux():
-    """
-    ##Function purpose: Verify DEUS prompts adapt correctly for Linux systems.
-    """
+    """##Function purpose: Verify DEUS prompts adapt correctly for Linux systems.."""
     ##Action purpose: Create sample DEUS prompt with FreeBSD references
     original_prompt = """
     This is a FreeBSD system administration prompt.
@@ -26,10 +23,10 @@ def test_adapt_deus_prompt_linux():
     Use ZFS boot environments.
     Manage jails for containerization.
     """
-    
+
     ##Action purpose: Adapt prompt for Linux
     adapted = _adapt_deus_prompt_for_os(original_prompt, "Linux")
-    
+
     ##Condition purpose: Verify FreeBSD references are replaced
     assert "FreeBSD" not in adapted or "Linux" in adapted
     assert "sysrc" not in adapted or "systemctl" in adapted
@@ -44,9 +41,7 @@ def test_adapt_deus_prompt_linux():
 
 ##Function purpose: Test OS adaptation preserves FreeBSD
 def test_adapt_deus_prompt_freebsd():
-    """
-    ##Function purpose: Verify DEUS prompts remain unchanged for FreeBSD systems.
-    """
+    """##Function purpose: Verify DEUS prompts remain unchanged for FreeBSD systems.."""
     ##Action purpose: Create sample DEUS prompt
     original_prompt = """
     This is a FreeBSD system administration prompt.
@@ -54,36 +49,32 @@ def test_adapt_deus_prompt_freebsd():
     Use pkg to manage packages.
     Follow FreeBSD Handbook guidelines.
     """
-    
+
     ##Action purpose: Adapt prompt for FreeBSD (should remain unchanged)
     adapted = _adapt_deus_prompt_for_os(original_prompt, "FreeBSD")
-    
+
     ##Condition purpose: Verify prompt is unchanged
     assert adapted == original_prompt
 
 
 ##Function purpose: Test OS adaptation case insensitivity
 def test_adapt_deus_prompt_case_insensitive():
-    """
-    ##Function purpose: Verify OS adaptation handles case-insensitive OS names.
-    """
+    """##Function purpose: Verify OS adaptation handles case-insensitive OS names.."""
     ##Action purpose: Create sample prompt
     original_prompt = "This is a FreeBSD system. Use sysrc."
-    
+
     ##Action purpose: Test various case variations
     adapted_lower = _adapt_deus_prompt_for_os(original_prompt, "linux")
     adapted_upper = _adapt_deus_prompt_for_os(original_prompt, "LINUX")
     adapted_mixed = _adapt_deus_prompt_for_os(original_prompt, "Linux")
-    
+
     ##Condition purpose: Verify all case variations produce same result
     assert adapted_lower == adapted_upper == adapted_mixed
 
 
 ##Function purpose: Test OS adaptation replaces all FreeBSD references
 def test_adapt_deus_prompt_comprehensive_replacement():
-    """
-    ##Function purpose: Verify all FreeBSD-specific references are replaced.
-    """
+    """##Function purpose: Verify all FreeBSD-specific references are replaced.."""
     ##Action purpose: Create comprehensive prompt with all FreeBSD references
     original_prompt = """
     FreeBSD system administration.
@@ -94,10 +85,10 @@ def test_adapt_deus_prompt_comprehensive_replacement():
     Follow FreeBSD philosophy and BSD philosophy.
     Ensure BSD Compliance.
     """
-    
+
     ##Action purpose: Adapt for Linux
     adapted = _adapt_deus_prompt_for_os(original_prompt, "Linux")
-    
+
     ##Condition purpose: Verify key replacements
     assert "FreeBSD" not in adapted or adapted.count("FreeBSD") < original_prompt.count("FreeBSD")
     assert "sysrc" not in adapted or "systemctl" in adapted
@@ -107,39 +98,33 @@ def test_adapt_deus_prompt_comprehensive_replacement():
 
 ##Function purpose: Test OS adaptation with None OS
 def test_adapt_deus_prompt_none_os():
-    """
-    ##Function purpose: Verify OS adaptation handles None OS gracefully.
-    """
+    """##Function purpose: Verify OS adaptation handles None OS gracefully.."""
     ##Action purpose: Create sample prompt
     original_prompt = "FreeBSD system administration."
-    
+
     ##Action purpose: Adapt with None OS (should remain unchanged)
     adapted = _adapt_deus_prompt_for_os(original_prompt, None)
-    
+
     ##Condition purpose: Verify prompt is unchanged
     assert adapted == original_prompt
 
 
 ##Function purpose: Test OS adaptation with empty OS
 def test_adapt_deus_prompt_empty_os():
-    """
-    ##Function purpose: Verify OS adaptation handles empty OS string gracefully.
-    """
+    """##Function purpose: Verify OS adaptation handles empty OS string gracefully.."""
     ##Action purpose: Create sample prompt
     original_prompt = "FreeBSD system administration."
-    
+
     ##Action purpose: Adapt with empty OS (should remain unchanged)
     adapted = _adapt_deus_prompt_for_os(original_prompt, "")
-    
+
     ##Condition purpose: Verify prompt is unchanged
     assert adapted == original_prompt
 
 
 ##Function purpose: Test OS adaptation preserves non-FreeBSD content
 def test_adapt_deus_prompt_preserves_content():
-    """
-    ##Function purpose: Verify OS adaptation preserves non-FreeBSD-specific content.
-    """
+    """##Function purpose: Verify OS adaptation preserves non-FreeBSD-specific content.."""
     ##Action purpose: Create prompt with mixed content
     original_prompt = """
     System administration guidelines.
@@ -148,10 +133,10 @@ def test_adapt_deus_prompt_preserves_content():
     Document all changes.
     FreeBSD-specific: Use sysrc.
     """
-    
+
     ##Action purpose: Adapt for Linux
     adapted = _adapt_deus_prompt_for_os(original_prompt, "Linux")
-    
+
     ##Condition purpose: Verify non-FreeBSD content is preserved
     assert "backup" in adapted
     assert "staging" in adapted

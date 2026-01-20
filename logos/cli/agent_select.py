@@ -17,6 +17,7 @@ from logos.core.identity import SystemIdentity, save_identity, update_session_tr
 from logos.core.prompts import build_complete_prompt
 from logos.core.terminal import clear_screen
 from logos.core.types import AgentGroup
+from logos.core.ui import UIColors
 
 
 ##Function purpose: Get agent groups for Daedelus mode
@@ -77,7 +78,7 @@ def get_daedelus_groups() -> list[AgentGroup]:
             "THE OPERATORS",
             "Review Systems",
             "Comprehensive review and system orchestration",
-            Colors.RED,
+            UIColors.GROUP_E,  # CYAN - Primary orchestration, coordination, leadership
             GROUP_E_OPERATORS,
         ),
     ]
@@ -343,8 +344,17 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
             ##Action purpose: Handle Ctrl+C gracefully
             print("\n\nReturning to mode selection...")
             return 1
+        except (OSError, ValueError, KeyError) as e:
+            ##Action purpose: Handle specific expected errors (file I/O, validation, key lookup)
+            display_error("Error in agent selection", str(e))
+            ##Action purpose: Wait for user acknowledgment
+            try:
+                input("\nPress Enter to continue...")
+            except (EOFError, KeyboardInterrupt):
+                return 1
+            continue
         except Exception as e:
-            ##Action purpose: Handle unexpected errors
+            ##Action purpose: Handle unexpected errors (graceful CLI degradation)
             display_error("Unexpected error in agent selection", str(e))
             ##Action purpose: Wait for user acknowledgment
             try:

@@ -32,7 +32,7 @@ from logos.core.prompts import (
     build_identity_context,
 )
 from logos.core.terminal import clear_screen
-from logos.core.types import AgentGroup, Mode, WelcomeScreenContext
+from logos.core.types import AgentGroup, Err, Mode, Ok, Result, WelcomeScreenContext
 from logos.core.ui import (
     BoxChars,
     UIColors,
@@ -63,6 +63,10 @@ __all__ = [
     "Mode",
     "AgentGroup",
     "WelcomeScreenContext",
+    # Result type pattern
+    "Result",
+    "Ok",
+    "Err",
     # Faction system
     "Faction",
     "FACTIONS",

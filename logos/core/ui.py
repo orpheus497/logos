@@ -69,12 +69,12 @@ class UIColors:
     INFO: str = Colors.BLUE  # Information
     HIGHLIGHT: str = Colors.MAGENTA  # Highlights
 
-    # Group colors (matching agent groups)
-    GROUP_A: str = Colors.GREEN  # Builders/Engineers
-    GROUP_B: str = Colors.BLUE  # Guardians/Auditors
-    GROUP_C: str = Colors.YELLOW  # Maintainers
-    GROUP_D: str = Colors.MAGENTA  # Workers/Specialists
-    GROUP_E: str = Colors.RED  # Operators
+    # Group colors (matching agent groups and their roles)
+    GROUP_A: str = Colors.GREEN  # Builders/Engineers - Growth, creation, building
+    GROUP_B: str = Colors.BLUE  # Guardians/Auditors - Trust, security, stability
+    GROUP_C: str = Colors.YELLOW  # Maintainers - Caution, maintenance, attention
+    GROUP_D: str = Colors.MAGENTA  # Workers/Specialists - Specialty, distinct, transformation
+    GROUP_E: str = Colors.CYAN  # Operators - Primary orchestration, coordination, leadership
 
     # Special colors
     GOLD: str = Colors.YELLOW  # Gold color for chosen faction (using YELLOW)
@@ -225,7 +225,7 @@ def print_box(
 
 def print_header(
     text: str,
-    width: int = 70,
+    width: int = 100,
     char: str = "═",
     color: str = UIColors.PRIMARY,
     bold: bool = True,

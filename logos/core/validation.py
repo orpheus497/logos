@@ -11,6 +11,8 @@ import re
 from datetime import datetime
 from typing import Any
 
+from logos.core.factions import FACTIONS
+
 ##Action purpose: Validation limit constants
 DEFAULT_MAX_INPUT_LENGTH: int = 50
 MAX_HOSTNAME_LENGTH: int = 255
@@ -163,7 +165,8 @@ def _validate_faction_section(faction: dict[str, Any]) -> tuple[bool, str | None
     """
     ##Function purpose: Validates faction section of configuration.
 
-    ##Action purpose: Checks required fields, types, and lengths.
+    ##Action purpose: Checks required fields, types, lengths, and validates
+    faction name against FACTIONS dictionary (per Constitution v2.0 - 5 factions).
 
     Args:
         faction: Faction section dictionary
@@ -177,6 +180,12 @@ def _validate_faction_section(faction: dict[str, Any]) -> tuple[bool, str | None
         return False, "Field 'faction.name' must be a string"
     if len(faction["name"]) > MAX_FACTION_NAME_LENGTH:
         return False, f"faction.name too long (max {MAX_FACTION_NAME_LENGTH} characters)"
+
+    ##Condition purpose: Verify faction name is one of the valid 5 factions (Constitution v2.0)
+    faction_name = faction["name"]
+    if faction_name not in FACTIONS:
+        valid_factions = ", ".join(sorted(FACTIONS.keys()))
+        return False, f"Invalid faction name '{faction_name}'. Must be one of: {valid_factions}"
 
     return True, None
 
