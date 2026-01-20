@@ -53,8 +53,8 @@ def select_faction() -> str | None:
     Returns:
         Faction key string, or None if cancelled
     """
-    ##Action purpose: Get faction options
-    get_faction_options()
+    ##Fix: Removed unused function call - get_faction_options() was called but return value discarded.
+    ##Note: Faction options are already displayed by display_first_run_wizard() before this function is called.
 
     ##Loop purpose: Display options and handle input until valid selection
     while True:

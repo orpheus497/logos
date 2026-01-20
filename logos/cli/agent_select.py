@@ -224,12 +224,13 @@ def select_agent(mode: str) -> str | None:
 
 
 ##Function purpose: Handle agent selection and prompt generation
-def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) -> bool:
+def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) -> tuple[bool, SystemIdentity]:
     """
     ##Function purpose: Handles agent selection, prompt building, and clipboard operations.
 
     ##Action purpose: Retrieves agent, builds complete prompt with identity and faction,
-    copies to clipboard, and displays result to user.
+    copies to clipboard, and displays result to user. Returns updated identity to ensure
+    state synchronization in the calling loop.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -237,7 +238,8 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
         identity: SystemIdentity instance for context
 
     Returns:
-        True if operation succeeded, False otherwise
+        Tuple of (success: bool, updated_identity: SystemIdentity)
+        On failure, returns (False, original identity)
     """
     ##Action purpose: Get agent instance
     agent = get_agent_for_mode(mode, agent_key)
@@ -245,7 +247,8 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
     if agent is None:
         ##Action purpose: Display error if agent not found
         display_error("Agent not found", f"Could not find agent '{agent_key}' in {mode} mode.")
-        return False
+        ##Action purpose: Return failure with original identity
+        return (False, identity)
 
     ##Action purpose: Build complete prompt with identity and faction, with OS adaptation for DEUS
     complete_prompt = build_complete_prompt(
@@ -273,8 +276,8 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
         prompt_text=complete_prompt if not clipboard_success else None,
     )
 
-    ##Action purpose: Return success status
-    return True
+    ##Action purpose: Return success status and updated identity
+    return (True, updated_identity)
 
 
 ##Function purpose: Main agent selection function
@@ -322,8 +325,12 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
                 ##Action purpose: Return 1 to go back to mode selection
                 return 1
 
-            ##Action purpose: Handle agent selection
-            handle_agent_selection(mode, agent_key, identity)
+            ##Action purpose: Handle agent selection and get updated identity
+            success, identity = handle_agent_selection(mode, agent_key, identity)
+            ##Condition purpose: Check if operation succeeded
+            if not success:
+                ##Action purpose: Continue loop on failure (error already displayed)
+                continue
 
             ##Action purpose: Wait for user to continue
             try:

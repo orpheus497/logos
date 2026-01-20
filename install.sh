@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ##
 ##Script function and purpose: LOGOS Installation Script
 ##
@@ -238,7 +238,7 @@ create_logos_command() {
 
     # Create logos wrapper script
     cat > "$BIN_DIR/logos" << 'EOF'
-#!/bin/bash
+#!/usr/bin/env bash
 ##
 ##Script function and purpose: LOGOS command wrapper
 ##

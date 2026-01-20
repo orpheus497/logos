@@ -4,8 +4,8 @@
 22-agent system for AI-assisted software development workflows.
 """
 
+##Fix: Removed undefined ALL_AGENTS import - this symbol is not defined in agents.py and not used anywhere
 from logos.daedelus.agents import (
-    ALL_AGENTS,
     GROUP_A_BUILDERS,
     GROUP_B_GUARDIANS,
     GROUP_C_MAINTAINERS,
@@ -20,6 +20,5 @@ __all__ = [
     "GROUP_C_MAINTAINERS",
     "GROUP_D_WORKERS",
     "GROUP_E_OPERATORS",
-    "ALL_AGENTS",
     "get_agent",
 ]
