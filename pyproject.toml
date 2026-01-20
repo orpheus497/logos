@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "logos"
+version = "0.0.1"
+description = "Unified AI Agent Federation - Merging Daedelus and DEUS"
+readme = "README.md"
+license = {text = "GNU Affero General Public License v3.0"}
+authors = [
+    {name = "orpheus497"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: GNU Affero General Public License v3 (AGPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+keywords = ["ai", "agents", "prompts", "cli", "development", "system-administration", "freebsd"]
+
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+clipboard = ["pyperclip>=1.8.0"]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "pyyaml>=6.0",
+    "pip-audit>=2.6.0",
+]
+
+[project.scripts]
+logos = "logos.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/orpheus497/logos"
+Repository = "https://github.com/orpheus497/logos"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["logos*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "D", "UP"]
+ignore = [
+    "D100",  # Missing docstring in public module
+    "D104",  # Missing docstring in public package
+    "D105",  # Missing docstring in magic method (we document with ##Method purpose:)
+    "D212",  # Multi-line docstring summary should start at the first line (conflicts with our custom schema)
+    "D213",  # Multi-line docstring summary second line (conflicts with our custom schema)
+    "D400",  # First line should end with a period (our schema uses different format)
+    "D401",  # First line should be in imperative mood (our schema uses "##Function purpose:")
+    "D413",  # Missing blank line after last section (our schema has different structure)
+    "D415",  # First line should end with punctuation (our schema uses different format)
+    "E501",  # Line too long (accepted for prompt files with long strings)
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
