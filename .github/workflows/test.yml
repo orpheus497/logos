@@ -1,0 +1,131 @@
+# GitHub Actions workflow for automated testing
+# Runs tests, linting, and coverage reporting on push and pull requests
+# Ensures code quality and test coverage before merging code
+
+name: Test Suite
+
+# Run on push to main, master, and fix branches, and on pull requests
+on:
+  push:
+    branches: [main, master, fix]
+  pull_request:
+    branches: [main, master, fix]
+
+# Define jobs to run in parallel
+jobs:
+  # Run test suite with coverage
+  test:
+    name: Test Suite (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    
+    # Test on multiple Python versions
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        fail-fast: false
+    
+    # Setup Python environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Run pip-audit (dependency vulnerability scan)
+        run: |
+          pip install pip-audit
+          pip-audit --format=json --output=audit.json || true
+          pip-audit --format=text
+        continue-on-error: true
+      
+      - name: Upload security audit report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-audit-report
+          path: audit.json
+          retention-days: 30
+      
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --cov=logos --cov=logos.core --cov=logos.cli \
+            --cov-report=xml --cov-report=term --cov-report=html \
+            --cov-report=term-missing
+      
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: matrix.python-version == '3.11'
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+      
+      - name: Upload HTML coverage report
+        uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.11'
+        with:
+          name: coverage-report
+          path: htmlcov/
+          retention-days: 30
+
+  # Run linting checks
+  lint:
+    name: Linting (Ruff)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Run Ruff linting
+        run: |
+          ruff check logos/ tests/
+      
+      - name: Run Ruff formatting check
+        run: |
+          ruff format --check logos/ tests/
+
+  # Verify code compiles
+  syntax:
+    name: Syntax Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Compile all Python files
+        run: |
+          find logos tests -name "*.py" -exec python -m py_compile {} \;

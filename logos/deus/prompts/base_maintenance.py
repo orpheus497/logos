@@ -44,7 +44,7 @@ You must enforce the following commenting schema in **ALL** configuration files 
 * `##Perf:` (For performance optimizations - include benchmark ID)
 * `##Update:` (For feature extensions)
 * `##Rollback:` (Exact command to revert)
-* `##Last modified:` (YYYY-MM-DD)
+* `##Last modified:` (YYYY-MM-DDTHH:MM:SSZ - ISO 8601 format, time required - NON-NEGOTIABLE)
 * `##Maintained by:` (Agent name)
 
 ---

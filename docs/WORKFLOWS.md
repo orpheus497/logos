@@ -58,8 +58,8 @@ When development requires system administration or vice versa:
 
 ## Workflow Documentation
 
-All workflows are documented in:
-- **Daedalus:** `.devdocs/` directory
-- **DEUS:** `~/.sysdocs/` directory
+When LOGOS agents work on your projects, they document workflows in:
+- **Daedalus domain:** `.devdocs/` directory (created in your project directory by agents)
+- **DEUS domain:** `~/.sysdocs/` directory (created in your home directory by agents)
 
 See **[CONSTITUTION.md](../CONSTITUTION.md)** for complete workflow specifications and procedures.

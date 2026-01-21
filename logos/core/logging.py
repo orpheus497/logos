@@ -44,27 +44,33 @@ def _get_log_level() -> int:
     return getattr(logging, level_name, logging.WARNING)
 
 
+##Function purpose: Get log file path from environment variable
 def _get_log_file() -> str | None:
     """
-    ##Function purpose: Get log file path from environment variable.
+    Get log file path from environment variable.
 
-    ##Action purpose: Reads LOGOS_LOG_FILE environment variable.
+    Reads LOGOS_LOG_FILE environment variable.
 
     Returns:
         Log file path string or None if not configured
     """
+    ##Action purpose: Reads LOGOS_LOG_FILE environment variable
     return os.environ.get("LOGOS_LOG_FILE")
 
 
+##Function purpose: Configure the root logger for LOGOS
 def configure_logging() -> None:
     """
-    ##Function purpose: Configure the root logger for LOGOS.
+    Configure the root logger for LOGOS.
 
-    ##Step purpose: Sets up logging with stderr handler and optional file handler.
+    Sets up logging with stderr handler and optional file handler. Called
+    automatically when the module is imported, but can be called again to
+    reconfigure if environment variables change.
 
-    ##Action purpose: Called automatically when the module is imported, but can be called
-    again to reconfigure if environment variables change.
     """
+    ##Step purpose: Sets up logging with stderr handler and optional file handler
+    ##Action purpose: Called automatically when the module is imported, but can be called
+    ##Step purpose: again to reconfigure if environment variables change
     ##Action purpose: Get root logger for logos namespace
     root_logger = logging.getLogger("logos")
 

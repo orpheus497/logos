@@ -119,9 +119,18 @@ install_freebsd_deps() {
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             if command_exists pkg; then
-                sudo pkg install -y xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                print_warning "The following command will be executed with sudo (administrator privileges):"
+                print_info "  sudo pkg install -y xclip"
+                print_warning "This requires administrator privileges to install system packages."
+                read -p "Continue with installation? (y/N): " -n 1 -r
+                echo
+                if [[ $REPLY =~ ^[Yy]$ ]]; then
+                    sudo pkg install -y xclip || {
+                        print_warning "Failed to install xclip. You can install it manually later."
+                    }
+                else
+                    print_info "Installation cancelled. You can install xclip manually later."
+                fi
             else
                 print_warning "pkg command not found. Please install xclip manually: pkg install xclip"
             fi
@@ -170,26 +179,51 @@ install_linux_deps() {
         read -p "Install xclip now? (y/N): " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
+            ##Action purpose: Determine which package manager command will be used
+            SUDO_CMD=""
             if command_exists apt-get; then
-                sudo apt-get install -y xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                SUDO_CMD="sudo apt-get install -y xclip"
             elif command_exists yum; then
-                sudo yum install -y xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                SUDO_CMD="sudo yum install -y xclip"
             elif command_exists dnf; then
-                sudo dnf install -y xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                SUDO_CMD="sudo dnf install -y xclip"
             elif command_exists pacman; then
-                sudo pacman -S --noconfirm xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                SUDO_CMD="sudo pacman -S --noconfirm xclip"
             elif command_exists zypper; then
-                sudo zypper install -y xclip || {
-                    print_warning "Failed to install xclip. You can install it manually later."
-                }
+                SUDO_CMD="sudo zypper install -y xclip"
+            fi
+            
+            if [ -n "$SUDO_CMD" ]; then
+                print_warning "The following command will be executed with sudo (administrator privileges):"
+                print_info "  $SUDO_CMD"
+                print_warning "This requires administrator privileges to install system packages."
+                read -p "Continue with installation? (y/N): " -n 1 -r
+                echo
+                if [[ $REPLY =~ ^[Yy]$ ]]; then
+                    if command_exists apt-get; then
+                        sudo apt-get install -y xclip || {
+                            print_warning "Failed to install xclip. You can install it manually later."
+                        }
+                    elif command_exists yum; then
+                        sudo yum install -y xclip || {
+                            print_warning "Failed to install xclip. You can install it manually later."
+                        }
+                    elif command_exists dnf; then
+                        sudo dnf install -y xclip || {
+                            print_warning "Failed to install xclip. You can install it manually later."
+                        }
+                    elif command_exists pacman; then
+                        sudo pacman -S --noconfirm xclip || {
+                            print_warning "Failed to install xclip. You can install it manually later."
+                        }
+                    elif command_exists zypper; then
+                        sudo zypper install -y xclip || {
+                            print_warning "Failed to install xclip. You can install it manually later."
+                        }
+                    fi
+                else
+                    print_info "Installation cancelled. You can install xclip manually later."
+                fi
             else
                 print_warning "Package manager not detected. Please install xclip manually."
             fi

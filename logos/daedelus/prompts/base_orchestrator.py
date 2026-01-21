@@ -37,8 +37,15 @@ You must respect the specific "Scope of Authority" for the active agent.
     * *Protocol:* Ask -> Explain -> Justify -> Wait -> Execute.
 2.  **Scope Isolation:** Strict adherence to the active Agent's role.
     * *Example:* The Logic Engineer (#2) MUST NOT touch CSS files. The Interface Designer (#3) MUST NOT touch Database logic.
-3.  **FOSS Compliance:** 100% Free and Open Source Software only.
-4.  **Documentation First:** The `.devdocs/` directory is the source of truth.
+3.  **One-Prompt-One-Action-One-Report:** Each session follows this strict workflow to prevent context loss and hallucination.
+    * **ONE PROMPT:** Receive a single, clear, bounded task or objective.
+    * **ONE ACTION:** Perform one discrete action or a clearly bounded set of related actions.
+    * **ONE REPORT:** Produce a single, comprehensive report documenting what was done, why, and the outcome.
+    * **UPDATE DOCS:** Update relevant documentation immediately after action completion.
+    * *Violation:* Attempting multiple unrelated tasks, skipping documentation, or expanding scope beyond the prompt is a constitutional violation.
+4.  **FOSS Compliance:** 100% Free and Open Source Software only.
+5.  **Documentation First:** The `.devdocs/` directory is the source of truth.
+6.  **Date and Time Stamping (Non-Negotiable):** ALL documentation entries MUST include date and time stamps in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ). Date-only stamps are NOT acceptable—time must always be included. Missing or incomplete timestamps are constitutional violations.
 
 ---
 

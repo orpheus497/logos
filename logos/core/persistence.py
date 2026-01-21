@@ -14,15 +14,13 @@ from typing import Any
 import yaml
 
 
-##Function purpose: Read YAML configuration file
+##Function purpose: Load YAML configuration from file
 def read_config(config_path: Path) -> dict[str, Any] | None:
     """
-    ##Function purpose: Loads YAML configuration from file.
+    Loads YAML configuration from file.
 
-    ##Action purpose: Reads and parses YAML file, returning dictionary of config data.
-
-    ##Condition purpose: If file doesn't exist, return None.
-    ##Error purpose: Catch YAML parsing errors and return None.
+    Reads and parses YAML file, returning dictionary of config data. If file
+    doesn't exist, returns None. Catches YAML parsing errors and returns None.
 
     Args:
         config_path: Path to YAML configuration file
@@ -30,6 +28,7 @@ def read_config(config_path: Path) -> dict[str, Any] | None:
     Returns:
         Dictionary of configuration data, or None if file doesn't exist or is invalid
     """
+    ##Action purpose: Reads and parses YAML file, returning dictionary of config data
     ##Condition purpose: Check if config file exists
     if not config_path.exists():
         ##Action purpose: Return None if file doesn't exist
@@ -39,23 +38,24 @@ def read_config(config_path: Path) -> dict[str, Any] | None:
         ##Action purpose: Read and parse YAML file
         with config_path.open("r", encoding="utf-8") as f:
             ##Action purpose: Load YAML content as dictionary
-            return yaml.safe_load(f) or {}
+            ##Fix: Return None for empty file instead of empty dict to preserve error distinction
+            data = yaml.safe_load(f)
+            return data if data is not None else None
     except (OSError, yaml.YAMLError):
         ##Error purpose: Handle YAML parsing or file I/O errors
         ##Action purpose: Return None on error (caller can handle)
         return None
 
 
-##Function purpose: Write YAML configuration file
+##Function purpose: Write dictionary data to YAML configuration file
 def write_config(config_path: Path, data: dict[str, Any]) -> bool:
     """
-    ##Function purpose: Writes dictionary data to YAML configuration file.
+    Writes dictionary data to YAML configuration file.
 
-    ##Action purpose: Serializes dictionary to YAML format and writes to file,
-    creating parent directories if needed. Sets secure file permissions to prevent
-    unauthorized access (0o600 for files, 0o700 for directories).
-
-    ##Error purpose: Catch file I/O errors and return False on failure.
+    Serializes dictionary to YAML format and writes to file, creating parent
+    directories if needed. Sets secure file permissions to prevent unauthorized
+    access (0o600 for files, 0o700 for directories). Catches file I/O errors and
+    returns False on failure.
 
     Args:
         config_path: Path to YAML configuration file
@@ -64,6 +64,8 @@ def write_config(config_path: Path, data: dict[str, Any]) -> bool:
     Returns:
         True if write succeeded, False otherwise
     """
+    ##Action purpose: Serializes dictionary to YAML format and writes to file,
+    ##Step purpose: creating parent directories if needed, setting secure permissions
     try:
         ##Action purpose: Create parent directories if they don't exist
         config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -89,9 +91,9 @@ def write_config(config_path: Path, data: dict[str, Any]) -> bool:
 ##Function purpose: Get default configuration directory path
 def get_config_dir() -> Path:
     """
-    ##Function purpose: Returns default configuration directory path.
+    Returns default configuration directory path.
 
-    ##Action purpose: Returns ~/.logos/ directory path for storing configuration files.
+    Returns ~/.logos/ directory path for storing configuration files.
 
     Returns:
         Path object pointing to ~/.logos/ directory
@@ -101,14 +103,16 @@ def get_config_dir() -> Path:
 
 
 ##Function purpose: Get identity configuration file path
+##Function purpose: Return path to identity configuration file
 def get_identity_path() -> Path:
     """
-    ##Function purpose: Returns path to identity configuration file.
+    Returns path to identity configuration file.
 
-    ##Action purpose: Returns ~/.logos/identity.yaml path for identity persistence.
+    Returns ~/.logos/identity.yaml path for identity persistence.
 
     Returns:
         Path object pointing to identity.yaml file
     """
+    ##Action purpose: Returns ~/.logos/identity.yaml path for identity persistence
     ##Action purpose: Return identity.yaml in config directory
     return get_config_dir() / "identity.yaml"

@@ -43,7 +43,30 @@ When you identify a need outside your scope:
 4. ESCALATE - Inform the human administrator
 5. WAIT - For the appropriate agent to be activated
 
-### Directive 3: BSD Compliance
+### Directive 3: One-Prompt-One-Action-One-Report Workflow
+**CONSTITUTIONAL REQUIREMENT:** Each agent session must follow this strict workflow to prevent context loss, hallucination, and confusion.
+
+**The Workflow:**
+1. **ONE PROMPT:** Receive a single, clear, bounded task or objective. Prompt must be specific enough to be completable in one session.
+2. **ONE ACTION:** Perform one discrete action or a clearly bounded set of related actions directly related to the prompt objective.
+3. **ONE REPORT:** Produce a single, comprehensive report documenting:
+   - What was done (the action taken)
+   - Why it was done (the rationale)
+   - The outcome (success, failure, partial completion)
+   - Any issues encountered
+   - Next steps (if any)
+4. **UPDATE DOCS:** Update relevant documentation immediately after action completion in your agent-specific folder.
+
+**Workflow Violations (Constitutional Violations):**
+- Attempting multiple unrelated tasks in one session
+- Skipping documentation updates
+- Expanding scope beyond the prompt
+- Mixing multiple objectives in one report
+- Continuing with new tasks after completion
+
+**Enforcement:** Workflow violations require immediate remediation. Each session must be independent and self-contained.
+
+### Directive 4: BSD Compliance
 The system operates under FreeBSD philosophy:
 1. **Base System Preference:** FreeBSD base system tools over third-party alternatives (sysrc vs manual edit).
 2. **Native Over Compatibility:** Native FreeBSD solutions over Linux compatibility layers.
@@ -51,17 +74,31 @@ The system operates under FreeBSD philosophy:
 4. **POSIX Compliance:** POSIX sh compatible scripts.
 5. **Handbook Authority:** FreeBSD Handbook is the authoritative reference.
 
-### Directive 4: Documentation First
+### Directive 5: Documentation First
 The `~/.sysdocs/` directory is the source of truth for system state.
 - **Before ANY modification:** Document current state, proposed change, and rollback.
 - **After ANY modification:** Update agent docs, session log, and verify reality matches docs.
 
-### Directive 5: Surgical Precision
+**Date and Time Stamping (Non-Negotiable):**
+- **ALL documentation entries MUST include date and time stamps in ISO 8601 format**
+- Format: `YYYY-MM-DDTHH:MM:SSZ` (e.g., `2026-01-20T14:30:00Z`)
+- Date-only stamps are **NOT acceptable**—time must always be included
+- Timestamps must be accurate to the second and in UTC (Z suffix)
+- This applies to all documentation files, session logs, decision records, audit reports, and configuration file headers
+- **Violation:** Missing or incomplete timestamps are constitutional violations
+
+**Documentation Standards:**
+- **Docstrings (Who/What):** Describe identity and purpose of code elements (functions, classes, modules)
+- **Structured Comments (Where/When/Why/How):** Describe context, timing, rationale, and implementation using `##` prefixes
+- All code must include both docstrings and structured comments where appropriate
+- All documentation must include date and time stamps in ISO 8601 format
+
+### Directive 6: Surgical Precision
 Minimum viable change is the maximum acceptable change.
 - Prefer sysctl tunable over kernel rebuild.
 - Prefer service restart over reboot.
 
-### Directive 6: Perfectionist Standards
+### Directive 7: Perfectionist Standards
 "It seems to work" is not acceptable. Verification is mandatory. All changes must be verified, documented, reversible, minimal, correct, and secure.
 
 ---
@@ -125,7 +162,7 @@ You must enforce the following commenting schema in **ALL** configuration files 
 |--------|---------------|
 | `##Script function and purpose: ` | Top of every script or config file |
 | `##Maintained by:` | Top of file, after purpose (Agent Name) |
-| `##Last modified: ` | Top of file (YYYY-MM-DD) |
+| `##Last modified: ` | Top of file (YYYY-MM-DDTHH:MM:SSZ - ISO 8601 format, time required) |
 | `##Tunable purpose:` | Before sysctl.conf or loader.conf entries |
 | `##Driver purpose:` | Before kld_list entries |
 | `##Service purpose:` | Before rc.conf service entries |

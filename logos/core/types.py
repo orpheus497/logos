@@ -1,7 +1,8 @@
 """
 ##Script function and purpose: Architectural type definitions.
 
-Provides type-safe enums and dataclasses for mode values, agent groups, and UI contexts.
+Provides type-safe enums and dataclasses for mode values, agent groups, UI contexts,
+and error handling patterns.
 Phase 3 architectural improvements.
 
 ##Action purpose: Replaces primitive strings and tuples with type-safe structures
@@ -10,8 +11,13 @@ to improve maintainability and reduce errors.
 
 from dataclasses import dataclass
 from enum import Enum
+from typing import Generic, TypeVar
 
 from logos.core.agent import Agent
+
+##Action purpose: Type variables for Result type generics
+T = TypeVar("T")  # Success value type
+E = TypeVar("E", bound=str)  # Error type (typically str)
 
 
 class Mode(str, Enum):
@@ -68,3 +74,42 @@ class WelcomeScreenContext:
     os_info: str | None = None
     last_session: str | None = None
     faction_prompt_counts: dict[str, int] | None = None
+
+
+##Class purpose: Success result container for Result type pattern
+@dataclass(frozen=True)
+class Ok(Generic[T]):
+    """
+    ##Class purpose: Success result container.
+
+    Represents a successful operation result. Used in Result type pattern
+    for explicit error handling with type safety.
+
+    ##Action purpose: Provides type-safe container for successful operation results,
+    replacing None returns and tuple-based success/failure patterns.
+    """
+
+    value: T  # The successful result value
+
+
+##Class purpose: Error result container for Result type pattern
+@dataclass(frozen=True)
+class Err(Generic[E]):
+    """
+    ##Class purpose: Error result container.
+
+    Represents a failed operation result. Used in Result type pattern
+    for explicit error handling with type safety.
+
+    ##Action purpose: Provides type-safe container for error results,
+    preserving error messages and context in a structured way.
+    """
+
+    error: E  # The error message or error object
+
+
+##Action purpose: Result type alias for explicit error handling
+##Note: Result type pattern provides better error handling than None returns or tuples
+##Usage: Result[T, E] where T is success type, E is error type (default: str)
+##Fix: Use modern Python 3.10+ union syntax instead of Union type
+Result = Ok[T] | Err[E]

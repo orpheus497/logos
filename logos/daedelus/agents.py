@@ -1,7 +1,7 @@
 """
 ##Script function and purpose: Daedelus agent definitions.
 
-22 agent definitions for software development workflows.
+24 agent definitions for software development workflows.
 """
 
 from logos.core.agent import Agent

@@ -69,17 +69,18 @@ class UIColors:
     INFO: str = Colors.BLUE  # Information
     HIGHLIGHT: str = Colors.MAGENTA  # Highlights
 
-    # Group colors (matching agent groups)
-    GROUP_A: str = Colors.GREEN  # Builders/Engineers
-    GROUP_B: str = Colors.BLUE  # Guardians/Auditors
-    GROUP_C: str = Colors.YELLOW  # Maintainers
-    GROUP_D: str = Colors.MAGENTA  # Workers/Specialists
-    GROUP_E: str = Colors.RED  # Operators
+    # Group colors (matching agent groups and their roles)
+    GROUP_A: str = Colors.GREEN  # Builders/Engineers - Growth, creation, building
+    GROUP_B: str = Colors.BLUE  # Guardians/Auditors - Trust, security, stability
+    GROUP_C: str = Colors.YELLOW  # Maintainers - Caution, maintenance, attention
+    GROUP_D: str = Colors.MAGENTA  # Workers/Specialists - Specialty, distinct, transformation
+    GROUP_E: str = Colors.CYAN  # Operators - Primary orchestration, coordination, leadership
 
     # Special colors
     GOLD: str = Colors.YELLOW  # Gold color for chosen faction (using YELLOW)
 
 
+##Function purpose: Create a beautiful box frame with optional title
 def create_box(
     width: int,
     title: str | None = None,
@@ -87,10 +88,10 @@ def create_box(
     title_color: str = UIColors.BOLD + UIColors.PRIMARY,
 ) -> list[str]:
     """
-    ##Function purpose: Create a beautiful box frame with optional title.
+    Create a beautiful box frame with optional title.
 
-    ##Action purpose: Generates a list of strings representing a box frame
-    using Unicode box-drawing characters.
+    Generates a list of strings representing a box frame using Unicode
+    box-drawing characters.
 
     Args:
         width: Width of the box (excluding border characters)
@@ -127,13 +128,14 @@ def create_box(
     return [top_border, bottom_border]
 
 
+##Function purpose: Create a horizontal separator line
 def create_separator(
     width: int,
     char: str = BoxChars.HORIZONTAL,
     color: str = UIColors.PRIMARY,
 ) -> str:
     """
-    ##Function purpose: Create a horizontal separator line.
+    Create a horizontal separator line.
 
     Args:
         width: Width of separator
@@ -146,6 +148,7 @@ def create_separator(
     return f"{color}{char * width}{Colors.RESET}"
 
 
+##Function purpose: Create a content line within a box frame
 def create_content_line(
     text: str,
     width: int,
@@ -154,9 +157,9 @@ def create_content_line(
     color: str = Colors.WHITE,
 ) -> str:
     """
-    ##Function purpose: Create a content line within a box frame.
+    Create a content line within a box frame.
 
-    ##Action purpose: Formats text with padding and alignment for box content.
+    Formats text with padding and alignment for box content.
 
     Args:
         text: Text content
@@ -168,6 +171,7 @@ def create_content_line(
     Returns:
         Formatted line string
     """
+    ##Action purpose: Formats text with padding and alignment for box content
     box = BoxChars
     reset = Colors.RESET
     content_width = width - (padding * 2)
@@ -192,6 +196,7 @@ def create_content_line(
     return f"{box.VERTICAL}{' ' * padding}{color}{formatted}{reset}{' ' * padding}{box.VERTICAL}"
 
 
+##Function purpose: Print a complete box with content
 def print_box(
     width: int,
     lines: list[str],
@@ -200,9 +205,9 @@ def print_box(
     title_color: str = UIColors.BOLD + UIColors.PRIMARY,
 ) -> None:
     """
-    ##Function purpose: Print a complete box with content.
+    Print a complete box with content.
 
-    ##Action purpose: Convenience function to print a box frame with content lines.
+    Convenience function to print a box frame with content lines.
 
     Args:
         width: Box width
@@ -211,6 +216,7 @@ def print_box(
         border_color: Border color
         title_color: Title color
     """
+    ##Action purpose: Convenience function to print a box frame with content lines
     ##Step purpose: Print top border
     top, bottom = create_box(width, title, border_color, title_color)
     print(top)
@@ -223,17 +229,18 @@ def print_box(
     print(bottom)
 
 
+##Function purpose: Print a beautiful header with separator
 def print_header(
     text: str,
-    width: int = 70,
+    width: int = 100,
     char: str = "═",
     color: str = UIColors.PRIMARY,
     bold: bool = True,
 ) -> None:
     """
-    ##Function purpose: Print a beautiful header with separator.
+    Print a beautiful header with separator.
 
-    ##Action purpose: Creates a centered header with decorative separators.
+    Creates a centered header with decorative separators.
 
     Args:
         text: Header text
@@ -242,6 +249,7 @@ def print_header(
         color: Color code
         bold: Whether to make text bold
     """
+    ##Action purpose: Creates a centered header with decorative separators
     reset = Colors.RESET
     bold_code = Colors.BOLD if bold else ""
 
@@ -258,6 +266,7 @@ def print_header(
     print(f"{color}{sep}{reset}")
 
 
+##Function purpose: Print a formatted menu item
 def print_menu_item(
     key: str,
     label: str,
@@ -266,9 +275,9 @@ def print_menu_item(
     key_color: str = UIColors.HIGHLIGHT,
 ) -> None:
     """
-    ##Function purpose: Print a formatted menu item.
+    Print a formatted menu item.
 
-    ##Action purpose: Creates a consistent menu item format with key and label.
+    Creates a consistent menu item format with key and label.
 
     Args:
         key: Menu key/option (e.g., "A1", "D", "Q")
@@ -277,6 +286,7 @@ def print_menu_item(
         color: Label color
         key_color: Key color
     """
+    ##Action purpose: Creates a consistent menu item format with key and label
     reset = Colors.RESET
 
     ##Step purpose: Format menu item
@@ -288,9 +298,10 @@ def print_menu_item(
         print(f"  {key_color}[{key}]{reset} {color}{label}{reset}")
 
 
+##Function purpose: Print a success message with icon
 def print_success(message: str) -> None:
     """
-    ##Function purpose: Print a success message with icon.
+    Print a success message with icon.
 
     Args:
         message: Success message text
@@ -298,9 +309,10 @@ def print_success(message: str) -> None:
     print(f"{UIColors.SUCCESS}✔ {message}{Colors.RESET}")
 
 
+##Function purpose: Print an error message with icon
 def print_error(message: str) -> None:
     """
-    ##Function purpose: Print an error message with icon.
+    Print an error message with icon.
 
     Args:
         message: Error message text
@@ -308,9 +320,10 @@ def print_error(message: str) -> None:
     print(f"{UIColors.ERROR}✗ {message}{Colors.RESET}")
 
 
+##Function purpose: Print a warning message with icon
 def print_warning(message: str) -> None:
     """
-    ##Function purpose: Print a warning message with icon.
+    Print a warning message with icon.
 
     Args:
         message: Warning message text
@@ -318,9 +331,10 @@ def print_warning(message: str) -> None:
     print(f"{UIColors.WARNING}⚠ {message}{Colors.RESET}")
 
 
+##Function purpose: Print an info message with icon
 def print_info(message: str) -> None:
     """
-    ##Function purpose: Print an info message with icon.
+    Print an info message with icon.
 
     Args:
         message: Info message text

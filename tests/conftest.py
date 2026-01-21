@@ -4,9 +4,10 @@
 Shared test fixtures and configuration for the LOGOS test suite.
 """
 
-import pytest
 import tempfile
 from pathlib import Path
+
+import pytest
 
 
 ##Function purpose: Temporary directory fixture for file operations
@@ -14,9 +15,9 @@ from pathlib import Path
 def temp_dir():
     """
     ##Function purpose: Provides temporary directory for file operation tests.
-    
+
     ##Action purpose: Creates temporary directory and cleans up after test.
-    
+
     Yields:
         Path object pointing to temporary directory
     """
@@ -31,19 +32,19 @@ def temp_dir():
 def temp_file():
     """
     ##Function purpose: Provides temporary file for testing.
-    
+
     ##Action purpose: Creates temporary file and cleans up after test.
-    
+
     Yields:
         Path object pointing to temporary file
     """
     ##Action purpose: Create temporary file
     with tempfile.NamedTemporaryFile(delete=False) as f:
         temp_path = Path(f.name)
-    
+
     ##Action purpose: Yield path
     yield temp_path
-    
+
     ##Action purpose: Cleanup
     if temp_path.exists():
         temp_path.unlink()

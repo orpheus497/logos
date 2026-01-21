@@ -73,8 +73,10 @@ class UILayout:
     """
 
     ##Action purpose: Faction logo display dimensions
-    LOGO_WIDTH: Final[int] = 15  # Width of each faction logo (standardized)
+    LOGO_WIDTH: Final[int] = 20  # Width of each faction logo (standardized, increased for better visibility)
     LOGO_SPACING: Final[int] = 3  # Space between logos in display
+    LOGO_HEIGHT: Final[int] = 6  # Standardized logo height (all logos are 6 lines tall)
 
     ##Action purpose: Standard display width for CLI screens
-    DISPLAY_WIDTH: Final[int] = 70  # Standard width for CLI display screens
+    DISPLAY_WIDTH: Final[int] = 100  # Standard width for CLI display screens (increased to prevent prompt cutoff)
+    PROMPT_PADDING: Final[int] = 4  # Padding for prompt text wrapping (width - PROMPT_PADDING)

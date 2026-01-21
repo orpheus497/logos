@@ -17,5 +17,6 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except KeyboardInterrupt:
+        ##Error purpose: Handle Ctrl+C at module level (user interruption)
         print("\nExiting LOGOS...")
         sys.exit(0)

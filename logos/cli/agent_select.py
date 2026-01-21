@@ -17,6 +17,7 @@ from logos.core.identity import SystemIdentity, save_identity, update_session_tr
 from logos.core.prompts import build_complete_prompt
 from logos.core.terminal import clear_screen
 from logos.core.types import AgentGroup
+from logos.core.ui import UIColors
 
 
 ##Function purpose: Get agent groups for Daedelus mode
@@ -77,7 +78,7 @@ def get_daedelus_groups() -> list[AgentGroup]:
             "THE OPERATORS",
             "Review Systems",
             "Comprehensive review and system orchestration",
-            Colors.RED,
+            UIColors.GROUP_E,  # CYAN - Primary orchestration, coordination, leadership
             GROUP_E_OPERATORS,
         ),
     ]
@@ -219,18 +220,18 @@ def select_agent(mode: str) -> str | None:
                 ##Action purpose: Invalid selection, prompt again
                 print(f"Invalid selection '{choice}'. Please try again or enter '0' to go back.")
         except (EOFError, KeyboardInterrupt):
-            ##Action purpose: Handle Ctrl+C or EOF
+            ##Error purpose: Handle Ctrl+C or EOF (user interruption)
             return None
 
 
-##Function purpose: Handle agent selection and prompt generation
+##Function purpose: Handle agent selection, prompt building, and clipboard operations
 def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) -> tuple[bool, SystemIdentity]:
     """
-    ##Function purpose: Handles agent selection, prompt building, and clipboard operations.
+    Handles agent selection, prompt building, and clipboard operations.
 
-    ##Action purpose: Retrieves agent, builds complete prompt with identity and faction,
-    copies to clipboard, and displays result to user. Returns updated identity to ensure
-    state synchronization in the calling loop.
+    Retrieves agent, builds complete prompt with identity and faction,
+    copies to clipboard, and displays result to user. Returns updated identity
+    to ensure state synchronization in the calling loop.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -241,6 +242,8 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
         Tuple of (success: bool, updated_identity: SystemIdentity)
         On failure, returns (False, original identity)
     """
+    ##Action purpose: Retrieves agent, builds complete prompt with identity and faction,
+    ##Step purpose: copies to clipboard, and displays result to user
     ##Action purpose: Get agent instance
     agent = get_agent_for_mode(mode, agent_key)
     ##Condition purpose: Check if agent found
@@ -280,13 +283,13 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
     return (True, updated_identity)
 
 
-##Function purpose: Main agent selection function
+##Function purpose: Run the agent selection loop for specified mode
 def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
     """
-    ##Function purpose: Runs the agent selection loop for specified mode.
+    Runs the agent selection loop for specified mode.
 
-    ##Action purpose: Orchestrates agent menu display, agent selection, prompt
-    generation, and clipboard operations in a loop until user exits.
+    Orchestrates agent menu display, agent selection, prompt generation,
+    and clipboard operations in a loop until user exits.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -295,6 +298,8 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
     Returns:
         Exit code (0 to quit, 1 to return to mode selection)
     """
+    ##Action purpose: Orchestrates agent menu display, agent selection, prompt
+    ##Step purpose: generation, and clipboard operations in a loop until user exits
     ##Loop purpose: Agent selection loop until user exits
     while True:
         try:
@@ -336,19 +341,30 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
             try:
                 input("\nPress Enter to continue...")
             except (EOFError, KeyboardInterrupt):
-                ##Action purpose: Handle Ctrl+C during wait
+                ##Error purpose: Handle Ctrl+C during wait (user interruption)
                 return 1
 
         except KeyboardInterrupt:
-            ##Action purpose: Handle Ctrl+C gracefully
+            ##Error purpose: Handle Ctrl+C gracefully (user interruption)
             print("\n\nReturning to mode selection...")
             return 1
+        except (OSError, ValueError, KeyError) as e:
+            ##Error purpose: Handle specific expected errors (file I/O, validation, key lookup)
+            display_error("Error in agent selection", str(e))
+            ##Action purpose: Wait for user acknowledgment
+            try:
+                input("\nPress Enter to continue...")
+            except (EOFError, KeyboardInterrupt):
+                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
+                return 1
+            continue
         except Exception as e:
-            ##Action purpose: Handle unexpected errors
+            ##Error purpose: Handle unexpected errors (graceful CLI degradation)
             display_error("Unexpected error in agent selection", str(e))
             ##Action purpose: Wait for user acknowledgment
             try:
                 input("\nPress Enter to continue...")
             except (EOFError, KeyboardInterrupt):
+                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
                 return 1
             continue

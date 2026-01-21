@@ -9,6 +9,7 @@ detection, identity loading, mode selection, and agent selection with full integ
 of identity, faction, and prompt composition systems.
 """
 
+import signal
 import sys
 
 from logos.cli.first_run import run_first_run_wizard
@@ -18,12 +19,24 @@ from logos.core.identity import get_identity_path, load_identity
 from logos.core.terminal import clear_screen
 
 
+##Function purpose: Signal handler for SIGINT (Ctrl+C) to allow graceful exit
+def _signal_handler(signum, frame):
+    """
+    Handles SIGINT signal (Ctrl+C) gracefully.
+
+    Raises KeyboardInterrupt to allow proper cleanup and graceful exit
+    handling throughout the application.
+    """
+    ##Action purpose: Raise KeyboardInterrupt for consistent handling
+    raise KeyboardInterrupt("Interrupted by user (Ctrl+C)")
+
+
 ##Function purpose: Check if this is first run by checking for identity file
 def is_first_run() -> bool:
     """
-    ##Function purpose: Determines if this is the user's first run of LOGOS.
+    Determines if this is the user's first run of LOGOS.
 
-    ##Action purpose: Checks for existence of identity configuration file to determine
+    Checks for existence of identity configuration file to determine
     if user has completed first-run wizard.
 
     Returns:
@@ -35,17 +48,20 @@ def is_first_run() -> bool:
     return not identity_path.exists()
 
 
-##Function purpose: Main CLI entry point
+##Function purpose: Main CLI entry point that orchestrates the LOGOS workflow
 def main() -> int:
     """
-    ##Function purpose: Main CLI entry point that orchestrates the LOGOS workflow.
+    Main CLI entry point that orchestrates the LOGOS workflow.
 
-    ##Action purpose: Routes user to first-run wizard or mode selection based on
-    whether identity exists, handling all errors gracefully.
+    Routes user to first-run wizard or mode selection based on whether identity
+    exists, handling all errors gracefully.
 
     Returns:
         Exit code (0 for success, non-zero for failure)
     """
+    ##Action purpose: Register signal handler for Ctrl+C (SIGINT)
+    signal.signal(signal.SIGINT, _signal_handler)
+
     try:
         ##Action purpose: Clear screen for clean start
         clear_screen()
@@ -76,19 +92,30 @@ def main() -> int:
         return run_mode_selection(identity)
 
     except KeyboardInterrupt:
-        ##Action purpose: Handle Ctrl+C gracefully
+        ##Error purpose: Handle Ctrl+C gracefully (user interruption)
         print("\n\nExiting LOGOS...")
+        ##Action purpose: Restore default signal handler before exit
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
         return 0
+    except (OSError, ValueError, FileNotFoundError) as e:
+        ##Error purpose: Handle specific expected errors (file I/O, validation, missing files)
+        display_error("Error occurred", str(e))
+        return 1
     except Exception as e:
-        ##Action purpose: Handle unexpected errors
+        ##Error purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error occurred", str(e))
         return 1
 
 
 ##Function purpose: Entry point when run as module
 if __name__ == "__main__":
+    ##Action purpose: Register signal handler for Ctrl+C at module level
+    signal.signal(signal.SIGINT, _signal_handler)
     try:
         sys.exit(main())
     except KeyboardInterrupt:
+        ##Error purpose: Handle Ctrl+C at module level (user interruption)
         print("\nExiting LOGOS...")
+        ##Action purpose: Restore default signal handler before exit
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
         sys.exit(0)
