@@ -103,18 +103,17 @@ def select_faction_for_change() -> str | None:
                     "Invalid selection. Please enter 'r' (Revanchist), 'd' (Daedalus), 'o' (Orphic), 't' (Technomancer), 'u' (Deus), or 'q' (Quit)"
                 )
         except (EOFError, KeyboardInterrupt):
-            ##Action purpose: Handle Ctrl+C or EOF
+            ##Error purpose: Handle Ctrl+C or EOF (user interruption)
             return None
 
 
-##Function purpose: Change user's faction
+##Function purpose: Handle faction change operation
 def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
     """
-    ##Function purpose: Handles faction change operation.
+    Handles faction change operation.
 
-    ##Action purpose: Displays faction selection menu, gets user selection,
-    updates identity faction field, saves to persistent storage, and returns
-    updated identity.
+    Displays faction selection menu, gets user selection, updates identity
+    faction field, saves to persistent storage, and returns updated identity.
 
     Args:
         identity: Current SystemIdentity instance
@@ -122,6 +121,8 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
     Returns:
         Updated SystemIdentity instance if change successful, None if cancelled or failed
     """
+    ##Action purpose: Displays faction selection menu, gets user selection,
+    ##Step purpose: updates identity faction field, saves to persistent storage
     try:
         ##Action purpose: Clear screen for clean display
         clear_screen()
@@ -147,7 +148,7 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
                 input("\nPress Enter to continue...")
             except (EOFError, KeyboardInterrupt):
                 pass
-            ##Action purpose: Return current identity unchanged
+            ##Action purpose: Return current identity unchanged (no faction change)
             return identity
 
         ##Action purpose: Create new identity with updated faction (immutable pattern)
@@ -204,20 +205,22 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
         ##Action purpose: Handle Ctrl+C gracefully
         return None
     except (OSError, ValueError) as e:
-        ##Action purpose: Handle specific expected errors (file I/O, validation)
+        ##Error purpose: Handle specific expected errors (file I/O, validation)
         display_error("Error in faction change", str(e))
         try:
             input("\nPress Enter to continue...")
         except (EOFError, KeyboardInterrupt):
+            ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
             pass
         ##Action purpose: Return None on error
         return None
     except Exception as e:
-        ##Action purpose: Handle unexpected errors (graceful CLI degradation)
+        ##Error purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error in faction change", str(e))
         try:
             input("\nPress Enter to continue...")
         except (EOFError, KeyboardInterrupt):
+            ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
             pass
         ##Action purpose: Return None on error
         return None
@@ -295,9 +298,14 @@ def select_mode() -> str | None:
                 return None
             else:
                 ##Action purpose: Invalid input, prompt again
-                print("Invalid selection. Please enter 'D' (Daedelus), 'U' (DEUS), or 'Q' (Quit)")
+                print(
+                    "Invalid selection. Please enter:\n"
+                    "  'D' (Daedelus), 'U' (DEUS), 'F' (Change Faction),\n"
+                    "  'S' (System Info), 'T' (Statistics), or 'Q' (Quit)"
+                )
         except (EOFError, KeyboardInterrupt):
-            ##Action purpose: Handle Ctrl+C or EOF
+            ##Error purpose: Handle Ctrl+C or EOF gracefully (user interruption)
+            print("\n")  # Add newline for clean exit
             return None
 
 
@@ -497,24 +505,27 @@ def run_mode_selection(identity: SystemIdentity) -> int:
                 continue
 
         except KeyboardInterrupt:
-            ##Action purpose: Handle Ctrl+C gracefully
+            ##Error purpose: Handle Ctrl+C gracefully (user interruption)
             print("\n\nExiting LOGOS...")
+            ##Action purpose: Ensure clean exit without traceback
             return 0
         except (OSError, ValueError) as e:
-            ##Action purpose: Handle specific expected errors (file I/O, validation)
+            ##Error purpose: Handle specific expected errors (file I/O, validation)
             display_error("Error in mode selection", str(e))
             ##Action purpose: Continue loop after error
             try:
                 input("\nPress Enter to continue...")
             except (EOFError, KeyboardInterrupt):
+                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
                 pass
             continue
         except Exception as e:
-            ##Action purpose: Handle unexpected errors (graceful CLI degradation)
+            ##Error purpose: Handle unexpected errors (graceful CLI degradation)
             display_error("Unexpected error in mode selection", str(e))
             ##Action purpose: Continue loop after error
             try:
                 input("\nPress Enter to continue...")
             except (EOFError, KeyboardInterrupt):
+                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
                 pass
             continue

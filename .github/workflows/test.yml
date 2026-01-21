@@ -4,12 +4,12 @@
 
 name: Test Suite
 
-# Run on push to main and on pull requests
+# Run on push to main, master, and fix branches, and on pull requests
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, fix]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, fix]
 
 # Define jobs to run in parallel
 jobs:

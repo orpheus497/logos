@@ -4,7 +4,7 @@
 Tests input validation and schema validation functions for security.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
@@ -141,7 +141,8 @@ def test_validate_input_whitelist():
 def test_validate_identity_schema_valid():
     """##Function purpose: Verify validate_identity_schema accepts valid schema.."""
     ##Action purpose: Create valid schema
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     valid_schema = {
         "identity": {
             "hostname": "testhost",
@@ -194,7 +195,8 @@ def test_validate_identity_schema_missing_section():
 def test_validate_identity_schema_missing_field():
     """##Function purpose: Verify validate_identity_schema rejects schema with missing required fields.."""
     ##Action purpose: Create schema missing hostname field
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     invalid_schema = {
         "identity": {
             "username": "testuser",
@@ -219,7 +221,8 @@ def test_validate_identity_schema_missing_field():
 def test_validate_identity_schema_wrong_type():
     """##Function purpose: Verify validate_identity_schema rejects schema with wrong field types.."""
     ##Action purpose: Create schema with wrong type (hostname as int)
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     invalid_schema = {
         "identity": {
             "hostname": 12345,  # Should be string
@@ -244,7 +247,8 @@ def test_validate_identity_schema_wrong_type():
 def test_validate_identity_schema_length_validation():
     """##Function purpose: Verify validate_identity_schema enforces length limits.."""
     ##Action purpose: Create schema with too-long hostname
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     invalid_schema = {
         "identity": {
             "hostname": "a" * 256,  # Exceeds 255 char limit
@@ -292,7 +296,8 @@ def test_validate_identity_schema_invalid_timestamp():
 def test_validate_identity_schema_negative_sessions():
     """##Function purpose: Verify validate_identity_schema rejects negative total_sessions.."""
     ##Action purpose: Create schema with negative total_sessions
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     invalid_schema = {
         "identity": {
             "hostname": "testhost",
@@ -318,7 +323,8 @@ def test_validate_identity_schema_negative_sessions():
 def test_validate_identity_schema_invalid_session_timestamp():
     """##Function purpose: Verify validate_identity_schema rejects invalid session timestamp.."""
     ##Action purpose: Create schema with invalid session timestamp
-    now = datetime.utcnow().isoformat() + "Z"
+    ##Fix: Use timezone-aware UTC datetime matching production code pattern (Bug #009)
+    now = datetime.now(timezone.utc).isoformat()
     invalid_schema = {
         "identity": {
             "hostname": "testhost",

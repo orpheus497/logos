@@ -159,9 +159,11 @@ def _run_freebsd_checks(scan: dict[str, Any]) -> None:
                 logger.debug(f"Subprocess error for {key}: {e}")
                 if key == "freebsd_version":
                     pass  # Don't set if None
-            except Exception:
+            except Exception as e:
                 ##Error purpose: Handle any other unexpected exceptions from subprocess calls
-                ##Action purpose: Set default values on failure (graceful degradation)
+                ##Fix: Add logging to record exception details for debugging (Bug #010)
+                ##Action purpose: Log unexpected exception and set default values on failure (graceful degradation)
+                logger.warning(f"Unexpected exception for {key}: {type(e).__name__}: {e}")
                 if key == "freebsd_version":
                     pass  # Don't set if None
                 else:
@@ -173,10 +175,10 @@ def _run_subprocess_check(
     command: list[str], return_output: bool = False, timeout: float = SUBPROCESS_TIMEOUT
 ) -> str | bool | None:
     """
-    ##Function purpose: Runs subprocess command with standardized error handling.
+    Runs subprocess command with standardized error handling.
 
-    ##Action purpose: Executes subprocess command with timeout and error handling,
-    returning either output string or boolean success status based on return_output flag.
+    Executes subprocess command with timeout and error handling, returning either
+    output string or boolean success status based on return_output flag.
 
     Args:
         command: List of command and arguments

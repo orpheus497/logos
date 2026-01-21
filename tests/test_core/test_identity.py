@@ -503,9 +503,11 @@ def test_scan_system_timezone_offset_format():
 
     ##Condition purpose: Verify timezone offset format (±HH:MM)
     import re
+
     timezone_pattern = r"^[+-]\d{2}:\d{2}$"
-    assert re.match(timezone_pattern, scan["timezone_offset"]), \
+    assert re.match(timezone_pattern, scan["timezone_offset"]), (
         f"Invalid timezone offset format: {scan['timezone_offset']} (expected ±HH:MM)"
+    )
 
 
 ##Function purpose: Test scan_system timezone consistency

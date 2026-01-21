@@ -156,7 +156,7 @@ Current:
 - User picks tool, uses tool
 
 LOGOS:
-- 48 agents across 2 domains
+- 50 agents across 2 domains (24 Daedelus + 26 DEUS)
 - System scanner
 - Faction selection
 - Mode switching
@@ -556,7 +556,7 @@ logos/
 │   │
 │   ├── daedelus/                 # Daedelus domain
 │   │   ├── __init__.py
-│   │   ├── agents.py             # 22 agent definitions
+│   │   ├── agents.py             # 24 agent definitions
 │   │   ├── prompts/
 │   │   │   ├── base_orchestrator.py
 │   │   │   ├── base_maintenance.py

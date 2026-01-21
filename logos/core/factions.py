@@ -20,13 +20,12 @@ from typing import Any
 @dataclass
 class Faction:
     """
-    ##Class purpose: Represents a philosophical faction that modifies agent behavior.
+    Represents a philosophical faction that modifies agent behavior.
 
-    ##Action purpose: Encapsulates faction name, philosophy, autonomy level, and
-    behavioral modifiers that affect how agents interact with users.
-
-    ##Step purpose: Factions determine the degree of human oversight, approval friction,
-    explanation depth, and operational autonomy for all agents in the LOGOS Federation.
+    Encapsulates faction name, philosophy, autonomy level, and behavioral modifiers
+    that affect how agents interact with users. Factions determine the degree of
+    human oversight, approval friction, explanation depth, and operational autonomy
+    for all agents in the LOGOS Federation.
 
     Attributes:
         name: Human-readable faction name
@@ -34,6 +33,9 @@ class Faction:
         autonomy_level: Level of AI autonomy ("minimal", "low", "balanced", "high", "maximum")
         modifiers: Dictionary of behavioral modifier key-value pairs
     """
+
+    ##Action purpose: Encapsulates faction name, philosophy, autonomy level, and
+    ##Step purpose: behavioral modifiers that affect how agents interact with users
 
     name: str
     philosophy: str
@@ -127,13 +129,13 @@ FACTIONS: dict[str, Faction] = {
 
 
 ##Function purpose: Apply faction-specific modifiers to agent prompts
+##Function purpose: Append faction protocol block to agent prompts
 def apply_faction_modifiers(prompt: str, faction: Faction) -> str:
     """
-    ##Function purpose: Appends faction protocol block to agent prompts.
+    Appends faction protocol block to agent prompts.
 
-    ##Action purpose: Injects faction-specific behavioral modifiers into prompts
-    to ensure consistent behavior across Daedelus and DEUS domains based on user's
-    philosophical choice.
+    Injects faction-specific behavioral modifiers into prompts to ensure consistent
+    behavior across Daedelus and DEUS domains based on user's philosophical choice.
 
     ##Condition purpose: If faction has no modifiers, return prompt unchanged.
     ##Action purpose: Otherwise, append formatted faction protocol block.

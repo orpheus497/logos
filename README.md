@@ -1,6 +1,6 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.0.1 (Pre-Alpha)  
+**Version:** 0.1.0 (Alpha)  
 **License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
 **Author:** orpheus497
 
@@ -152,13 +152,17 @@ Real-world projects require both development and system administration. LOGOS is
 
 #### 5. **Philosophical Framework (Faction System)**
 
-LOGOS recognizes that different users have different preferences for AI collaboration:
+LOGOS recognizes that different users have different preferences for AI collaboration. The system provides **five distinct factions** representing a spectrum from minimal to maximum AI autonomy:
 
-- **Revanchist:** Maximum human control, teaching focus, explicit approval required
-- **Orphic:** Balanced collaboration, educational, multiple options provided
-- **Technomancer:** Maximum AI autonomy, proactive suggestions, minimal friction
+- **The Revanchists (Minimal):** Maximum human control, teaching focus, explicit approval required for all actions. "AI/ML is dangerous if left unchecked—I hate AI/ML and will never trust it"
+- **The Daedalus Faction (Low):** Careful monitoring, permission required for all actions, mistake prevention focus. "AI/ML can be used as a tool but must be checked regularly—it WILL make mistakes if unmonitored"
+- **The Orphics (Balanced):** Collaborative partnership, multiple options provided, educational explanations. "Technology enhances human intelligence—I am in control, it asks me to confirm everything"
+- **The Technomancers (High):** High autonomy with human direction for major decisions, proactive suggestions, batch operations. "AI/ML can manage my system and build programs—I need to direct it"
+- **The Deus Faction (Maximum):** Full autonomy, no human input needed, parameter-based governance. "AI/ML can be totally autonomous—I can trust it, no human input needed for action"
 
-Your faction choice **modifies agent behavior** to match your preferences, ensuring the AI works the way you want it to work.
+Your faction choice **modifies agent behavior** to match your preferences, ensuring the AI works the way you want it to work. All five factions are equal members of the LOGOS Federation, bound by the same constitutional principles while expressing those principles through their chosen approach.
+
+**For detailed information about each faction, including characteristics, use cases, and comparison tables, see [docs/FACTIONS.md](docs/FACTIONS.md).**
 
 #### 6. **Proven Methodology: Built by Itself**
 
@@ -457,11 +461,11 @@ On first launch, LOGOS guides you through initial setup:
    - Displays: hostname, username, OS name, OS version
    - Runs FreeBSD-specific checks if applicable
 2. **Faction Selection:** Choose your philosophical approach (5 factions available)
-   - **Revanchists (Minimal):** "AI/ML is dangerous—I hate it and will never trust it" - Teaching/guiding focus
-   - **Daedalus (Low):** "AI/ML can be used but must be checked—it WILL make mistakes if unmonitored" - Close monitoring
-   - **Orphics (Balanced):** "Technology enhances human intelligence—I am in control" - Collaborative partnership
-   - **Technomancers (High):** "AI/ML can manage my system—I need to direct it" - Human control for major decisions
-   - **Deus (Maximum):** "AI/ML can be totally autonomous—I can trust it" - No human input needed
+   - **The Revanchists (Minimal Autonomy):** "AI/ML is dangerous if left unchecked—I hate AI/ML and will never trust it" - Maximum control, teaching/guiding focus, explicit approval for all actions
+   - **The Daedalus Faction (Low Autonomy):** "AI/ML can be used as a tool but must be checked regularly—it WILL make mistakes if unmonitored" - Close monitoring, permission required, mistake prevention
+   - **The Orphics (Balanced Autonomy):** "Technology enhances human intelligence—I am in control, it asks me to confirm everything" - Collaborative partnership, multiple options, educational explanations
+   - **The Technomancers (High Autonomy):** "AI/ML can manage my system and build programs—I need to direct it" - Human control for major decisions, batch operations, proactive suggestions
+   - **The Deus Faction (Maximum Autonomy):** "AI/ML can be totally autonomous—I can trust it, no human input needed for action" - Full autonomy, parameter-based governance, self-directed operation
 3. **Identity Creation:** Saves your configuration to `~/.logos/identity.yaml`
 
 The wizard cannot be skipped; it's required for initial setup.
@@ -1056,10 +1060,12 @@ A: Yes, but it requires modifying the codebase. Add agent definitions to `logos/
 A: Yes, but currently requires manual editing of `~/.logos/identity.yaml`. Future versions will include an in-CLI option.
 
 **Q: What's the difference between factions?**  
-A: Factions modify agent behavior:
-- **Revanchist:** Asks for approval frequently, explains everything, teaches
-- **Orphic:** Provides multiple options, educational, balanced
-- **Technomancer:** Proactive, autonomous for low-risk tasks, minimal friction
+A: Factions modify agent behavior across a spectrum from minimal to maximum autonomy:
+- **The Revanchists (Minimal):** Asks for approval frequently, explains everything, teaches, maximum control
+- **The Daedalus Faction (Low):** Permission required for all actions, close monitoring, mistake prevention
+- **The Orphics (Balanced):** Provides multiple options, educational, balanced collaboration
+- **The Technomancers (High):** Proactive, autonomous for low-risk tasks, minimal friction, batch operations
+- **The Deus Faction (Maximum):** No human input needed, fully autonomous, parameter-based operation
 
 **Q: How do I know which agent to use?**  
 A: Read agent descriptions in the selection menu. Generally:
@@ -1262,7 +1268,7 @@ pip-audit --fix
 
 ### Project Status
 
-**Current Version:** 0.0.1 (Pre-Alpha)
+**Current Version:** 0.1.0 (Alpha)
 
 **Completed:**
 - ✅ Core infrastructure (identity, persistence, validation)
@@ -1294,7 +1300,7 @@ This section describes documentation **about LOGOS itself** (the LOGOS codebase)
   - `DECISIONS_LOG.md` - Architecture decisions
   - `AGENTS.md` - Agent registry and definitions
 - **Domain Documentation:** `docs/` - Domain-specific reference materials
-  - `FACTIONS.md` - Faction system overview
+  - `FACTIONS.md` - **Complete faction system documentation** (all 5 factions with detailed characteristics, use cases, and comparison table)
   - `WORKFLOWS.md` - Workflow overview
 
 **Note:** The LOGOS project's `.devdocs/` folder is for tracking the development of LOGOS itself. This is separate from the `.devdocs/` folder that LOGOS agents create when working on your projects.
@@ -1361,5 +1367,5 @@ If you modify LOGOS and distribute it (including as a service), you must:
 
 ---
 
-**Status:** Pre-Alpha - Core functionality complete, testing in progress  
+**Status:** Alpha - Stable release, ready for production use  
 **Last Updated:** 2026-01-20

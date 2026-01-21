@@ -282,7 +282,7 @@ def test_wrap_text_short_text():
     ##Action purpose: Wrap short text
     text = "Short text"
     wrapped = _wrap_text(text, 100)
-    
+
     ##Condition purpose: Verify text is not split
     assert len(wrapped) == 1
     assert wrapped[0] == "Short text"
@@ -294,7 +294,7 @@ def test_wrap_text_long_text():
     ##Action purpose: Wrap long text
     text = "This is a very long text that should be wrapped to fit within the specified width of 100 characters"
     wrapped = _wrap_text(text, 100)
-    
+
     ##Condition purpose: Verify text is wrapped into multiple lines
     assert len(wrapped) > 1
     ##Condition purpose: Verify each line is within width
@@ -308,7 +308,7 @@ def test_wrap_text_exact_width():
     ##Action purpose: Wrap text that exactly fits
     text = "A" * 100
     wrapped = _wrap_text(text, 100)
-    
+
     ##Condition purpose: Verify text fits in one line
     assert len(wrapped) == 1
     assert len(wrapped[0]) == 100
@@ -319,7 +319,7 @@ def test_get_logos_banner():
     """##Function purpose: Verify get_logos_banner returns banner lines.."""
     ##Action purpose: Get LOGOS banner
     banner = get_logos_banner()
-    
+
     ##Condition purpose: Verify banner is a list
     assert isinstance(banner, list)
     ##Condition purpose: Verify banner has content
@@ -335,7 +335,7 @@ def test_get_logos_banner_contains_logos():
     ##Action purpose: Get LOGOS banner
     banner = get_logos_banner()
     banner_text = "\n".join(banner)
-    
+
     ##Condition purpose: Verify banner contains LOGOS text (case-insensitive)
     assert "LOGOS" in banner_text.upper() or "logos" in banner_text.lower()
 
@@ -346,14 +346,14 @@ def test_display_logos_banner():
     ##Action purpose: Capture stdout
     old_stdout = sys.stdout
     sys.stdout = StringIO()
-    
+
     try:
         ##Action purpose: Display LOGOS banner
         display_logos_banner(width=100)
-        
+
         ##Action purpose: Get output
         output = sys.stdout.getvalue()
-        
+
         ##Condition purpose: Verify output contains banner content
         assert len(output) > 0
     finally:
@@ -367,14 +367,14 @@ def test_display_logos_banner_custom_width():
     ##Action purpose: Capture stdout
     old_stdout = sys.stdout
     sys.stdout = StringIO()
-    
+
     try:
         ##Action purpose: Display LOGOS banner with custom width
         display_logos_banner(width=UILayout.DISPLAY_WIDTH)
-        
+
         ##Action purpose: Get output
         output = sys.stdout.getvalue()
-        
+
         ##Condition purpose: Verify output is generated
         assert len(output) > 0
     finally:

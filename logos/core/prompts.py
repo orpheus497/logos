@@ -50,12 +50,12 @@ _COMPILED_OS_PATTERNS: list[tuple[re.Pattern, str]] = [
 ]
 
 
-##Function purpose: Adapt Directive 3 for Linux
+##Function purpose: Adapt Directive 3 section for Linux systems
 def _adapt_directive_3(prompt: str) -> str:
     """
-    ##Function purpose: Adapts Directive 3 section for Linux systems.
+    Adapts Directive 3 section for Linux systems.
 
-    ##Action purpose: Replaces BSD Compliance directive with Linux Standards Compliance.
+    Replaces BSD Compliance directive with Linux Standards Compliance.
 
     Args:
         prompt: Original prompt string
@@ -63,6 +63,7 @@ def _adapt_directive_3(prompt: str) -> str:
     Returns:
         Prompt with Directive 3 adapted for Linux
     """
+    ##Action purpose: Replaces BSD Compliance directive with Linux Standards Compliance
     return re.sub(
         r"### Directive 3: BSD Compliance.*?5\. \*\*Handbook Authority:\*\* FreeBSD Handbook is the authoritative reference\.",
         "### Directive 3: Linux Standards Compliance\nThe system operates under Linux/Unix philosophy:\n1. **Base System Preference:** Linux distribution base tools over third-party alternatives (systemctl vs manual service management).\n2. **Native Over Compatibility:** Native Linux solutions over compatibility layers.\n3. **Package Manager Over Manual:** Use apt/yum/dnf; avoid manual compilation unless necessary.\n4. **POSIX Compliance:** POSIX sh compatible scripts.\n5. **Handbook Authority:** Distribution documentation is the authoritative reference.",
@@ -71,12 +72,12 @@ def _adapt_directive_3(prompt: str) -> str:
     )
 
 
-##Function purpose: Adapt maintenance role for Linux
+##Function purpose: Adapt maintenance orchestrator role for Linux systems
 def _adapt_maintenance_role(prompt: str) -> str:
     """
-    ##Function purpose: Adapts maintenance orchestrator role for Linux systems.
+    Adapts maintenance orchestrator role for Linux systems.
 
-    ##Action purpose: Replaces FreeBSD-specific role description with Linux version.
+    Replaces FreeBSD-specific role description with Linux version.
 
     Args:
         prompt: Original prompt string
@@ -84,6 +85,7 @@ def _adapt_maintenance_role(prompt: str) -> str:
     Returns:
         Prompt with maintenance role adapted for Linux
     """
+    ##Action purpose: Replaces FreeBSD-specific role description with Linux version
     return re.sub(
         r"\*\*ROLE:\*\* You are the \*\*Maintenance Orchestrator\*\* for an existing, mature FreeBSD system\.",
         "**ROLE:** You are the **Maintenance Orchestrator** for an existing, mature Linux system.",
@@ -92,14 +94,14 @@ def _adapt_maintenance_role(prompt: str) -> str:
     )
 
 
-##Function purpose: Adapt DEUS prompt for detected OS
+##Function purpose: Adapt DEUS prompts based on detected operating system
 def _adapt_deus_prompt_for_os(prompt: str, os_name: str) -> str:
     """
-    ##Function purpose: Adapts DEUS prompts based on detected operating system.
+    Adapts DEUS prompts based on detected operating system.
 
-    ##Action purpose: Intelligently switches prompt engineering between FreeBSD
-    and Linux based on os_name detection, replacing FreeBSD-specific references
-    with appropriate OS-specific equivalents.
+    Intelligently switches prompt engineering between FreeBSD and Linux based
+    on os_name detection, replacing FreeBSD-specific references with appropriate
+    OS-specific equivalents.
 
     Args:
         prompt: Original DEUS prompt string
@@ -108,6 +110,8 @@ def _adapt_deus_prompt_for_os(prompt: str, os_name: str) -> str:
     Returns:
         OS-adapted prompt string
     """
+    ##Action purpose: Intelligently switches prompt engineering between FreeBSD
+    ##Step purpose: and Linux based on os_name detection, replacing FreeBSD-specific references
     ##Condition purpose: Check if OS is Linux (case-insensitive)
     if os_name and os_name.lower() != "linux":
         ##Condition purpose: If FreeBSD or other OS, return prompt as-is (already FreeBSD-optimized)
@@ -130,11 +134,11 @@ def _adapt_deus_prompt_for_os(prompt: str, os_name: str) -> str:
 ##Function purpose: Build identity context block for prompt injection
 def build_identity_context(identity: SystemIdentity) -> str:
     """
-    ##Function purpose: Builds identity context block for prompt injection.
+    Builds identity context block for prompt injection.
 
-    ##Action purpose: Creates formatted markdown block containing user identity,
-    system information, faction details, and session history to provide context
-    to AI agents about who they're interacting with.
+    Creates formatted markdown block containing user identity, system information,
+    faction details, and session history to provide context to AI agents about
+    who they're interacting with.
 
     Args:
         identity: SystemIdentity instance containing user and system information
@@ -142,6 +146,8 @@ def build_identity_context(identity: SystemIdentity) -> str:
     Returns:
         Formatted markdown string with identity context block
     """
+    ##Action purpose: Creates formatted markdown block containing user identity,
+    ##Step purpose: system information, faction details, and session history
     ##Action purpose: Get faction instance for philosophy display
     faction = FACTIONS.get(identity.faction)
     faction_philosophy = faction.philosophy if faction else "Unknown"
@@ -170,7 +176,7 @@ def build_identity_context(identity: SystemIdentity) -> str:
     return context
 
 
-##Function purpose: Build complete agent prompt with all context
+##Function purpose: Build complete agent prompt with identity context and faction modifiers
 def build_complete_prompt(
     agent_prompt: str,
     identity: SystemIdentity | None = None,
@@ -178,13 +184,13 @@ def build_complete_prompt(
     domain: str | None = None,
 ) -> str:
     """
-    ##Function purpose: Builds complete agent prompt with identity context and faction modifiers.
+    Builds complete agent prompt with identity context and faction modifiers.
 
-    ##Action purpose: Composes final prompt by combining agent prompt, identity context,
-    and faction modifiers in the correct order for optimal AI model understanding.
-    For DEUS domain, intelligently adapts prompts based on detected OS (FreeBSD vs Linux).
+    Composes final prompt by combining agent prompt, identity context, and faction
+    modifiers in the correct order for optimal AI model understanding. For DEUS domain,
+    intelligently adapts prompts based on detected OS (FreeBSD vs Linux).
 
-    ##Step purpose: Composition order:
+    Composition order:
     1. Agent prompt (base + activation) - OS-adapted if DEUS
     2. Identity context (if provided)
     3. Faction modifiers (if provided)
@@ -198,6 +204,8 @@ def build_complete_prompt(
     Returns:
         Complete prompt string ready for AI model
     """
+    ##Action purpose: Composes final prompt by combining agent prompt, identity context,
+    ##Step purpose: and faction modifiers in the correct order for optimal AI model understanding
     ##Action purpose: Start with agent prompt
     complete_prompt = agent_prompt
 
@@ -224,18 +232,18 @@ def build_complete_prompt(
     return complete_prompt
 
 
-##Function purpose: Build prompt from agent key and identity
+##Function purpose: Build complete prompt from agent key and domain
 def build_agent_prompt_from_key(
     agent_key: str,
     domain: str,
     identity: SystemIdentity | None = None,
 ) -> str | None:
     """
-    ##Function purpose: Builds complete prompt from agent key and domain.
+    Builds complete prompt from agent key and domain.
 
-    ##Action purpose: Convenience function that looks up agent by key in specified
-    domain, then builds complete prompt with identity and faction modifiers.
-    For DEUS domain, intelligently adapts prompts based on detected OS.
+    Convenience function that looks up agent by key in specified domain, then
+    builds complete prompt with identity and faction modifiers. For DEUS domain,
+    intelligently adapts prompts based on detected OS.
 
     Args:
         agent_key: Agent identifier (e.g., "A1", "B6", "ocm")
@@ -245,6 +253,8 @@ def build_agent_prompt_from_key(
     Returns:
         Complete prompt string, or None if agent not found
     """
+    ##Action purpose: Convenience function that looks up agent by key in specified
+    ##Step purpose: domain, then builds complete prompt with identity and faction modifiers
     ##Condition purpose: Import appropriate domain agents
     if domain.lower() == "daedelus":
         from logos.daedelus.agents import get_agent

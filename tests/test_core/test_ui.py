@@ -258,14 +258,14 @@ def test_create_box_with_display_width():
     """##Function purpose: Verify create_box works correctly with DISPLAY_WIDTH (100).."""
     ##Action purpose: Create box with DISPLAY_WIDTH
     box = create_box(UILayout.DISPLAY_WIDTH, "Test Title", ["Line 1", "Line 2"])
-    
+
     ##Condition purpose: Verify box contains title
     assert "Test Title" in box
-    
+
     ##Condition purpose: Verify box contains content
     assert "Line 1" in box
     assert "Line 2" in box
-    
+
     ##Condition purpose: Verify box width matches DISPLAY_WIDTH
     # Box width should be approximately DISPLAY_WIDTH (accounting for borders)
     lines = box.split("\n")
@@ -280,10 +280,10 @@ def test_create_separator_with_display_width():
     """##Function purpose: Verify create_separator works correctly with DISPLAY_WIDTH (100).."""
     ##Action purpose: Create separator with DISPLAY_WIDTH
     separator = create_separator(UILayout.DISPLAY_WIDTH)
-    
+
     ##Condition purpose: Verify separator has correct length
     assert len(separator) >= UILayout.DISPLAY_WIDTH
-    
+
     ##Condition purpose: Verify separator contains horizontal character
     assert BoxChars.HORIZONTAL in separator or "═" in separator
 
@@ -293,13 +293,13 @@ def test_create_content_line_with_display_width():
     """##Function purpose: Verify create_content_line works correctly with DISPLAY_WIDTH (100).."""
     ##Action purpose: Create content line with DISPLAY_WIDTH
     line = create_content_line("Test content", UILayout.DISPLAY_WIDTH)
-    
+
     ##Condition purpose: Verify content is included
     assert "Test content" in line
-    
+
     ##Condition purpose: Verify line has borders
     assert BoxChars.VERTICAL in line or "║" in line
-    
+
     ##Condition purpose: Verify line width matches DISPLAY_WIDTH (accounting for borders)
     # Account for border characters (2 chars) in width calculation
     assert len(line) >= UILayout.DISPLAY_WIDTH - 2
@@ -311,16 +311,16 @@ def test_print_header_with_display_width():
     ##Action purpose: Capture stdout
     captured_output = StringIO()
     original_stdout = sys.stdout
-    
+
     try:
         sys.stdout = captured_output
-        
+
         ##Action purpose: Print header with DISPLAY_WIDTH
         print_header("Test Header", UILayout.DISPLAY_WIDTH)
-        
+
         ##Action purpose: Get output
         output = captured_output.getvalue()
-        
+
         ##Condition purpose: Verify header in output
         assert "Test Header" in output
     finally:
@@ -333,16 +333,16 @@ def test_print_box_with_display_width():
     ##Action purpose: Capture stdout
     captured_output = StringIO()
     original_stdout = sys.stdout
-    
+
     try:
         sys.stdout = captured_output
-        
+
         ##Action purpose: Print box with DISPLAY_WIDTH
         print_box(UILayout.DISPLAY_WIDTH, "Test Title", ["Line 1", "Line 2"])
-        
+
         ##Action purpose: Get output
         output = captured_output.getvalue()
-        
+
         ##Condition purpose: Verify title and content in output
         assert "Test Title" in output
         assert "Line 1" in output

@@ -34,12 +34,12 @@ except ImportError:
 _CLIPBOARD_TOOL_CACHE: dict[str, str | None] = {}
 
 
-##Function purpose: Get clipboard tool path with caching
+##Function purpose: Get clipboard tool path with caching for performance
 def _get_clipboard_tool(tool_name: str) -> str | None:
     """
-    ##Function purpose: Gets clipboard tool path with caching for performance.
+    Gets clipboard tool path with caching for performance.
 
-    ##Action purpose: Caches shutil.which() results to avoid repeated filesystem lookups.
+    Caches shutil.which() results to avoid repeated filesystem lookups.
     Tool detection results are cached for the lifetime of the module.
 
     Args:
@@ -48,6 +48,7 @@ def _get_clipboard_tool(tool_name: str) -> str | None:
     Returns:
         Full path to tool if found, None otherwise
     """
+    ##Action purpose: Caches shutil.which() results to avoid repeated filesystem lookups
     ##Condition purpose: Check cache first
     if tool_name not in _CLIPBOARD_TOOL_CACHE:
         ##Action purpose: Cache tool detection result
@@ -56,16 +57,17 @@ def _get_clipboard_tool(tool_name: str) -> str | None:
     return _CLIPBOARD_TOOL_CACHE[tool_name]
 
 
+##Function purpose: Copy text to system clipboard using platform-appropriate method
 def copy_to_clipboard(text: str) -> bool:
     """
-    ##Function purpose: Copy text to system clipboard using platform-appropriate method.
+    Copy text to system clipboard using platform-appropriate method.
 
-    ##Step purpose: Unified clipboard implementation that tries multiple methods:
+    Unified clipboard implementation that tries multiple methods:
     - Wayland-first for modern Linux desktops
     - X11 fallback for traditional X11 systems (including FreeBSD)
     - Python pyperclip as final cross-platform fallback
 
-    ##Action purpose: Uses subprocess.run() with explicit arguments to avoid shell injection.
+    Uses subprocess.run() with explicit arguments to avoid shell injection.
 
     Args:
         text: The text content to copy to clipboard.
@@ -73,6 +75,8 @@ def copy_to_clipboard(text: str) -> bool:
     Returns:
         True if copy succeeded, False otherwise.
     """
+    ##Step purpose: Unified clipboard implementation that tries multiple methods
+    ##Action purpose: Uses subprocess.run() with explicit arguments to avoid shell injection
     ##Step purpose: Try Wayland clipboard (wl-copy) - preferred on Wayland compositors
     if wl_copy_path := _get_clipboard_tool("wl-copy"):
         try:
@@ -89,10 +93,10 @@ def copy_to_clipboard(text: str) -> bool:
         except subprocess.TimeoutExpired:
             logger.warning("wl-copy timed out")
         except OSError as e:
-            ##Action purpose: Handle OS-level errors (file not found, permission denied)
+            ##Error purpose: Handle OS-level errors (file not found, permission denied)
             logger.debug(f"wl-copy OS error: {e}")
         except Exception as e:
-            ##Action purpose: Handle unexpected errors (fallback)
+            ##Error purpose: Handle unexpected errors (fallback)
             logger.debug(f"wl-copy exception: {e}")
 
     ##Step purpose: Try X11 clipboard tools (xclip, xsel) - common on X11 systems
@@ -121,10 +125,10 @@ def copy_to_clipboard(text: str) -> bool:
             except subprocess.TimeoutExpired:
                 logger.warning(f"{name} timed out")
             except OSError as e:
-                ##Action purpose: Handle OS-level errors (file not found, permission denied)
+                ##Error purpose: Handle OS-level errors (file not found, permission denied)
                 logger.debug(f"{name} OS error: {e}")
             except Exception as e:
-                ##Action purpose: Handle unexpected errors (fallback)
+                ##Error purpose: Handle unexpected errors (fallback)
                 logger.debug(f"{name} exception: {e}")
 
     ##Step purpose: Try Python pyperclip library (cross-platform fallback)
@@ -133,10 +137,10 @@ def copy_to_clipboard(text: str) -> bool:
             pyperclip.copy(text)
             return True
         except (OSError, RuntimeError) as e:
-            ##Action purpose: Handle specific pyperclip errors (OS errors, runtime errors)
+            ##Error purpose: Handle specific pyperclip errors (OS errors, runtime errors)
             logger.debug(f"pyperclip error: {e}")
         except Exception as e:
-            ##Action purpose: Handle unexpected errors (fallback)
+            ##Error purpose: Handle unexpected errors (fallback)
             logger.debug(f"pyperclip exception: {e}")
 
     ##Action purpose: Return False if all methods failed

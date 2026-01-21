@@ -23,7 +23,7 @@ MAX_FACTION_NAME_LENGTH: int = 50
 MAX_SESSION_FIELD_LENGTH: int = 50
 
 
-##Function purpose: Validate user input for security
+##Function purpose: Validate user input for security to prevent injection attacks
 def validate_input(
     input_str: str,
     max_length: int = DEFAULT_MAX_INPUT_LENGTH,
@@ -31,9 +31,9 @@ def validate_input(
     allowed_chars: str | None = None,
 ) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates user input for security to prevent injection attacks.
+    Validates and sanitizes user input string.
 
-    ##Action purpose: Performs comprehensive input validation including length checks,
+    Performs comprehensive input validation including length checks,
     control character detection, and optional character whitelisting.
 
     Args:
@@ -46,6 +46,8 @@ def validate_input(
         Tuple of (is_valid, error_message). is_valid is True if input is valid,
         False otherwise. error_message is None if valid, otherwise contains error description.
     """
+    ##Action purpose: Performs comprehensive input validation including length checks,
+    ##Step purpose: control character detection, and optional character whitelisting
     ##Condition purpose: Check input length
     if len(input_str) > max_length:
         return False, f"Input too long (max {max_length} characters)"
@@ -75,9 +77,9 @@ def validate_input(
 ##Function purpose: Validate top-level schema structure
 def _validate_schema_structure(config_data: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates top-level schema structure.
+    Validates top-level schema structure.
 
-    ##Action purpose: Checks that all required sections exist and are dictionaries.
+    Checks that all required sections exist and are dictionaries.
 
     Args:
         config_data: Configuration data dictionary
@@ -85,6 +87,7 @@ def _validate_schema_structure(config_data: dict[str, Any]) -> tuple[bool, str |
     Returns:
         Tuple of (is_valid, error_message)
     """
+    ##Action purpose: Checks that all required sections exist and are dictionaries
     required_sections = ["identity", "faction", "system", "sessions"]
     for section in required_sections:
         if section not in config_data:
@@ -94,12 +97,12 @@ def _validate_schema_structure(config_data: dict[str, Any]) -> tuple[bool, str |
     return True, None
 
 
-##Function purpose: Validate identity section
+##Function purpose: Validate identity section of configuration
 def _validate_identity_section(identity: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates identity section of configuration.
+    Validates identity section of configuration.
 
-    ##Action purpose: Checks required fields, types, lengths, and timestamp format.
+    Checks required fields, types, lengths, and timestamp format.
 
     Args:
         identity: Identity section dictionary
@@ -107,6 +110,7 @@ def _validate_identity_section(identity: dict[str, Any]) -> tuple[bool, str | No
     Returns:
         Tuple of (is_valid, error_message)
     """
+    ##Action purpose: Checks required fields, types, lengths, and timestamp format
     required_fields = ["hostname", "username", "created"]
     for field in required_fields:
         if field not in identity:
@@ -131,12 +135,12 @@ def _validate_identity_section(identity: dict[str, Any]) -> tuple[bool, str | No
     return True, None
 
 
-##Function purpose: Validate system section
+##Function purpose: Validate system section of configuration
 def _validate_system_section(system: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates system section of configuration.
+    Validates system section of configuration.
 
-    ##Action purpose: Checks required fields, types, and lengths.
+    Checks required fields, types, and lengths.
 
     Args:
         system: System section dictionary
@@ -144,6 +148,7 @@ def _validate_system_section(system: dict[str, Any]) -> tuple[bool, str | None]:
     Returns:
         Tuple of (is_valid, error_message)
     """
+    ##Action purpose: Checks required fields, types, and lengths
     required_fields = ["os", "version"]
     for field in required_fields:
         if field not in system:
@@ -160,13 +165,13 @@ def _validate_system_section(system: dict[str, Any]) -> tuple[bool, str | None]:
     return True, None
 
 
-##Function purpose: Validate faction section
+##Function purpose: Validate faction section of configuration
 def _validate_faction_section(faction: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates faction section of configuration.
+    Validates faction section of configuration.
 
-    ##Action purpose: Checks required fields, types, lengths, and validates
-    faction name against FACTIONS dictionary (per Constitution v2.0 - 5 factions).
+    Checks required fields, types, lengths, and validates faction name against
+    FACTIONS dictionary (per Constitution v2.0 - 5 factions).
 
     Args:
         faction: Faction section dictionary
@@ -174,6 +179,8 @@ def _validate_faction_section(faction: dict[str, Any]) -> tuple[bool, str | None
     Returns:
         Tuple of (is_valid, error_message)
     """
+    ##Action purpose: Checks required fields, types, lengths, and validates
+    ##Step purpose: faction name against FACTIONS dictionary (per Constitution v2.0 - 5 factions)
     if "name" not in faction:
         return False, "Missing required field: faction.name"
     if not isinstance(faction["name"], str):
@@ -190,12 +197,12 @@ def _validate_faction_section(faction: dict[str, Any]) -> tuple[bool, str | None
     return True, None
 
 
-##Function purpose: Validate sessions section
+##Function purpose: Validate sessions section of configuration
 def _validate_sessions_section(sessions: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates sessions section of configuration.
+    Validates sessions section of configuration.
 
-    ##Action purpose: Checks optional fields, types, lengths, and timestamp formats.
+    Checks optional fields, types, lengths, and timestamp formats.
 
     Args:
         sessions: Sessions section dictionary
@@ -203,6 +210,7 @@ def _validate_sessions_section(sessions: dict[str, Any]) -> tuple[bool, str | No
     Returns:
         Tuple of (is_valid, error_message)
     """
+    ##Action purpose: Checks optional fields, types, lengths, and timestamp formats
     if "total_sessions" in sessions:
         if not isinstance(sessions["total_sessions"], int):
             return False, "sessions.total_sessions must be an integer"
@@ -231,13 +239,13 @@ def _validate_sessions_section(sessions: dict[str, Any]) -> tuple[bool, str | No
     return True, None
 
 
-##Function purpose: Validate identity configuration schema
+##Function purpose: Validate identity configuration schema structure and types
 def validate_identity_schema(config_data: dict[str, Any]) -> tuple[bool, str | None]:
     """
-    ##Function purpose: Validates identity configuration schema structure and types.
+    Validates identity configuration schema structure and types.
 
-    ##Action purpose: Performs comprehensive validation of identity YAML configuration
-    including structure checks, type validation, length limits, and format validation
+    Performs comprehensive validation of identity YAML configuration including
+    structure checks, type validation, length limits, and format validation
     to prevent malformed or tampered configuration files.
 
     Args:

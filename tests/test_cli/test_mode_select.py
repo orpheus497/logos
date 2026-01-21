@@ -205,11 +205,13 @@ def test_change_faction_successful_change():
     )
 
     ##Action purpose: Mock save_identity to return success
-    with patch("logos.cli.mode_select.save_identity", return_value=True), \
-         patch("logos.cli.mode_select.clear_screen"), \
-         patch("builtins.input", return_value="o"), \
-         patch("logos.cli.mode_select.display_faction_selection_menu"), \
-         patch("logos.cli.mode_select.display_error"):
+    with (
+        patch("logos.cli.mode_select.save_identity", return_value=True),
+        patch("logos.cli.mode_select.clear_screen"),
+        patch("builtins.input", return_value="o"),
+        patch("logos.cli.mode_select.display_faction_selection_menu"),
+        patch("logos.cli.mode_select.display_error"),
+    ):
         ##Action purpose: Change faction
         result = change_faction(identity)
 
@@ -246,11 +248,13 @@ def test_change_faction_all_factions():
         )
 
         ##Action purpose: Mock dependencies
-        with patch("logos.cli.mode_select.save_identity", return_value=True), \
-             patch("logos.cli.mode_select.clear_screen"), \
-             patch("builtins.input", return_value=input_char), \
-             patch("logos.cli.mode_select.display_faction_selection_menu"), \
-             patch("logos.cli.mode_select.display_error"):
+        with (
+            patch("logos.cli.mode_select.save_identity", return_value=True),
+            patch("logos.cli.mode_select.clear_screen"),
+            patch("builtins.input", return_value=input_char),
+            patch("logos.cli.mode_select.display_faction_selection_menu"),
+            patch("logos.cli.mode_select.display_error"),
+        ):
             ##Action purpose: Change faction
             result = change_faction(identity)
 
@@ -274,10 +278,12 @@ def test_change_faction_same_faction():
     )
 
     ##Action purpose: Mock dependencies
-    with patch("logos.cli.mode_select.clear_screen"), \
-         patch("builtins.input", return_value="o"), \
-         patch("logos.cli.mode_select.display_faction_selection_menu"), \
-         patch("logos.cli.mode_select.display_error"):
+    with (
+        patch("logos.cli.mode_select.clear_screen"),
+        patch("builtins.input", return_value="o"),
+        patch("logos.cli.mode_select.display_faction_selection_menu"),
+        patch("logos.cli.mode_select.display_error"),
+    ):
         ##Action purpose: Try to change to same faction
         result = change_faction(identity)
 
@@ -303,10 +309,12 @@ def test_change_faction_cancellation():
     )
 
     ##Action purpose: Mock dependencies
-    with patch("logos.cli.mode_select.clear_screen"), \
-         patch("builtins.input", return_value="q"), \
-         patch("logos.cli.mode_select.display_faction_selection_menu"), \
-         patch("logos.cli.mode_select.display_error"):
+    with (
+        patch("logos.cli.mode_select.clear_screen"),
+        patch("builtins.input", return_value="q"),
+        patch("logos.cli.mode_select.display_faction_selection_menu"),
+        patch("logos.cli.mode_select.display_error"),
+    ):
         ##Action purpose: Cancel faction change
         result = change_faction(identity)
 
@@ -329,11 +337,13 @@ def test_change_faction_save_failure():
     )
 
     ##Action purpose: Mock dependencies with save failure
-    with patch("logos.cli.mode_select.save_identity", return_value=False), \
-         patch("logos.cli.mode_select.clear_screen"), \
-         patch("builtins.input", return_value="r"), \
-         patch("logos.cli.mode_select.display_faction_selection_menu"), \
-         patch("logos.cli.mode_select.display_error") as mock_error:
+    with (
+        patch("logos.cli.mode_select.save_identity", return_value=False),
+        patch("logos.cli.mode_select.clear_screen"),
+        patch("builtins.input", return_value="r"),
+        patch("logos.cli.mode_select.display_faction_selection_menu"),
+        patch("logos.cli.mode_select.display_error") as mock_error,
+    ):
         ##Action purpose: Attempt faction change
         result = change_faction(identity)
 
@@ -358,10 +368,12 @@ def test_change_faction_keyboard_interrupt():
     )
 
     ##Action purpose: Mock dependencies
-    with patch("logos.cli.mode_select.clear_screen"), \
-         patch("builtins.input", side_effect=KeyboardInterrupt()), \
-         patch("logos.cli.mode_select.display_faction_selection_menu"), \
-         patch("logos.cli.mode_select.display_error"):
+    with (
+        patch("logos.cli.mode_select.clear_screen"),
+        patch("builtins.input", side_effect=KeyboardInterrupt()),
+        patch("logos.cli.mode_select.display_faction_selection_menu"),
+        patch("logos.cli.mode_select.display_error"),
+    ):
         ##Action purpose: Handle interrupt
         result = change_faction(identity)
 

@@ -28,10 +28,10 @@ from logos.core.ui import (
 ##Function purpose: Wrap text to fit within specified width
 def _wrap_text(text: str, width: int) -> list[str]:
     """
-    ##Function purpose: Wraps text to fit within specified width.
+    Wraps text to fit within specified width.
 
-    ##Action purpose: Breaks long text into multiple lines that fit within
-    the specified width, preserving word boundaries.
+    Breaks long text into multiple lines that fit within the specified width,
+    preserving word boundaries.
 
     Args:
         text: Text to wrap
@@ -40,23 +40,27 @@ def _wrap_text(text: str, width: int) -> list[str]:
     Returns:
         List of wrapped lines
     """
+    ##Action purpose: Breaks long text into multiple lines that fit within
+    ##Step purpose: the specified width, preserving word boundaries
     ##Action purpose: Use textwrap to break text into lines
     wrapped_lines = textwrap.wrap(text, width=width, break_long_words=False, break_on_hyphens=False)
     ##Condition purpose: Return wrapped lines or single line if empty
     return wrapped_lines if wrapped_lines else [text]
 
 
-##Function purpose: Get ASCII art banner for LOGOS
+##Function purpose: Return ASCII art banner for "LOGOS" word
 def get_logos_banner() -> list[str]:
     """
-    ##Function purpose: Returns ASCII art banner for "LOGOS" word.
+    Returns ASCII art banner for "LOGOS" word.
 
-    ##Action purpose: Provides beautiful ASCII art representation of the LOGOS
-    federation name for display at the top of all screens using box-drawing characters.
+    Provides beautiful ASCII art representation of the LOGOS federation name for
+    display at the top of all screens using box-drawing characters.
 
     Returns:
         List of strings representing the ASCII art banner
     """
+    ##Action purpose: Provides beautiful ASCII art representation of the LOGOS
+    ##Step purpose: federation name for display at the top of all screens using box-drawing characters
     ##Action purpose: Create impressive ASCII art banner for LOGOS using box-drawing characters
     ##Action purpose: Clear, readable banner that spells "LOGOS" clearly
     banner = [
@@ -72,18 +76,20 @@ def get_logos_banner() -> list[str]:
     return banner
 
 
-##Function purpose: Display LOGOS banner
+##Function purpose: Display the LOGOS ASCII art banner
 def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> None:
     """
-    ##Function purpose: Displays the LOGOS ASCII art banner.
+    Displays the LOGOS ASCII art banner.
 
-    ##Action purpose: Prints the LOGOS banner centered within the specified width,
-    using the provided color.
+    Prints the LOGOS banner centered within the specified width, using the
+    provided color.
 
     Args:
         width: Total width for centering
         color: ANSI color code for the banner
     """
+    ##Action purpose: Prints the LOGOS banner centered within the specified width,
+    ##Step purpose: using the provided color
     ##Action purpose: Get banner lines
     banner_lines = get_logos_banner()
     reset = Colors.RESET
@@ -97,13 +103,13 @@ def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> Non
     print()  # Extra spacing after banner
 
 
-##Function purpose: Get ASCII art logo for a faction
+##Function purpose: Return ASCII art logo for specified faction
 def get_faction_logo(faction_key: str) -> list[str]:
     """
-    ##Function purpose: Returns ASCII art logo for specified faction.
+    Returns ASCII art logo for specified faction.
 
-    ##Action purpose: Provides beautiful ASCII art representation of each
-    faction that aligns with their philosophical identity.
+    Provides beautiful ASCII art representation of each faction that aligns
+    with their philosophical identity.
 
     Args:
         faction_key: Faction identifier ("daedalus", "deus", "revanchist", "orphic", "technomancer")
@@ -112,6 +118,8 @@ def get_faction_logo(faction_key: str) -> list[str]:
     Returns:
         List of strings representing the ASCII art logo
     """
+    ##Action purpose: Provides beautiful ASCII art representation of each
+    ##Step purpose: faction that aligns with their philosophical identity
     ##Action purpose: Define unique ASCII art logos for each faction (all exactly 20 chars wide for perfect alignment)
     logos = {
         ##Action purpose: Revanchist logo - traditional, human-focused, shield (protective, minimal autonomy)
@@ -170,19 +178,21 @@ def get_faction_logo(faction_key: str) -> list[str]:
     return logos.get(faction_key, [])
 
 
-##Function purpose: Display faction logo with color
+##Function purpose: Display faction ASCII art logo with specified color
 def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: int = 100) -> None:
     """
-    ##Function purpose: Displays faction ASCII art logo with specified color.
+    Displays faction ASCII art logo with specified color.
 
-    ##Action purpose: Prints the faction logo centered within the specified width,
-    using the provided color for all logo lines.
+    Prints the faction logo centered within the specified width, using the
+    provided color for all logo lines.
 
     Args:
         faction_key: Faction identifier
         color: ANSI color code for the logo
         width: Total width for centering
     """
+    ##Action purpose: Prints the faction logo centered within the specified width,
+    ##Step purpose: using the provided color for all logo lines
     ##Action purpose: Get logo lines
     logo_lines = get_faction_logo(faction_key)
 
@@ -202,7 +212,6 @@ def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: i
         print(" " * padding + color + line + reset)
 
 
-##Function purpose: Display all faction logos with counters
 ##Function purpose: Render a single row of logos line by line
 def _render_logo_row(
     logos: list[list[str]],
@@ -213,10 +222,10 @@ def _render_logo_row(
     spacing: int,
 ) -> None:
     """
-    ##Function purpose: Renders a single row of logos line by line.
+    Renders a single row of logos line by line.
 
-    ##Action purpose: Prints each line of logos with proper spacing and colors,
-    handling the mode/faction key distinction when logo_keys and faction_keys differ.
+    Prints each line of logos with proper spacing and colors, handling the
+    mode/faction key distinction when logo_keys and faction_keys differ.
 
     Args:
         logos: List of logo line lists (one per logo)
@@ -226,6 +235,8 @@ def _render_logo_row(
         width: Total display width
         spacing: Space between logos
     """
+    ##Action purpose: Prints each line of logos with proper spacing and colors,
+    ##Step purpose: handling the mode/faction key distinction when logo_keys and faction_keys differ
     ui = UIColors
     reset = Colors.RESET
 
@@ -257,7 +268,7 @@ def _render_logo_row(
         print(combined_line)
 
 
-##Function purpose: Print counters below a row of logos
+##Function purpose: Print prompt counters below a row of logos
 def _print_logo_counters(
     logo_keys: list[str],
     faction_keys: list[str],
@@ -268,10 +279,10 @@ def _print_logo_counters(
     spacing: int,
 ) -> None:
     """
-    ##Function purpose: Prints prompt counters below a row of logos.
+    Prints prompt counters below a row of logos.
 
-    ##Action purpose: Displays prompt counts centered below each logo, using
-    faction keys (not logo keys) for count lookup to preserve mode/faction distinction.
+    Displays prompt counts centered below each logo, using faction keys (not
+    logo keys) for count lookup to preserve mode/faction distinction.
 
     Args:
         logo_keys: List of logo keys (for reference, not used for lookup)
@@ -282,6 +293,8 @@ def _print_logo_counters(
         logo_width: Width of each logo
         spacing: Space between logos
     """
+    ##Action purpose: Displays prompt counts centered below each logo, using
+    ##Step purpose: faction keys (not logo keys) for count lookup to preserve mode/faction distinction
     ui = UIColors
     reset = Colors.RESET
 
@@ -310,23 +323,26 @@ def _print_logo_counters(
     print()  # Extra spacing
 
 
+##Function purpose: Display all 5 faction logos with prompt counters
 def display_faction_logos_with_counters(
     current_faction: str,
     faction_prompt_counts: dict[str, int],
     width: int = 100,
 ) -> None:
     """
-    ##Function purpose: Displays all 5 faction logos with prompt counters.
+    Displays all 5 faction logos with prompt counters.
 
-    ##Action purpose: Creates a beautiful display showing all faction logos
-    in a grid layout, with the current faction highlighted in gold and others
-    in white. Each logo shows the prompt count below it.
+    Creates a beautiful display showing all faction logos in a grid layout,
+    with the current faction highlighted in gold and others in white. Each
+    logo shows the prompt count below it.
 
     Args:
         current_faction: Currently selected faction key
         faction_prompt_counts: Dictionary mapping faction keys to prompt counts
         width: Total display width
     """
+    ##Action purpose: Creates a beautiful display showing all faction logos
+    ##Step purpose: in a grid layout, with the current faction highlighted in gold
     ui = UIColors
 
     ##Step purpose: Calculate layout for 5 logos (2 rows: 3 on top, 2 on bottom)
@@ -381,7 +397,7 @@ def display_faction_logos_with_counters(
     )
 
 
-##Function purpose: Display the LOGOS welcome screen
+##Function purpose: Display beautiful welcome screen with user context
 def display_welcome_screen(
     context: WelcomeScreenContext | None = None,
     username: str | None = None,
@@ -393,10 +409,10 @@ def display_welcome_screen(
     faction_prompt_counts: dict[str, int] | None = None,
 ) -> None:
     """
-    ##Function purpose: Display beautiful welcome screen with user context.
+    Display beautiful welcome screen with user context.
 
-    ##Action purpose: Creates the main LOGOS federation welcome screen
-    with personalized information, faction logos, and prompt counters.
+    Creates the main LOGOS federation welcome screen with personalized information,
+    faction logos, and prompt counters.
 
     Args:
         context: WelcomeScreenContext dataclass with all context data (preferred)
@@ -408,6 +424,8 @@ def display_welcome_screen(
         last_session: Last session information (legacy parameter, use context instead)
         faction_prompt_counts: Dictionary mapping faction keys to prompt counts (legacy parameter, use context instead)
     """
+    ##Action purpose: Creates the main LOGOS federation welcome screen
+    ##Step purpose: with personalized information, faction logos, and prompt counters
     ##Action purpose: Extract values from context if provided, otherwise use legacy parameters
     if context:
         username = context.username
@@ -469,14 +487,17 @@ def display_welcome_screen(
         )
 
 
-##Function purpose: Display mode selection menu
+##Function purpose: Display beautiful mode selection interface
 def display_mode_selection() -> None:
     """
-    ##Function purpose: Display beautiful mode selection interface.
+    Display beautiful mode selection interface.
 
-    ##Action purpose: Creates the Daedelus/DEUS mode selection screen
-    with clear options and descriptions.
+    Creates the Daedelus/DEUS mode selection screen with clear options and
+    descriptions.
+
     """
+    ##Action purpose: Creates the Daedelus/DEUS mode selection screen
+    ##Step purpose: with clear options and descriptions
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
@@ -492,20 +513,32 @@ def display_mode_selection() -> None:
         "[U] DEUS - System Administration",
         "    FreeBSD system administration federation",
         "",
-        "[F] Change Faction | [S] System Info | [T] Faction Stats | [Q] Quit",
+        "Additional Options:",
+        "",
+        "[F] Change Faction",
+        "    Switch to a different philosophical faction",
+        "",
+        "[S] System Information",
+        "    View detailed system and environment information",
+        "",
+        "[T] Faction Statistics",
+        "    View prompt usage statistics by faction and mode",
+        "",
+        "[Q] Quit",
+        "    Exit LOGOS",
         "",
     ]
 
     print_box(width, lines, title="SELECT MODE", border_color=ui.PRIMARY)
 
 
-##Function purpose: Get LOGOS banner lines (helper for batching)
+##Function purpose: Get LOGOS banner lines for batching (performance optimization)
 def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> list[str]:
     """
-    ##Function purpose: Gets LOGOS banner lines for batching (performance optimization).
+    Gets LOGOS banner lines for batching (performance optimization).
 
-    ##Action purpose: Returns banner lines as a list instead of printing directly,
-    allowing batch output operations for improved performance.
+    Returns banner lines as a list instead of printing directly, allowing
+    batch output operations for improved performance.
 
     Args:
         width: Total width for centering
@@ -514,6 +547,8 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     Returns:
         List of banner lines with formatting
     """
+    ##Action purpose: Returns banner lines as a list instead of printing directly,
+    ##Step purpose: allowing batch output operations for improved performance
     ##Action purpose: Get banner lines
     banner_lines = get_logos_banner()
     reset = Colors.RESET
@@ -531,13 +566,13 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     return output_lines
 
 
-##Function purpose: Get faction logo lines (helper for batching)
+##Function purpose: Get faction logo lines for batching (performance optimization)
 def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width: int = 100) -> list[str]:
     """
-    ##Function purpose: Gets faction logo lines for batching (performance optimization).
+    Gets faction logo lines for batching (performance optimization).
 
-    ##Action purpose: Returns logo lines as a list instead of printing directly,
-    allowing batch output operations for improved performance.
+    Returns logo lines as a list instead of printing directly, allowing
+    batch output operations for improved performance.
 
     Args:
         faction_key: Faction identifier
@@ -547,6 +582,8 @@ def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width
     Returns:
         List of logo lines with formatting
     """
+    ##Action purpose: Returns logo lines as a list instead of printing directly,
+    ##Step purpose: allowing batch output operations for improved performance
     ##Action purpose: Get logo lines
     logo_lines = get_faction_logo(faction_key)
     output_lines = []
@@ -570,7 +607,7 @@ def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width
     return output_lines
 
 
-##Function purpose: Display agent selection menu
+##Function purpose: Display beautiful agent selection menu
 def display_agent_menu(
     mode: str,
     agent_groups: list[AgentGroup],
@@ -578,11 +615,11 @@ def display_agent_menu(
     faction_key: str | None = None,
 ) -> None:
     """
-    ##Function purpose: Display beautiful agent selection menu.
+    Display beautiful agent selection menu.
 
-    ##Action purpose: Creates a formatted agent selection interface
-    with color-coded groups, clear organization, and chosen faction logo.
-    ##Optimization: Uses batched output (single print operation) for improved performance (C9 optimization).
+    Creates a formatted agent selection interface with color-coded groups, clear
+    organization, and chosen faction logo. Uses batched output (single print
+    operation) for improved performance.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -590,6 +627,8 @@ def display_agent_menu(
         faction_name: Optional faction name to display
         faction_key: Optional faction key for logo display
     """
+    ##Action purpose: Creates a formatted agent selection interface
+    ##Step purpose: with color-coded groups, clear organization, and chosen faction logo
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
@@ -644,21 +683,23 @@ def display_agent_menu(
     print("\n".join(output_lines))
 
 
-##Function purpose: Display first-run wizard
+##Function purpose: Display beautiful first-run setup wizard
 def display_first_run_wizard(
     system_info: dict[str, str],
     factions: list[tuple[str, str, str]],
 ) -> None:
     """
-    ##Function purpose: Display beautiful first-run setup wizard.
+    Display beautiful first-run setup wizard.
 
-    ##Action purpose: Creates the initial setup screen with system scan
-    results and faction selection.
+    Creates the initial setup screen with system scan results and faction
+    selection.
 
     Args:
         system_info: Dictionary with system information (hostname, username, os, etc.)
         factions: List of (faction_key, faction_name, description) tuples
     """
+    ##Action purpose: Creates the initial setup screen with system scan
+    ##Step purpose: results and faction selection
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
@@ -706,17 +747,19 @@ def display_first_run_wizard(
     print()
 
 
-##Function purpose: Display system information
+##Function purpose: Display comprehensive system information
 def display_system_info(identity: SystemIdentity) -> None:
     """
-    ##Function purpose: Displays comprehensive system information.
+    Displays comprehensive system information.
 
-    ##Action purpose: Shows system identity, date/time/timezone, and system
-    capabilities in a formatted display box.
+    Shows system identity, date/time/timezone, and system capabilities in a
+    formatted display box.
 
     Args:
         identity: SystemIdentity instance with system information
     """
+    ##Action purpose: Shows system identity, date/time/timezone, and system
+    ##Step purpose: capabilities in a formatted display box
     import time
     from datetime import datetime, timezone
 
@@ -811,7 +854,7 @@ def display_system_info(identity: SystemIdentity) -> None:
     print()
 
 
-##Function purpose: Display agent prompt result
+##Function purpose: Display agent selection result beautifully
 def display_agent_result(
     agent_name: str,
     agent_group: str,
@@ -821,10 +864,9 @@ def display_agent_result(
     prompt_text: str | None = None,
 ) -> None:
     """
-    ##Function purpose: Display agent selection result beautifully.
+    Display agent selection result beautifully.
 
-    ##Action purpose: Shows the result of agent selection with
-    appropriate success/error messaging.
+    Shows the result of agent selection with appropriate success/error messaging.
 
     Args:
         agent_name: Name of selected agent
@@ -834,6 +876,8 @@ def display_agent_result(
         show_prompt: Whether to display full prompt
         prompt_text: Full prompt text (if show_prompt is True)
     """
+    ##Action purpose: Shows the result of agent selection with
+    ##Step purpose: appropriate success/error messaging
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
@@ -869,10 +913,10 @@ def display_agent_result(
     print()
 
 
-##Function purpose: Display error message
+##Function purpose: Display error message beautifully
 def display_error(message: str, details: str | None = None) -> None:
     """
-    ##Function purpose: Display error message beautifully.
+    Display error message beautifully.
 
     Args:
         message: Error message
@@ -896,21 +940,23 @@ def display_error(message: str, details: str | None = None) -> None:
     print()
 
 
-##Function purpose: Display faction prompt statistics
+##Function purpose: Display faction and mode prompt statistics beautifully
 def display_faction_statistics(
     faction_prompt_counts: dict[str, int],
     mode_prompt_counts: dict[str, int],
 ) -> None:
     """
-    ##Function purpose: Display faction and mode prompt statistics beautifully.
+    Display faction and mode prompt statistics beautifully.
 
-    ##Action purpose: Shows how many prompts have been selected for each faction
-    and mode, formatted in a clear, readable display.
+    Shows how many prompts have been selected for each faction and mode,
+    formatted in a clear, readable display.
 
     Args:
         faction_prompt_counts: Dictionary of faction name to prompt count
         mode_prompt_counts: Dictionary of mode name to prompt count
     """
+    ##Action purpose: Shows how many prompts have been selected for each faction
+    ##Step purpose: and mode, formatted in a clear, readable display
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 

@@ -21,16 +21,16 @@ def get_faction_options() -> list[tuple[str, str, str]]:
     ##Function purpose: Builds faction selection options list.
 
     ##Action purpose: Creates list of (key, name, description) tuples for all
-    available factions excluding the default daedelus/deus factions.
+    5 available factions with their modifiers.
 
     Returns:
         List of (faction_key, faction_name, description) tuples
     """
-    ##Action purpose: Filter out default factions, keep only user-selectable ones
-    selectable_factions = ["revanchist", "orphic", "technomancer"]
+    ##Action purpose: All 5 factions are selectable with their own modifiers
+    selectable_factions = ["revanchist", "daedalus", "orphic", "technomancer", "deus"]
     options = []
 
-    ##Loop purpose: Build options list from selectable factions
+    ##Loop purpose: Build options list from all selectable factions
     for key in selectable_factions:
         faction = FACTIONS.get(key)
         ##Condition purpose: Skip if faction not found
@@ -60,10 +60,10 @@ def select_faction() -> str | None:
     while True:
         try:
             ##Action purpose: Get user input
-            choice = input("\nSelect faction (r/o/t): ").strip().lower()
+            choice = input("\nSelect faction (r/d/o/t/u/q): ").strip().lower()
 
             ##Action purpose: Validate input for security
-            is_valid, error = validate_input(choice, max_length=20, allowed_chars="rotqexi")
+            is_valid, error = validate_input(choice, max_length=20, allowed_chars="rdotuqexi")
             if not is_valid:
                 ##Action purpose: Display validation error and prompt again
                 print(f"Invalid input: {error}")
@@ -72,32 +72,40 @@ def select_faction() -> str | None:
             ##Condition purpose: Map input to faction key
             if choice in ["r", "revanchist"]:
                 return "revanchist"
+            elif choice in ["d", "daedalus"]:
+                return "daedalus"
             elif choice in ["o", "orphic"]:
                 return "orphic"
             elif choice in ["t", "technomancer"]:
                 return "technomancer"
+            elif choice in ["u", "deus"]:
+                return "deus"
             elif choice in ["q", "quit", "exit"]:
                 ##Action purpose: Allow user to cancel
                 return None
             else:
                 ##Action purpose: Invalid input, prompt again
-                print("Invalid selection. Please enter 'r' (Revanchist), 'o' (Orphic), or 't' (Technomancer)")
+                print(
+                    "Invalid selection. Please enter 'r' (Revanchist), 'd' (Daedalus), 'o' (Orphic), 't' (Technomancer), 'u' (Deus), or 'q' (Quit)"
+                )
         except (EOFError, KeyboardInterrupt):
-            ##Action purpose: Handle Ctrl+C or EOF
+            ##Error purpose: Handle Ctrl+C or EOF (user interruption)
             return None
 
 
-##Function purpose: Main first-run wizard function
+##Function purpose: Run the complete first-run setup wizard
 def run_first_run_wizard() -> bool:
     """
-    ##Function purpose: Runs the complete first-run setup wizard.
+    Runs the complete first-run setup wizard.
 
-    ##Action purpose: Orchestrates system scanning, faction selection, and
-    identity creation for new LOGOS users.
+    Orchestrates system scanning, faction selection, and identity creation
+    for new LOGOS users.
 
     Returns:
         True if wizard completed successfully, False if cancelled
     """
+    ##Action purpose: Orchestrates system scanning, faction selection, and
+    ##Step purpose: identity creation for new LOGOS users
     try:
         ##Action purpose: Clear screen for clean start
         clear_screen()
@@ -151,14 +159,14 @@ def run_first_run_wizard() -> bool:
         return True
 
     except KeyboardInterrupt:
-        ##Action purpose: Handle Ctrl+C gracefully
+        ##Error purpose: Handle Ctrl+C gracefully (user interruption)
         print("\n\nFirst-run wizard cancelled.")
         return False
     except (OSError, ValueError, KeyError) as e:
-        ##Action purpose: Handle specific expected errors (file I/O, validation, key lookup)
+        ##Error purpose: Handle specific expected errors (file I/O, validation, key lookup)
         display_error("Error in first-run wizard", str(e))
         return False
     except Exception as e:
-        ##Action purpose: Handle unexpected errors (graceful CLI degradation)
+        ##Error purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error in first-run wizard", str(e))
         return False
