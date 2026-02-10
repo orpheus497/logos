@@ -127,7 +127,7 @@ def test_validate_input_whitelist():
         assert error is None
 
     ##Action purpose: Test with disallowed characters
-    invalid_inputs = ["a", "b", "c", "ra", "otx", "123"]
+    invalid_inputs = ["a", "b", "c", "ra", "otxy", "123"]
 
     ##Loop purpose: Test invalid inputs
     for invalid_input in invalid_inputs:
