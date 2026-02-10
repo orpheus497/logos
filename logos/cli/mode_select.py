@@ -77,7 +77,12 @@ def select_faction_for_change() -> str | None:
             choice = input("\nSelect faction (r/d/o/t/u/q): ").strip().lower()
 
             ##Action purpose: Validate input for security
-            is_valid, error = validate_input(choice, max_length=20, allowed_chars="rdotuqexi")
+            is_valid, error = validate_input(
+                choice,
+                max_length=20,
+                allow_whitespace=False,
+                allowed_chars="abcdefghijklmnopqrstuvwxyz",
+            )
             if not is_valid:
                 ##Action purpose: Display validation error and prompt again
                 print(f"Invalid input: {error}")

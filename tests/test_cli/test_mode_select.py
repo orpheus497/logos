@@ -218,8 +218,9 @@ def test_change_faction_successful_change():
         ##Condition purpose: Verify faction changed
         assert result is not None
         assert result.faction == "orphic"
-        ##Condition purpose: Verify save was called
-        assert result is identity
+        ##Condition purpose: Verify returned identity has updated fields
+        assert result.hostname == identity.hostname
+        assert result.username == identity.username
 
 
 ##Function purpose: Test change_faction all 5 factions

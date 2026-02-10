@@ -17,7 +17,7 @@ def test_get_faction_options():
 
     ##Condition purpose: Verify options structure
     assert isinstance(options, list)
-    assert len(options) == 3  # revanchist, orphic, technomancer
+    assert len(options) == 5  # revanchist, daedalus, orphic, technomancer, deus
 
     ##Condition purpose: Verify each option is a tuple
     for option in options:
