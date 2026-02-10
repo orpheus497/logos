@@ -336,9 +336,16 @@ def test_get_logos_banner_contains_logos():
     banner = get_logos_banner()
     banner_text = "\n".join(banner)
 
-    ##Condition purpose: Verify banner contains L O G O S letters (may be spaced)
-    # Banner has letters spaced out like "L      O      G      O      S"
-    assert "L" in banner_text and "O" in banner_text and "G" in banner_text and "S" in banner_text
+    ##Condition purpose: Verify banner contains L O G O S letters in spaced format
+    # Banner has letters spaced out like "    L      O      G      O      S"
+    # Check that the spaced pattern exists in the last line
+    assert len(banner) > 0
+    last_line = banner[-1] if banner else ""
+    # Check for the spaced LOGOS pattern (with multiple spaces between letters)
+    import re
+    # Pattern matches "L", then spaces, then "O", then spaces, etc.
+    spaced_pattern = r"L\s+O\s+G\s+O\s+S"
+    assert re.search(spaced_pattern, last_line), f"Expected spaced 'L O G O S' pattern in banner, got: {last_line}"
 
 
 ##Function purpose: Test display_logos_banner displays banner
