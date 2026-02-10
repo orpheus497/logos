@@ -81,7 +81,7 @@ def select_faction_for_change() -> str | None:
                 choice,
                 max_length=20,
                 allow_whitespace=False,
-                allowed_chars=set("abcdefghijklmnopqrstuvwxyz"),
+                allowed_chars="abcdefghijklmnopqrstuvwxyz",
             )
             if not is_valid:
                 ##Action purpose: Display validation error and prompt again

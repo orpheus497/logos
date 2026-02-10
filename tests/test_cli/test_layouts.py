@@ -4,6 +4,7 @@
 Tests layout and display functions including system information display.
 """
 
+import re
 import sys
 from io import StringIO
 from unittest.mock import patch
@@ -334,7 +335,6 @@ def test_get_logos_banner_contains_logos():
     """##Function purpose: Verify get_logos_banner contains LOGOS text.."""
     ##Action purpose: Get LOGOS banner
     banner = get_logos_banner()
-    banner_text = "\n".join(banner)
 
     ##Condition purpose: Verify banner contains L O G O S letters in spaced format
     # Banner has letters spaced out like "    L      O      G      O      S"
@@ -342,7 +342,6 @@ def test_get_logos_banner_contains_logos():
     assert len(banner) > 0
     last_line = banner[-1] if banner else ""
     # Check for the spaced LOGOS pattern (with multiple spaces between letters)
-    import re
     # Pattern matches "L", then spaces, then "O", then spaces, etc.
     spaced_pattern = r"L\s+O\s+G\s+O\s+S"
     assert re.search(spaced_pattern, last_line), f"Expected spaced 'L O G O S' pattern in banner, got: {last_line}"
