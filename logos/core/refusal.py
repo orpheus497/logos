@@ -110,12 +110,12 @@ def quick_refusal(
     recommended_key: str,
     recommended_name: str,
     reason: str,
+    recommended_description: str | None = None,
 ) -> str:
     """
     ##Function purpose: Generate refusal with minimal parameter entry.
 
-    Convenience function for common refusal cases where full description
-    not needed.
+    Convenience function for common refusal cases.
 
     Args:
         refusing_key: Key of refusing agent (e.g., "A1")
@@ -124,12 +124,17 @@ def quick_refusal(
         recommended_key: Key of recommended agent
         recommended_name: Name of recommended agent
         reason: Why request is out of scope
+        recommended_description: Optional description of recommended agent
 
     Returns:
         Formatted refusal message
     """
-    ##Action purpose: Create RefusalResponse with minimal data
-    desc_name = re.sub(r'^(the)\s+', '', recommended_name, flags=re.IGNORECASE)
+    ##Action purpose: Create RefusalResponse with provided or generated description
+    if not recommended_description:
+        ##Action purpose: Strip "The " prefix robustly using regex
+        desc_name = re.sub(r"^(the)\s+", "", recommended_name, flags=re.IGNORECASE)
+        recommended_description = f"Handles {desc_name} responsibilities"
+
     response = RefusalResponse(
         refusing_agent_key=refusing_key,
         refusing_agent_name=refusing_name,
@@ -137,7 +142,7 @@ def quick_refusal(
         reason=reason,
         recommended_agent_key=recommended_key,
         recommended_agent_name=recommended_name,
-        recommended_agent_description=f"Specialized in {desc_name} tasks",
+        recommended_agent_description=recommended_description,
     )
 
     ##Action purpose: Generate and return formatted refusal

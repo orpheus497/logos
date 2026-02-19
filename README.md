@@ -71,7 +71,7 @@ LOGOS serves as an **intelligent prompt composition system** that:
 - **Engineers (A1-A5):** Design kernel configs, manage drivers, architect networks, configure boot, design services
 - **Auditors (B6-B10):** Audit security, validate syntax, profile performance, ensure compliance, gate releases
 - **Maintainers (C1, C6-C11):** Manage packages, update ports, maintain configs, patch security, optimize systems
-- **Specialists (D2-D5):** Manage ZFS, configure networks, harden security, automate tasks
+- **Specialists (D2-D5):** Custom port compilation, Linux compatibility/Wine, jails and isolation, ZFS storage architecture
 - **Operators (E1-E5):** Administer systems, resolve conflicts, provide ultimate system oversight
 
 ---

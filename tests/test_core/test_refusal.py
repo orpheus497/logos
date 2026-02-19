@@ -135,7 +135,20 @@ class TestQuickRefusal:
             recommended_name="The Security Patcher",
             reason="Fixing security vulnerabilities",
         )
-        assert "Specialized in Security Patcher tasks" in result
+        assert "Handles Security Patcher responsibilities" in result
+
+    def test_uses_provided_description(self):
+        """##Function purpose: Verify quick_refusal uses provided description."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="architecture",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+            recommended_description="Specialized in backend development",
+        )
+        assert "Specialized in backend development" in result
 
 
 class TestValidateRefusalResponse:
