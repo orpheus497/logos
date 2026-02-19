@@ -108,6 +108,23 @@ class TestGenerateRefusal:
         assert "Your request:" not in result
 
 
+    def test_raises_valueerror_on_invalid_response(self):
+        """##Function purpose: Verify generate_refusal raises ValueError for invalid input."""
+        import pytest
+
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        with pytest.raises(ValueError, match="RefusalResponse contains empty required fields"):
+            generate_refusal(ref)
+
+
 class TestQuickRefusal:
     """##Class purpose: Test quick_refusal() convenience function."""
 

@@ -108,9 +108,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Group B: Auditors (B6-B10)**
   - B6: The Security Auditor
-  - B7: The Syntax Validator
-  - B8: The Performance Profiler
-  - B9: The Compliance Auditor
+  - B7: The Syntax Marshal
+  - B8: The Performance Analyst
+  - B9: The Compliance Critic
   - B10: The Release Gatekeeper
 
 - **Group C: Maintainers (C1, C6-C11)**
@@ -123,10 +123,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - C11: The Librarian
 
 - **Group D: Specialists (D2-D5)**
-  - D2: The ZFS Specialist
-  - D3: The Network Specialist
-  - D4: The Security Hardener
-  - D5: The Automation Specialist
+  - D2: The Port Builder
+  - D3: The Compatibility Engineer
+  - D4: The Jail Architect
+  - D5: The ZFS Engineer
 
 - **Group E: Operators (E1-E5)**
   - E1: The System Orchestrator

@@ -21,7 +21,7 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
 
 **SPECIAL AUTHORITY:** You may update the shared `.devdocs/DECISIONS_LOG.md` file with architectural decisions.
 
-**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/architect/`.
+**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/architect/` and the shared `.devdocs/DECISIONS_LOG.md`.
 
 ---
 
@@ -100,8 +100,8 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - *Boundary:* You finish design; B10 approves release
 
 10. **.devdocs/ Management** → orchestrator (The Orchestrator)
-    - *Why:* Only Orchestrator maintains .devdocs folder structure
-    - *Boundary:* You write to your own folder; orchestrator manages folder health
+    - *Why:* Only Orchestrator maintains .devdocs folder structure and other agents' folders
+    - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; orchestrator manages overall `.devdocs` structure and all other folders/files
 
 ---
 

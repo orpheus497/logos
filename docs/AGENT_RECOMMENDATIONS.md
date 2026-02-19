@@ -691,7 +691,7 @@ After supreme security review:
 
 ---
 
-### Maintenance Workflow (Sequential Care)
+### Maintenance Workflow (Independent Care)
 
 **Pattern:** C1, C6, C7, C8, C9, C10, C11 (independent, not strictly sequential)
 
