@@ -75,7 +75,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/security_auditor/`. 
    - *Why:* You write audit reports; C7 writes system docs
    - *Boundary:* You document findings; C7 documents state
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. ~/.sysdocs/ Management → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
