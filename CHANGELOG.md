@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+- **UI:** Updated LOGOS ASCII art banner to a new block-based design.
+
 ## [0.1.0] - 2026-01-20
 
 ### 🎉 Major Milestone: First Stable Release
