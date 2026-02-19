@@ -27,17 +27,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B8 (The Profiler)
   - B9 (The Critic)
   - B10 (The Gatekeeper)
+- Scope boundaries implemented for Daedelus Group C (Maintainers):
+  - C1 (The Bug Hunter)
+  - C6 (The Security Patcher)
+  - C7 (The Doc Updater)
+  - C8 (The Configurator)
+  - C9 (The Optimizer)
+  - C10 (The Janitor)
+  - C11 (The Librarian)
+- Scope boundaries implemented for Daedelus Group D (Workers):
+  - D2 (The Feature Sprinter)
+  - D3 (The Refactorer)
+  - D4 (The UI Tweaker)
+  - D5 (The Test Extender)
+- Scope boundaries implemented for Daedelus Group E (Operators):
+  - orchestrator (The Orchestrator)
+  - ocm / E12 (The Operational Control Manager)
+  - daedelus (Daedelus - The Brutal Perfectionist Supreme Review)
 
 ### Changed
 
 - Version set to 0.2.0-dev for active development
+- Orchestrator agent now has activation prompt with scope boundaries
 
 ### Development Status
 
 - Phase 1: Agent Boundaries - In Progress
 - PR #1: Infrastructure setup - Complete
 - PR #2: Daedelus Group A-B Boundaries - Complete
-- PR #3: Daedelus Group C-E Boundaries - Next
+- PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
+- PR #4: DEUS Group A-B Boundaries - Next
 
 ## [0.1.0] - 2026-01-20
 

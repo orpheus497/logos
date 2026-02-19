@@ -51,6 +51,7 @@ from logos.daedelus.prompts.agents.operators import (
     DAEDELUS_PURPOSE,
     OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
     OPERATIONAL_CONTROL_MANAGER_PURPOSE,
+    ORCHESTRATOR_ACTIVATION,
     THE_ORCHESTRATOR_PURPOSE,
 )
 from logos.daedelus.prompts.agents.workers import (
@@ -270,7 +271,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         desc="Empty Project Setup",
         group="E",
         base_prompt=ORCHESTRATOR_BASE_PROMPT,
-        activation_prompt="",
+        activation_prompt=ORCHESTRATOR_ACTIVATION,
         purpose=THE_ORCHESTRATOR_PURPOSE,
     ),
     "ocm": Agent(
