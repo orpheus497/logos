@@ -53,7 +53,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     header = "### ✅ IN SCOPE (What You CAN Do):"
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
-    items = re.findall(r"\n\d+\. \*\*", in_scope_text)
+    items = re.findall(r"(?:^|\n)\d+\. \*\*", in_scope_text)
     assert len(items) >= 3, (
         f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
     )
@@ -65,7 +65,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     header = "### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):"
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
-    items = re.findall(r"\n\d+\. \*\*", forbidden_text)
+    items = re.findall(r"(?:^|\n)\d+\. \*\*", forbidden_text)
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     )

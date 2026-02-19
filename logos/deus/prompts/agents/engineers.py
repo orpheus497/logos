@@ -74,7 +74,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/kernel_architect/`.
    - *Why:* You set compile-time options; C8 sets runtime tunables
    - *Boundary:* You compile; C8 tunes
 
-8. ~/.sysdocs/ Management → E1 (The System Orchestrator)
+8. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -216,7 +216,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/driver_engineer/`. 
    - *Why:* You install firmware packages; C11 manages the package system
    - *Boundary:* You use pkg for firmware; C11 manages pkg itself
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -367,7 +367,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/network_architect/`
    - *Why:* You handle host network; D4 handles jail network
    - *Boundary:* You provide the bridge; D4 connects the jail
 
-8. **.devdocs/ Management** → E1 (The System Orchestrator)
+8. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -515,7 +515,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/boot_engineer/`. Cr
    - *Why:* You handle boot tunables; C8 handles runtime sysctls
    - *Boundary:* You set read-only tunables; C8 sets writable ones
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -666,7 +666,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/service_scribe/`. C
    - *Why:* You write runbooks; C7 maintains system manuals
    - *Boundary:* You document operations; C7 documents reference
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 

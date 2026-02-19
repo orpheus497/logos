@@ -178,7 +178,7 @@ After release decision:
 
 ### Group C: Maintainers
 
-> **Note on agent numbering:** Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D starts at D2). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
+> **Note on agent numbering:** Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D2-D5). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
 
 **C1 (The Bug Hunter) → Next Steps:**
 

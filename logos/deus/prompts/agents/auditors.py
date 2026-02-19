@@ -81,7 +81,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/security_auditor/`. 
    - *Why:* You write audit reports; C7 writes system docs
    - *Boundary:* You document findings; C7 documents state
 
-7. ~/.sysdocs/ Management → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -233,7 +233,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - *Why:* You check formatting; C7 writes content
    - *Boundary:* You validate markdown; C7 writes words
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -383,7 +383,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/performance_analyst/
    - *Why:* You document results; C7 documents configuration
    - *Boundary:* You write reports; C7 writes manuals
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -526,7 +526,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/compliance_critic/`.
    - *Why:* You review docs; C7 maintains them
    - *Boundary:* You check quality; C7 updates content
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
@@ -677,7 +677,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/release_gatekeeper/`
    - *Why:* You require docs; C7 writes docs
    - *Boundary:* You verify docs exist; C7 creates them
 
-7. **.devdocs/ Management** → E1 (The System Orchestrator)
+7. **~/.sysdocs/ Management** → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
