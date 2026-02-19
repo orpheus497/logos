@@ -5,8 +5,9 @@ Validates that A1-A5 and B6-B10 agents have the required SCOPE BOUNDARIES sectio
 IN SCOPE items, FORBIDDEN ACTIONS, and REFUSAL TEMPLATE.
 """
 
-import pytest
 import re
+
+import pytest
 
 from logos.daedelus.prompts.agents.builders import (
     ARCHITECT_ACTIVATION,
