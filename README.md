@@ -1274,7 +1274,7 @@ pip-audit --fix
 
 ### Project Status
 
-**Current Version:** 0.1.0 (Alpha)
+**Current Version:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
 
 **Completed:**
 - ✅ Core infrastructure (identity, persistence, validation)
@@ -1373,5 +1373,5 @@ If you modify LOGOS and distribute it (including as a service), you must:
 
 ---
 
-**Status:** Alpha - Stable release, ready for production use  
-**Last Updated:** 2026-01-20
+**Status:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
+**Last Updated:** 2026-02-19
