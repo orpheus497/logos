@@ -44,6 +44,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - orchestrator (The Orchestrator)
   - ocm / E12 (The Operational Control Manager)
   - daedelus (Daedelus - The Brutal Perfectionist Supreme Review)
+- Scope boundaries implemented for DEUS Group A (Engineers):
+  - A1 (The Kernel Architect)
+  - A2 (The Driver Engineer)
+  - A3 (The Network Architect)
+  - A4 (The Boot Engineer)
+  - A5 (The Service Scribe)
+- Scope boundaries implemented for DEUS Group B (Auditors):
+  - B6 (The Security Auditor)
+  - B7 (The Syntax Marshal)
+  - B8 (The Performance Analyst)
+  - B9 (The Compliance Critic)
+  - B10 (The Release Gatekeeper)
 
 ### Changed
 
@@ -67,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PR #1: Infrastructure setup - Complete
 - PR #2: Daedelus Group A-B Boundaries - Complete
 - PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
-- PR #4: DEUS Group A-B Boundaries - Next
+- PR #4: DEUS Group A-B Boundaries - Complete (10/26 DEUS agents)
 
 ## [0.1.0] - 2026-01-20
 
