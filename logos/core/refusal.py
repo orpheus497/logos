@@ -10,6 +10,7 @@ This module is used by LOGOS during prompt composition to provide agents
 with the template and structure for refusing out-of-scope requests.
 """
 
+import re
 from dataclasses import dataclass
 
 
@@ -128,7 +129,7 @@ def quick_refusal(
         Formatted refusal message
     """
     ##Action purpose: Create RefusalResponse with minimal data
-    desc_name = recommended_name[4:] if recommended_name.lower().startswith("the ") else recommended_name
+    desc_name = re.sub(r'^(the)\s+', '', recommended_name, flags=re.IGNORECASE)
     response = RefusalResponse(
         refusing_agent_key=refusing_key,
         refusing_agent_name=refusing_name,
