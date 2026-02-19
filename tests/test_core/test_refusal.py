@@ -135,7 +135,7 @@ class TestQuickRefusal:
             recommended_name="The Security Patcher",
             reason="Fixing security vulnerabilities",
         )
-        assert "Specialized in security patcher tasks" in result
+        assert "Specialized in Security Patcher tasks" in result
 
 
 class TestValidateRefusalResponse:

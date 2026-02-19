@@ -1,6 +1,6 @@
 # LOGOS Agent Recommendations Cross-Reference
 
-**Version:** 0.2.0  
+**Version:** 0.2.0.dev0  
 **Last Updated:** 2026-02-19  
 **Purpose:** Quick reference for agent-to-agent workflow recommendations
 

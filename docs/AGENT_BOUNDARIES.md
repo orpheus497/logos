@@ -1,6 +1,6 @@
 # LOGOS Agent Boundaries Reference Guide
 
-**Version:** 0.2.0  
+**Version:** 0.2.0.dev0  
 **Last Updated:** 2026-02-19  
 **Purpose:** Complete reference for agent scope boundaries, forbidden actions, and agent redirects
 

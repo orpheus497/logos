@@ -128,6 +128,7 @@ def quick_refusal(
         Formatted refusal message
     """
     ##Action purpose: Create RefusalResponse with minimal data
+    desc_name = recommended_name[4:] if recommended_name.lower().startswith("the ") else recommended_name
     response = RefusalResponse(
         refusing_agent_key=refusing_key,
         refusing_agent_name=refusing_name,
@@ -135,7 +136,7 @@ def quick_refusal(
         reason=reason,
         recommended_agent_key=recommended_key,
         recommended_agent_name=recommended_name,
-        recommended_agent_description=f"Specialized in {recommended_name.lower().replace('the ', '')} tasks",
+        recommended_agent_description=f"Specialized in {desc_name} tasks",
     )
 
     ##Action purpose: Generate and return formatted refusal

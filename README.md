@@ -12,7 +12,7 @@
 
 ## 🚧 Development Notice
 
-LOGOS v0.2.0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
+LOGOS v0.2.0.dev0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ---
 
