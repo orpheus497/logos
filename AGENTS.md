@@ -69,7 +69,7 @@ python -m ruff check logos/
 ## Current Development Status
 
 **Branch:** `task2/daedelus1` — PR #2: Daedelus Agent Boundaries (Group A-B)
-**Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (on this branch)
+**Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (bumped in Phase 1 on `task1/infrastructure`, inherited on this branch)
 
 ### PR #2 Progress: Daedelus Group A-B Scope Boundaries
 
@@ -101,7 +101,7 @@ python -m ruff check logos/
 
 Next commit: `feat(daedelus): add scope boundaries to A2 (Logic Engineer)` — add SCOPE BOUNDARIES to `LOGIC_ENGINEER_ACTIVATION` in `logos/daedelus/prompts/agents/builders.py`.
 
-Reference `PLAN.md` lines 1144-1194 for agent-specific scope definitions. Follow the pattern established in commit 1 (A1 Architect).
+Reference the "Detailed Agent-Specific Scope Definitions" section in `PLAN.md` for agent-specific scope definitions. Follow the pattern established in commit 1 (A1 Architect).
 
 ---
 

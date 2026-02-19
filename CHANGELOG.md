@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.2.0-dev] - 2026-02-19
+## [Unreleased]
 
-### Added (In Development)
+### Added
 
 - Agent boundary enforcement system (in progress)
 - Refusal response generation utility (logos/core/refusal.py)
@@ -27,17 +27,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B8 (The Profiler)
   - B9 (The Critic)
   - B10 (The Gatekeeper)
+- Scope boundaries implemented for Daedelus Group C (Maintainers):
+  - C1 (The Bug Hunter)
+  - C6 (The Security Patcher)
+  - C7 (The Doc Updater)
+  - C8 (The Configurator)
+  - C9 (The Optimizer)
+  - C10 (The Janitor)
+  - C11 (The Librarian)
+- Scope boundaries implemented for Daedelus Group D (Workers):
+  - D2 (The Feature Sprinter)
+  - D3 (The Refactorer)
+  - D4 (The UI Tweaker)
+  - D5 (The Test Extender)
+- Scope boundaries implemented for Daedelus Group E (Operators):
+  - orchestrator (The Orchestrator)
+  - ocm / E12 (The Operational Control Manager)
+  - daedelus (Daedelus - The Brutal Perfectionist Supreme Review)
 
 ### Changed
 
 - Version set to 0.2.0-dev for active development
+- Orchestrator agent now has activation prompt with scope boundaries
+
+### Fixed
+
+- Corrected DEUS agent names to match actual implementation:
+  - B7: Syntax Validator → Syntax Marshal
+  - B8: Performance Profiler → Performance Analyst
+  - B9: Compliance Auditor → Compliance Critic
+  - D2: ZFS Specialist → Port Builder
+  - D3: Network Specialist → Compatibility Engineer
+  - D4: Security Hardener → Jail Architect
+  - D5: Automation Specialist → ZFS Engineer
 
 ### Development Status
 
 - Phase 1: Agent Boundaries - In Progress
 - PR #1: Infrastructure setup - Complete
 - PR #2: Daedelus Group A-B Boundaries - Complete
-- PR #3: Daedelus Group C-E Boundaries - Next
+- PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
+- PR #4: DEUS Group A-B Boundaries - Next
 
 ## [0.1.0] - 2026-01-20
 
@@ -117,9 +147,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Group B: Auditors (B6-B10)**
   - B6: The Security Auditor
-  - B7: The Syntax Marshal
-  - B8: The Performance Analyst
-  - B9: The Compliance Critic
+  - B7: The Syntax Validator
+  - B8: The Performance Profiler
+  - B9: The Compliance Auditor
   - B10: The Release Gatekeeper
 
 - **Group C: Maintainers (C1, C6-C11)**
@@ -132,10 +162,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - C11: The Librarian
 
 - **Group D: Specialists (D2-D5)**
-  - D2: The Port Builder
-  - D3: The Compatibility Engineer
-  - D4: The Jail Architect
-  - D5: The ZFS Engineer
+  - D2: The ZFS Specialist
+  - D3: The Network Specialist
+  - D4: The Security Hardener
+  - D5: The Automation Specialist
 
 - **Group E: Operators (E1-E5)**
   - E1: The System Orchestrator

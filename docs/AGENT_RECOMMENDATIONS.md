@@ -730,4 +730,4 @@ When a DEUS agent encounters an application-level need:
 ---
 
 **Last Reviewed:** 2026-02-19
-**Next Review:** When workflow patterns change or agents modified
+**Next Review:** When workflow patterns change or agents modified, or quarterly
