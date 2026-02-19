@@ -102,7 +102,7 @@ git add docs/AGENT_RECOMMENDATIONS.md
 git add logos/core/refusal.py
 git add tests/test_core/test_refusal.py
 
-# Stage modified files (after issues above are resolved)
+# Stage modified files
 git add CHANGELOG.md
 git add README.md
 git add pyproject.toml

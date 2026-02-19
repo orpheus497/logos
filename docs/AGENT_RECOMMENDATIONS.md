@@ -85,7 +85,7 @@ After completing test implementation:
 - Wait for other agents to complete
 
 *After documentation:*
-- Funnel Workflow → B6, B8, B9 (parallel reviews)
+- Funnel Workflow → B6, B7, B8, B9 (parallel reviews)
 
 ---
 
@@ -689,13 +689,14 @@ After supreme security review:
 
 ### Maintenance Workflow (Sequential Care)
 
-**Pattern:** C1 → C6 → C7 → C8 → C9 → C10 → C11
+**Pattern:** C1, C6, C7, C8, C9, C10, C11 (independent, not strictly sequential)
 
 **When to use:**
 - Ongoing project maintenance
 - Documentation synchronization
 - Dependency updates
 - Routine care tasks
+- Agents operate independently based on need; order is not mandatory
 
 **Agents typically involved:**
 - C1 (Bug Hunter) - Bug diagnosis
