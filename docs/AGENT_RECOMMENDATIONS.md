@@ -85,7 +85,7 @@ After completing test implementation:
 - Wait for other agents to complete
 
 *After documentation:*
-- Funnel Workflow → B6, B8, B9 (parallel reviews)
+- Funnel Workflow → B6, B7, B8, B9 (parallel reviews)
 
 ---
 
@@ -177,6 +177,8 @@ After release decision:
 ---
 
 ### Group C: Maintainers
+
+> **Note on agent numbering:** Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D starts at D2). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
 
 **C1 (The Bug Hunter) → Next Steps:**
 
@@ -311,6 +313,8 @@ After extending test coverage:
 ---
 
 ### Group E: Operators
+
+> **Note on naming convention:** Daedelus Group E operators use descriptive identifiers (`orchestrator`, `ocm`, `daedelus`) rather than the alphanumeric pattern (E1-E5) used in the DEUS domain. This is intentional — these operators are invoked by name in the CLI and codebase, and their descriptive keys provide clearer intent when referenced in code and user commands.
 
 **orchestrator (The Orchestrator) → Next Steps:**
 
@@ -687,15 +691,16 @@ After supreme security review:
 
 ---
 
-### Maintenance Workflow (Sequential Care)
+### Maintenance Workflow (Independent Care)
 
-**Pattern:** C1 → C6 → C7 → C8 → C9 → C10 → C11
+**Pattern:** C1, C6, C7, C8, C9, C10, C11 (independent, not strictly sequential)
 
 **When to use:**
 - Ongoing project maintenance
 - Documentation synchronization
 - Dependency updates
 - Routine care tasks
+- Agents operate independently based on need; order is not mandatory
 
 **Agents typically involved:**
 - C1 (Bug Hunter) - Bug diagnosis

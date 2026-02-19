@@ -1,7 +1,7 @@
 # AGENTS.md — Copilot Coding Agent Instructions
 
 **Project:** LOGOS — Unified AI Agent Federation
-**Branch:** `task1/infrastructure` (based on `develop`)
+**Branch:** `task2/daedelus1` (based on `task1/infrastructure`)
 
 ---
 
@@ -68,93 +68,59 @@ python -m ruff check logos/
 
 ## Current Development Status
 
-**Branch:** `task1/infrastructure` — Phase 1: Agent Boundary Enforcement
+**Branch:** `task2/daedelus1` — PR #2: Daedelus Agent Boundaries (Group A-B)
 **Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (on this branch)
 
-### Completed Work (unstaged, requires commit)
+### PR #2 Progress: Daedelus Group A-B Scope Boundaries
 
-| File | Status | Verification |
-|------|--------|-------------|
-| `docs/AGENT_BOUNDARIES.md` | Created — 1329 lines, all 50 agents documented | Complete |
-| `docs/AGENT_RECOMMENDATIONS.md` | Created — 728 lines, all 50 agents with next-steps | Complete |
-| `logos/core/refusal.py` | Created — 168 lines, passes ruff, imports clean | Complete |
-| `tests/test_core/test_refusal.py` | Created — 207 lines, 16/16 tests passing | Complete |
-| `CHANGELOG.md` | Modified — v0.2.0.dev0 entry added | Complete |
-| `README.md` | Modified — development notice and version updated | Complete |
-| `pyproject.toml` | Modified — version bumped to 0.2.0.dev0 | Complete |
+| Commit | Agent | File | Status |
+|--------|-------|------|--------|
+| 1/14 | A1 - The Architect | `builders.py` | ✅ Committed |
+| 2/14 | A2 - The Logic Engineer | `builders.py` | ⬜ Pending |
+| 3/14 | A3 - The Interface Designer | `builders.py` | ⬜ Pending |
+| 4/14 | A4 - The Test Engineer | `builders.py` | ⬜ Pending |
+| 5/14 | A5 - The Scribe | `builders.py` | ⬜ Pending |
+| 6/14 | B6 - The Sentinel | `guardians.py` | ⬜ Pending |
+| 7/14 | B7 - The Marshal | `guardians.py` | ⬜ Pending |
+| 8/14 | B8 - The Profiler | `guardians.py` | ⬜ Pending |
+| 9/14 | B9 - The Critic | `guardians.py` | ⬜ Pending |
+| 10/14 | B10 - The Gatekeeper | `guardians.py` | ⬜ Pending |
+| 11/14 | Docs: AGENT_BOUNDARIES.md | `docs/` | ⬜ Pending |
+| 12/14 | Docs: AGENT_RECOMMENDATIONS.md | `docs/` | ⬜ Pending |
+| 13/14 | Tests: boundary validation | `tests/` | ⬜ Pending |
+| 14/14 | CHANGELOG.md update | root | ⬜ Pending |
 
-### Issues Resolved
+### Each SCOPE BOUNDARIES Section Must Include
 
-All issues identified during review have been addressed. Changes are ready for commit.
+- ✅ IN SCOPE: minimum 5 categorized items with sub-items
+- ⛔ FORBIDDEN ACTIONS: minimum 10 with agent redirects and "Why" explanations
+- 🤝 REQUIRES COLLABORATION: minimum 3 scenarios
+- 🚫 REFUSAL TEMPLATE: with concrete example
+
+### Resumption Instructions
+
+Next commit: `feat(daedelus): add scope boundaries to A2 (Logic Engineer)` — add SCOPE BOUNDARIES to `LOGIC_ENGINEER_ACTIVATION` in `logos/daedelus/prompts/agents/builders.py`.
+
+Reference `PLAN.md` lines 1144-1194 for agent-specific scope definitions. Follow the pattern established in commit 1 (A1 Architect).
 
 ---
 
-## Git Actions Required
+## Completed Phases
 
-The following git operations need to be performed by the repository owner. All changes are currently unstaged on the `task1/infrastructure` branch.
+### Phase 1: Agent Boundary Infrastructure (task1/infrastructure) ✅
 
-### Staging
-
-```bash
-# Stage new files
-git add docs/AGENT_BOUNDARIES.md
-git add docs/AGENT_RECOMMENDATIONS.md
-git add logos/core/refusal.py
-git add tests/test_core/test_refusal.py
-
-# Stage modified files (after issues above are resolved)
-git add CHANGELOG.md
-git add README.md
-git add pyproject.toml
-git add AGENTS.md
-```
-
-### Recommended Commits
-
-```bash
-# Commit 1: Documentation infrastructure
-git commit -m "feat: add agent boundaries and recommendations documentation
-
-- Create docs/AGENT_BOUNDARIES.md with scope definitions for all 50 agents
-- Create docs/AGENT_RECOMMENDATIONS.md with workflow cross-reference for all 50 agents
-- Each agent entry includes: IN SCOPE, FORBIDDEN ACTIONS, COLLABORATION, WORKFLOW
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-
-# Commit 2: Refusal module
-git commit -m "feat: add refusal response generation utility
-
-- Create logos/core/refusal.py with RefusalResponse dataclass
-- Implement generate_refusal() for formatted out-of-scope messages
-- Implement quick_refusal() convenience function
-- Implement validate_refusal_response() field validation
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-
-# Commit 3: Tests
-git commit -m "test: add refusal module tests
-
-- Create tests/test_core/test_refusal.py with 16 test cases
-- Cover dataclass creation, output formatting, convenience function, validation
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-
-# Commit 4: Version and metadata (after resolving CHANGELOG/README issues)
-git commit -m "chore: bump version to 0.2.0.dev0 and update project metadata
-
-- Update pyproject.toml version to 0.2.0.dev0
-- Add v0.2.0.dev0 entry to CHANGELOG.md
-- Update README.md with development status
-- Replace raw plan in AGENTS.md with coding agent instructions
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-```
+- `docs/AGENT_BOUNDARIES.md` — all 50 agents documented
+- `docs/AGENT_RECOMMENDATIONS.md` — all 50 agents with workflow recommendations
+- `logos/core/refusal.py` — refusal response generation utility
+- `tests/test_core/test_refusal.py` — 16 tests passing
+- Version bumped to 0.2.0.dev0
 
 ---
 
 ## Remaining v0.2.0 Phases
 
-For full roadmap details, create a `docs/ROADMAP.md`. Remaining work after Phase 1:
+For full roadmap details, see `PLAN.md`. Remaining work after PR #2:
+- PR #3-5: Remaining agent boundaries (Daedelus C-E, DEUS A-B, DEUS C-E)
 - Phase 2: .devdocs Governance — unified task management with temporal log system
 - Phase 3: Workflow Coordination — agents recommend next steps automatically
 - Phase 4: OS Adaptations — Linux and FreeBSD-specific DEUS prompts

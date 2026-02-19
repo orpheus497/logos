@@ -52,6 +52,9 @@ def generate_refusal(response: RefusalResponse) -> str:
     Returns:
         Formatted refusal message string ready for display
 
+    Raises:
+        ValueError: If any required field in the response is empty
+
     Example:
         >>> ref = RefusalResponse(
         ...     refusing_agent_key="A1",
@@ -68,6 +71,10 @@ def generate_refusal(response: RefusalResponse) -> str:
         I am The Architect (A1), specialized in system architecture design.
         ...
     """
+    ##Action purpose: Validate required fields before formatting
+    if not validate_refusal_response(response):
+        raise ValueError("RefusalResponse contains empty required fields")
+
     ##Action purpose: Build refusal message with consistent formatting
     message_parts = [
         "⛔ OUT OF SCOPE",
@@ -111,6 +118,7 @@ def quick_refusal(
     recommended_name: str,
     reason: str,
     recommended_description: str | None = None,
+    user_request_summary: str | None = None,
 ) -> str:
     """
     ##Function purpose: Generate refusal with minimal parameter entry.
@@ -125,6 +133,7 @@ def quick_refusal(
         recommended_name: Name of recommended agent
         reason: Why request is out of scope
         recommended_description: Optional description of recommended agent
+        user_request_summary: Optional brief summary of user's request
 
     Returns:
         Formatted refusal message
@@ -143,6 +152,7 @@ def quick_refusal(
         recommended_agent_key=recommended_key,
         recommended_agent_name=recommended_name,
         recommended_agent_description=recommended_description,
+        user_request_summary=user_request_summary,
     )
 
     ##Action purpose: Generate and return formatted refusal

@@ -6,6 +6,8 @@ formatting, quick_refusal() convenience function, and validate_refusal_response(
 validation logic.
 """
 
+import pytest
+
 from logos.core.refusal import (
     RefusalResponse,
     generate_refusal,
@@ -106,6 +108,21 @@ class TestGenerateRefusal:
         """##Function purpose: Verify user request line absent when no summary."""
         result = generate_refusal(self._make_response())
         assert "Your request:" not in result
+
+
+    def test_raises_valueerror_on_invalid_response(self):
+        """##Function purpose: Verify generate_refusal raises ValueError for invalid input."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        with pytest.raises(ValueError, match="RefusalResponse contains empty required fields"):
+            generate_refusal(ref)
 
 
 class TestQuickRefusal:
@@ -278,6 +295,32 @@ class TestValidateRefusalResponse:
             refusing_agent_name="The Architect",
             refusing_agent_specialty="system architecture design",
             reason="   ",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        assert validate_refusal_response(ref) is False
+
+    def test_empty_refusing_specialty_returns_false(self):
+        """##Function purpose: Verify empty refusing_agent_specialty fails validation."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        assert validate_refusal_response(ref) is False
+
+    def test_whitespace_only_refusing_specialty_returns_false(self):
+        """##Function purpose: Verify whitespace-only refusing_agent_specialty fails validation."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="   ",
+            reason="reason",
             recommended_agent_key="A2",
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="description",

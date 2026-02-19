@@ -14,11 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Agent boundary enforcement system with refusal response generation (`logos/core/refusal.py`)
 - Agent boundaries reference documentation for all 50 agents (`docs/AGENT_BOUNDARIES.md`)
 - Agent workflow recommendations cross-reference for all 50 agents (`docs/AGENT_RECOMMENDATIONS.md`)
+- **PR #2 (In Progress):** Daedelus Agent Boundaries — Group A-B scope enforcement
+  - A1 (The Architect): SCOPE BOUNDARIES section added to activation prompt (5 IN SCOPE categories, 10 FORBIDDEN ACTIONS, 3 COLLABORATION scenarios, REFUSAL TEMPLATE)
 
 ### Changed
 
 - Version set to 0.2.0.dev0 for active development
 - Updated LOGOS ASCII art banner to a new block-based design
+- Renamed DEUS domain agents for consistency:
+  - B7: The Syntax Validator → The Syntax Marshal
+  - B8: The Performance Profiler → The Performance Analyst
+  - B9: The Compliance Auditor → The Compliance Critic
+  - D2: The ZFS Specialist → The Port Builder
+  - D3: The Network Specialist → The Compatibility Engineer
+  - D4: The Security Hardener → The Jail Architect
+  - D5: The Automation Specialist → The ZFS Engineer
 
 ## [0.1.0] - 2026-01-20
 
