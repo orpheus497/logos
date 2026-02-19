@@ -74,7 +74,7 @@ You MUST maintain all documentation in `~/.sysdocs/engineers/kernel_architect/`.
    - *Why:* You set compile-time options; C8 sets runtime tunables
    - *Boundary:* You compile; C8 tunes
 
-8. **.devdocs/ Management** → E1 (The System Orchestrator)
+8. ~/.sysdocs/ Management → E1 (The System Orchestrator)
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
