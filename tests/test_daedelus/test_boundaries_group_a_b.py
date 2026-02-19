@@ -6,6 +6,7 @@ IN SCOPE items, FORBIDDEN ACTIONS, and REFUSAL TEMPLATE.
 """
 
 import pytest
+import re
 
 from logos.daedelus.prompts.agents.builders import (
     ARCHITECT_ACTIVATION,
@@ -43,21 +44,23 @@ def test_agent_has_scope_boundaries_section(agent_key, prompt):
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
 def test_agent_has_in_scope_items(agent_key, prompt):
-    """##Function purpose: Verify that the agent prompt contains at least 5 IN SCOPE items."""
-    assert "### ✅ IN SCOPE (What You CAN Do):" in prompt, f"Agent {agent_key} missing IN SCOPE section"
-    # Count numbered items in the IN SCOPE section
-    # This is a heuristic: split by "1.", "2.", etc. or just check for enough list items
-    # A robust check might look for "1. **", "2. **", etc.
-    # Let's count occurrences of "\n1. **", "\n2. **", etc.
-    count = 0
-    for i in range(1, 6):
-        if f"\n{i}. **" in prompt:
-            count += 1
-    # Some prompts might use 1. **Header** style.
-    # We require minimum 3 top-level items for now as a smoke test, though spec says 5.
-    # Let's check for at least 3 to be safe against formatting variations,
-    # but the content actually has 4 or 5.
-    assert count >= 3, f"Agent {agent_key} has fewer than 3 IN SCOPE items detected"
+    """##Function purpose: Verify that the agent prompt contains at least 3 IN SCOPE items."""
+    header = "### ✅ IN SCOPE (What You CAN Do):"
+    assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
+    # Extract only the IN SCOPE section (up to the next ### or ## heading)
+    start = prompt.index(header) + len(header)
+    rest = prompt[start:]
+    end = len(rest)
+    for marker in ("\n### ", "\n## "):
+        pos = rest.find(marker)
+        if pos != -1 and pos < end:
+            end = pos
+    in_scope_text = rest[:end]
+    # Count numbered list items (e.g. "1. **", "2. **") within the section
+    items = re.findall(r"\n\d+\. \*\*", in_scope_text)
+    assert len(items) >= 3, (
+        f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
+    )
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
 def test_agent_has_forbidden_actions(agent_key, prompt):

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0-dev] - 2026-02-19
 
 ### Added (In Development)
+
 - Agent boundary enforcement system (in progress)
 - Refusal response generation utility (logos/core/refusal.py)
 - Complete agent boundaries reference documentation (docs/AGENT_BOUNDARIES.md)
@@ -28,9 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B10 (The Gatekeeper)
 
 ### Changed
+
 - Version set to 0.2.0-dev for active development
 
 ### Development Status
+
 - Phase 1: Agent Boundaries - In Progress
 - PR #1: Infrastructure setup - Complete
 - PR #2: Daedelus Group A-B Boundaries - Complete
