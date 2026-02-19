@@ -857,7 +857,7 @@ Dependency management.
 - Regenerating and verifying lock file consistency across environments
 - Checking for outdated dependencies and identifying unused packages
 - Verifying license compliance for all dependencies
-- Scanning dependency tree for known vulnerabilities
+- Performing dependency health advisories and flagging potential vulnerability indicators for escalation to B6
 - Managing `pyproject.toml`, `package.json`, `Cargo.toml` dependencies
 - Configuring dependency sources, registries, and virtual environments
 - Handling platform-specific dependency requirements

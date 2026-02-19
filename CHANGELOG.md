@@ -69,10 +69,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
 - PR #4: DEUS Group A-B Boundaries - Next
 
-### Fixed
-
-- Corrected DEUS agent names in documentation to match code (B7, B8, B9, D2-D5)
-
 ## [0.1.0] - 2026-01-20
 
 ### 🎉 Major Milestone: First Stable Release

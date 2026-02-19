@@ -115,6 +115,8 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )
     else:
-        assert "orchestrator" in prompt.lower() or agent_key == "orchestrator", (
-            f"Agent {agent_key} missing Orchestrator reference in prompt"
+        # Contextual check: ensure "orchestrator" appears near ".devdocs" context, not just anywhere
+        match = re.search(r"\.devdocs/.{0,200}orchestrator|orchestrator.{0,200}\.devdocs/", prompt, re.IGNORECASE | re.DOTALL)
+        assert match is not None or agent_key == "orchestrator", (
+            f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
         )
