@@ -1,12 +1,18 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.1.0 (Alpha)  
+**Version:** 0.2.0.dev0  
 **License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
 **Author:** orpheus497
 
 [![Test Suite](https://github.com/orpheus497/logos/actions/workflows/test.yml/badge.svg)](https://github.com/orpheus497/logos/actions/workflows/test.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+---
+
+## 🚧 Development Notice
+
+LOGOS v0.2.0.dev0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ---
 
@@ -65,7 +71,7 @@ LOGOS serves as an **intelligent prompt composition system** that:
 - **Engineers (A1-A5):** Design kernel configs, manage drivers, architect networks, configure boot, design services
 - **Auditors (B6-B10):** Audit security, validate syntax, profile performance, ensure compliance, gate releases
 - **Maintainers (C1, C6-C11):** Manage packages, update ports, maintain configs, patch security, optimize systems
-- **Specialists (D2-D5):** Manage ZFS, configure networks, harden security, automate tasks
+- **Specialists (D2-D5):** Custom port compilation, Linux compatibility/Wine, jails and isolation, ZFS storage architecture
 - **Operators (E1-E5):** Administer systems, resolve conflicts, provide ultimate system oversight
 
 ---
@@ -1268,7 +1274,7 @@ pip-audit --fix
 
 ### Project Status
 
-**Current Version:** 0.1.0 (Alpha)
+**Current Version:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
 
 **Completed:**
 - ✅ Core infrastructure (identity, persistence, validation)
@@ -1367,5 +1373,5 @@ If you modify LOGOS and distribute it (including as a service), you must:
 
 ---
 
-**Status:** Alpha - Stable release, ready for production use  
-**Last Updated:** 2026-01-20
+**Status:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
+**Last Updated:** 2026-02-19
