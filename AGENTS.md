@@ -69,7 +69,7 @@ python -m ruff check logos/
 ## Current Development Status
 
 **Branch:** `task1/infrastructure` — Phase 1: Agent Boundary Enforcement  
-**Base version:** 0.1.0 (on `develop`) → 0.2.0-dev (on this branch)
+**Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (on this branch)
 
 ### Completed Work (unstaged, requires commit)
 
@@ -140,10 +140,10 @@ git commit -m "test: add refusal module tests
 Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
 
 # Commit 4: Version and metadata (after resolving CHANGELOG/README issues)
-git commit -m "chore: bump version to 0.2.0-dev and update project metadata
+git commit -m "chore: bump version to 0.2.0.dev0 and update project metadata
 
-- Update pyproject.toml version to 0.2.0-dev
-- Add v0.2.0-dev entry to CHANGELOG.md
+- Update pyproject.toml version to 0.2.0.dev0
+- Add v0.2.0.dev0 entry to CHANGELOG.md
 - Update README.md with development status
 - Replace raw plan in AGENTS.md with coding agent instructions
 

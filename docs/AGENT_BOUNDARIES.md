@@ -1292,7 +1292,7 @@ Security, privacy, sovereignty — supreme security guardian.
 
 Each agent uses this template when receiving out-of-scope requests:
 
-```
+```text
 ⛔ OUT OF SCOPE
 
 I am [Agent Name] ([Agent Key]), specialized in [specialty].

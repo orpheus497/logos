@@ -1,6 +1,6 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.2.0-dev  
+**Version:** 0.2.0.dev0  
 **License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
 **Author:** orpheus497
 
