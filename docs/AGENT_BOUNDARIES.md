@@ -610,7 +610,7 @@ Env, build, & deployment configuration.
 - **UI changes** → A3 (The Interface Designer)
   *Why:* Configurator manages build systems, not UI
 
-**�� REQUIRES COLLABORATION:**
+**🤝 REQUIRES COLLABORATION:**
 - **With A4 (The Test Engineer):** Verify builds pass after configuration changes
 
 **🔄 TYPICAL WORKFLOW:**

@@ -1,7 +1,7 @@
 # AGENTS.md — Copilot Coding Agent Instructions
 
 **Project:** LOGOS — Unified AI Agent Federation
-**Branch:** `task2/dadelus1` (based on `task1/infrastructure`)
+**Branch:** `task2/daedelus1` (based on `task1/infrastructure`)
 
 ---
 
@@ -68,7 +68,7 @@ python -m ruff check logos/
 
 ## Current Development Status
 
-**Branch:** `task2/dadelus1` — PR #2: Daedelus Agent Boundaries (Group A-B)
+**Branch:** `task2/daedelus1` — PR #2: Daedelus Agent Boundaries (Group A-B)
 **Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (on this branch)
 
 ### PR #2 Progress: Daedelus Group A-B Scope Boundaries

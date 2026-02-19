@@ -178,6 +178,8 @@ After release decision:
 
 ### Group C: Maintainers
 
+> **Note on agent numbering:** Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D starts at D2). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
+
 **C1 (The Bug Hunter) → Next Steps:**
 
 After diagnosing and fixing bug:
@@ -311,6 +313,8 @@ After extending test coverage:
 ---
 
 ### Group E: Operators
+
+> **Note on naming convention:** Daedelus Group E operators use descriptive identifiers (`orchestrator`, `ocm`, `daedelus`) rather than the alphanumeric pattern (E1-E5) used in the DEUS domain. This is intentional — these operators are invoked by name in the CLI and codebase, and their descriptive keys provide clearer intent when referenced in code and user commands.
 
 **orchestrator (The Orchestrator) → Next Steps:**
 

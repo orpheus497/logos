@@ -48,38 +48,38 @@ def _wrap_text(text: str, width: int) -> list[str]:
     return wrapped_lines if wrapped_lines else [text]
 
 
-##Function purpose: Return ASCII art banner for "LOGOS" word
+##Function purpose: Return Unicode art banner for "LOGOS" word
 def get_logos_banner() -> list[str]:
     """
-    Returns ASCII art banner for "LOGOS" word.
+    Returns Unicode art banner for "LOGOS" word.
 
-    Provides beautiful ASCII art representation of the LOGOS federation name for
-    display at the top of all screens using box-drawing characters.
+    Provides beautiful Unicode art representation of the LOGOS federation name for
+    display at the top of all screens using block-drawing characters (U+2588, U+2592).
 
     Returns:
-        List of strings representing the ASCII art banner
+        List of strings representing the Unicode art banner
     """
-    ##Action purpose: Provides beautiful ASCII art representation of the LOGOS
-    ##Step purpose: federation name for display at the top of all screens using box-drawing characters
-    ##Action purpose: Create impressive ASCII art banner for LOGOS using box-drawing characters
+    ##Action purpose: Provides beautiful Unicode art representation of the LOGOS
+    ##Step purpose: federation name for display at the top of all screens using block-drawing characters
+    ##Action purpose: Create impressive Unicode art banner for LOGOS using block-drawing characters
     ##Action purpose: Clear, readable banner that spells "LOGOS" clearly
     banner = [
-        "█████          ███████      █████████     ███████     █████████ ",
+        "█████          ███████      █████████     ███████     █████████  ",
         "▒▒███         ███▒▒▒▒▒███   ███▒▒▒▒▒███  ███▒▒▒▒▒███  ███▒▒▒▒▒███",
         " ▒███        ███     ▒▒███ ███     ▒▒▒  ███     ▒▒███▒███    ▒▒▒ ",
         " ▒███       ▒███      ▒███▒███         ▒███      ▒███▒▒█████████ ",
         " ▒███       ▒███      ▒███▒███    █████▒███      ▒███ ▒▒▒▒▒▒▒▒███",
         " ▒███      █▒▒███     ███ ▒▒███  ▒▒███ ▒▒███     ███  ███    ▒███",
         " ███████████ ▒▒▒███████▒   ▒▒█████████  ▒▒▒███████▒  ▒▒█████████ ",
-        "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒",
+        "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒  ",
     ]
     return banner
 
 
-##Function purpose: Display the LOGOS ASCII art banner
+##Function purpose: Display the LOGOS Unicode art banner
 def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> None:
     """
-    Displays the LOGOS ASCII art banner.
+    Displays the LOGOS Unicode art banner.
 
     Prints the LOGOS banner centered within the specified width, using the
     provided color.

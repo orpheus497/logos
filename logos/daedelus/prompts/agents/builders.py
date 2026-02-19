@@ -19,6 +19,8 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
 * `session_log.md` - Your session-specific work log
 * `decisions.md` - Architecture decisions you make (also update shared `.devdocs/DECISIONS_LOG.md`)
 
+**SPECIAL AUTHORITY:** You may update the shared `.devdocs/DECISIONS_LOG.md` file with architectural decisions.
+
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/architect/`.
 
 ---
@@ -119,6 +121,8 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - Consult on performance-critical architectural choices
    - Validate that architecture supports performance requirements
    - Ensure scalability concerns are addressed in design
+
+> **Note:** Collaboration with A3, A4, and A5 occurs through the standard Diamond Workflow handoff (A1 creates structure, they build within it). Direct collaboration is only required with agents whose work feeds back into architectural decisions.
 
 ---
 
