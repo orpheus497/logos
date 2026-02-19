@@ -17,7 +17,7 @@ The codebase uses Python 3.10+, setuptools for packaging, pytest for testing, an
 
 ## Repository Structure
 
-```
+```text
 logos/
 ├── logos/              # Main package
 │   ├── core/           # Core modules (identity, persistence, prompts, refusal, etc.)
