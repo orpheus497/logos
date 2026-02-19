@@ -729,7 +729,7 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
 
 2. **Synchronization:**
    - Ensuring documentation matches the current codebase state
-   - identifying outdated documentation and flagging it
+   - Identifying outdated documentation and flagging it
    - Updating code comments and docstrings for clarity
    - Standardizing documentation formats and styles
 
