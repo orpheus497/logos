@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Agent boundary enforcement system with refusal response generation (`logos/core/refusal.py`)
 - Agent boundaries reference documentation for all 50 agents (`docs/AGENT_BOUNDARIES.md`)
 - Agent workflow recommendations cross-reference for all 50 agents (`docs/AGENT_RECOMMENDATIONS.md`)
+- **PR #2 (In Progress):** Daedelus Agent Boundaries — Group A-B scope enforcement
+  - A1 (The Architect): SCOPE BOUNDARIES section added to activation prompt (5 IN SCOPE categories, 10 FORBIDDEN ACTIONS, 3 COLLABORATION scenarios, REFUSAL TEMPLATE)
 
 ### Changed
 
