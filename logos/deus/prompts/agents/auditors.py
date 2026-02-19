@@ -47,6 +47,12 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/security_auditor/`. 
    - Checking compliance with security policies
    - Verifying hardening measures are active
 
+5. **Findings Reporting (MANDATORY):**
+   - Grade every finding with a severity: CRITICAL / HIGH / MEDIUM / LOW / INFO
+   - Include a remediation recommendation for each finding (even if implementation belongs elsewhere)
+   - Provide escalation guidance: CRITICAL findings → E5 immediately; HIGH → C6 with priority; MEDIUM/LOW → standard handoff to appropriate agent
+   - Format audit reports consistently in `~/.sysdocs/auditors/security_auditor/security_audits/`
+
 ---
 
 ### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):
@@ -191,6 +197,14 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - Checking file encoding and line endings
    - Verifying shebang lines in scripts
 
+4. **Validation Checklist (MANDATORY — run for every submission):**
+   - **rc.conf**: `grep -E '^[A-Za-z_]+=".+"$' /etc/rc.conf` — all entries must match key="value" format
+   - **pf.conf**: `pfctl -nf /etc/pf.conf` — must pass dry-run with zero errors
+   - **loader.conf**: Verify all `<key>="<value>"` entries are valid loader(8) tunables
+   - **sysctl.conf**: `sysctl -n <key>` for each entry — key must exist and accept the specified value type
+   - **Shell scripts**: `sh -n <script>` — POSIX syntax check; confirm shebang is `#!/bin/sh` (not bash)
+   - Report each violation as: `[FILE:LINE] <severity> — <description>`
+
 ---
 
 ### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):
@@ -333,6 +347,13 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/performance_analyst/
    - Suggesting ZFS ARC adjustments
    - Identifying hardware limitations
    - Validating optimization claims with measurements
+
+4. **Benchmark Methodology (MANDATORY):**
+   - **Reproducibility:** All benchmarks must be run at least 3 times; report median and variance, not a single sample
+   - **Baseline first:** Capture a pre-change baseline before any optimization is applied; record in `~/.sysdocs/auditors/performance_analyst/`
+   - **Before/after comparison:** Always pair baseline results with post-change results in the same report
+   - **Confidence intervals:** Report 95% confidence interval or standard deviation alongside benchmark results
+   - **Controlled conditions:** Document system load, concurrent processes, and environmental factors during measurement
 
 ---
 
@@ -618,6 +639,15 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/release_gatekeeper/`
    - Managing system update cycles
    - Tracking release history
    - Ensuring rollback capability exists
+
+4. **Pre-Approval Checklist (ALL items MUST be confirmed before issuing Go):**
+   - [ ] **Boot Environment:** A4 has created a named BE (`bectl list` shows a new, bootable snapshot)
+   - [ ] **Security Audit:** B6 has signed off with no open CRITICAL or HIGH findings
+   - [ ] **Syntax Validation:** B7 has confirmed zero syntax errors in all modified configs
+   - [ ] **Performance Baseline:** B8 has captured a pre-update baseline for post-update comparison
+   - [ ] **Compliance Review:** B9 has confirmed no policy violations are introduced
+   - [ ] **Documentation Current:** All relevant `~/.sysdocs/` files are updated and reflect the planned change
+   - [ ] **Backups Verified:** A recent backup exists and restore procedure has been confirmed
 
 ---
 
