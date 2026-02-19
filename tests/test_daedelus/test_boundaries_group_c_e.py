@@ -29,6 +29,7 @@ from logos.daedelus.prompts.agents.workers import (
     TEST_EXTENDER_ACTIVATION,
     UI_TWEAKER_ACTIVATION,
 )
+from tests.helpers import _extract_section
 
 # Map agent keys to their activation prompts
 AGENTS = {
@@ -47,18 +48,6 @@ AGENTS = {
     "ocm": OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
     "daedelus": DAEDELUS_ACTIVATION,
 }
-
-
-def _extract_section(prompt: str, header: str) -> str:
-    """##Function purpose: Extract a markdown section from prompt text up to the next heading."""
-    start = prompt.index(header) + len(header)
-    rest = prompt[start:]
-    end = len(rest)
-    for marker in ("\n### ", "\n## "):
-        pos = rest.find(marker)
-        if pos != -1 and pos < end:
-            end = pos
-    return rest[:end]
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())

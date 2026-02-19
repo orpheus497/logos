@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.2.0-dev] - 2026-02-19
+## [Unreleased]
 
-### Added (In Development)
+### Added
 
 - Agent boundary enforcement system (in progress)
 - Refusal response generation utility (logos/core/refusal.py)

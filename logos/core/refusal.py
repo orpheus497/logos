@@ -101,7 +101,7 @@ def generate_refusal(response: RefusalResponse) -> str:
         response.reason,
         "",
         "**Who can help:**",
-        f"- {response.recommended_agent_key} ({response.recommended_agent_name}): "
+        f"- {response.recommended_agent_name} ({response.recommended_agent_key}): "
         f"{response.recommended_agent_description}",
     ])
 
@@ -114,6 +114,7 @@ def quick_refusal(
     refusing_key: str,
     refusing_name: str,
     refusing_specialty: str,
+    *,
     recommended_key: str,
     recommended_name: str,
     reason: str,
@@ -141,11 +142,14 @@ def quick_refusal(
     ##Action purpose: Create RefusalResponse with provided or generated description
     if not recommended_description:
         ##Action purpose: Strip "The " prefix robustly using regex
-        desc_name = re.sub(r"^the\s+", "", recommended_name, flags=re.IGNORECASE).strip()
-        if desc_name:
-            recommended_description = f"Handles {desc_name} responsibilities"
+        if not recommended_name or not recommended_name.strip():
+            recommended_description = "Handles requests"
         else:
-            recommended_description = f"Handles {recommended_name.strip()} responsibilities"
+            desc_name = re.sub(r"^the\s+", "", recommended_name, flags=re.IGNORECASE).strip()
+            if desc_name:
+                recommended_description = f"Handles {desc_name} responsibilities"
+            else:
+                recommended_description = f"Handles {recommended_name.strip()} responsibilities"
 
     response = RefusalResponse(
         refusing_agent_key=refusing_key,

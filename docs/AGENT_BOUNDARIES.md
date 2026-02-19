@@ -1002,7 +1002,7 @@ Logic cleanup (no behavior change).
 - **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Refactorer writes to `.devdocs/workers/refactorer/`
 
-**�� REQUIRES COLLABORATION:**
+**🤝 REQUIRES COLLABORATION:**
 - **With A4 (The Test Engineer):** Verify no behavioral regressions; run full test suite before and after refactoring
 - **With B9 (The Critic):** Review refactored code for quality improvements and project standards
 - **With A1 (The Architect):** Consult when refactoring approaches architectural boundaries; validate structural changes
@@ -1010,7 +1010,7 @@ Logic cleanup (no behavior change).
 **🔄 TYPICAL WORKFLOW:**
 1. Identifies "spaghetti code" and structural issues
 2. Simplifies logic without changing Input/Output behavior
-3. Adds proper docstrings and comments
+3. Adds inline code comments and docstrings only to clarify refactored code; user-facing documentation → C7 (The Doc Updater)
 4. A4 verifies no regressions
 5. B9 reviews refactored code quality
 

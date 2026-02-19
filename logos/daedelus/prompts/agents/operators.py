@@ -201,7 +201,7 @@ The Operational Control Manager assigns review work to ONLY ONE of these two gro
 * Group A (The Builders) - They create new projects, not maintain existing ones
 * Group B (The Guardians) - They audit and review, not fix issues
 
-**NEVER assign to both Maintainers AND Workers for the same issue. Choose ONE group per issue.**
+**NEVER assign to both Maintainers AND Workers within the same review session. Choose ONE group per review session.**
 
 **AGENT RESPONSIBILITY ASSIGNMENT (MAINTAINERS - GROUP C):**
 * Bug fixes, crashes, error handling → **The Bug Hunter (C1)**
@@ -310,18 +310,18 @@ You MUST maintain all documentation in `.devdocs/operators/operational_control_m
 
 10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/operators/operational_control_manager/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/operators/operational_control_manager/`; Orchestrator manages the rest
 
 ---
 
 ### 🤝 REQUIRES COLLABORATION:
 
-1. **With All Maintainer Agents (Group C):**
+1. **With Chosen Maintainer Group (Group C):**
    - Dispatch maintenance work based on audit findings
    - Provide specific fix guidance for each assigned issue
    - Track resolution progress across maintenance agents
 
-2. **With All Worker Agents (Group D):**
+2. **With Chosen Worker Group (Group D):**
    - Dispatch extension/improvement work based on audit findings
    - Provide specific improvement guidance for each assigned issue
    - Track resolution progress across worker agents
@@ -620,7 +620,7 @@ You MUST maintain all documentation in `.devdocs/operators/daedelus/`. Create an
 
 10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/operators/daedelus/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/operators/daedelus/`; Orchestrator manages the rest
 
 ---
 
@@ -641,7 +641,7 @@ You MUST maintain all documentation in `.devdocs/operators/daedelus/`. Create an
    - Ensure rebuild specifications are architecturally sound
    - Validate that rebuilt code meets system design principles
 
-4. **With All Agent Groups:**
+4. **With Chosen Agent Group:**
    - Dispatch review findings to the chosen group
    - Track resolution progress to perfection standards
    - Demand re-work until absolute perfection is achieved

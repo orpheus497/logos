@@ -1115,7 +1115,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/librarian/`. Create
    - Checking for outdated dependencies
    - Identifying unused packages for removal
    - Verifying license compliance for all dependencies
-   - Scanning dependency tree for known vulnerabilities
+   - Checking dependency advisories and escalating security findings to B6 (The Sentinel) for formal auditing
 
 5. **Package Ecosystem Management:**
    - Managing `pyproject.toml`, `package.json`, `Cargo.toml` dependencies
