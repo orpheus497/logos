@@ -6,6 +6,8 @@ formatting, quick_refusal() convenience function, and validate_refusal_response(
 validation logic.
 """
 
+import pytest
+
 from logos.core.refusal import (
     RefusalResponse,
     generate_refusal,
@@ -110,8 +112,6 @@ class TestGenerateRefusal:
 
     def test_raises_valueerror_on_invalid_response(self):
         """##Function purpose: Verify generate_refusal raises ValueError for invalid input."""
-        import pytest
-
         ref = RefusalResponse(
             refusing_agent_key="A1",
             refusing_agent_name="The Architect",
