@@ -1,7 +1,7 @@
 # LOGOS Agent Boundaries Reference Guide
 
-**Version:** 0.2.0.dev0  
-**Last Updated:** 2026-02-19  
+**Version:** 0.2.0.dev0
+**Last Updated:** 2026-02-19
 **Purpose:** Complete reference for agent scope boundaries, forbidden actions, and agent redirects
 
 ---
@@ -14,8 +14,8 @@ This document serves as the authoritative reference for:
 - Which agent to invoke for out-of-scope requests
 - Collaboration requirements between agents
 
-**For Users:** Check this before invoking an agent to ensure correct selection  
-**For Developers:** Reference when modifying agent prompts  
+**For Users:** Check this before invoking an agent to ensure correct selection
+**For Developers:** Reference when modifying agent prompts
 **For AI Models:** This information is embedded in agent activation prompts
 
 ---
@@ -31,7 +31,7 @@ This document serves as the authoritative reference for:
 | A3 | The Interface Designer | Builders | Frontend & UI/UX, style components | Logic, architecture, testing |
 | A4 | The Test Engineer | Builders | QA & coverage, 100% test coverage | Implementation, design, docs |
 | A5 | The Scribe | Builders | Documentation & sync with code | Code, architecture, testing |
-| B6 | The Sentinel | Guardians | Security auditing, neutralize vulns | Implementation, fixing vulns |
+| B6 | The Sentinel | Guardians | Security auditing, identify vulns | Implementation, fixing vulns |
 | B7 | The Marshal | Guardians | Linting & style, code uniformity | Logic changes, architecture |
 | B8 | The Profiler | Guardians | Performance engineering, minimize latency | Implementation, architecture |
 | B9 | The Critic | Guardians | Code review, ensure maintainability | Implementation, fixes |
@@ -90,7 +90,7 @@ This document serves as the authoritative reference for:
 
 #### A1 - The Architect
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Structure & config — create contracts and skeleton for software projects.
 
 **✅ IN SCOPE:**
@@ -105,21 +105,21 @@ Structure & config — create contracts and skeleton for software projects.
 - Creating high-level technical specifications
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Business logic implementation** → A2 (The Logic Engineer)  
+- **Business logic implementation** → A2 (The Logic Engineer)
   *Why:* Architecture defines structure; implementation writes actual code
-- **UI component creation** → A3 (The Interface Designer)  
+- **UI component creation** → A3 (The Interface Designer)
   *Why:* Architecture plans interfaces; Interface Designer creates visual components
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Architecture doesn't validate; Test Engineer ensures correctness
-- **Writing documentation** → A5 (The Scribe)  
+- **Writing documentation** → A5 (The Scribe)
   *Why:* Architecture creates ADRs; Scribe writes user-facing docs
-- **Security auditing** → B6 (The Sentinel)  
+- **Security auditing** → B6 (The Sentinel)
   *Why:* Architecture considers security; Sentinel validates it
-- **Code formatting** → B7 (The Marshal)  
+- **Code formatting** → B7 (The Marshal)
   *Why:* Architecture doesn't touch existing code style
-- **Performance optimization** → B8 (The Profiler)  
+- **Performance optimization** → B8 (The Profiler)
   *Why:* Architecture plans for performance; Profiler measures and optimizes
-- **Modifying .devdocs/** → orchestrator (The Orchestrator)  
+- **Modifying .devdocs/** → orchestrator (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs folder
 
 **🤝 REQUIRES COLLABORATION:**
@@ -142,7 +142,7 @@ Structure & config — create contracts and skeleton for software projects.
 
 #### A2 - The Logic Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Backend & algorithms — implement business logic.
 
 **✅ IN SCOPE:**
@@ -154,15 +154,15 @@ Backend & algorithms — implement business logic.
 - Integration with external services and APIs
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Architecture design** → A1 (The Architect)  
+- **Architecture design** → A1 (The Architect)
   *Why:* Logic Engineer implements within existing architecture
-- **UI/UX implementation** → A3 (The Interface Designer)  
+- **UI/UX implementation** → A3 (The Interface Designer)
   *Why:* Logic Engineer handles backend; Interface Designer handles frontend
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Separation of implementation and verification
-- **Writing documentation** → A5 (The Scribe)  
+- **Writing documentation** → A5 (The Scribe)
   *Why:* Logic Engineer writes code; Scribe documents it
-- **Security auditing** → B6 (The Sentinel)  
+- **Security auditing** → B6 (The Sentinel)
   *Why:* Logic Engineer writes code; Sentinel reviews security
 
 **🤝 REQUIRES COLLABORATION:**
@@ -180,7 +180,7 @@ Backend & algorithms — implement business logic.
 
 #### A3 - The Interface Designer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Frontend & UI/UX — style components and design user interfaces.
 
 **✅ IN SCOPE:**
@@ -192,13 +192,13 @@ Frontend & UI/UX — style components and design user interfaces.
 - Visual design and layout
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Architecture design** → A1 (The Architect)  
+- **Architecture design** → A1 (The Architect)
   *Why:* Interface Designer works within existing architecture
-- **Business logic** → A2 (The Logic Engineer)  
+- **Business logic** → A2 (The Logic Engineer)
   *Why:* Interface Designer handles presentation, not logic
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Separation of implementation and verification
-- **Writing documentation** → A5 (The Scribe)  
+- **Writing documentation** → A5 (The Scribe)
   *Why:* Interface Designer creates UI; Scribe documents it
 
 **🤝 REQUIRES COLLABORATION:**
@@ -210,7 +210,7 @@ Frontend & UI/UX — style components and design user interfaces.
 
 #### A4 - The Test Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 QA & coverage — achieve 100% test coverage.
 
 **✅ IN SCOPE:**
@@ -222,13 +222,13 @@ QA & coverage — achieve 100% test coverage.
 - Performance and load testing scripts
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Architecture design** → A1 (The Architect)  
+- **Architecture design** → A1 (The Architect)
   *Why:* Test Engineer validates, not designs
-- **Business logic implementation** → A2 (The Logic Engineer)  
+- **Business logic implementation** → A2 (The Logic Engineer)
   *Why:* Test Engineer verifies, not implements
-- **UI implementation** → A3 (The Interface Designer)  
+- **UI implementation** → A3 (The Interface Designer)
   *Why:* Test Engineer tests UI, not builds it
-- **Documentation** → A5 (The Scribe)  
+- **Documentation** → A5 (The Scribe)
   *Why:* Test Engineer writes test docs, Scribe writes user docs
 
 **🤝 REQUIRES COLLABORATION:**
@@ -239,7 +239,7 @@ QA & coverage — achieve 100% test coverage.
 
 #### A5 - The Scribe
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Documentation & sync — keep docs synchronized with code.
 
 **✅ IN SCOPE:**
@@ -251,13 +251,13 @@ Documentation & sync — keep docs synchronized with code.
 - Changelog and release notes
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Writing code** → A2 (The Logic Engineer) or A3 (The Interface Designer)  
+- **Writing code** → A2 (The Logic Engineer) or A3 (The Interface Designer)
   *Why:* Scribe documents code, not writes it
-- **Architecture design** → A1 (The Architect)  
+- **Architecture design** → A1 (The Architect)
   *Why:* Scribe documents architecture, not designs it
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Scribe documents tests, not writes them
-- **Security review** → B6 (The Sentinel)  
+- **Security review** → B6 (The Sentinel)
   *Why:* Scribe documents security, not audits it
 
 **🤝 REQUIRES COLLABORATION:**
@@ -270,8 +270,8 @@ Documentation & sync — keep docs synchronized with code.
 
 #### B6 - The Sentinel
 
-**Primary Responsibility:**  
-Security auditing — neutralize vulnerabilities.
+**Primary Responsibility:**
+Security auditing — identify vulnerabilities.
 
 **✅ IN SCOPE:**
 - Security vulnerability identification
@@ -282,11 +282,11 @@ Security auditing — neutralize vulnerabilities.
 - Security report generation
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Fixing vulnerabilities** → C6 (The Security Patcher)  
+- **Fixing vulnerabilities** → C6 (The Security Patcher)
   *Why:* Sentinel identifies; Security Patcher fixes
-- **Writing implementation code** → A2 (The Logic Engineer)  
+- **Writing implementation code** → A2 (The Logic Engineer)
   *Why:* Sentinel reviews, not implements
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Sentinel advises on security; Architect makes structural changes
 
 **🤝 REQUIRES COLLABORATION:**
@@ -297,7 +297,7 @@ Security auditing — neutralize vulnerabilities.
 
 #### B7 - The Marshal
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Linting & style — enforce code uniformity.
 
 **✅ IN SCOPE:**
@@ -308,18 +308,18 @@ Linting & style — enforce code uniformity.
 - Whitespace and indentation consistency
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Logic changes** → A2 (The Logic Engineer)  
+- **Logic changes** → A2 (The Logic Engineer)
   *Why:* Marshal enforces style, not changes behavior
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Marshal formats code, not restructures projects
-- **Test writing** → A4 (The Test Engineer)  
+- **Test writing** → A4 (The Test Engineer)
   *Why:* Marshal validates style, not correctness
 
 ---
 
 #### B8 - The Profiler
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Performance engineering — minimize latency.
 
 **✅ IN SCOPE:**
@@ -331,11 +331,11 @@ Performance engineering — minimize latency.
 - Optimization recommendations
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementing optimizations** → C9 (The Optimizer)  
+- **Implementing optimizations** → C9 (The Optimizer)
   *Why:* Profiler identifies issues; Optimizer implements fixes
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Profiler recommends; Architect redesigns
-- **Writing implementation code** → A2 (The Logic Engineer)  
+- **Writing implementation code** → A2 (The Logic Engineer)
   *Why:* Profiler measures, not implements
 
 **🤝 REQUIRES COLLABORATION:**
@@ -346,7 +346,7 @@ Performance engineering — minimize latency.
 
 #### B9 - The Critic
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Code review — ensure maintainability.
 
 **✅ IN SCOPE:**
@@ -358,18 +358,18 @@ Code review — ensure maintainability.
 - Review feedback and recommendations
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementing fixes** → A2 (The Logic Engineer) or D3 (The Refactorer)  
+- **Implementing fixes** → A2 (The Logic Engineer) or D3 (The Refactorer)
   *Why:* Critic reviews; implementation agents fix
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Critic reviews quality; Architect makes structural decisions
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Critic identifies gaps; Test Engineer fills them
 
 ---
 
 #### B10 - The Gatekeeper
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Release management — manage release lifecycle.
 
 **✅ IN SCOPE:**
@@ -381,11 +381,11 @@ Release management — manage release lifecycle.
 - Post-release validation
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Writing implementation code** → A2 (The Logic Engineer)  
+- **Writing implementation code** → A2 (The Logic Engineer)
   *Why:* Gatekeeper approves releases, not writes code
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Gatekeeper verifies test results, not writes tests
-- **Security auditing** → B6 (The Sentinel)  
+- **Security auditing** → B6 (The Sentinel)
   *Why:* Gatekeeper checks audit results, not performs audits
 
 **🤝 REQUIRES COLLABORATION:**
@@ -398,7 +398,7 @@ Release management — manage release lifecycle.
 
 #### C1 - The Bug Hunter
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Diagnose & fix crashes — root cause analysis.
 
 **✅ IN SCOPE:**
@@ -409,16 +409,16 @@ Diagnose & fix crashes — root cause analysis.
 - Debug logging and tracing
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New feature development** → D2 (The Feature Sprinter)  
+- **New feature development** → D2 (The Feature Sprinter)
   *Why:* Bug Hunter fixes existing code, not adds features
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Bug Hunter fixes bugs, not redesigns systems
 
 ---
 
 #### C6 - The Security Patcher
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Vulnerability fixes & hardening — apply security patches.
 
 **✅ IN SCOPE:**
@@ -428,16 +428,16 @@ Vulnerability fixes & hardening — apply security patches.
 - CVE response and patching
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Security auditing** → B6 (The Sentinel)  
+- **Security auditing** → B6 (The Sentinel)
   *Why:* Security Patcher fixes; Sentinel identifies
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Security Patcher patches; Architect redesigns
 
 ---
 
 #### C7 - The Doc Updater
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Syncing docs with reality — keep documentation current.
 
 **✅ IN SCOPE:**
@@ -447,16 +447,16 @@ Syncing docs with reality — keep documentation current.
 - Synchronizing README with current state
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Code changes** → A2 (The Logic Engineer)  
+- **Code changes** → A2 (The Logic Engineer)
   *Why:* Doc Updater updates docs, not code
-- **Writing tests** → A4 (The Test Engineer)  
+- **Writing tests** → A4 (The Test Engineer)
   *Why:* Doc Updater writes docs, not tests
 
 ---
 
 #### C8 - The Configurator
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Env, build, & deployment configuration.
 
 **✅ IN SCOPE:**
@@ -467,16 +467,16 @@ Env, build, & deployment configuration.
 - Package manager configuration
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Business logic** → A2 (The Logic Engineer)  
+- **Business logic** → A2 (The Logic Engineer)
   *Why:* Configurator manages config, not implements logic
-- **UI changes** → A3 (The Interface Designer)  
+- **UI changes** → A3 (The Interface Designer)
   *Why:* Configurator manages build systems, not UI
 
 ---
 
 #### C9 - The Optimizer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Speed & resource tuning.
 
 **✅ IN SCOPE:**
@@ -487,16 +487,16 @@ Speed & resource tuning.
 - Query optimization
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → D2 (The Feature Sprinter)  
+- **New features** → D2 (The Feature Sprinter)
   *Why:* Optimizer improves existing code, not adds features
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Optimizer tunes within architecture, not redesigns
 
 ---
 
 #### C10 - The Janitor
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Dead code & log removal — clean codebase.
 
 **✅ IN SCOPE:**
@@ -507,16 +507,16 @@ Dead code & log removal — clean codebase.
 - Code hygiene tasks
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → D2 (The Feature Sprinter)  
+- **New features** → D2 (The Feature Sprinter)
   *Why:* Janitor cleans; Feature Sprinter adds
-- **Logic changes** → A2 (The Logic Engineer)  
+- **Logic changes** → A2 (The Logic Engineer)
   *Why:* Janitor removes dead code, not changes live logic
 
 ---
 
 #### C11 - The Librarian
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Dependency management.
 
 **✅ IN SCOPE:**
@@ -527,9 +527,9 @@ Dependency management.
 - Lock file maintenance
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Business logic** → A2 (The Logic Engineer)  
+- **Business logic** → A2 (The Logic Engineer)
   *Why:* Librarian manages packages, not implements logic
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Librarian manages deps, not architecture
 
 ---
@@ -538,7 +538,7 @@ Dependency management.
 
 #### D2 - The Feature Sprinter
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Small additions (non-breaking).
 
 **✅ IN SCOPE:**
@@ -548,16 +548,16 @@ Small additions (non-breaking).
 - Configuration additions
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* Feature Sprinter adds small features, not redesigns
-- **Breaking changes** → A1 (The Architect) + A2 (The Logic Engineer)  
+- **Breaking changes** → A1 (The Architect) + A2 (The Logic Engineer)
   *Why:* Breaking changes require architectural planning
 
 ---
 
 #### D3 - The Refactorer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Logic cleanup (no behavior change).
 
 **✅ IN SCOPE:**
@@ -568,16 +568,16 @@ Logic cleanup (no behavior change).
 - Naming improvements
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → D2 (The Feature Sprinter)  
+- **New features** → D2 (The Feature Sprinter)
   *Why:* Refactorer improves structure, not adds features
-- **UI changes** → A3 (The Interface Designer) or D4 (The UI Tweaker)  
+- **UI changes** → A3 (The Interface Designer) or D4 (The UI Tweaker)
   *Why:* Refactorer handles logic structure, not visual changes
 
 ---
 
 #### D4 - The UI Tweaker
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 CSS/HTML/visual polish.
 
 **✅ IN SCOPE:**
@@ -588,16 +588,16 @@ CSS/HTML/visual polish.
 - Minor animation adjustments
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Backend logic** → A2 (The Logic Engineer)  
+- **Backend logic** → A2 (The Logic Engineer)
   *Why:* UI Tweaker polishes frontend, not writes backend
-- **Architecture changes** → A1 (The Architect)  
+- **Architecture changes** → A1 (The Architect)
   *Why:* UI Tweaker polishes, not restructures
 
 ---
 
 #### D5 - The Test Extender
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Adding coverage, fixing flakes.
 
 **✅ IN SCOPE:**
@@ -607,9 +607,9 @@ Adding coverage, fixing flakes.
 - Test stability improvements
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation changes** → A2 (The Logic Engineer)  
+- **Implementation changes** → A2 (The Logic Engineer)
   *Why:* Test Extender writes tests, not implementation code
-- **New test frameworks** → A4 (The Test Engineer)  
+- **New test frameworks** → A4 (The Test Engineer)
   *Why:* Test Extender extends existing suite; Test Engineer sets up frameworks
 
 ---
@@ -618,7 +618,7 @@ Adding coverage, fixing flakes.
 
 #### orchestrator - The Orchestrator
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Empty project setup — base context foundation.
 
 **✅ IN SCOPE:**
@@ -628,16 +628,16 @@ Empty project setup — base context foundation.
 - Initial project structure
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → A2 (The Logic Engineer)  
+- **Implementation** → A2 (The Logic Engineer)
   *Why:* Orchestrator sets up projects, not implements features
-- **Reviews** → B6-B10 (Guardians)  
+- **Reviews** → B6-B10 (Guardians)
   *Why:* Orchestrator initializes, not reviews
 
 ---
 
 #### ocm - The Operational Control Manager
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Operational review — comprehensive audit assignments.
 
 **✅ IN SCOPE:**
@@ -647,16 +647,16 @@ Operational review — comprehensive audit assignments.
 - Status tracking and reporting
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate implementation agent  
+- **Implementation** → Appropriate implementation agent
   *Why:* OCM coordinates, not implements
-- **Direct coding** → A2 (The Logic Engineer)  
+- **Direct coding** → A2 (The Logic Engineer)
   *Why:* OCM manages operations, not writes code
 
 ---
 
 #### daedelus - Daedelus
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
 
 **✅ IN SCOPE:**
@@ -666,9 +666,9 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
 - Cross-cutting quality analysis
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate implementation agent  
+- **Implementation** → Appropriate implementation agent
   *Why:* Daedelus reviews perfection, not implements
-- **Initial design** → A1 (The Architect)  
+- **Initial design** → A1 (The Architect)
   *Why:* Daedelus reviews, not designs
 
 ---
@@ -679,7 +679,7 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
 
 #### A1 - The Kernel Architect
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Kernel config, custom builds.
 
 **✅ IN SCOPE:**
@@ -689,16 +689,16 @@ Kernel config, custom builds.
 - Kernel parameter planning
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Application code** → Daedelus domain agents  
+- **Application code** → Daedelus domain agents
   *Why:* Kernel Architect handles kernel, not application code
-- **Network configuration** → A3 (The Network Architect)  
+- **Network configuration** → A3 (The Network Architect)
   *Why:* Kernel Architect handles kernel, not network infrastructure
 
 ---
 
 #### A2 - The Driver Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Hardware, drivers, firmware.
 
 **✅ IN SCOPE:**
@@ -708,16 +708,16 @@ Hardware, drivers, firmware.
 - Hardware compatibility verification
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Kernel configuration** → A1 (The Kernel Architect)  
+- **Kernel configuration** → A1 (The Kernel Architect)
   *Why:* Driver Engineer handles drivers, not kernel config
-- **Network design** → A3 (The Network Architect)  
+- **Network design** → A3 (The Network Architect)
   *Why:* Driver Engineer handles hardware, not network topology
 
 ---
 
 #### A3 - The Network Architect
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Network, VLANs, firewall.
 
 **✅ IN SCOPE:**
@@ -728,18 +728,18 @@ Network, VLANs, firewall.
 - DNS and DHCP configuration
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Kernel modifications** → A1 (The Kernel Architect)  
+- **Kernel modifications** → A1 (The Kernel Architect)
   *Why:* Network Architect handles network, not kernel
-- **Driver installation** → A2 (The Driver Engineer)  
+- **Driver installation** → A2 (The Driver Engineer)
   *Why:* Network Architect configures network, not hardware drivers
-- **Application code** → Daedelus domain agents  
+- **Application code** → Daedelus domain agents
   *Why:* Cross-domain boundary
 
 ---
 
 #### A4 - The Boot Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Boot loader, ZFS BE, recovery.
 
 **✅ IN SCOPE:**
@@ -749,16 +749,16 @@ Boot loader, ZFS BE, recovery.
 - Boot process optimization
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Network configuration** → A3 (The Network Architect)  
+- **Network configuration** → A3 (The Network Architect)
   *Why:* Boot Engineer handles boot, not network
-- **Driver management** → A2 (The Driver Engineer)  
+- **Driver management** → A2 (The Driver Engineer)
   *Why:* Boot Engineer handles boot, not hardware
 
 ---
 
 #### A5 - The Service Scribe
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 rc.conf, services, runbooks.
 
 **✅ IN SCOPE:**
@@ -768,11 +768,11 @@ rc.conf, services, runbooks.
 - Service dependency mapping
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Kernel configuration** → A1 (The Kernel Architect)  
+- **Kernel configuration** → A1 (The Kernel Architect)
   *Why:* Service Scribe handles services, not kernel
-- **Hardware management** → A2 (The Driver Engineer)  
+- **Hardware management** → A2 (The Driver Engineer)
   *Why:* Service Scribe handles services, not hardware
-- **Network infrastructure** → A3 (The Network Architect)  
+- **Network infrastructure** → A3 (The Network Architect)
   *Why:* Service Scribe configures services, not network topology
 
 ---
@@ -781,7 +781,7 @@ rc.conf, services, runbooks.
 
 #### B6 - The Security Auditor
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Security review, vulnerability scanning.
 
 **✅ IN SCOPE:**
@@ -791,16 +791,16 @@ Security review, vulnerability scanning.
 - Compliance verification
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Applying patches** → C6 (The Security Patcher)  
+- **Applying patches** → C6 (The Security Patcher)
   *Why:* Security Auditor identifies; Security Patcher fixes
-- **Implementation** → Appropriate engineer  
+- **Implementation** → Appropriate engineer
   *Why:* Security Auditor reviews, not implements
 
 ---
 
 #### B7 - The Syntax Marshal
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Syntax validation, standards.
 
 **✅ IN SCOPE:**
@@ -809,16 +809,16 @@ Syntax validation, standards.
 - Format verification
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Security auditing** → B6 (The Security Auditor)  
+- **Security auditing** → B6 (The Security Auditor)
   *Why:* Syntax Marshal validates syntax, not security
-- **Performance tuning** → B8 (The Performance Analyst)  
+- **Performance tuning** → B8 (The Performance Analyst)
   *Why:* Syntax Marshal validates format, not performance
 
 ---
 
 #### B8 - The Performance Analyst
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Benchmarking, profiling.
 
 **✅ IN SCOPE:**
@@ -828,16 +828,16 @@ Benchmarking, profiling.
 - Performance recommendations
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementing optimizations** → C9 (The Optimizer)  
+- **Implementing optimizations** → C9 (The Optimizer)
   *Why:* Performance Analyst measures; Optimizer tunes
-- **Security review** → B6 (The Security Auditor)  
+- **Security review** → B6 (The Security Auditor)
   *Why:* Performance Analyst profiles performance, not security
 
 ---
 
 #### B9 - The Compliance Critic
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 BSD standards, best practices.
 
 **✅ IN SCOPE:**
@@ -846,16 +846,16 @@ BSD standards, best practices.
 - Configuration quality review
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementing fixes** → Appropriate maintainer  
+- **Implementing fixes** → Appropriate maintainer
   *Why:* Compliance Critic reviews, not implements
-- **Security auditing** → B6 (The Security Auditor)  
+- **Security auditing** → B6 (The Security Auditor)
   *Why:* Compliance Critic checks standards, not security
 
 ---
 
 #### B10 - The Release Gatekeeper
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Update approval, release management.
 
 **✅ IN SCOPE:**
@@ -865,9 +865,9 @@ Update approval, release management.
 - Post-update validation
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate engineer or maintainer  
+- **Implementation** → Appropriate engineer or maintainer
   *Why:* Release Gatekeeper approves, not implements
-- **Testing** → Appropriate auditor  
+- **Testing** → Appropriate auditor
   *Why:* Release Gatekeeper decides, not tests
 
 ---
@@ -876,7 +876,7 @@ Update approval, release management.
 
 #### C1 - The Bug Hunter
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Crash diagnosis, bug fixing.
 
 **✅ IN SCOPE:**
@@ -885,16 +885,16 @@ Crash diagnosis, bug fixing.
 - System bug fix implementation
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → Appropriate specialist  
+- **New features** → Appropriate specialist
   *Why:* Bug Hunter fixes existing issues, not adds features
-- **Architecture changes** → A1 (The Kernel Architect)  
+- **Architecture changes** → A1 (The Kernel Architect)
   *Why:* Bug Hunter fixes bugs, not redesigns
 
 ---
 
 #### C6 - The Security Patcher
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 CVE patching, hardening.
 
 **✅ IN SCOPE:**
@@ -903,16 +903,16 @@ CVE patching, hardening.
 - Emergency security fixes
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Security auditing** → B6 (The Security Auditor)  
+- **Security auditing** → B6 (The Security Auditor)
   *Why:* Security Patcher fixes; Security Auditor identifies
-- **Architecture changes** → A1 (The Kernel Architect)  
+- **Architecture changes** → A1 (The Kernel Architect)
   *Why:* Security Patcher patches, not redesigns
 
 ---
 
 #### C7 - The Manual Keeper
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Documentation maintenance.
 
 **✅ IN SCOPE:**
@@ -922,16 +922,16 @@ Documentation maintenance.
 - Configuration documentation
 
 **⛔ FORBIDDEN ACTIONS:**
-- **System changes** → Appropriate engineer or maintainer  
+- **System changes** → Appropriate engineer or maintainer
   *Why:* Manual Keeper documents, not modifies systems
-- **Code writing** → Daedelus domain agents  
+- **Code writing** → Daedelus domain agents
   *Why:* Cross-domain boundary
 
 ---
 
 #### C8 - The Sysctl Tuner
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Kernel tunables, sysctl configuration.
 
 **✅ IN SCOPE:**
@@ -940,16 +940,16 @@ Kernel tunables, sysctl configuration.
 - Runtime parameter management
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Application configuration** → Daedelus C8 (The Configurator)  
+- **Application configuration** → Daedelus C8 (The Configurator)
   *Why:* Sysctl Tuner handles kernel tunables, not app config
-- **Network configuration** → A3 (The Network Architect)  
+- **Network configuration** → A3 (The Network Architect)
   *Why:* Sysctl Tuner handles kernel params, not network topology
 
 ---
 
 #### C9 - The Optimizer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Performance tuning, resource optimization.
 
 **✅ IN SCOPE:**
@@ -959,16 +959,16 @@ Performance tuning, resource optimization.
 - Memory management tuning
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → Appropriate specialist  
+- **New features** → Appropriate specialist
   *Why:* Optimizer tunes existing systems, not adds capabilities
-- **Architecture changes** → A1 (The Kernel Architect)  
+- **Architecture changes** → A1 (The Kernel Architect)
   *Why:* Optimizer tunes within architecture, not redesigns
 
 ---
 
 #### C10 - The System Janitor
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Cleanup, space recovery.
 
 **✅ IN SCOPE:**
@@ -978,16 +978,16 @@ Cleanup, space recovery.
 - Old package cleanup
 
 **⛔ FORBIDDEN ACTIONS:**
-- **New features** → Appropriate specialist  
+- **New features** → Appropriate specialist
   *Why:* System Janitor cleans, not extends
-- **Configuration changes** → Appropriate engineer  
+- **Configuration changes** → Appropriate engineer
   *Why:* System Janitor cleans up, not reconfigures
 
 ---
 
 #### C11 - The Port Librarian
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Package management, ports.
 
 **✅ IN SCOPE:**
@@ -997,9 +997,9 @@ Package management, ports.
 - Port option configuration
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Business logic** → Daedelus domain agents  
+- **Business logic** → Daedelus domain agents
   *Why:* Cross-domain boundary
-- **Kernel configuration** → A1 (The Kernel Architect)  
+- **Kernel configuration** → A1 (The Kernel Architect)
   *Why:* Port Librarian manages packages, not kernel
 
 ---
@@ -1008,7 +1008,7 @@ Package management, ports.
 
 #### D2 - The Port Builder
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Custom port compilation.
 
 **✅ IN SCOPE:**
@@ -1018,18 +1018,18 @@ Custom port compilation.
 - Port patching
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Network configuration** → A3 (The Network Architect)  
+- **Network configuration** → A3 (The Network Architect)
   *Why:* Port Builder compiles ports, not configures network
-- **Kernel configuration** → A1 (The Kernel Architect)  
+- **Kernel configuration** → A1 (The Kernel Architect)
   *Why:* Port Builder handles ports, not kernel
-- **Jail management** → D4 (The Jail Architect)  
+- **Jail management** → D4 (The Jail Architect)
   *Why:* Port Builder builds ports, not manages jails
 
 ---
 
 #### D3 - The Compatibility Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Linux compatibility, Wine.
 
 **✅ IN SCOPE:**
@@ -1039,16 +1039,16 @@ Linux compatibility, Wine.
 - Compatibility troubleshooting
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Native port building** → D2 (The Port Builder)  
+- **Native port building** → D2 (The Port Builder)
   *Why:* Compatibility Engineer handles compat layers, not native ports
-- **Kernel configuration** → A1 (The Kernel Architect)  
+- **Kernel configuration** → A1 (The Kernel Architect)
   *Why:* Compatibility Engineer handles compat, not kernel
 
 ---
 
 #### D4 - The Jail Architect
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Jails, vnet, isolation.
 
 **✅ IN SCOPE:**
@@ -1058,18 +1058,18 @@ Jails, vnet, isolation.
 - Jail resource limits
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Kernel modification** → A1 (The Kernel Architect)  
+- **Kernel modification** → A1 (The Kernel Architect)
   *Why:* Jail Architect manages jails, not kernel
-- **Port building** → D2 (The Port Builder)  
+- **Port building** → D2 (The Port Builder)
   *Why:* Jail Architect manages jails, not compiles ports
-- **Host network infrastructure** → A3 (The Network Architect)  
+- **Host network infrastructure** → A3 (The Network Architect)
   *Why:* Jail Architect handles jail networking, not host network
 
 ---
 
 #### D5 - The ZFS Engineer
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 ZFS pools, datasets, storage architecture.
 
 **✅ IN SCOPE:**
@@ -1080,11 +1080,11 @@ ZFS pools, datasets, storage architecture.
 - Storage architecture planning
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Network configuration** → A3 (The Network Architect)  
+- **Network configuration** → A3 (The Network Architect)
   *Why:* ZFS Engineer handles storage, not network
-- **Kernel modification** → A1 (The Kernel Architect)  
+- **Kernel modification** → A1 (The Kernel Architect)
   *Why:* ZFS Engineer manages storage, not kernel
-- **Jail management** → D4 (The Jail Architect)  
+- **Jail management** → D4 (The Jail Architect)
   *Why:* ZFS Engineer handles storage, not jails
 
 ---
@@ -1093,7 +1093,7 @@ ZFS pools, datasets, storage architecture.
 
 #### E1 - The System Orchestrator
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Base context, constitutional framework.
 
 **✅ IN SCOPE:**
@@ -1102,16 +1102,16 @@ Base context, constitutional framework.
 - Base system setup coordination
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate engineer or specialist  
+- **Implementation** → Appropriate engineer or specialist
   *Why:* System Orchestrator coordinates, not implements
-- **Reviews** → B6-B10 (Auditors)  
+- **Reviews** → B6-B10 (Auditors)
   *Why:* System Orchestrator initializes, not reviews
 
 ---
 
 #### E2 - The Administrator
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Documentation curation.
 
 **✅ IN SCOPE:**
@@ -1120,16 +1120,16 @@ Documentation curation.
 - Documentation standards enforcement
 
 **⛔ FORBIDDEN ACTIONS:**
-- **System changes** → Appropriate engineer or maintainer  
+- **System changes** → Appropriate engineer or maintainer
   *Why:* Administrator curates docs, not modifies systems
-- **Coding** → Daedelus domain agents  
+- **Coding** → Daedelus domain agents
   *Why:* Cross-domain boundary
 
 ---
 
 #### E3 - The General Manager
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Monitoring, dispatch.
 
 **✅ IN SCOPE:**
@@ -1139,16 +1139,16 @@ Monitoring, dispatch.
 - Incident response coordination
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate engineer or specialist  
+- **Implementation** → Appropriate engineer or specialist
   *Why:* General Manager dispatches, not implements
-- **Direct fixes** → Appropriate maintainer  
+- **Direct fixes** → Appropriate maintainer
   *Why:* General Manager coordinates, not fixes
 
 ---
 
 #### E4 - The Ombudsman
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Quality, orchestration.
 
 **✅ IN SCOPE:**
@@ -1158,16 +1158,16 @@ Quality, orchestration.
 - Process improvement recommendations
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate engineer or specialist  
+- **Implementation** → Appropriate engineer or specialist
   *Why:* Ombudsman assesses quality, not implements
-- **Coding** → Daedelus domain agents  
+- **Coding** → Daedelus domain agents
   *Why:* Cross-domain boundary
 
 ---
 
 #### E5 - DEUS
 
-**Primary Responsibility:**  
+**Primary Responsibility:**
 Security, privacy, sovereignty — supreme security guardian.
 
 **✅ IN SCOPE:**
@@ -1177,9 +1177,9 @@ Security, privacy, sovereignty — supreme security guardian.
 - Cross-cutting security decisions
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Application code** → Daedelus domain agents  
+- **Application code** → Daedelus domain agents
   *Why:* Cross-domain boundary
-- **Initial system design** → A1 (The Kernel Architect)  
+- **Initial system design** → A1 (The Kernel Architect)
   *Why:* DEUS reviews and enforces, not designs from scratch
 
 ---
@@ -1325,5 +1325,5 @@ To invoke the correct agent: `logos [correct_key]`
 
 ---
 
-**Last Reviewed:** 2026-02-19  
+**Last Reviewed:** 2026-02-19
 **Next Review:** When new agents added or scopes modified

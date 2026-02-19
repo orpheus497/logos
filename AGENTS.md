@@ -1,6 +1,6 @@
 # AGENTS.md — Copilot Coding Agent Instructions
 
-**Project:** LOGOS — Unified AI Agent Federation  
+**Project:** LOGOS — Unified AI Agent Federation
 **Branch:** `task1/infrastructure` (based on `develop`)
 
 ---
@@ -68,7 +68,7 @@ python -m ruff check logos/
 
 ## Current Development Status
 
-**Branch:** `task1/infrastructure` — Phase 1: Agent Boundary Enforcement  
+**Branch:** `task1/infrastructure` — Phase 1: Agent Boundary Enforcement
 **Base version:** 0.1.0 (on `develop`) → 0.2.0.dev0 (on this branch)
 
 ### Completed Work (unstaged, requires commit)
