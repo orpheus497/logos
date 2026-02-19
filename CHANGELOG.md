@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - A1 (The Kernel Architect)
   - A2 (The Driver Engineer)
   - A3 (The Network Architect)
-  - A4 (The Boot Engineer)
+  - A4 (The Boot Engineer, formerly The Boot Configurator)
   - A5 (The Service Scribe)
 - Scope boundaries implemented for DEUS Group B (Auditors):
   - B6 (The Security Auditor)
