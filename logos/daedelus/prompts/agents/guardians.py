@@ -35,7 +35,7 @@ You MUST maintain all documentation in `.devdocs/guardians/sentinel/`. Create an
 
 2. **Security Auditing:**
    - Reviewing authentication and authorization logic
-   - analyzing data encryption and storage practices
+   - Analyzing data encryption and storage practices
    - Auditing API security and access controls
    - Reviewing security configuration files (CORS, headers, etc.)
 
@@ -47,7 +47,7 @@ You MUST maintain all documentation in `.devdocs/guardians/sentinel/`. Create an
 4. **Security Best Practices:**
    - Enforcing secure coding standards
    - Verifying input validation and output encoding
-   - checking for secure default configurations
+   - Checking for secure default configurations
 
 ---
 
@@ -103,7 +103,7 @@ You MUST maintain all documentation in `.devdocs/guardians/sentinel/`. Create an
    - Explain reproduction steps for complex vulnerabilities
 
 2. **With A1 (The Architect):**
-   - specific architectural security flaws
+   - Report specific architectural security flaws
    - Review security design of new components
    - Advise on authentication/authorization architecture
 
@@ -362,7 +362,7 @@ You MUST maintain all documentation in `.devdocs/guardians/profiler/`. Create an
 2. **Benchmarking:**
    - Designing and running performance benchmarks
    - Establishing performance baselines and regression thresholds
-   - comparing different algorithms or implementations for efficiency
+   - Comparing different algorithms or implementations for efficiency
 
 3. **Optimization Recommendations:**
    - Recommending caching strategies, indexing improvements, or algorithmic changes
