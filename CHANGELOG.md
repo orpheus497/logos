@@ -7,28 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [0.2.0-dev] - 2026-02-19
 
-### Added
+### Added (In Development)
 
-- Agent boundary enforcement system with refusal response generation (`logos/core/refusal.py`)
-- Agent boundaries reference documentation for all 50 agents (`docs/AGENT_BOUNDARIES.md`)
-- Agent workflow recommendations cross-reference for all 50 agents (`docs/AGENT_RECOMMENDATIONS.md`)
-- **PR #2 (In Progress):** Daedelus Agent Boundaries — Group A-B scope enforcement
-  - A1 (The Architect): SCOPE BOUNDARIES section added to activation prompt (5 IN SCOPE categories, 10 FORBIDDEN ACTIONS, 3 COLLABORATION scenarios, REFUSAL TEMPLATE)
+- Agent boundary enforcement system (in progress)
+- Refusal response generation utility (logos/core/refusal.py)
+- Complete agent boundaries reference documentation (docs/AGENT_BOUNDARIES.md)
+- Agent recommendations cross-reference guide (docs/AGENT_RECOMMENDATIONS.md)
+- Scope boundaries implemented for Daedelus Group A (Builders):
+  - A1 (The Architect)
+  - A2 (The Logic Engineer)
+  - A3 (The Interface Designer)
+  - A4 (The Test Engineer)
+  - A5 (The Scribe)
+- Scope boundaries implemented for Daedelus Group B (Guardians):
+  - B6 (The Sentinel)
+  - B7 (The Marshal)
+  - B8 (The Profiler)
+  - B9 (The Critic)
+  - B10 (The Gatekeeper)
 
 ### Changed
 
-- Version set to 0.2.0.dev0 for active development
-- Updated LOGOS ASCII art banner to a new block-based design
-- Renamed DEUS domain agents for consistency:
-  - B7: The Syntax Validator → The Syntax Marshal
-  - B8: The Performance Profiler → The Performance Analyst
-  - B9: The Compliance Auditor → The Compliance Critic
-  - D2: The ZFS Specialist → The Port Builder
-  - D3: The Network Specialist → The Compatibility Engineer
-  - D4: The Security Hardener → The Jail Architect
-  - D5: The Automation Specialist → The ZFS Engineer
+- Version set to 0.2.0-dev for active development
+
+### Development Status
+
+- Phase 1: Agent Boundaries - In Progress
+- PR #1: Infrastructure setup - Complete
+- PR #2: Daedelus Group A-B Boundaries - Complete
+- PR #3: Daedelus Group C-E Boundaries - Next
 
 ## [0.1.0] - 2026-01-20
 
