@@ -1,7 +1,7 @@
 """##Script function and purpose: Shared test utilities for Daedelus boundary tests."""
 
 
-def _extract_section(prompt: str, header: str) -> str:
+def extract_section(prompt: str, header: str) -> str:
     """##Function purpose: Extract a markdown section from prompt text up to the next heading."""
     try:
         start = prompt.index(header) + len(header)

@@ -29,7 +29,7 @@ from logos.daedelus.prompts.agents.workers import (
     TEST_EXTENDER_ACTIVATION,
     UI_TWEAKER_ACTIVATION,
 )
-from tests.helpers import _extract_section
+from tests.helpers import extract_section
 
 # Map agent keys to their activation prompts
 AGENTS = {
@@ -61,7 +61,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 5 IN SCOPE items."""
     header = "### ✅ IN SCOPE (What You CAN Do):"
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
-    in_scope_text = _extract_section(prompt, header)
+    in_scope_text = extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", in_scope_text)
     assert len(items) >= 5, (
         f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
@@ -73,7 +73,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 10 FORBIDDEN ACTIONS."""
     header = "### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):"
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
-    forbidden_text = _extract_section(prompt, header)
+    forbidden_text = extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", forbidden_text)
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
@@ -87,7 +87,7 @@ def test_agent_has_collaboration_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 3 REQUIRES COLLABORATION items."""
     header = "### 🤝 REQUIRES COLLABORATION:"
     assert header in prompt, f"Agent {agent_key} missing COLLABORATION section"
-    collab_text = _extract_section(prompt, header)
+    collab_text = extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", collab_text)
     assert len(items) >= 3, (
         f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
@@ -106,6 +106,13 @@ def test_agent_has_refusal_template(agent_key, prompt):
 def test_agent_has_devdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
-    assert "orchestrator" in prompt.lower() or agent_key == "orchestrator", (
-        f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
-    )
+    devdocs_heading = ".devdocs/ Management"
+    if devdocs_heading in prompt:
+        block = prompt[prompt.index(devdocs_heading):][:300]
+        assert "orchestrator" in block.lower() or agent_key == "orchestrator", (
+            f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
+        )
+    else:
+        assert "orchestrator" in prompt.lower() or agent_key == "orchestrator", (
+            f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
+        )

@@ -490,6 +490,7 @@ Daedelus takes a preference to REBUILDING A FUNCTION FROM THE GROUND UP if the c
     * **ASSIGNMENT RULES:**
       - Evaluate ALL issues found in the review
       - Select ONE group (A, B, C, or D) that best addresses the majority of critical issues
+      - Note: Group E (Operators) must not be chosen—Operators cannot be assigned to themselves
       - Assign ALL issues to agents within that ONE group only
       - You may assign to multiple agents WITHIN the chosen group
       - Format: "**ASSIGNED GROUP: [Group Letter] - [Group Name]**"

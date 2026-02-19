@@ -149,7 +149,7 @@ def quick_refusal(
             if desc_name:
                 recommended_description = f"Handles {desc_name} responsibilities"
             else:
-                recommended_description = f"Handles {recommended_name.strip()} responsibilities"
+                recommended_description = "Handles requests"
 
     response = RefusalResponse(
         refusing_agent_key=refusing_key,
