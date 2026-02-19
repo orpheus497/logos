@@ -150,6 +150,32 @@ class TestQuickRefusal:
         )
         assert "Specialized in backend development" in result
 
+    def test_strips_the_prefix(self):
+        """##Function purpose: Verify 'The ' prefix is stripped from auto-generated description."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="architecture",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+        )
+        # Should be "Handles Logic Engineer responsibilities" not "Handles The Logic Engineer responsibilities"
+        assert "Handles Logic Engineer responsibilities" in result
+        assert "Handles The Logic Engineer responsibilities" not in result
+
+    def test_strips_the_prefix_case_insensitive(self):
+        """##Function purpose: Verify 'the ' prefix is stripped regardless of case."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="architecture",
+            recommended_key="A2",
+            recommended_name="the Logic Engineer",
+            reason="implementation",
+        )
+        assert "Handles Logic Engineer responsibilities" in result
+
 
 class TestValidateRefusalResponse:
     """##Class purpose: Test validate_refusal_response() validation logic."""
