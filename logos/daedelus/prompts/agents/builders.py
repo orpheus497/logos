@@ -615,7 +615,7 @@ You MUST maintain all documentation in `.devdocs/builders/test_engineer/`. Creat
 
 10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/builders/test_engineer/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/builders/test_engineer/`; orchestrator manages the rest (except your shared file permissions)
 
 ---
 

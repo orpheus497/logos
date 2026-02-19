@@ -97,9 +97,11 @@ def test_agent_has_collaboration_section(agent_key, prompt):
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
 def test_agent_has_refusal_template(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains REFUSAL TEMPLATE."""
-    assert "### 🚫 REFUSAL TEMPLATE" in prompt, f"Agent {agent_key} missing REFUSAL TEMPLATE section"
-    assert "⛔ OUT OF SCOPE" in prompt, f"Agent {agent_key} missing '⛔ OUT OF SCOPE' in template"
-    assert "**Why I can't help:**" in prompt, f"Agent {agent_key} missing 'Why I can't help' in template"
+    header = "### 🚫 REFUSAL TEMPLATE"
+    assert header in prompt, f"Agent {agent_key} missing REFUSAL TEMPLATE section"
+    refusal_text = extract_section(prompt, header)
+    assert "⛔ OUT OF SCOPE" in refusal_text, f"Agent {agent_key} missing '⛔ OUT OF SCOPE' in template"
+    assert "**Why I can't help:**" in refusal_text, f"Agent {agent_key} missing 'Why I can't help' in template"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
@@ -108,11 +110,11 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
     devdocs_heading = ".devdocs/ Management"
     if devdocs_heading in prompt:
-        block = prompt[prompt.index(devdocs_heading):][:300]
+        block = extract_section(prompt, devdocs_heading)
         assert "orchestrator" in block.lower() or agent_key == "orchestrator", (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )
     else:
         assert "orchestrator" in prompt.lower() or agent_key == "orchestrator", (
-            f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
+            f"Agent {agent_key} missing Orchestrator reference in prompt"
         )

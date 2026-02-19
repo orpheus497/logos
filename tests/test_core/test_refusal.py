@@ -109,7 +109,6 @@ class TestGenerateRefusal:
         result = generate_refusal(self._make_response())
         assert "Your request:" not in result
 
-
     def test_raises_valueerror_on_invalid_response(self):
         """##Function purpose: Verify generate_refusal raises ValueError for invalid input."""
         ref = RefusalResponse(
