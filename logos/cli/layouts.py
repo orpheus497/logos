@@ -97,7 +97,7 @@ def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> Non
     ##Loop purpose: Print each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - len(line.rstrip())) // 2
         ##Action purpose: Print centered banner line with color
         print(" " * padding + color + line + reset)
     print()  # Extra spacing after banner
@@ -207,7 +207,7 @@ def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: i
     ##Loop purpose: Print each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - len(line.rstrip())) // 2
         ##Action purpose: Print centered logo line with color
         print(" " * padding + color + line + reset)
 
@@ -557,7 +557,7 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     ##Loop purpose: Build each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - len(line.rstrip())) // 2
         ##Action purpose: Build centered banner line with color
         output_lines.append(" " * padding + color + line + reset)
     output_lines.append("")  # Extra spacing after banner
@@ -599,7 +599,7 @@ def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width
     ##Loop purpose: Build each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - len(line.rstrip())) // 2
         ##Action purpose: Build centered logo line with color
         output_lines.append(" " * padding + color + line + reset)
 

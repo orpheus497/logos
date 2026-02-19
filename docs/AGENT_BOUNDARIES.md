@@ -126,8 +126,8 @@ Structure & config — create contracts and skeleton for software projects.
   *Why:* Architecture creates design; Critic reviews implementation quality
 - **Release management** → B10 (The Gatekeeper)
   *Why:* Architecture doesn't manage releases; Gatekeeper controls release gates
-- **Modifying .devdocs/** → orchestrator (The Orchestrator)
-  *Why:* Only Orchestrator manages .devdocs folder structure
+- **Modifying .devdocs/ (except shared `DECISIONS_LOG.md`)** → orchestrator (The Orchestrator)
+  *Why:* Orchestrator manages .devdocs structure; A1 may only update the shared decisions log
 
 **🤝 REQUIRES COLLABORATION:**
 - **With A2 (The Logic Engineer):** Ensure architecture supports business requirements

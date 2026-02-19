@@ -91,12 +91,14 @@ python -m ruff check logos/
 | 14/14 | CHANGELOG.md update | root | ⬜ Pending |
 
 ### Each SCOPE BOUNDARIES Section Must Include
+
 - ✅ IN SCOPE: minimum 5 categorized items with sub-items
 - ⛔ FORBIDDEN ACTIONS: minimum 10 with agent redirects and "Why" explanations
 - 🤝 REQUIRES COLLABORATION: minimum 3 scenarios
 - 🚫 REFUSAL TEMPLATE: with concrete example
 
 ### Resumption Instructions
+
 Next commit: `feat(daedelus): add scope boundaries to A2 (Logic Engineer)` — add SCOPE BOUNDARIES to `LOGIC_ENGINEER_ACTIVATION` in `logos/daedelus/prompts/agents/builders.py`.
 
 Reference `PLAN.md` lines 1144-1194 for agent-specific scope definitions. Follow the pattern established in commit 1 (A1 Architect).
@@ -106,6 +108,7 @@ Reference `PLAN.md` lines 1144-1194 for agent-specific scope definitions. Follow
 ## Completed Phases
 
 ### Phase 1: Agent Boundary Infrastructure (task1/infrastructure) ✅
+
 - `docs/AGENT_BOUNDARIES.md` — all 50 agents documented
 - `docs/AGENT_RECOMMENDATIONS.md` — all 50 agents with workflow recommendations
 - `logos/core/refusal.py` — refusal response generation utility
