@@ -1,12 +1,18 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.1.0 (Alpha)  
+**Version:** 0.2.0-dev  
 **License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
 **Author:** orpheus497
 
 [![Test Suite](https://github.com/orpheus497/logos/actions/workflows/test.yml/badge.svg)](https://github.com/orpheus497/logos/actions/workflows/test.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+---
+
+## 🚧 Development Notice
+
+LOGOS v0.2.0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ---
 
