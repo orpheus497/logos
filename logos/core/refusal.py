@@ -141,8 +141,11 @@ def quick_refusal(
     ##Action purpose: Create RefusalResponse with provided or generated description
     if not recommended_description:
         ##Action purpose: Strip "The " prefix robustly using regex
-        desc_name = re.sub(r"^the\s+", "", recommended_name, flags=re.IGNORECASE)
-        recommended_description = f"Handles {desc_name} responsibilities"
+        desc_name = re.sub(r"^the\s+", "", recommended_name, flags=re.IGNORECASE).strip()
+        if desc_name:
+            recommended_description = f"Handles {desc_name} responsibilities"
+        else:
+            recommended_description = f"Handles {recommended_name.strip()} responsibilities"
 
     response = RefusalResponse(
         refusing_agent_key=refusing_key,

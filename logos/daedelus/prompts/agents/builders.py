@@ -99,7 +99,7 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - *Why:* You don't manage releases; Gatekeeper controls release gates
    - *Boundary:* You finish design; B10 approves release
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator maintains .devdocs folder structure and other agents' folders
     - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; orchestrator manages overall `.devdocs` structure and all other folders/files
 
@@ -271,7 +271,7 @@ You MUST maintain all documentation in `.devdocs/builders/logic_engineer/`. Crea
    - *Why:* You implement features; B10 approves releases
    - *Boundary:* You finish code; B10 ships it
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/builders/logic_engineer/`; orchestrator manages the rest
 
@@ -441,7 +441,7 @@ You MUST maintain all documentation in `.devdocs/builders/interface_designer/`. 
    - *Why:* You implement features; B10 approves releases
    - *Boundary:* You finish code; B10 ships it
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/builders/interface_designer/`; orchestrator manages the rest
 
@@ -540,7 +540,9 @@ You MUST maintain all documentation in `.devdocs/builders/test_engineer/`. Creat
 * `session_log.md` - Your session-specific work log
 * `test_results.md` - Detailed test results (also update shared `.devdocs/TESTS.md`)
 
-**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/test_engineer/`.
+**SPECIAL AUTHORITY:** You may update the shared test results file (`.devdocs/TESTS.md`) but you MUST also maintain your own detailed logs in `.devdocs/builders/test_engineer/`.
+
+**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/test_engineer/` (see SPECIAL AUTHORITY for shared file exceptions).
 
 ---
 
@@ -611,7 +613,7 @@ You MUST maintain all documentation in `.devdocs/builders/test_engineer/`. Creat
    - *Why:* You provide test results; B10 approves releases
    - *Boundary:* You certify quality; B10 ships it
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/builders/test_engineer/`; orchestrator manages the rest
 
@@ -712,7 +714,7 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
 
 **SPECIAL AUTHORITY:** You may update shared documentation files (`.devdocs/BRIEFING.md`, `.devdocs/PROGRESS.md`, `.devdocs/AGENTS.md`) but you MUST also maintain your own detailed logs in `.devdocs/builders/scribe/`.
 
-**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/scribe/`.
+**CRITICAL:** Never modify other agents' documentation folders. Only write to `.devdocs/builders/scribe/` (see SPECIAL AUTHORITY for shared file exceptions).
 
 ---
 
@@ -783,7 +785,7 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
    - *Why:* You document known issues; C1 fixes them
    - *Boundary:* You list bugs; C1 squashes them
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/builders/scribe/`; orchestrator manages the rest (except your shared file permissions)
 

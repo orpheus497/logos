@@ -49,6 +49,18 @@ AGENTS = {
 }
 
 
+def _extract_section(prompt: str, header: str) -> str:
+    """##Function purpose: Extract a markdown section from prompt text up to the next heading."""
+    start = prompt.index(header) + len(header)
+    rest = prompt[start:]
+    end = len(rest)
+    for marker in ("\n### ", "\n## "):
+        pos = rest.find(marker)
+        if pos != -1 and pos < end:
+            end = pos
+    return rest[:end]
+
+
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
 def test_agent_has_scope_boundaries_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains the SCOPE BOUNDARIES section."""
@@ -60,16 +72,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 5 IN SCOPE items."""
     header = "### ✅ IN SCOPE (What You CAN Do):"
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
-    # Extract only the IN SCOPE section (up to the next ### or ## heading)
-    start = prompt.index(header) + len(header)
-    rest = prompt[start:]
-    end = len(rest)
-    for marker in ("\n### ", "\n## "):
-        pos = rest.find(marker)
-        if pos != -1 and pos < end:
-            end = pos
-    in_scope_text = rest[:end]
-    # Count numbered list items (e.g. "1. **", "2. **") within the section
+    in_scope_text = _extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", in_scope_text)
     assert len(items) >= 5, (
         f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
@@ -81,21 +84,11 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 10 FORBIDDEN ACTIONS."""
     header = "### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):"
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
-    # Extract FORBIDDEN section
-    start = prompt.index(header) + len(header)
-    rest = prompt[start:]
-    end = len(rest)
-    for marker in ("\n### ", "\n## "):
-        pos = rest.find(marker)
-        if pos != -1 and pos < end:
-            end = pos
-    forbidden_text = rest[:end]
-    # Count numbered forbidden items
+    forbidden_text = _extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", forbidden_text)
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     )
-    # Verify redirects and explanations
     assert "→" in forbidden_text, f"Agent {agent_key} forbidden actions missing redirects (→)"
     assert "*Why:*" in forbidden_text, f"Agent {agent_key} forbidden actions missing 'Why' explanations"
 
@@ -105,16 +98,7 @@ def test_agent_has_collaboration_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 3 REQUIRES COLLABORATION items."""
     header = "### 🤝 REQUIRES COLLABORATION:"
     assert header in prompt, f"Agent {agent_key} missing COLLABORATION section"
-    # Extract COLLABORATION section
-    start = prompt.index(header) + len(header)
-    rest = prompt[start:]
-    end = len(rest)
-    for marker in ("\n### ", "\n## "):
-        pos = rest.find(marker)
-        if pos != -1 and pos < end:
-            end = pos
-    collab_text = rest[:end]
-    # Count numbered collaboration items
+    collab_text = _extract_section(prompt, header)
     items = re.findall(r"\n\d+\. \*\*", collab_text)
     assert len(items) >= 3, (
         f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
@@ -134,5 +118,5 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
     assert "orchestrator" in prompt.lower() or agent_key == "orchestrator", (
-        f"Agent {agent_key} missing orchestrator reference in .devdocs boundary"
+        f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
     )

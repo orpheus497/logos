@@ -262,6 +262,19 @@ class TestValidateRefusalResponse:
         )
         assert validate_refusal_response(ref) is False
 
+    def test_whitespace_only_recommended_description_returns_false(self):
+        """##Function purpose: Verify whitespace-only recommended_agent_description fails."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="system architecture design",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="   ",
+        )
+        assert validate_refusal_response(ref) is False
+
     def test_empty_recommended_key_returns_false(self):
         """##Function purpose: Verify empty recommended_agent_key fails validation."""
         ref = RefusalResponse(

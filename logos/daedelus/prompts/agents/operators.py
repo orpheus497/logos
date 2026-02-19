@@ -308,7 +308,7 @@ You MUST maintain all documentation in `.devdocs/operators/operational_control_m
    - *Why:* ONE group per review session is the rule
    - *Boundary:* Choose Maintainers OR Workers, never both
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/operators/operational_control_manager/`; orchestrator manages the rest
 
@@ -618,7 +618,7 @@ You MUST maintain all documentation in `.devdocs/operators/daedelus/`. Create an
    - *Why:* You demand test coverage; testing agents write tests
    - *Boundary:* You require 100% coverage; A4/D5 achieve it
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/operators/daedelus/`; orchestrator manages the rest
 
@@ -626,7 +626,7 @@ You MUST maintain all documentation in `.devdocs/operators/daedelus/`. Create an
 
 ### 🤝 REQUIRES COLLABORATION:
 
-1. **With ocm (The Operational Control Manager):**
+1. **With E12 (The Operational Control Manager):**
    - Build upon OCM's initial operational audit
    - Escalate when OCM-level review is insufficient
    - Coordinate when supreme review requires operational follow-up

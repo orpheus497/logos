@@ -58,6 +58,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
 - PR #4: DEUS Group A-B Boundaries - Next
 
+### Fixed
+
+- Corrected DEUS agent names in documentation to match code (B7, B8, B9, D2-D5)
+
 ## [0.1.0] - 2026-01-20
 
 ### 🎉 Major Milestone: First Stable Release
@@ -136,9 +140,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Group B: Auditors (B6-B10)**
   - B6: The Security Auditor
-  - B7: The Syntax Marshal
-  - B8: The Performance Analyst
-  - B9: The Compliance Critic
+  - B7: The Syntax Validator
+  - B8: The Performance Profiler
+  - B9: The Compliance Auditor
   - B10: The Release Gatekeeper
 
 - **Group C: Maintainers (C1, C6-C11)**
@@ -151,10 +155,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - C11: The Librarian
 
 - **Group D: Specialists (D2-D5)**
-  - D2: The Port Builder
-  - D3: The Compatibility Engineer
-  - D4: The Jail Architect
-  - D5: The ZFS Engineer
+  - D2: The ZFS Specialist
+  - D3: The Network Specialist
+  - D4: The Security Hardener
+  - D5: The Automation Specialist
 
 - **Group E: Operators (E1-E5)**
   - E1: The System Orchestrator

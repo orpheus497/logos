@@ -101,7 +101,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/bug_hunter/`. Creat
    - *Why:* You fix code; Doc Updater synchronizes documentation
    - *Boundary:* You patch code; C7 patches docs
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/bug_hunter/`; orchestrator manages the rest
 
@@ -280,7 +280,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/security_patcher/`.
    - *Why:* You patch vulnerable deps; Librarian manages all deps
    - *Boundary:* You fix insecure packages; C11 manages the package ecosystem
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/security_patcher/`; orchestrator manages the rest
 
@@ -462,7 +462,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/doc_updater/`. Crea
    - *Why:* You document UI; Interface Designer and UI Tweaker change UI
    - *Boundary:* You describe the interface; A3/D4 build it
 
-10. **.devdocs/ Structure Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Structure Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs folder structure
     - *Boundary:* You update content within docs; orchestrator manages the structure
 
@@ -637,7 +637,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/configurator/`. Cre
    - *Why:* You change config; Doc Updater documents the changes
    - *Boundary:* You modify settings; C7 updates the docs
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/configurator/`; orchestrator manages the rest
 
@@ -812,7 +812,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/optimizer/`. Create
    - *Why:* You optimize code; Doc Updater documents the changes
    - *Boundary:* You improve speed; C7 updates the docs
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/optimizer/`; orchestrator manages the rest
 
@@ -988,7 +988,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/janitor/`. Create a
    - *Why:* You clean code; Doc Updater maintains documentation
    - *Boundary:* You remove dead code; C7 updates docs about it
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/janitor/`; orchestrator manages the rest
 
@@ -1163,7 +1163,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/librarian/`. Create
    - *Why:* You update packages; Doc Updater documents the changes
    - *Boundary:* You change dependencies; C7 updates the docs
 
-10. **.devdocs/ Management** → orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
     - *Boundary:* You write to `.devdocs/maintainers/librarian/`; orchestrator manages the rest
 
