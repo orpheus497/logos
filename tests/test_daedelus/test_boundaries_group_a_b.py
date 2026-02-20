@@ -71,11 +71,11 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     )
     redirects = forbidden_text.count("→")
     assert redirects >= len(items), (
-        f"Agent {agent_key} has {redirects} redirects for {len(items)} forbidden actions"
+        f"Agent {agent_key} has {redirects} redirects, expected at least {len(items)} (one per forbidden action)"
     )
     why_count = forbidden_text.count("Why:")
     assert why_count >= len(items), (
-        f"Agent {agent_key} has {why_count} 'Why' explanations for {len(items)} forbidden actions"
+        f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)} (one per forbidden action)"
     )
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())

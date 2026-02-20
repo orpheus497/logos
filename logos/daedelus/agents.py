@@ -263,10 +263,10 @@ GROUP_D_WORKERS: dict[str, Agent] = {
 
 # ==============================================================================
 # GROUP E: THE OPERATORS (Review Systems)
-# Keys: orchestrator, ocm, daedelus
+# Keys: E1, E2, E3
 # ==============================================================================
 GROUP_E_OPERATORS: dict[str, Agent] = {
-    "orchestrator": Agent(
+    "E1": Agent(
         name="The Orchestrator",
         desc="Empty Project Setup",
         group="E",
@@ -274,7 +274,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         activation_prompt=ORCHESTRATOR_ACTIVATION,
         purpose=THE_ORCHESTRATOR_PURPOSE,
     ),
-    "ocm": Agent(
+    "E2": Agent(
         name="The Operational Control Manager",
         desc="Operational Review (Maintainers/Workers Only)",
         group="E",
@@ -282,7 +282,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         activation_prompt=OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
         purpose=OPERATIONAL_CONTROL_MANAGER_PURPOSE,
     ),
-    "daedelus": Agent(
+    "E3": Agent(
         name="Daedelus",
         desc="The BRUTAL PERFECTIONIST SUPREME REVIEW",
         group="E",

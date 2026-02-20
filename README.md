@@ -710,7 +710,9 @@ logos/
 │   └── WORKFLOWS.md          # Workflow overview
 │
 ├── blueprint.md             # Project specification
-├── CONSTITUTION.md          # LOGOS Federation Constitution
+├── AGENTS.md           # Agent federation reference
+├── CHANGELOG.md        # Project version history and changes
+├── CONSTITUTION.md     # Federation Prime Directives and rules
 ├── LICENSE                  # AGPL-3.0 license
 ├── pyproject.toml           # Project configuration
 ├── install.sh               # Installation script

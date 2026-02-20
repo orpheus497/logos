@@ -187,3 +187,4 @@ def validate_refusal_response(response: RefusalResponse) -> bool:
 
     ##Action purpose: Return True only if all fields have content
     return all(field and field.strip() for field in required_fields)
+

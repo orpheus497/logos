@@ -210,7 +210,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - Verifying shebang lines in scripts
 
 4. **Validation Checklist (MANDATORY — run for every submission):**
-   - **rc.conf**: `grep -E '^[A-Za-z_][A-Za-z0-9_]*=".*"$' /etc/rc.conf` — all entries must match key="value" format (value may be empty)
+   - **rc.conf**: `grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[A-Za-z_][A-Za-z0-9_]*=(".*"|[^[:space:]"'\''\\ ]+)$'` — report non-conforming lines (allows quoted or simple unquoted values; skips comments and blank lines)
    - **pf.conf**: `pfctl -nf /etc/pf.conf` — must pass dry-run with zero errors
    - **loader.conf**: Verify all `<key>="<value>"` entries are valid loader(8) tunables
    - **sysctl.conf**: `sysctl -n <key>` for each entry — key must exist and accept the specified value type
@@ -632,6 +632,7 @@ I review scripts for POSIX compliance (which prefers `sh`), but I do not modify 
 
 **Who can help:**
 - C10 (The System Janitor): Cleans up and maintains system scripts
+- C7 (The Manual Keeper): Maintains system documentation and manuals
 ```
 ***
 """

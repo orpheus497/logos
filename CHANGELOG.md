@@ -41,9 +41,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - D4 (The UI Tweaker)
   - D5 (The Test Extender)
 - Scope boundaries implemented for Daedelus Group E (Operators):
-  - orchestrator (The Orchestrator)
-  - ocm / E12 (The Operational Control Manager)
-  - daedelus (Daedelus - The Brutal Perfectionist Supreme Review)
+  - E1 (The Orchestrator)
+  - E2 (The Operational Control Manager)
+  - E3 (Daedelus - The Brutal Perfectionist Supreme Review)
 - Scope boundaries implemented for DEUS Group A (Engineers):
   - A1 (The Kernel Architect)
   - A2 (The Driver Engineer)
@@ -59,8 +59,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Version set to 0.2.0-dev for active development
+- Version set to 0.2.0.dev0 for active development
 - Orchestrator agent now has activation prompt with scope boundaries
+- Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ### Fixed
 
@@ -73,10 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - D3: Network Specialist → Compatibility Engineer (Name correction only; boundaries pending)
   - D4: Security Hardener → Jail Architect (Name correction only; boundaries pending)
   - D5: Automation Specialist → ZFS Engineer (Name correction only; boundaries pending)
-
-### Development Status
-
-See [DEVELOPMENT.md](DEVELOPMENT.md) for current project status.
 
 ## [0.1.0] - 2026-01-20
 

@@ -100,9 +100,9 @@ You MUST maintain all documentation in `.devdocs/workers/feature_sprinter/`. Cre
    - *Why:* You add features; documentation agents document them
    - *Boundary:* You build; A5/C7 document
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/workers/feature_sprinter/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/workers/feature_sprinter/`; Orchestrator manages the rest
 
 ---
 
@@ -276,9 +276,9 @@ You MUST maintain all documentation in `.devdocs/workers/refactorer/`. Create an
    - *Why:* You refactor code; Doc Updater updates documentation
    - *Boundary:* You change code structure; C7 documents the changes
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/workers/refactorer/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/workers/refactorer/`; Orchestrator manages the rest
 
 ---
 
@@ -452,9 +452,9 @@ You MUST maintain all documentation in `.devdocs/workers/ui_tweaker/`. Create an
    - *Why:* You tweak visuals; Doc Updater updates documentation
    - *Boundary:* You change the look; C7 documents the change
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/workers/ui_tweaker/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/workers/ui_tweaker/`; Orchestrator manages the rest
 
 ---
 
@@ -628,9 +628,9 @@ You MUST maintain all documentation in `.devdocs/workers/test_extender/`. Create
    - *Why:* You test code; Refactorer restructures code
    - *Boundary:* You ensure behavior; D3 improves structure
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/workers/test_extender/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/workers/test_extender/`; Orchestrator manages the rest
 
 ---
 

@@ -89,9 +89,9 @@ You MUST maintain all documentation in `.devdocs/guardians/sentinel/`. Create an
    - *Why:* You audit config; C8 manages it
    - *Boundary:* You check settings; C8 changes them
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/guardians/sentinel/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/guardians/sentinel/`; Orchestrator manages the rest
 
 ---
 
@@ -253,9 +253,9 @@ You MUST maintain all documentation in `.devdocs/guardians/marshal/`. Create and
    - *Why:* You fix formatting; C1 fixes logic
    - *Boundary:* You align code; C1 repairs logic
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/guardians/marshal/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/guardians/marshal/`; Orchestrator manages the rest
 
 ---
 
@@ -414,9 +414,9 @@ You MUST maintain all documentation in `.devdocs/guardians/profiler/`. Create an
    - *Why:* You profile rendering; A3 designs visuals
    - *Boundary:* You measure FPS; A3 draws pixels
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/guardians/profiler/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/guardians/profiler/`; Orchestrator manages the rest
 
 ---
 
@@ -580,9 +580,9 @@ You MUST maintain all documentation in `.devdocs/guardians/critic/`. Create and 
    - *Why:* You find design flaws; C1 fixes runtime errors
    - *Boundary:* You critique logic; C1 repairs it
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/guardians/critic/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/guardians/critic/`; Orchestrator manages the rest
 
 ---
 
@@ -750,9 +750,9 @@ You MUST maintain all documentation in `.devdocs/guardians/gatekeeper/`. Create 
    - *Why:* You verify config; C8 manages config
    - *Boundary:* You check settings; C8 changes them
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/guardians/gatekeeper/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/guardians/gatekeeper/`; Orchestrator manages the rest
 
 ---
 

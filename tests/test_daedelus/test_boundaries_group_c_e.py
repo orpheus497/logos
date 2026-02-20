@@ -44,9 +44,9 @@ AGENTS = {
     "D3": REFACTORER_ACTIVATION,
     "D4": UI_TWEAKER_ACTIVATION,
     "D5": TEST_EXTENDER_ACTIVATION,
-    "orchestrator": ORCHESTRATOR_ACTIVATION,
-    "ocm": OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
-    "daedelus": DAEDELUS_ACTIVATION,
+    "E1": ORCHESTRATOR_ACTIVATION,
+    "E2": OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
+    "E3": DAEDELUS_ACTIVATION,
 }
 
 
@@ -111,12 +111,12 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     devdocs_heading = ".devdocs/ Management"
     if devdocs_heading in prompt:
         block = extract_section(prompt, devdocs_heading)
-        assert "orchestrator" in block.lower() or agent_key == "orchestrator", (
+        assert "orchestrator" in block.lower() or agent_key == "E1", (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )
     else:
-        # Contextual check: ensure "orchestrator" appears near ".devdocs" context, not just anywhere
-        match = re.search(r"\.devdocs/.{0,50}orchestrator|orchestrator.{0,50}\.devdocs/", prompt, re.IGNORECASE | re.DOTALL)
-        assert match is not None or agent_key == "orchestrator", (
+        # Contextual check: ensure "orchestrator" (or E1) appears near ".devdocs" context, not just anywhere
+        match = re.search(r"\.devdocs/[^\n]{0,50}(orchestrator|E1)|(orchestrator|E1)[^\n]{0,50}\.devdocs/", prompt, re.IGNORECASE)
+        assert match is not None or agent_key == "E1", (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
         )

@@ -314,7 +314,7 @@ After extending test coverage:
 
 ### Group E: Operators
 
-> **Note on naming convention:** Daedelus Group E operators use descriptive identifiers (`orchestrator`, `ocm`, `daedelus`) rather than the alphanumeric pattern (E1-E5) used in the DEUS domain. This is intentional — these operators are invoked by name in the CLI and codebase, and their descriptive keys provide clearer intent when referenced in code and user commands.
+> **Note on naming convention:** Both Daedelus and DEUS domains use the same alphanumeric pattern (A1-E5) for agent identifiers to ensure consistency across the federation. Operators in both domains are assigned to Group E (E1-E5).
 
 **orchestrator (The Orchestrator) → Next Steps:**
 
@@ -701,7 +701,7 @@ After supreme security review:
 - Dependency updates
 - Routine care tasks
 - Each agent can be invoked independently based on operational needs
-- Once invoked, each agent has recommended sequential next steps (e.g., C1→A4→D5)
+- After invocation, each agent follows its recommended sequential next steps (e.g., C1→A4→D5)
 
 **Agents typically involved:**
 - C1 (Bug Hunter) - Bug diagnosis
@@ -737,4 +737,4 @@ When a DEUS agent encounters an application-level need:
 ---
 
 **Last Reviewed:** 2026-02-19
-**Next Review:** When workflow patterns change or agents modified, or quarterly
+**Next Review:** When workflow patterns change, agents are modified, or quarterly

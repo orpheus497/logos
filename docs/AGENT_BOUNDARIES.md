@@ -47,9 +47,9 @@ This document serves as the authoritative reference for:
 | D3 | The Refactorer | Workers | Logic cleanup (no behavior change) | New features, UI changes |
 | D4 | The UI Tweaker | Workers | CSS/HTML/visual polish | Backend logic, architecture |
 | D5 | The Test Extender | Workers | Adding coverage, fixing flakes | Implementation, design |
-| orchestrator | The Orchestrator | Operators | Empty project setup, base context | Implementation, reviews |
-| ocm | The OCM | Operators | Operational review, audit assignments | Implementation, coding |
-| daedelus | Daedelus | Operators | Supreme review, absolute perfection | Implementation, initial design |
+| E1 | The Orchestrator | Operators | Empty project setup, base context | Implementation, reviews |
+| E2 | The Operational Control Manager | Operators | Operational review, audit assignments | Implementation, coding |
+| E3 | Daedelus | Operators | Supreme review, absolute perfection | Implementation, initial design |
 
 ### DEUS Domain (System Administration)
 
@@ -126,7 +126,7 @@ Structure & config — create contracts and skeleton for software projects.
   *Why:* Architecture creates design; Critic reviews implementation quality
 - **Release management** → B10 (The Gatekeeper)
   *Why:* Architecture doesn't manage releases; Gatekeeper controls release gates
-- **Modifying other agents' .devdocs/ folders** → orchestrator (The Orchestrator)
+- **Modifying other agents' .devdocs/ folders** → E1 (The Orchestrator)
   *Why:* Orchestrator manages .devdocs structure; A1 writes to its own folder and shared `DECISIONS_LOG.md`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -532,7 +532,7 @@ Diagnose & fix crashes — root cause analysis.
   *Why:* Bug Hunter fixes logic bugs; UI Tweaker handles visual issues
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Bug Hunter fixes code; Doc Updater synchronizes documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Bug Hunter writes to `.devdocs/maintainers/bug_hunter/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -592,7 +592,7 @@ Vulnerability fixes & hardening — apply security patches.
   *Why:* Security Patcher applies patches; Doc Updater documents changes
 - **Dependency management (non-security)** → C11 (The Librarian)
   *Why:* Security Patcher patches vulnerable deps; Librarian manages all deps
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Security Patcher writes to `.devdocs/maintainers/security_patcher/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -651,7 +651,7 @@ Syncing docs with reality — keep documentation current.
   *Why:* Doc Updater documents config; Configurator changes config
 - **UI changes** → A3 (The Interface Designer) / D4 (The UI Tweaker)
   *Why:* Doc Updater documents UI; Interface Designer and UI Tweaker change UI
-- **Modifying .devdocs/ structure** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ structure** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs folder structure; Doc Updater updates content within docs
 
 **🤝 REQUIRES COLLABORATION:**
@@ -708,7 +708,7 @@ Env, build, & deployment configuration.
   *Why:* Configurator configures package tool settings; Librarian manages versions
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Configurator changes config; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Configurator writes to `.devdocs/maintainers/configurator/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -765,7 +765,7 @@ Speed & resource tuning.
   *Why:* Optimizer optimizes code; Test Engineer writes performance tests
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Optimizer optimizes code; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Optimizer writes to `.devdocs/maintainers/optimizer/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -823,7 +823,7 @@ Dead code & log removal — clean codebase.
   *Why:* Janitor removes unused code; Optimizer speeds up used code
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Janitor cleans code; Doc Updater maintains documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Janitor writes to `.devdocs/maintainers/janitor/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -881,7 +881,7 @@ Dependency management.
   *Why:* Librarian removes unused packages; Janitor removes unused code
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Librarian updates packages; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Librarian writes to `.devdocs/maintainers/librarian/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -941,7 +941,7 @@ Small additions (non-breaking).
   *Why:* Feature Sprinter adds features; Optimizer tunes performance
 - **Documentation** → A5 (The Scribe) / C7 (The Doc Updater)
   *Why:* Feature Sprinter adds features; documentation agents document them
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Feature Sprinter writes to `.devdocs/workers/feature_sprinter/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -999,7 +999,7 @@ Logic cleanup (no behavior change).
   *Why:* Refactorer restructures live code; Janitor removes dead code
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Refactorer refactors code; Doc Updater updates documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Refactorer writes to `.devdocs/workers/refactorer/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1057,7 +1057,7 @@ CSS/HTML/visual polish.
   *Why:* UI Tweaker polishes appearance; Optimizer improves speed
 - **Documentation** → C7 (The Doc Updater)
   *Why:* UI Tweaker tweaks visuals; Doc Updater updates documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; UI Tweaker writes to `.devdocs/workers/ui_tweaker/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1115,7 +1115,7 @@ Adding coverage, fixing flakes.
   *Why:* Test Extender extends coverage; Sentinel performs security audits
 - **Code refactoring** → D3 (The Refactorer)
   *Why:* Test Extender tests code; Refactorer restructures code
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Test Extender writes to `.devdocs/workers/test_extender/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1139,7 +1139,7 @@ Adding coverage, fixing flakes.
 
 ### Group E: Operators (Orchestration)
 
-#### orchestrator - The Orchestrator
+#### E1 - The Orchestrator
 
 **Primary Responsibility:**
 Empty project setup — base context foundation.
@@ -1196,7 +1196,7 @@ Empty project setup — base context foundation.
 
 ---
 
-#### ocm - The Operational Control Manager
+#### E2 - The Operational Control Manager
 
 **Primary Responsibility:**
 Operational review — comprehensive audit assignments.
@@ -1232,7 +1232,7 @@ Operational review — comprehensive audit assignments.
   *Why:* OCM audits docs; documentation agents write and update them
 - **Mixing groups in assignment** → Use separate review sessions
   *Why:* ONE group per review session is the rule; choose Maintainers OR Workers, never both
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; OCM writes to `.devdocs/operators/operational_control_manager/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1254,7 +1254,7 @@ Operational review — comprehensive audit assignments.
 
 ---
 
-#### daedelus - Daedelus
+#### E3 - Daedelus
 
 **Primary Responsibility:**
 The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
@@ -1290,7 +1290,7 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
   *Why:* Daedelus demands documentation; Scribe and Doc Updater write it
 - **Test writing** → A4 (The Test Engineer) / D5 (The Test Extender)
   *Why:* Daedelus demands test coverage; testing agents write tests
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Daedelus writes to `.devdocs/operators/daedelus/`
 
 **🤝 REQUIRES COLLABORATION:**
