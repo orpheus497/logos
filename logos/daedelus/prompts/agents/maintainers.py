@@ -462,7 +462,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/doc_updater/`. Crea
    - *Why:* You document UI; Interface Designer and UI Tweaker change UI
    - *Boundary:* You describe the interface; A3/D4 build it
 
-10. **.devdocs/ Structure Management** → E1 (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs folder structure
     - *Boundary:* You update content within docs; Orchestrator manages the structure
 

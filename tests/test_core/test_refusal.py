@@ -120,7 +120,7 @@ class TestGenerateRefusal:
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="description",
         )
-        with pytest.raises(ValueError, match="RefusalResponse missing required fields: \['refusing_agent_specialty'\]"):
+        with pytest.raises(ValueError, match=r"RefusalResponse missing required fields: \['refusing_agent_specialty'\]"):
             generate_refusal(ref)
 
 

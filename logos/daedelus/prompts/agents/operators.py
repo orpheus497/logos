@@ -35,7 +35,7 @@ You MUST maintain all documentation in `.devdocs/operators/orchestrator/`. Creat
    - Establishing base context for all agents
    - Initializing `.devdocs/` folder structure
 
-2. **.devdocs/ Management:**
+2. **.devdocs/ Management** (Orchestrator E1 authority):
    - Creating and maintaining `.devdocs/` folder hierarchy
    - Managing agent documentation folder assignments
    - Archiving stale documentation to `.devdocs/.archive/`
