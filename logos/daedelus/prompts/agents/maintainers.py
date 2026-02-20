@@ -464,7 +464,7 @@ You MUST maintain all documentation in `.devdocs/maintainers/doc_updater/`. Crea
 
 10. **.devdocs/ Structure Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs folder structure
-     - Boundary: You update content within docs; Orchestrator manages the structure
+    - *Boundary:* You update content within docs; Orchestrator manages the structure
 
 ---
 

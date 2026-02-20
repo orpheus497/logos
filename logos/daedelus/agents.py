@@ -343,7 +343,7 @@ def get_agent(key: str) -> Agent | None:
     ##Action purpose: Uses lazy loading to defer agent dictionary creation until first access.
 
     Args:
-        key: Agent identifier (e.g., "A1", "B6", "ocm", "daedelus")
+        key: Agent identifier (e.g., "A1", "B6", "E1", "E2", "E3")
 
     Returns:
         Agent if found, None otherwise.

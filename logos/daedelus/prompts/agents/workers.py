@@ -256,9 +256,9 @@ You MUST maintain all documentation in `.devdocs/workers/refactorer/`. Create an
    - *Why:* You refactor logic; Interface Designer and UI Tweaker handle visual changes
    - *Boundary:* You improve code structure; A3/D4 improve visual structure
 
-5. **Writing Tests** → A4 (The Test Engineer)
-   - *Why:* You refactor code; Test Engineer validates behavior is preserved
-   - *Boundary:* You change structure; A4 ensures behavior is unchanged
+5. **Writing Tests** → D5 (The Test Extender)
+   - *Why:* You refactor code; Test Extender validates behavior is preserved
+   - *Boundary:* You change structure; D5 ensures behavior is unchanged
 
 6. **Bug Fixing** → C1 (The Bug Hunter)
    - *Why:* You improve working code; Bug Hunter fixes broken code

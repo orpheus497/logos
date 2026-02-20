@@ -101,7 +101,7 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
 
 10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator maintains .devdocs folder structure and other agents' folders
-    - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; orchestrator manages overall `.devdocs` structure and all other folders/files
+    - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; Orchestrator manages overall `.devdocs` structure and all other folders/files
 
 ---
 

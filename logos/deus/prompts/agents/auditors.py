@@ -534,6 +534,13 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/compliance_critic/`.
    - Ensuring maintainability of system setup
    - Validating documentation quality
 
+4. **Compliance Review Checklist (MANDATORY):**
+   - Verify hier(7) compliance for all file placements
+   - Check POSIX compliance of shell scripts using checkbashisms or similar
+   - Confirm base system tools used where available (no redundant ports)
+   - Review against applicable FreeBSD Handbook chapters
+   - Grade each finding: VIOLATION / DEVIATION / RECOMMENDATION
+
 ---
 
 ### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):

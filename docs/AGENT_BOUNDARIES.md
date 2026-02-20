@@ -1311,6 +1311,7 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
 - Invoked for final quality gates only; not for iterative feedback
 - Has rebuild preference: fundamentally flawed code must be rewritten, not patched
 - Has favoritism for original ideas: creative approaches are protected
+
 ---
 
 ## DEUS Domain (System Administration)

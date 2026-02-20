@@ -314,7 +314,7 @@ After extending test coverage:
 
 ### Group E: Operators
 
-> **Note on naming convention:** Both Daedelus and DEUS domains use the same alphanumeric pattern (A1-E5) for agent identifiers to ensure consistency across the federation. Operators in both domains are assigned to Group E (E1-E5).
+> Note on naming convention: Agent identifiers follow an alphanumeric pattern (A1-E5) across both domains. DEUS Group E uses E1-E5 numbering, while Daedelus Group E uses descriptive names (orchestrator, ocm, daedelus) for the operator agents.
 
 **orchestrator (The Orchestrator) → Next Steps:**
 
