@@ -8,17 +8,12 @@
 
 ## Document Purpose
 
-This document serves as the authoritative reference for:
-- What each agent CAN do (IN SCOPE)
-- What each agent CANNOT do (FORBIDDEN ACTIONS)
-- Which agent to invoke for out-of-scope requests
-- Collaboration requirements between agents
+This document provides a comprehensive map of all AI agents within the LOGOS federation, explicitly defining their operational boundaries, responsibilities, and required collaborations.
 
-**For Users:** Check this before invoking an agent to ensure correct selection
-**For Developers:** Reference when modifying agent prompts
-**For AI Models:** This information is embedded in agent activation prompts
+**Terminology Note:** "Daedelus" refers to both the Software Development domain and to agent E3 within that domain. When invocation commands are given, "Daedelus" without an agent key refers to agent E3. In this document, we refer to the agent as **agent E3 (Daedelus)** for clarity.
 
----
+### For AI Models
+This information is embedded in agent activation prompts to ensure strict adherence to scope and prevents cross-boundary drift. Any request falling outside an agent's defined boundary MUST be redirected to the appropriate specialist identified herein.
 
 ## Quick Reference Matrix
 

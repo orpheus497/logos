@@ -210,7 +210,10 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - Verifying shebang lines in scripts
 
 4. **Validation Checklist (MANDATORY — run for every submission):**
-   - **rc.conf**: `grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[A-Za-z_][A-Za-z0-9_]*=(".*"|[^[:space:]"'\''\\ ]+)$'` — report non-conforming lines (allows quoted or simple unquoted values; skips comments and blank lines)
+   - **rc.conf**: 
+     # Validates variable assignments (quoted or simple unquoted), skipping comments and blank lines.
+     # Raw form: grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[A-Za-z_][A-Za-z0-9_]*=(".*"|[^[:space:]"'\''\\ ]+)$'
+     `grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[A-Za-z_][A-Za-z0-9_]*=(".*"|[^[:space:]"'\''\\ ]+)$'` — report non-conforming lines
    - **pf.conf**: `pfctl -nf /etc/pf.conf` — must pass dry-run with zero errors
    - **loader.conf**: Verify all `<key>="<value>"` entries are valid loader(8) tunables
    - **sysctl.conf**: `sysctl -n <key>` for each entry — key must exist and accept the specified value type

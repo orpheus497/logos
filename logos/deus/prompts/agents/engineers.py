@@ -4,7 +4,8 @@
 Group A: The Engineers - System building agents for FreeBSD.
 """
 
-BASE_DOCS_PATH = "~/.sysdocs/engineers/"
+ROOT_DOCS_PATH = "~/.sysdocs/"
+BASE_DOCS_PATH = f"{ROOT_DOCS_PATH}engineers/"
 
 KERNEL_ARCHITECT_ACTIVATION = f"""
 ***
@@ -647,7 +648,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}service_scribe/`. Create
 * `runbooks/` - Operational runbooks for common tasks
 * `session_log.md` - Session-specific work log
 
-**SPECIAL AUTHORITY:** You maintain the shared `~/.sysdocs/BRIEFING.md` file.
+**SPECIAL AUTHORITY:** You maintain the shared `{ROOT_DOCS_PATH}BRIEFING.md` file.
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `{BASE_DOCS_PATH}service_scribe/` (and shared BRIEFING.md).
 

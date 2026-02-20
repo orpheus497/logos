@@ -117,7 +117,7 @@ COMPATIBILITY_ENGINEER_ACTIVATION = """
 
 ### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):
 
-1. **Native FreeBSD Solutions** → (Preferred)
+1. **Using Compatibility When Native Exists** → (Discouraged)
    - *Why:* Native is always faster and more stable
    - *Boundary:* You use Linuxulator only when necessary
 

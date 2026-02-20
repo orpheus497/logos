@@ -120,7 +120,7 @@ class TestGenerateRefusal:
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="description",
         )
-        with pytest.raises(ValueError, match="RefusalResponse contains empty required fields"):
+        with pytest.raises(ValueError, match="RefusalResponse missing required fields: \['refusing_agent_specialty'\]"):
             generate_refusal(ref)
 
 
@@ -208,7 +208,7 @@ class TestQuickRefusal:
 class TestValidateRefusalResponse:
     """##Class purpose: Test validate_refusal_response() validation logic."""
 
-    def test_valid_response_returns_true(self):
+    def test_valid_response_returns_empty_list(self):
         """##Function purpose: Verify valid response passes validation."""
         ref = RefusalResponse(
             refusing_agent_key="A1",
@@ -219,7 +219,7 @@ class TestValidateRefusalResponse:
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="Implements business logic and algorithms",
         )
-        assert validate_refusal_response(ref) is True
+        assert validate_refusal_response(ref) == []
 
     @pytest.mark.parametrize("field,invalid_value", [
         ("refusing_agent_key", ""),
@@ -237,7 +237,7 @@ class TestValidateRefusalResponse:
         ("recommended_agent_description", ""),
         ("recommended_agent_description", "   "),
     ])
-    def test_invalid_field_returns_false(self, field, invalid_value):
+    def test_invalid_field_returns_field_name(self, field, invalid_value):
         """##Function purpose: Verify empty or whitespace-only required fields fail validation."""
         valid_data = {
             "refusing_agent_key": "A1",
@@ -250,5 +250,39 @@ class TestValidateRefusalResponse:
         }
         valid_data[field] = invalid_value
         ref = RefusalResponse(**valid_data)
-        assert validate_refusal_response(ref) is False
+        assert validate_refusal_response(ref) == [field]
+
+
+class TestRefusalEdgeCases:
+    """##Class purpose: Test edge cases for refusal response generation."""
+
+    def test_whitespace_only_summary_ignored(self):
+        """##Function purpose: Verify whitespace-only summary is treated as None."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="architecture",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+            user_request_summary="   ",
+        )
+        result = generate_refusal(ref)
+        assert "Your request:" not in result
+
+    def test_very_long_strings_preserved(self):
+        """##Function purpose: Verify very long strings are handled without truncation."""
+        long_string = "A" * 5000
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty=long_string,
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        result = generate_refusal(ref)
+        assert long_string in result
 

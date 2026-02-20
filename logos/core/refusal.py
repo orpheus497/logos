@@ -75,8 +75,9 @@ def generate_refusal(response: RefusalResponse) -> str:
         ...
     """
     ##Action purpose: Validate required fields before formatting
-    if not validate_refusal_response(response):
-        raise ValueError("RefusalResponse contains empty required fields")
+    missing_fields = validate_refusal_response(response)
+    if missing_fields:
+        raise ValueError(f"RefusalResponse missing required fields: {missing_fields}")
 
     ##Action purpose: Build refusal message with consistent formatting
     message_parts = [
@@ -88,7 +89,7 @@ def generate_refusal(response: RefusalResponse) -> str:
     ]
 
     ##Condition purpose: Add user request summary if provided
-    if response.user_request_summary:
+    if response.user_request_summary and response.user_request_summary.strip():
         message_parts.extend([
             f'Your request: "{response.user_request_summary}"',
             "",
@@ -143,7 +144,7 @@ def quick_refusal(
         Formatted refusal message
     """
     ##Action purpose: Create RefusalResponse with provided or generated description
-    if not recommended_description:
+    if recommended_description is None:
         ##Action purpose: Strip "The " prefix robustly using regex
         desc_name = _THE_PREFIX_PATTERN.sub("", recommended_name).strip()
         recommended_description = f"Handles {desc_name} responsibilities" if desc_name else "Handles requests"
@@ -164,7 +165,7 @@ def quick_refusal(
 
 
 ##Function purpose: Validate refusal response contains required fields
-def validate_refusal_response(response: RefusalResponse) -> bool:
+def validate_refusal_response(response: RefusalResponse) -> list[str]:
     """
     ##Function purpose: Ensure RefusalResponse has all required non-empty fields.
 
@@ -172,19 +173,19 @@ def validate_refusal_response(response: RefusalResponse) -> bool:
         response: RefusalResponse to validate
 
     Returns:
-        True if valid, False if any required field is empty
+        List of missing field names (empty list if valid)
     """
     ##Action purpose: Check all required fields are non-empty
-    required_fields = [
-        response.refusing_agent_key,
-        response.refusing_agent_name,
-        response.refusing_agent_specialty,
-        response.reason,
-        response.recommended_agent_key,
-        response.recommended_agent_name,
-        response.recommended_agent_description,
-    ]
+    required_fields = {
+        "refusing_agent_key": response.refusing_agent_key,
+        "refusing_agent_name": response.refusing_agent_name,
+        "refusing_agent_specialty": response.refusing_agent_specialty,
+        "reason": response.reason,
+        "recommended_agent_key": response.recommended_agent_key,
+        "recommended_agent_name": response.recommended_agent_name,
+        "recommended_agent_description": response.recommended_agent_description,
+    }
 
-    ##Action purpose: Return True only if all fields have content
-    return all(field and field.strip() for field in required_fields)
+    ##Action purpose: Return list of fields that are empty or None
+    return [name for name, val in required_fields.items() if not (val and val.strip())]
 

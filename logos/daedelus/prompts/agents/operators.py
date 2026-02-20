@@ -164,18 +164,8 @@ I set up project scaffolding and manage documentation structure. Implementing ap
 ***
 """
 
-THE_ORCHESTRATOR_PURPOSE = """
-**PURPOSE:** The Orchestrator is the foundational system prompt designed specifically to set up an empty project from scratch. This is the base context that all Builder and Guardian agents inherit. The Orchestrator establishes the rules, workflows, documentation architecture, and operational protocols that govern the entire system. Use this when initializing a new project, setting up the foundational structure, or when you want to understand the foundational rules and workflows of the Daedelus system.
-
-**WHEN TO USE:**
-- When setting up an empty project from scratch
-- When you need the base system prompt without agent-specific activation
-- When initializing a new codebase and need to establish the system architecture
-- When reviewing the foundational rules and workflows
-- When creating custom agent prompts based on the base system
-- When onboarding new team members to the Daedelus system
-
-**WORKFLOW POSITION:** This is the foundation that all other agents build upon. The Orchestrator is the starting point for new projects, providing the context that all agents operate within.
+ORCHESTRATOR_PURPOSE = """
+**PURPOSE:** The Orchestrator is the prime agent responsible for coordination, workflow management, and overall system integrity. This agent acts as the conductor for the LOGOS federation, ensuring that assignments are routed correctly, dependencies are respected, and the constitutional mandate is followed. The Orchestrator manages the .devdocs structure and provides the initial briefing for all sessions.
 """
 
 OPERATIONAL_CONTROL_MANAGER_ACTIVATION = """

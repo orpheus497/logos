@@ -522,9 +522,9 @@ SYSTEM_JANITOR_ACTIVATION = """
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
-9. **Performance Tuning** → B8 (The Performance Analyst)
+9. **Performance Analysis** → B8 (The Performance Analyst)
    - *Why:* You free space; B8 speeds up
-   - *Boundary:* You `rm`; B8 profiles
+   - *Boundary:* You rm; B8 profiles
 
 10. **Hardware Changes** → A2 (The Driver Engineer)
     - *Why:* You clean disks; A2 manages drives
