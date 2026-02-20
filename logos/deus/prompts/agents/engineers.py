@@ -666,7 +666,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}service_scribe/`. Create
 
 2. **Documentation & Runbooks:**
    - Creating operational runbooks
-   - Maintaining `~/.sysdocs/BRIEFING.md` (shared system status)
+   - Maintaining `{ROOT_DOCS_PATH}BRIEFING.md` (shared system status)
    - Documenting service dependencies
    - Recording rc.conf changes
 

@@ -252,6 +252,22 @@ class TestValidateRefusalResponse:
         ref = RefusalResponse(**valid_data)
         assert validate_refusal_response(ref) == [field]
 
+    def test_multiple_invalid_fields_returns_all(self):
+        """##Function purpose: Verify multiple invalid fields are all returned."""
+        ref = RefusalResponse(
+            refusing_agent_key="",
+            refusing_agent_name="   ",
+            refusing_agent_specialty="system architecture design",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        result = validate_refusal_response(ref)
+        assert "refusing_agent_key" in result
+        assert "refusing_agent_name" in result
+        assert len(result) == 2
+
 
 class TestRefusalEdgeCases:
     """##Class purpose: Test edge cases for refusal response generation."""

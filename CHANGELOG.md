@@ -56,6 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B8 (The Performance Analyst)
   - B9 (The Compliance Critic)
   - B10 (The Release Gatekeeper)
+- Scope boundaries implemented for DEUS Group D (Specialists):
+  - D2 (The Port Builder)
+  - D3 (The Compatibility Engineer)
+  - D4 (The Jail Architect)
+  - D5 (The ZFS Engineer)
 
 ### Changed
 

@@ -40,12 +40,12 @@ AGENTS = {
 }
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_scope_boundaries_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains the SCOPE BOUNDARIES section."""
     assert "## SCOPE BOUNDARIES" in prompt, f"Agent {agent_key} missing SCOPE BOUNDARIES section"
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_in_scope_items(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 3 IN SCOPE items."""
     # Group A-B agents use ≥3 IN SCOPE categories (most have 4); Group C-E uses ≥5.
@@ -58,7 +58,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
         f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
     )
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_forbidden_actions(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 10 FORBIDDEN ACTIONS with redirects."""
     # Group A-B uses the same ≥10 FORBIDDEN ACTIONS threshold as Group C-E.
@@ -78,12 +78,12 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
         f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)} (one per forbidden action)"
     )
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_collaboration_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains REQUIRES COLLABORATION."""
     assert "### 🤝 REQUIRES COLLABORATION:" in prompt, f"Agent {agent_key} missing COLLABORATION section"
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_refusal_template(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains REFUSAL TEMPLATE."""
     header = "### 🚫 REFUSAL TEMPLATE"

@@ -178,7 +178,7 @@ After release decision:
 
 ### Group C: Maintainers
 
-> Note on agent numbering: Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D2-D5) across both Daedelus and DEUS domains. These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
+> Note on agent numbering: Groups C and D have intentional gaps in their numbering sequences across both Daedelus and DEUS domains. Group C includes C1 and C6-C11 (C2-C5 reserved for future use); Group D includes D2-D5 (D1 reserved for future use). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
 
 **C1 (The Bug Hunter) → Next Steps:**
 
@@ -314,9 +314,9 @@ After extending test coverage:
 
 ### Group E: Operators
 
-> Note on naming convention: Agent identifiers follow an alphanumeric pattern (A1-E5) across both domains. DEUS Group E uses E1-E5 numbering, while Daedelus Group E uses descriptive names (orchestrator, ocm, daedelus) for the operator agents.
+> Note on naming convention: Agent identifiers follow an alphanumeric pattern (A1-E5) across both domains. DEUS Group E uses E1-E5 numbering, and Daedelus Group E uses E1-E3 for the operator agents (E1 Orchestrator, E2 Operational Control Manager, E3 Daedelus).
 
-**orchestrator (The Orchestrator) → Next Steps:**
+**E1 (The Orchestrator) → Next Steps:**
 
 After project initialization:
 
@@ -329,7 +329,7 @@ After project initialization:
 
 ---
 
-**ocm (The OCM) → Next Steps:**
+**E2 (The Operational Control Manager) → Next Steps:**
 
 After operational review:
 
@@ -340,13 +340,13 @@ After operational review:
 
 ---
 
-**daedelus (Daedelus) → Next Steps:**
+**E3 (Daedelus) → Next Steps:**
 
 After supreme review:
 
 *If issues found:*
 - Dispatch to appropriate agents for fixes
-- Re-invoke daedelus after fixes applied
+- Re-invoke E3 after fixes applied
 
 *If perfection achieved:*
 - B10 (The Gatekeeper) - Release approval

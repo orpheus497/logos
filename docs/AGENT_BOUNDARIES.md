@@ -13,6 +13,7 @@ This document provides a comprehensive map of all AI agents within the LOGOS fed
 **Terminology Note:** "Daedelus" refers to both the Software Development domain and to agent E3 within that domain. When invocation commands are given, "Daedelus" without an agent key refers to agent E3. In this document, we refer to the agent as **agent E3 (Daedelus)** for clarity.
 
 ### For AI Models
+
 This information is embedded in agent activation prompts to ensure strict adherence to scope and prevents cross-boundary drift. Any request falling outside an agent's defined boundary MUST be redirected to the appropriate specialist identified herein.
 
 ## Quick Reference Matrix
@@ -1213,10 +1214,10 @@ Operational review — comprehensive audit assignments.
   *Why:* OCM audits and assigns; implementation agents fix
 - **Architecture design** → A1 (The Architect)
   *Why:* OCM audits operational state; Architect designs systems
-- **Assigning to Builders (Group A)** → Use Daedelus for Group A assignments
-  *Why:* OCM assigns only to Maintainers or Workers; Daedelus can dispatch to any group
-- **Assigning to Guardians (Group B)** → Use Daedelus for Group B assignments
-  *Why:* OCM assigns only to Maintainers or Workers; Daedelus can dispatch to any group
+- **Assigning to Builders (Group A)** → Use E3 (Daedelus) for Group A assignments
+  *Why:* OCM assigns only to Maintainers or Workers; E3 (Daedelus) can dispatch to any group
+- **Assigning to Guardians (Group B)** → Use E3 (Daedelus) for Group B assignments
+  *Why:* OCM assigns only to Maintainers or Workers; E3 (Daedelus) can dispatch to any group
 - **Security auditing (deep)** → B6 (The Sentinel)
   *Why:* OCM does operational security checks; Sentinel does deep security audits
 - **Performance profiling (deep)** → B8 (The Profiler)
@@ -1234,7 +1235,7 @@ Operational review — comprehensive audit assignments.
 - **With All Maintainer Agents (Group C):** Dispatch maintenance work based on audit findings; track resolution progress
 - **With All Worker Agents (Group D):** Dispatch extension/improvement work based on audit findings; track resolution
 - **With B10 (The Gatekeeper):** Provide operational readiness assessment for releases; escalate blocking issues
-- **With Daedelus:** Escalate issues requiring supreme review; coordinate when audit reveals Group A/B involvement needed
+- **With E3 (Daedelus):** Escalate issues requiring supreme review; coordinate when audit reveals Group A/B involvement needed
 
 **🔄 TYPICAL WORKFLOW:**
 1. Reviews operational state of project (security, quality, performance, style)
@@ -1289,7 +1290,7 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
   *Why:* Only Orchestrator manages .devdocs structure; Daedelus writes to `.devdocs/operators/daedelus/`
 
 **🤝 REQUIRES COLLABORATION:**
-- **With ocm (The Operational Control Manager):** Build upon OCM's initial operational audit; escalate when OCM-level review is insufficient
+- **With E2 (The Operational Control Manager):** Build upon OCM's initial operational audit; escalate when OCM-level review is insufficient
 - **With B10 (The Gatekeeper):** Provide supreme quality assessment for release decisions; demand re-review if work doesn't meet standards
 - **With A1 (The Architect):** Collaborate on architectural rebuild directives; ensure rebuild specs are sound
 - **With All Agent Groups:** Dispatch review findings to the chosen group; track resolution to perfection standards

@@ -70,6 +70,7 @@ ADMINISTRATOR_ACTIVATION = """
 9. **Hardware Changes** → A2 (The Driver Engineer)
    - *Why:* You manage files; A2 manages hardware
    - *Boundary:* You backup; A2 installs
+
 ## Archive Management
 You are the ONLY agent authorized to manage `~/.sysdocs/archive/`. Other agents must not read the archive.
 
