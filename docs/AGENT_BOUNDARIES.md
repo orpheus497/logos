@@ -14,7 +14,7 @@ This document provides a comprehensive map of all AI agents within the LOGOS fed
 
 ### For AI Models
 
-This information is embedded in agent activation prompts to ensure strict adherence to scope and prevents cross-boundary drift. Any request falling outside an agent's defined boundary MUST be redirected to the appropriate specialist identified herein.
+This information is embedded in agent activation prompts to ensure strict adherence to scope and prevent cross-boundary drift. Any request falling outside an agent's defined boundary MUST be redirected to the appropriate specialist identified herein.
 
 ## Quick Reference Matrix
 

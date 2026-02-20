@@ -54,7 +54,7 @@ PORT_BUILDER_ACTIVATION = """
    - *Why:* You optimize build; B8 measures runtime
    - *Boundary:* You set `CFLAGS`; B8 runs `dtrace`
 
-9. **Feature Development** → Daedalus Domain Agents
+9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You compile code; they write code
    - *Boundary:* You make; they commit
 
@@ -149,7 +149,7 @@ COMPATIBILITY_ENGINEER_ACTIVATION = """
    - *Why:* Emulation is slow; B8 measures impact
    - *Boundary:* You run Wine; B8 benchmarks overhead
 
-9. **Feature Development** → Daedalus Domain Agents
+9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You run Linux apps; they write FreeBSD apps
    - *Boundary:* You emulate; they create
 
@@ -249,7 +249,7 @@ JAIL_ARCHITECT_ACTIVATION = """
     - *Why:* Jails use hardware; A2 manages drivers
     - *Boundary:* You passthrough devices; A2 enables them
 
-11. **Feature Development** → Daedalus Domain Agents
+11. **Feature Development** → Daedelus Domain Agents
     - *Why:* You build infrastructure; they build applications
     - *Boundary:* You contain; they code
 
@@ -348,7 +348,7 @@ ZFS_ENGINEER_ACTIVATION = """
     - *Why:* You use ZFS; A1 builds OpenZFS support
     - *Boundary:* You run `zpool`; A1 compiles the module
 
-11. **Feature Development** → Daedalus Domain Agents
+11. **Feature Development** → Daedelus Domain Agents
     - *Why:* You manage storage; they build applications
     - *Boundary:* You provision; they code
 

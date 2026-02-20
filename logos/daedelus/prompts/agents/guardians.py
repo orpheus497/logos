@@ -762,7 +762,7 @@ You MUST maintain all documentation in `.devdocs/guardians/gatekeeper/`. Create 
 
 ### 🤝 REQUIRES COLLABORATION:
 
-1. **With B6, B7, B8, B9 (The Guardians):**
+1. **With B6, B7, B8, B9 (Peer Guardians):**
    - Collect and verify audit results from all guardians
    - Ensure all gates are passed before release
    - Request re-audits if critical issues are found

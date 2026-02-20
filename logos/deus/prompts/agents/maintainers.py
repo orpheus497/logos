@@ -34,7 +34,7 @@ BUG_HUNTER_ACTIVATION = """
    - *Why:* You fix crashes; C9 fixes slowness
    - *Boundary:* You ensure stability; C9 ensures speed
 
-4. **Adding New Features** → Daedalus Domain Agents
+4. **Adding New Features** → Daedelus Domain Agents
    - *Why:* You fix what exists; they add what's new
    - *Boundary:* You repair; they expand
 
@@ -145,7 +145,7 @@ SECURITY_PATCHER_ACTIVATION = """
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
-8. **Feature Development** → Daedalus Domain Agents
+8. **Feature Development** → Daedelus Domain Agents
    - *Why:* You secure the system; they add features
    - *Boundary:* You harden; they build
 
@@ -227,7 +227,7 @@ MANUAL_KEEPER_ACTIVATION = """
    - *Why:* You document vulnerabilities; C6 patches them
    - *Boundary:* You warn users; C6 protects users
 
-6. **Code Logic** → Daedalus Domain Agents
+6. **Code Logic** → Daedelus Domain Agents
    - *Why:* You document code; they write it
    - *Boundary:* You explain function; they implement function
 
@@ -329,7 +329,7 @@ SYSCTL_TUNER_ACTIVATION = """
    - *Why:* You tune network stack; A3 designs network topology
    - *Boundary:* You reduce latency; A3 routes packets
 
-9. **Feature Development** → Daedalus Domain Agents
+9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You optimize the kernel; they build features
    - *Boundary:* You make it fast; they make it do things
 
@@ -423,7 +423,7 @@ OPTIMIZER_ACTIVATION = """
    - *Why:* You optimize throughput; A3 designs topology
    - *Boundary:* You reduce overhead; A3 routes packets
 
-9. **Feature Development** → Daedalus Domain Agents
+9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You make features fast; they build them
    - *Boundary:* You profile; they code
 
@@ -616,7 +616,7 @@ PORT_LIBRARIAN_ACTIVATION = """
    - *Why:* You install software; B8 checks its speed
    - *Boundary:* You deploy; B8 measures
 
-9. **Feature Development** → Daedalus Domain Agents
+9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You provide tools; they build features
    - *Boundary:* You install python; they write scripts
 

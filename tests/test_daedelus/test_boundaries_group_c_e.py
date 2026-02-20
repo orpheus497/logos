@@ -1,7 +1,7 @@
 """
 ##Script function and purpose: Test boundary enforcement for Daedelus Group C, D, and E agents.
 
-Validates that C1, C6-C11, D2-D5, orchestrator, ocm, and daedelus agents have the required
+Validates that C1, C6-C11, D2-D5, and E1-E3 agents have the required
 SCOPE BOUNDARIES section, IN SCOPE items, FORBIDDEN ACTIONS, and REFUSAL TEMPLATE.
 """
 

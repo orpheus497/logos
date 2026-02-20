@@ -49,8 +49,8 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}kernel_architect/`. Crea
 
 ### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):
 
-1. **Application Code** → Daedalus Domain Agents
-   - *Why:* You handle kernel; Daedalus handles application code
+1. **Application Code** → Daedelus Domain Agents
+   - *Why:* You handle kernel; Daedelus handles application code
    - *Boundary:* You build the OS core; they build the apps
 
 2. **Network Configuration** → A3 (The Network Architect)
@@ -81,8 +81,8 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}kernel_architect/`. Crea
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
-9. **User Data Handling** → Daedalus Domain Agents
-   - *Why:* You handle kernel; Daedalus handles user data
+9. **User Data Handling** → Daedelus Domain Agents
+   - *Why:* You handle kernel; Daedelus handles user data
    - *Boundary:* You configure the core; they manage content
 
 10. **Package Publishing** → C11 (The Port Librarian)
@@ -370,7 +370,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}network_architect/`. Cre
    - *Why:* You configure the interface; A2 loads the driver
    - *Boundary:* You configure 'em0'; A2 makes 'em0' exist
 
-3. **Application Code** → Daedalus Domain Agents
+3. **Application Code** → Daedelus Domain Agents
    - *Why:* You handle network infra; they handle apps
    - *Boundary:* You provide connectivity; they use it
 
@@ -394,7 +394,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}network_architect/`. Cre
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
-9. **Direct DB Schema Changes** → Daedalus Domain Agents
+9. **Direct DB Schema Changes** → Daedelus Domain Agents
    - *Why:* You handle transport; they handle data structure
    - *Boundary:* You route packets; they structure information
 
@@ -558,7 +558,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}boot_engineer/`. Create 
    - *Why:* You manage the bootloader; E1 manages releases
    - *Boundary:* You ensure it starts; E1 defines the version
 
-10. **User Data Handling** → Daedalus Domain Agents
+10. **User Data Handling** → Daedelus Domain Agents
     - *Why:* You operate at boot time; user data is high-level
     - *Boundary:* You load the kernel; they manage content
 
@@ -660,7 +660,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}service_scribe/`. Create
 
 1. **Service Configuration:**
    - `rc.conf` configuration using `sysrc` (NEVER manual edits)
-   - Service enable/disable (`sysrc service_enable="YES"`)
+   - Service enable/disable (`sysrc <service>_enable="YES"`, e.g., `sysrc sshd_enable="YES"`)
    - Periodic task configuration (`/etc/periodic.conf`)
    - Service startup order management
 

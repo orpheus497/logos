@@ -52,7 +52,7 @@ from logos.daedelus.prompts.agents.operators import (
     OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
     OPERATIONAL_CONTROL_MANAGER_PURPOSE,
     ORCHESTRATOR_ACTIVATION,
-    THE_ORCHESTRATOR_PURPOSE,
+    ORCHESTRATOR_PURPOSE,
 )
 from logos.daedelus.prompts.agents.workers import (
     FEATURE_SPRINTER_ACTIVATION,
@@ -272,7 +272,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         group="E",
         base_prompt=ORCHESTRATOR_BASE_PROMPT,
         activation_prompt=ORCHESTRATOR_ACTIVATION,
-        purpose=THE_ORCHESTRATOR_PURPOSE,
+        purpose=ORCHESTRATOR_PURPOSE,
     ),
     "E2": Agent(
         name="The Operational Control Manager",

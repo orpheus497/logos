@@ -3,6 +3,8 @@
 
 def extract_section(prompt: str, header: str) -> str:
     """Extract a markdown section from prompt text up to the next heading."""
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError("Prompt must be a non-empty string")
     if not header or not header.strip():
         raise ValueError("Header cannot be empty")
     try:

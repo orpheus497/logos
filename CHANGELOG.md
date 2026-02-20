@@ -75,10 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B7: Syntax Validator → Syntax Marshal
   - B8: Performance Profiler → Performance Analyst
   - B9: Compliance Auditor → Compliance Critic
-  - D2: ZFS Specialist → Port Builder (Name correction; boundaries implemented (see FORBIDDEN ACTIONS for each specialist))
-  - D3: Network Specialist → Compatibility Engineer (Name correction; boundaries implemented (see FORBIDDEN ACTIONS for each specialist))
-  - D4: Security Hardener → Jail Architect (Name correction; boundaries implemented (see FORBIDDEN ACTIONS for each specialist))
-  - D5: Automation Specialist → ZFS Engineer (Name correction; boundaries implemented (see FORBIDDEN ACTIONS for each specialist))
+  - D2: ZFS Specialist → Port Builder
+  - D3: Network Specialist → Compatibility Engineer
+  - D4: Security Hardener → Jail Architect
+  - D5: Automation Specialist → ZFS Engineer
 
 ## [0.1.0] - 2026-01-20
 

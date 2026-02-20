@@ -65,7 +65,7 @@ LOGOS serves as an **intelligent prompt composition system** that:
 - **Guardians (B6-B10):** Review code for security, syntax, performance, quality, and release readiness
 - **Maintainers (C1, C6-C11):** Fix bugs, update docs, optimize code, manage dependencies, clean up
 - **Workers (D2-D5):** Implement features, debug issues, extend tests, tweak UI
-- **Operators (orchestrator, ocm, daedelus):** Orchestrate workflows, manage operations, provide ultimate oversight
+- **Operators (E1-E3):** Orchestrate workflows, manage operations, provide ultimate oversight
 
 **DEUS Domain (26 agents):** System administration agents (FreeBSD/Linux)
 - **Engineers (A1-A5):** Design kernel configs, manage drivers, architect networks, configure boot, design services
@@ -762,7 +762,7 @@ Agents are organized by domain and group:
 - `GROUP_B_GUARDIANS` - Keys B6-B10
 - `GROUP_C_MAINTAINERS` - Keys C1, C6-C11
 - `GROUP_D_WORKERS` - Keys D2-D5
-- `GROUP_E_OPERATORS` - Keys "orchestrator", "ocm", "daedelus"
+- `GROUP_E_OPERATORS` - Keys E1, E2, E3
 
 **DEUS Agents:**
 - `GROUP_A_ENGINEERS` - Keys A1-A5

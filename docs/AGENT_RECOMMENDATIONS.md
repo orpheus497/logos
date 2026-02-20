@@ -730,7 +730,7 @@ When a Daedelus agent encounters a system-level need:
 
 When a DEUS agent encounters an application-level need:
 - Recommend appropriate Daedelus agent
-- Example: DEUS E3 (General Manager) needs application deployed → Daedelus C8 (Configurator)
+- Example: DEUS E3 (The General Manager) needs application deployed → Daedelus C8 (Configurator)
 - Example: DEUS A5 (Service Scribe) needs application documentation updated → Daedelus A5 (Scribe)
 - Example: DEUS B8 (Performance Analyst) identifies inefficient application code → Daedelus B8 (Profiler)
 
