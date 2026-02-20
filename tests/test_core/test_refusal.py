@@ -166,19 +166,31 @@ class TestQuickRefusal:
         )
         assert "Specialized in backend development" in result
 
-    def test_strips_the_prefix(self):
+    def test_strip_the_prefix_from_recommended_name(self):
         """##Function purpose: Verify 'The ' prefix is stripped from auto-generated description."""
         result = quick_refusal(
             refusing_key="A1",
             refusing_name="The Architect",
-            refusing_specialty="architecture",
+            refusing_specialty="system architecture design",
             recommended_key="A2",
             recommended_name="The Logic Engineer",
             reason="implementation",
         )
-        # Should be "Handles Logic Engineer responsibilities" not "Handles The Logic Engineer responsibilities"
         assert "Handles Logic Engineer responsibilities" in result
-        assert "Handles The Logic Engineer responsibilities" not in result
+
+    def test_includes_user_request_summary(self):
+        """##Function purpose: Verify user_request_summary is included in quick refusal."""
+        summary = "Create a login button"
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="system architecture design",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+            user_request_summary=summary,
+        )
+        assert f"Your request: \"{summary}\"" in result
 
     def test_strips_the_prefix_case_insensitive(self):
         """##Function purpose: Verify 'the ' prefix is stripped regardless of case."""
@@ -209,171 +221,34 @@ class TestValidateRefusalResponse:
         )
         assert validate_refusal_response(ref) is True
 
-    def test_empty_key_returns_false(self):
-        """##Function purpose: Verify empty refusing_agent_key fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
+    @pytest.mark.parametrize("field,invalid_value", [
+        ("refusing_agent_key", ""),
+        ("refusing_agent_key", "   "),
+        ("refusing_agent_name", ""),
+        ("refusing_agent_name", "   "),
+        ("refusing_agent_specialty", ""),
+        ("refusing_agent_specialty", "   "),
+        ("reason", ""),
+        ("reason", "   "),
+        ("recommended_agent_key", ""),
+        ("recommended_agent_key", "   "),
+        ("recommended_agent_name", ""),
+        ("recommended_agent_name", "   "),
+        ("recommended_agent_description", ""),
+        ("recommended_agent_description", "   "),
+    ])
+    def test_invalid_field_returns_false(self, field, invalid_value):
+        """##Function purpose: Verify empty or whitespace-only required fields fail validation."""
+        valid_data = {
+            "refusing_agent_key": "A1",
+            "refusing_agent_name": "The Architect",
+            "refusing_agent_specialty": "system architecture design",
+            "reason": "reason",
+            "recommended_agent_key": "A2",
+            "recommended_agent_name": "The Logic Engineer",
+            "recommended_agent_description": "description",
+        }
+        valid_data[field] = invalid_value
+        ref = RefusalResponse(**valid_data)
         assert validate_refusal_response(ref) is False
 
-    def test_whitespace_only_key_returns_false(self):
-        """##Function purpose: Verify whitespace-only refusing_agent_key fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="   ",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_returns_false(self):
-        """##Function purpose: Verify whitespace-only field fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="   ",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_empty_reason_returns_false(self):
-        """##Function purpose: Verify empty reason fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_empty_recommended_description_returns_false(self):
-        """##Function purpose: Verify empty recommended_agent_description fails."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_recommended_description_returns_false(self):
-        """##Function purpose: Verify whitespace-only recommended_agent_description fails."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="   ",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_empty_recommended_key_returns_false(self):
-        """##Function purpose: Verify empty recommended_agent_key fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_empty_recommended_name_returns_false(self):
-        """##Function purpose: Verify empty recommended_agent_name fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_recommended_key_returns_false(self):
-        """##Function purpose: Verify whitespace-only recommended_agent_key fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="   ",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_recommended_name_returns_false(self):
-        """##Function purpose: Verify whitespace-only recommended_agent_name fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="   ",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_reason_returns_false(self):
-        """##Function purpose: Verify whitespace-only reason fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="system architecture design",
-            reason="   ",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_empty_refusing_specialty_returns_false(self):
-        """##Function purpose: Verify empty refusing_agent_specialty fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False
-
-    def test_whitespace_only_refusing_specialty_returns_false(self):
-        """##Function purpose: Verify whitespace-only refusing_agent_specialty fails validation."""
-        ref = RefusalResponse(
-            refusing_agent_key="A1",
-            refusing_agent_name="The Architect",
-            refusing_agent_specialty="   ",
-            reason="reason",
-            recommended_agent_key="A2",
-            recommended_agent_name="The Logic Engineer",
-            recommended_agent_description="description",
-        )
-        assert validate_refusal_response(ref) is False

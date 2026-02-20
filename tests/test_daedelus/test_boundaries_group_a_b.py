@@ -69,8 +69,14 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     )
-    assert "→" in forbidden_text, f"Agent {agent_key} forbidden actions missing redirects (→)"
-    assert "*Why:*" in forbidden_text, f"Agent {agent_key} forbidden actions missing 'Why' explanations"
+    redirects = forbidden_text.count("→")
+    assert redirects >= len(items), (
+        f"Agent {agent_key} has {redirects} redirects for {len(items)} forbidden actions"
+    )
+    why_count = forbidden_text.count("Why:")
+    assert why_count >= len(items), (
+        f"Agent {agent_key} has {why_count} 'Why' explanations for {len(items)} forbidden actions"
+    )
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
 def test_agent_has_collaboration_section(agent_key, prompt):

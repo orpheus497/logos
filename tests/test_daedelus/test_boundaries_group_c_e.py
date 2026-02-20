@@ -50,31 +50,31 @@ AGENTS = {
 }
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_scope_boundaries_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains the SCOPE BOUNDARIES section."""
     assert "## SCOPE BOUNDARIES" in prompt, f"Agent {agent_key} missing SCOPE BOUNDARIES section"
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_in_scope_items(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 5 IN SCOPE items."""
     header = "### ✅ IN SCOPE (What You CAN Do):"
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
-    items = re.findall(r"(?:^|\n)\d+\. \*\*", in_scope_text)
+    items = re.findall(r"^\d+\. \*\*", in_scope_text, re.MULTILINE)
     assert len(items) >= 5, (
         f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
     )
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_forbidden_actions(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 10 FORBIDDEN ACTIONS."""
     header = "### ⛔ FORBIDDEN ACTIONS (What You CANNOT Do):"
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
-    items = re.findall(r"(?:^|\n)\d+\. \*\*", forbidden_text)
+    items = re.findall(r"^\d+\. \*\*", forbidden_text, re.MULTILINE)
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     )
@@ -82,19 +82,19 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert "*Why:*" in forbidden_text, f"Agent {agent_key} forbidden actions missing 'Why' explanations"
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_collaboration_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 3 REQUIRES COLLABORATION items."""
     header = "### 🤝 REQUIRES COLLABORATION:"
     assert header in prompt, f"Agent {agent_key} missing COLLABORATION section"
     collab_text = extract_section(prompt, header)
-    items = re.findall(r"(?:^|\n)\d+\. \*\*", collab_text)
+    items = re.findall(r"^\d+\. \*\*", collab_text, re.MULTILINE)
     assert len(items) >= 3, (
         f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
     )
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_refusal_template(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains REFUSAL TEMPLATE."""
     header = "### 🚫 REFUSAL TEMPLATE"
@@ -104,7 +104,7 @@ def test_agent_has_refusal_template(agent_key, prompt):
     assert "**Why I can't help:**" in refusal_text, f"Agent {agent_key} missing 'Why I can't help' in template"
 
 
-@pytest.mark.parametrize("agent_key,prompt", AGENTS.items())
+@pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_devdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
@@ -116,7 +116,7 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
         )
     else:
         # Contextual check: ensure "orchestrator" appears near ".devdocs" context, not just anywhere
-        match = re.search(r"\.devdocs/.{0,200}orchestrator|orchestrator.{0,200}\.devdocs/", prompt, re.IGNORECASE | re.DOTALL)
+        match = re.search(r"\.devdocs/.{0,50}orchestrator|orchestrator.{0,50}\.devdocs/", prompt, re.IGNORECASE | re.DOTALL)
         assert match is not None or agent_key == "orchestrator", (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
         )

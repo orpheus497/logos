@@ -700,7 +700,8 @@ After supreme security review:
 - Documentation synchronization
 - Dependency updates
 - Routine care tasks
-- Agents operate independently based on need; order is not mandatory
+- Each agent can be invoked independently based on operational needs
+- Once invoked, each agent has recommended sequential next steps (e.g., C1→A4→D5)
 
 **Agents typically involved:**
 - C1 (Bug Hunter) - Bug diagnosis
@@ -715,17 +716,23 @@ After supreme security review:
 
 ## Cross-Domain Recommendations
 
+**Guideline:** Hand off when the issue crosses the boundary between "Application Code/Logic" (Daedelus) and "System/Infrastructure" (DEUS).
+
 **Daedelus → DEUS Handoff:**
 
 When a Daedelus agent encounters a system-level need:
 - Recommend appropriate DEUS agent
 - Example: A2 (Logic Engineer) needs environment variables configured → DEUS A5 (Service Scribe)
+- Example: A3 (Interface Designer) needs firewall ports opened → DEUS A3 (Network Architect)
+- Example: B8 (Profiler) identifies kernel-level bottleneck → DEUS C8 (Sysctl Tuner)
 
 **DEUS → Daedelus Handoff:**
 
 When a DEUS agent encounters an application-level need:
 - Recommend appropriate Daedelus agent
 - Example: DEUS E3 (General Manager) needs application deployed → Daedelus C8 (Configurator)
+- Example: DEUS A5 (Service Scribe) needs application documentation updated → Daedelus A5 (Scribe)
+- Example: DEUS B8 (Performance Analyst) identifies inefficient application code → Daedelus B8 (Profiler)
 
 ---
 

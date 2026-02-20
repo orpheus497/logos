@@ -109,8 +109,8 @@ Reference the "Detailed Agent-Specific Scope Definitions" section in `PLAN.md` f
 
 ### Phase 1: Agent Boundary Infrastructure (task1/infrastructure) ✅
 
-- `docs/AGENT_BOUNDARIES.md` — all 50 agents documented
-- `docs/AGENT_RECOMMENDATIONS.md` — all 50 agents with workflow recommendations
+- `docs/AGENT_BOUNDARIES.md` — all 50 agents documented (base definitions created; specific updates in subsequent PRs)
+- `docs/AGENT_RECOMMENDATIONS.md` — all 50 agents with workflow recommendations (base definitions created)
 - `logos/core/refusal.py` — refusal response generation utility
 - `tests/test_core/test_refusal.py` — 16 tests passing
 - Version bumped to 0.2.0.dev0

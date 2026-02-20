@@ -69,18 +69,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B7: Syntax Validator → Syntax Marshal
   - B8: Performance Profiler → Performance Analyst
   - B9: Compliance Auditor → Compliance Critic
-  - D2: ZFS Specialist → Port Builder
-  - D3: Network Specialist → Compatibility Engineer
-  - D4: Security Hardener → Jail Architect
-  - D5: Automation Specialist → ZFS Engineer
+  - D2: ZFS Specialist → Port Builder (Name correction only; boundaries pending)
+  - D3: Network Specialist → Compatibility Engineer (Name correction only; boundaries pending)
+  - D4: Security Hardener → Jail Architect (Name correction only; boundaries pending)
+  - D5: Automation Specialist → ZFS Engineer (Name correction only; boundaries pending)
 
 ### Development Status
 
-- Phase 1: Agent Boundaries - In Progress
-- PR #1: Infrastructure setup - Complete
-- PR #2: Daedelus Group A-B Boundaries - Complete
-- PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
-- PR #4: DEUS Group A-B Boundaries - Complete (10/26 DEUS agents)
+See [DEVELOPMENT.md](DEVELOPMENT.md) for current project status.
 
 ## [0.1.0] - 2026-01-20
 

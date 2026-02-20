@@ -73,6 +73,9 @@ def get_logos_banner() -> list[str]:
         " ███████████ ▒▒▒███████▒   ▒▒█████████  ▒▒▒███████▒  ▒▒█████████ ",
         "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒  ",
     ]
+    ##Action purpose: Ensure all lines are padded to uniform length (69 chars)
+    max_length = 69
+    banner = [line.ljust(max_length) for line in banner]
     return banner
 
 
