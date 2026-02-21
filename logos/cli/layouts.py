@@ -112,7 +112,7 @@ def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> Non
     ##Loop purpose: Print each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Print centered banner line with color
         print(" " * padding + color + line + reset)
     print()  # Extra spacing after banner
@@ -572,7 +572,7 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     ##Loop purpose: Build each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Build centered banner line with color
         output_lines.append(" " * padding + color + line + reset)
     output_lines.append("")  # Extra spacing after banner

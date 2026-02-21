@@ -117,8 +117,9 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
     devdocs_heading = ".devdocs/ Management"
-    if re.search(r'(?m)^' + re.escape(devdocs_heading), prompt):
-        block = extract_section(prompt, devdocs_heading)
+    devdocs_match = re.search(r'(?m)^\d+\.\s+\*{0,2}' + re.escape(devdocs_heading), prompt)
+    if devdocs_match:
+        block = extract_section(prompt, devdocs_match.group())
         assert re.search(r'\borchestrator\b|\bE1\b', block, re.IGNORECASE), (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )

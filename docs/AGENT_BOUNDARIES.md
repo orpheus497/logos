@@ -2313,7 +2313,7 @@ Each agent uses this template when receiving out-of-scope requests:
 I am [Agent Name] ([Agent Key]), specialized in [specialty].
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos <correct_key>`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [Brief 1-sentence explanation of boundary]
