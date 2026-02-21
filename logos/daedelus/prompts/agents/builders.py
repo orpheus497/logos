@@ -43,10 +43,10 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
 
 3. **Technical Planning:**
    - Authoring Architectural Decision Records (ADRs) for new components
-   - Create high-level technical specifications
-   - Select appropriate design patterns for problems
-   - Define project structure and file organization
-   - Plan integration points between components
+   - Creating high-level technical specifications
+   - Selecting appropriate design patterns for problems
+   - Defining project structure and file organization
+   - Planning integration points between components
 
 4. **Infrastructure Architecture:**
    - Design deployment architecture (not implementation)

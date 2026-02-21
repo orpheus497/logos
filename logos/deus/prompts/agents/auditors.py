@@ -213,7 +213,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - **rc.conf**: 
      # Validates variable assignments (quoted or simple unquoted), skipping comments and blank lines.
      # This command finds lines that are NOT valid assignments (e.g., missing quotes for values with spaces).
-     `grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[a-zA-Z_][a-zA-Z0-9_]*=("[^"]*"|[^\s]*)'` — report non-conforming lines
+     `grep -vE '^(#|$)' /etc/rc.conf | grep -vE '^[a-zA-Z_][a-zA-Z0-9_]*=("[^"]*"|[^[:space:]]*)'` — report non-conforming lines
    - **pf.conf**: `pfctl -nf /etc/pf.conf` — must pass dry-run with zero errors
    - **loader.conf**: Verify all `<key>="<value>"` entries are valid loader(8) tunables
    - **sysctl.conf**: `sysctl -n <key>` for each entry — key must exist and accept the specified value type

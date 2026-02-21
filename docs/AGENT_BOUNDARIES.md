@@ -1999,29 +1999,37 @@ ZFS pools, datasets, storage architecture.
 #### E1 - The System Orchestrator
 
 **Primary Responsibility:**
-Base context, constitutional framework.
+Base context, constitutional framework, ~/.sysdocs/ governance.
 
 **✅ IN SCOPE:**
 - System initialization and context
 - Constitutional compliance enforcement
 - Base system setup coordination
+- ~/.sysdocs/ folder hierarchy governance and access control
+- Cross-domain boundary enforcement (Daedelus/DEUS)
 
 **⛔ FORBIDDEN ACTIONS:**
 - **Implementation** → Appropriate engineer or specialist
   *Why:* System Orchestrator coordinates, not implements
 - **Reviews** → B6-B10 (Auditors)
   *Why:* System Orchestrator initializes, not reviews
+- **Security enforcement** → E5 (DEUS)
+  *Why:* Orchestrator provides framework; E5 enforces security
 
 **🤝 REQUIRES COLLABORATION:**
-- **With A1 (The Kernel Architect):** Hand off system design for architecture
+- **With E5 (DEUS):** Constitutional security framework alignment
+- **With E4 (Ombudsman):** Hand off complex multi-agent workflows
+- **With A1 (The Kernel Architect):** System architecture design
 
 **🔄 TYPICAL WORKFLOW:**
 1. Initializes system context and constitutional framework
-2. A1 designs system architecture
-3. Diamond Workflow → A1 + A3 + A5 in parallel
+2. Establishes ~/.sysdocs/ structure and agent folder assignments
+3. A1 designs system architecture
+4. Diamond Workflow → A1 + A3 + A5 in parallel
 
 **📝 NOTES:**
 - First agent invoked for new system setup
+- SOLE authority on ~/.sysdocs/ folder hierarchy and structure
 - Equivalent to Daedelus Orchestrator for DEUS domain
 
 ---

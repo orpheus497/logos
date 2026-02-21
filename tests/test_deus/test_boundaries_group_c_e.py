@@ -1,7 +1,7 @@
 """
-##Script function and purpose: Test boundary enforcement for Daedelus Group C, D, and E agents.
+##Script function and purpose: Test boundary enforcement for DEUS Group C, D, and E agents.
 
-Validates that C1, C6-C11, D2-D5, and E1-E3 agents have the required
+Validates that C1, C6-C11, D2-D5, and E1-E5 agents have the required
 SCOPE BOUNDARIES section, IN SCOPE items, FORBIDDEN ACTIONS, and REFUSAL TEMPLATE.
 """
 
@@ -9,25 +9,27 @@ import re
 
 import pytest
 
-from logos.daedelus.prompts.agents.maintainers import (
+from logos.deus.prompts.agents.maintainers import (
     BUG_HUNTER_ACTIVATION,
-    CONFIGURATOR_ACTIVATION,
-    DOC_UPDATER_ACTIVATION,
-    JANITOR_ACTIVATION,
-    LIBRARIAN_ACTIVATION,
+    MANUAL_KEEPER_ACTIVATION,
     OPTIMIZER_ACTIVATION,
+    PORT_LIBRARIAN_ACTIVATION,
     SECURITY_PATCHER_ACTIVATION,
+    SYSCTL_TUNER_ACTIVATION,
+    SYSTEM_JANITOR_ACTIVATION,
 )
-from logos.daedelus.prompts.agents.operators import (
-    DAEDELUS_ACTIVATION,
-    OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
-    ORCHESTRATOR_ACTIVATION,
+from logos.deus.prompts.agents.operators import (
+    ADMINISTRATOR_ACTIVATION,
+    DEUS_ACTIVATION,
+    GENERAL_MANAGER_ACTIVATION,
+    OMBUDSMAN_ACTIVATION,
+    SYSTEM_ORCHESTRATOR_ACTIVATION,
 )
-from logos.daedelus.prompts.agents.workers import (
-    FEATURE_SPRINTER_ACTIVATION,
-    REFACTORER_ACTIVATION,
-    TEST_EXTENDER_ACTIVATION,
-    UI_TWEAKER_ACTIVATION,
+from logos.deus.prompts.agents.specialists import (
+    COMPATIBILITY_ENGINEER_ACTIVATION,
+    JAIL_ARCHITECT_ACTIVATION,
+    PORT_BUILDER_ACTIVATION,
+    ZFS_ENGINEER_ACTIVATION,
 )
 from tests.helpers import extract_section
 
@@ -35,18 +37,20 @@ from tests.helpers import extract_section
 AGENTS = {
     "C1": BUG_HUNTER_ACTIVATION,
     "C6": SECURITY_PATCHER_ACTIVATION,
-    "C7": DOC_UPDATER_ACTIVATION,
-    "C8": CONFIGURATOR_ACTIVATION,
+    "C7": MANUAL_KEEPER_ACTIVATION,
+    "C8": SYSCTL_TUNER_ACTIVATION,
     "C9": OPTIMIZER_ACTIVATION,
-    "C10": JANITOR_ACTIVATION,
-    "C11": LIBRARIAN_ACTIVATION,
-    "D2": FEATURE_SPRINTER_ACTIVATION,
-    "D3": REFACTORER_ACTIVATION,
-    "D4": UI_TWEAKER_ACTIVATION,
-    "D5": TEST_EXTENDER_ACTIVATION,
-    "E1": ORCHESTRATOR_ACTIVATION,
-    "E2": OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
-    "E3": DAEDELUS_ACTIVATION,
+    "C10": SYSTEM_JANITOR_ACTIVATION,
+    "C11": PORT_LIBRARIAN_ACTIVATION,
+    "D2": PORT_BUILDER_ACTIVATION,
+    "D3": COMPATIBILITY_ENGINEER_ACTIVATION,
+    "D4": JAIL_ARCHITECT_ACTIVATION,
+    "D5": ZFS_ENGINEER_ACTIVATION,
+    "E1": SYSTEM_ORCHESTRATOR_ACTIVATION,
+    "E2": ADMINISTRATOR_ACTIVATION,
+    "E3": GENERAL_MANAGER_ACTIVATION,
+    "E4": OMBUDSMAN_ACTIVATION,
+    "E5": DEUS_ACTIVATION,
 }
 
 
@@ -105,18 +109,20 @@ def test_agent_has_refusal_template(agent_key, prompt):
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
-def test_agent_has_devdocs_boundary(agent_key, prompt):
-    """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
-    assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
-    devdocs_heading = ".devdocs/ Management"
-    if devdocs_heading in prompt:
-        block = extract_section(prompt, devdocs_heading)
+def test_agent_has_sysdocs_boundary(agent_key, prompt):
+    """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
+    assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
+    sysdocs_heading = "~/.sysdocs/ Management"
+    if sysdocs_heading in prompt:
+        block = extract_section(prompt, sysdocs_heading)
         assert "orchestrator" in block.lower() or "e1" in block.lower(), (
-            f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
+            f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ boundary"
         )
     else:
-        # Contextual check: ensure "orchestrator" (or E1) appears near ".devdocs" context, not just anywhere
-        match = re.search(r"(?:\.devdocs/).{0,80}(?:orchestrator|E1)|(?:orchestrator|E1).{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE | re.DOTALL)
+        match = re.search(
+            r"(?:~/.sysdocs/[^\n]{0,80}(?:orchestrator|E1))|(?:(?:orchestrator|E1)[^\n]{0,80}~/.sysdocs/)",
+            prompt, re.IGNORECASE
+        )
         assert match is not None, (
-            f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
+            f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ context"
         )
