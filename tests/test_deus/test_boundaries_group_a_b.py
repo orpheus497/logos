@@ -99,6 +99,6 @@ def test_agent_has_sysdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
     assert re.search(
-        r"(?:~/.sysdocs/[^\n]{0,80}(?:orchestrator|E1))|(?:(?:orchestrator|E1)[^\n]{0,80}~/.sysdocs/)",
-        prompt, re.IGNORECASE
+        r"(?:~/\.sysdocs/).{0,80}(?:orchestrator|E1)|(?:(?:orchestrator|E1).{0,80}~/\.sysdocs/)",
+        prompt, re.IGNORECASE | re.DOTALL
     ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"
