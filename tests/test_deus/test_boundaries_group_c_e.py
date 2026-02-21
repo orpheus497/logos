@@ -82,10 +82,10 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert len(items) >= 10, (
         f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     )
-    redirects = forbidden_text.count("→")
-    assert redirects >= len(items), (
-        f"Agent {agent_key} has {redirects} redirect(s) (→) for "
-        f"{len(items)} FORBIDDEN ACTIONS; expected at least one redirect per item"
+    arrow_markers = forbidden_text.count("→")
+    assert arrow_markers >= len(items), (
+        f"Agent {agent_key} has {arrow_markers} arrow marker(s) (→) for "
+        f"{len(items)} FORBIDDEN ACTIONS; expected at least one arrow marker per item"
     )
     why_count = forbidden_text.count("Why:")
     assert why_count >= len(items), (
