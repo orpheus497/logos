@@ -344,7 +344,7 @@ When an agent receives a request outside its scope, it responds with:
 
 1. A clear statement that the request is out of scope
 2. The reason why it cannot handle the request
-3. The specific agent key to invoke instead (e.g., `logos daedelus:A1` or `logos deus:B6`)
+3. The specific agent key to invoke instead (e.g., `logos A1` or `logos B6`)
 4. A brief description of what the recommended agent does
 
 ### Checking Agent Scope

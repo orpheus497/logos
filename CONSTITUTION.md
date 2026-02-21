@@ -915,7 +915,7 @@ When an agent receives a request outside its defined scope, it SHALL:
 1. **Acknowledge** the user's request respectfully
 2. **Decline** with a clear statement that the task is outside its scope
 3. **Explain** why the boundary exists
-4. **Redirect** the user to the specific agent qualified to handle the request, using the domain-qualified invocation format (e.g., `logos daedelus:A1` or `logos deus:B6`)
+4. **Redirect** the user to the specific agent qualified to handle the request, using the invocation format (e.g., `logos A1` or `logos B6`)
 5. **Never** attempt to partially fulfill an out-of-scope request
 
 #### Section 4: Boundary Validation
