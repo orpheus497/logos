@@ -21,17 +21,18 @@ LOGOS v0.2.0.dev0 is in active development on the `develop` branch. Current focu
 1. [What is LOGOS?](#what-is-logos)
 2. [Why LOGOS? Rationale and Market Position](#why-logos-rationale-and-market-position)
 3. [How LOGOS Works](#how-logos-works)
-4. [Installation](#installation)
-5. [Setup and Configuration](#setup-and-configuration)
-6. [Usage Guide](#usage-guide)
-7. [Technical Architecture](#technical-architecture)
-8. [Maintenance and Troubleshooting](#maintenance-and-troubleshooting)
-9. [FAQs](#faqs)
-10. [Security](#security)
-11. [Performance](#performance)
-12. [Development](#development)
-13. [Documentation](#documentation)
-14. [License](#license)
+4. [Agent Boundaries](#agent-boundaries)
+5. [Installation](#installation)
+6. [Setup and Configuration](#setup-and-configuration)
+7. [Usage Guide](#usage-guide)
+8. [Technical Architecture](#technical-architecture)
+9. [Maintenance and Troubleshooting](#maintenance-and-troubleshooting)
+10. [FAQs](#faqs)
+11. [Security](#security)
+12. [Performance](#performance)
+13. [Development](#development)
+14. [Documentation](#documentation)
+15. [License](#license)
 
 ---
 
@@ -321,6 +322,44 @@ On first run, LOGOS performs a comprehensive system scan:
 - Jail host status (via `jls -q`)
 
 All subprocess calls use a 0.5-second timeout and run in parallel for performance.
+
+---
+
+## Agent Boundaries
+
+Every LOGOS agent operates within clearly defined **scope boundaries**. This system ensures agents stay in their lane, refuse out-of-scope requests gracefully, and redirect users to the correct agent.
+
+### How It Works
+
+Each of the 50 agents has an embedded `SCOPE BOUNDARIES` section in its activation prompt that defines:
+
+- **IN SCOPE:** The specific tasks this agent is designed to handle
+- **FORBIDDEN ACTIONS:** Tasks explicitly outside this agent's responsibility, each with a redirect to the correct agent and an explanation
+- **REQUIRES COLLABORATION:** Work that needs coordination with other agents
+- **REFUSAL TEMPLATE:** A standardized response format when declining out-of-scope requests
+
+### Refusal Mechanism
+
+When an agent receives a request outside its scope, it responds with:
+
+1. A clear statement that the request is out of scope
+2. The reason why it cannot handle the request
+3. The specific agent key to invoke instead (e.g., `logos A1` or `logos B6`)
+4. A brief description of what the recommended agent does
+
+### Checking Agent Scope
+
+- **Quick reference:** See [`docs/AGENT_BOUNDARIES.md`](docs/AGENT_BOUNDARIES.md) for a complete matrix of all 50 agents and their boundaries
+- **Recommendations:** See [`docs/AGENT_RECOMMENDATIONS.md`](docs/AGENT_RECOMMENDATIONS.md) for workflow-aware agent selection guidance
+
+### Boundary Validation
+
+All agent boundaries are validated by automated tests ensuring:
+
+- Every agent has a minimum number of IN SCOPE items
+- Every FORBIDDEN ACTION includes a redirect arrow (`→`) and an explanation (`Why:`)
+- Refusal templates are present and correctly formatted
+- No role overlap exists between agents in the same domain
 
 ---
 

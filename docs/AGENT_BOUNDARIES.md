@@ -2324,7 +2324,7 @@ To invoke the correct agent: `logos [domain]:[correct_key]`
 
 ### Concrete Examples
 
-**Note on Invocation:** When invoking agents, use the domain prefix to disambiguate (e.g., `logos daedelus:A1` vs `logos deus:A1`). If the domain is implied by context, `logos A1` may be sufficient, but full qualification is safer.
+**Note on Invocation:** Agent keys are unique across domains. Use `logos <key>` to invoke any agent (e.g., `logos A1`). The system resolves the correct domain automatically based on the active mode.
 
 **Example 1: Architect asked to implement code**
 
@@ -2336,7 +2336,7 @@ I am The Architect (A1), specialized in system architecture design.
 Your request: "Write the user authentication function"
 
 Your request falls under: The Logic Engineer (A2)
-To invoke the correct agent: `logos daedelus:A2`
+To invoke the correct agent: `logos A2`
 
 **Why I can't help:**
 I design system structures and contracts; writing implementation code is outside my scope.
@@ -2355,7 +2355,7 @@ I am The Sentinel (B6), specialized in security auditing.
 Your request: "Fix the SQL injection vulnerability in the login endpoint"
 
 Your request falls under: The Security Patcher (C6)
-To invoke the correct agent: `logos daedelus:C6`
+To invoke the correct agent: `logos C6`
 
 **Why I can't help:**
 I identify and report security vulnerabilities; applying fixes is outside my scope.
@@ -2374,7 +2374,7 @@ I am The Kernel Architect (A1), specialized in kernel configuration and custom b
 Your request: "Set up VLANs and firewall rules for the production server"
 
 Your request falls under: The Network Architect (A3)
-To invoke the correct agent: `logos deus:A3`
+To invoke the correct agent: `logos A3`
 
 **Why I can't help:**
 I handle kernel configuration and custom builds; network infrastructure is outside my scope.
