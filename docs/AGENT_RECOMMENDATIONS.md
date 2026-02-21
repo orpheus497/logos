@@ -178,7 +178,7 @@ After release decision:
 
 ### Group C: Maintainers
 
-> **Note on agent numbering:** Groups C and D have intentional gaps in their numbering sequences (C1, then C6-C11; D starts at D2). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
+> Note on agent numbering: Groups C and D have intentional gaps in their numbering sequences across both Daedelus and DEUS domains. Group C includes C1 and C6-C11 (C2-C5 reserved for future use); Group D includes D2-D5 (D1 reserved for future use). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
 
 **C1 (The Bug Hunter) → Next Steps:**
 
@@ -314,9 +314,9 @@ After extending test coverage:
 
 ### Group E: Operators
 
-> **Note on naming convention:** Daedelus Group E operators use descriptive identifiers (`orchestrator`, `ocm`, `daedelus`) rather than the alphanumeric pattern (E1-E5) used in the DEUS domain. This is intentional — these operators are invoked by name in the CLI and codebase, and their descriptive keys provide clearer intent when referenced in code and user commands.
+> Note on naming convention: Agent identifiers follow an alphanumeric pattern (A1-E5) across both domains. DEUS Group E uses E1-E5 numbering, and Daedelus Group E uses E1-E3 for the operator agents (E1 Orchestrator, E2 Operational Control Manager, E3 Daedelus).
 
-**orchestrator (The Orchestrator) → Next Steps:**
+**E1 (The Orchestrator) → Next Steps:**
 
 After project initialization:
 
@@ -329,7 +329,7 @@ After project initialization:
 
 ---
 
-**ocm (The OCM) → Next Steps:**
+**E2 (The Operational Control Manager) → Next Steps:**
 
 After operational review:
 
@@ -340,13 +340,13 @@ After operational review:
 
 ---
 
-**daedelus (Daedelus) → Next Steps:**
+**E3 (Daedelus) → Next Steps:**
 
 After supreme review:
 
 *If issues found:*
 - Dispatch to appropriate agents for fixes
-- Re-invoke daedelus after fixes applied
+- Re-invoke E3 after fixes applied
 
 *If perfection achieved:*
 - B10 (The Gatekeeper) - Release approval
@@ -700,7 +700,8 @@ After supreme security review:
 - Documentation synchronization
 - Dependency updates
 - Routine care tasks
-- Agents operate independently based on need; order is not mandatory
+- Each agent can be invoked independently based on operational needs
+- After invocation, each agent follows its recommended sequential next steps (e.g., C1→A4→D5)
 
 **Agents typically involved:**
 - C1 (Bug Hunter) - Bug diagnosis
@@ -715,19 +716,25 @@ After supreme security review:
 
 ## Cross-Domain Recommendations
 
+**Guideline:** Hand off when the issue crosses the boundary between "Application Code/Logic" (Daedelus) and "System/Infrastructure" (DEUS).
+
 **Daedelus → DEUS Handoff:**
 
 When a Daedelus agent encounters a system-level need:
 - Recommend appropriate DEUS agent
 - Example: A2 (Logic Engineer) needs environment variables configured → DEUS A5 (Service Scribe)
+- Example: A3 (Interface Designer) needs firewall ports opened → DEUS A3 (Network Architect)
+- Example: B8 (Profiler) identifies kernel-level bottleneck → DEUS C8 (Sysctl Tuner)
 
 **DEUS → Daedelus Handoff:**
 
 When a DEUS agent encounters an application-level need:
 - Recommend appropriate Daedelus agent
-- Example: DEUS E3 (General Manager) needs application deployed → Daedelus C8 (Configurator)
+- Example: DEUS E3 (The General Manager) needs application deployed → Daedelus C8 (Configurator)
+- Example: DEUS A5 (Service Scribe) needs application documentation updated → Daedelus A5 (Scribe)
+- Example: DEUS B8 (Performance Analyst) identifies inefficient application code → Daedelus B8 (Profiler)
 
 ---
 
 **Last Reviewed:** 2026-02-19
-**Next Review:** When workflow patterns change or agents modified, or quarterly
+**Next Review:** When workflow patterns change, agents are modified, or quarterly

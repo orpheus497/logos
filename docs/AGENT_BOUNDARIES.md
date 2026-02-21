@@ -8,17 +8,13 @@
 
 ## Document Purpose
 
-This document serves as the authoritative reference for:
-- What each agent CAN do (IN SCOPE)
-- What each agent CANNOT do (FORBIDDEN ACTIONS)
-- Which agent to invoke for out-of-scope requests
-- Collaboration requirements between agents
+This document provides a comprehensive map of all AI agents within the LOGOS federation, explicitly defining their operational boundaries, responsibilities, and required collaborations.
 
-**For Users:** Check this before invoking an agent to ensure correct selection
-**For Developers:** Reference when modifying agent prompts
-**For AI Models:** This information is embedded in agent activation prompts
+**Terminology Note:** "Daedelus" refers to both the Software Development domain and to agent E3 within that domain. When invocation commands are given, "Daedelus" without an agent key refers to agent E3. In this document, we refer to the agent as **agent E3 (Daedelus)** for clarity.
 
----
+### For AI Models
+
+This information is embedded in agent activation prompts to ensure strict adherence to scope and prevent cross-boundary drift. Any request falling outside an agent's defined boundary MUST be redirected to the appropriate specialist identified herein.
 
 ## Quick Reference Matrix
 
@@ -47,9 +43,9 @@ This document serves as the authoritative reference for:
 | D3 | The Refactorer | Workers | Logic cleanup (no behavior change) | New features, UI changes |
 | D4 | The UI Tweaker | Workers | CSS/HTML/visual polish | Backend logic, architecture |
 | D5 | The Test Extender | Workers | Adding coverage, fixing flakes | Implementation, design |
-| orchestrator | The Orchestrator | Operators | Empty project setup, base context | Implementation, reviews |
-| ocm | The OCM | Operators | Operational review, audit assignments | Implementation, coding |
-| daedelus | Daedelus | Operators | Supreme review, absolute perfection | Implementation, initial design |
+| E1 | The Orchestrator | Operators | Empty project setup, base context | Implementation, reviews |
+| E2 | The Operational Control Manager | Operators | Operational review, audit assignments | Implementation, coding |
+| E3 | Daedelus | Operators | Supreme review, absolute perfection | Implementation, initial design |
 
 ### DEUS Domain (System Administration)
 
@@ -126,8 +122,8 @@ Structure & config — create contracts and skeleton for software projects.
   *Why:* Architecture creates design; Critic reviews implementation quality
 - **Release management** → B10 (The Gatekeeper)
   *Why:* Architecture doesn't manage releases; Gatekeeper controls release gates
-- **Modifying .devdocs/ (except shared `DECISIONS_LOG.md`)** → orchestrator (The Orchestrator)
-  *Why:* Orchestrator manages .devdocs structure; A1 may only update the shared decisions log
+- **Modifying other agents' .devdocs/ folders** → E1 (The Orchestrator)
+  *Why:* Orchestrator manages .devdocs structure; A1 writes to its own folder and shared `DECISIONS_LOG.md`
 
 **🤝 REQUIRES COLLABORATION:**
 - **With A2 (The Logic Engineer):** Ensure architecture supports business requirements
@@ -532,7 +528,7 @@ Diagnose & fix crashes — root cause analysis.
   *Why:* Bug Hunter fixes logic bugs; UI Tweaker handles visual issues
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Bug Hunter fixes code; Doc Updater synchronizes documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Bug Hunter writes to `.devdocs/maintainers/bug_hunter/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -592,7 +588,7 @@ Vulnerability fixes & hardening — apply security patches.
   *Why:* Security Patcher applies patches; Doc Updater documents changes
 - **Dependency management (non-security)** → C11 (The Librarian)
   *Why:* Security Patcher patches vulnerable deps; Librarian manages all deps
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Security Patcher writes to `.devdocs/maintainers/security_patcher/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -651,7 +647,7 @@ Syncing docs with reality — keep documentation current.
   *Why:* Doc Updater documents config; Configurator changes config
 - **UI changes** → A3 (The Interface Designer) / D4 (The UI Tweaker)
   *Why:* Doc Updater documents UI; Interface Designer and UI Tweaker change UI
-- **Modifying .devdocs/ structure** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ structure** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs folder structure; Doc Updater updates content within docs
 
 **🤝 REQUIRES COLLABORATION:**
@@ -708,7 +704,7 @@ Env, build, & deployment configuration.
   *Why:* Configurator configures package tool settings; Librarian manages versions
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Configurator changes config; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Configurator writes to `.devdocs/maintainers/configurator/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -765,7 +761,7 @@ Speed & resource tuning.
   *Why:* Optimizer optimizes code; Test Engineer writes performance tests
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Optimizer optimizes code; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Optimizer writes to `.devdocs/maintainers/optimizer/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -823,7 +819,7 @@ Dead code & log removal — clean codebase.
   *Why:* Janitor removes unused code; Optimizer speeds up used code
 - **Documentation updates** → C7 (The Doc Updater)
   *Why:* Janitor cleans code; Doc Updater maintains documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Janitor writes to `.devdocs/maintainers/janitor/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -857,7 +853,7 @@ Dependency management.
 - Regenerating and verifying lock file consistency across environments
 - Checking for outdated dependencies and identifying unused packages
 - Verifying license compliance for all dependencies
-- Performing dependency health advisories and flagging potential vulnerability indicators for escalation to B6
+- Performing dependency health checks and flagging potential vulnerability indicators for escalation to B6
 - Managing `pyproject.toml`, `package.json`, `Cargo.toml` dependencies
 - Configuring dependency sources, registries, and virtual environments
 - Handling platform-specific dependency requirements
@@ -881,7 +877,7 @@ Dependency management.
   *Why:* Librarian removes unused packages; Janitor removes unused code
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Librarian updates packages; Doc Updater documents the changes
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Librarian writes to `.devdocs/maintainers/librarian/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -941,7 +937,7 @@ Small additions (non-breaking).
   *Why:* Feature Sprinter adds features; Optimizer tunes performance
 - **Documentation** → A5 (The Scribe) / C7 (The Doc Updater)
   *Why:* Feature Sprinter adds features; documentation agents document them
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Feature Sprinter writes to `.devdocs/workers/feature_sprinter/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -999,7 +995,7 @@ Logic cleanup (no behavior change).
   *Why:* Refactorer restructures live code; Janitor removes dead code
 - **Documentation** → C7 (The Doc Updater)
   *Why:* Refactorer refactors code; Doc Updater updates documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Refactorer writes to `.devdocs/workers/refactorer/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1057,7 +1053,7 @@ CSS/HTML/visual polish.
   *Why:* UI Tweaker polishes appearance; Optimizer improves speed
 - **Documentation** → C7 (The Doc Updater)
   *Why:* UI Tweaker tweaks visuals; Doc Updater updates documentation
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; UI Tweaker writes to `.devdocs/workers/ui_tweaker/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1115,7 +1111,7 @@ Adding coverage, fixing flakes.
   *Why:* Test Extender extends coverage; Sentinel performs security audits
 - **Code refactoring** → D3 (The Refactorer)
   *Why:* Test Extender tests code; Refactorer restructures code
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Test Extender writes to `.devdocs/workers/test_extender/`
 
 **🤝 REQUIRES COLLABORATION:**
@@ -1139,7 +1135,7 @@ Adding coverage, fixing flakes.
 
 ### Group E: Operators (Orchestration)
 
-#### orchestrator - The Orchestrator
+#### E1 - The Orchestrator
 
 **Primary Responsibility:**
 Empty project setup — base context foundation.
@@ -1196,7 +1192,7 @@ Empty project setup — base context foundation.
 
 ---
 
-#### ocm - The Operational Control Manager
+#### E2 - The Operational Control Manager
 
 **Primary Responsibility:**
 Operational review — comprehensive audit assignments.
@@ -1218,10 +1214,10 @@ Operational review — comprehensive audit assignments.
   *Why:* OCM audits and assigns; implementation agents fix
 - **Architecture design** → A1 (The Architect)
   *Why:* OCM audits operational state; Architect designs systems
-- **Assigning to Builders (Group A)** → Use Daedelus for Group A assignments
-  *Why:* OCM assigns only to Maintainers or Workers; Daedelus can dispatch to any group
-- **Assigning to Guardians (Group B)** → Use Daedelus for Group B assignments
-  *Why:* OCM assigns only to Maintainers or Workers; Daedelus can dispatch to any group
+- **Assigning to Builders (Group A)** → Use E3 (Daedelus) for Group A assignments
+  *Why:* OCM assigns only to Maintainers or Workers; E3 (Daedelus) can dispatch to any group
+- **Assigning to Guardians (Group B)** → Use E3 (Daedelus) for Group B assignments
+  *Why:* OCM assigns only to Maintainers or Workers; E3 (Daedelus) can dispatch to any group
 - **Security auditing (deep)** → B6 (The Sentinel)
   *Why:* OCM does operational security checks; Sentinel does deep security audits
 - **Performance profiling (deep)** → B8 (The Profiler)
@@ -1232,14 +1228,14 @@ Operational review — comprehensive audit assignments.
   *Why:* OCM audits docs; documentation agents write and update them
 - **Mixing groups in assignment** → Use separate review sessions
   *Why:* ONE group per review session is the rule; choose Maintainers OR Workers, never both
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; OCM writes to `.devdocs/operators/operational_control_manager/`
 
 **🤝 REQUIRES COLLABORATION:**
 - **With All Maintainer Agents (Group C):** Dispatch maintenance work based on audit findings; track resolution progress
 - **With All Worker Agents (Group D):** Dispatch extension/improvement work based on audit findings; track resolution
 - **With B10 (The Gatekeeper):** Provide operational readiness assessment for releases; escalate blocking issues
-- **With Daedelus:** Escalate issues requiring supreme review; coordinate when audit reveals Group A/B involvement needed
+- **With E3 (Daedelus):** Escalate issues requiring supreme review; coordinate when audit reveals Group A/B involvement needed
 
 **🔄 TYPICAL WORKFLOW:**
 1. Reviews operational state of project (security, quality, performance, style)
@@ -1254,7 +1250,7 @@ Operational review — comprehensive audit assignments.
 
 ---
 
-#### daedelus - Daedelus
+#### E3 - Daedelus
 
 **Primary Responsibility:**
 The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
@@ -1290,11 +1286,11 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
   *Why:* Daedelus demands documentation; Scribe and Doc Updater write it
 - **Test writing** → A4 (The Test Engineer) / D5 (The Test Extender)
   *Why:* Daedelus demands test coverage; testing agents write tests
-- **Modifying .devdocs/ (except own folder)** → orchestrator (The Orchestrator)
+- **Modifying .devdocs/ (except own folder)** → E1 (The Orchestrator)
   *Why:* Only Orchestrator manages .devdocs structure; Daedelus writes to `.devdocs/operators/daedelus/`
 
 **🤝 REQUIRES COLLABORATION:**
-- **With ocm (The Operational Control Manager):** Build upon OCM's initial operational audit; escalate when OCM-level review is insufficient
+- **With E2 (The Operational Control Manager):** Build upon OCM's initial operational audit; escalate when OCM-level review is insufficient
 - **With B10 (The Gatekeeper):** Provide supreme quality assessment for release decisions; demand re-review if work doesn't meet standards
 - **With A1 (The Architect):** Collaborate on architectural rebuild directives; ensure rebuild specs are sound
 - **With All Agent Groups:** Dispatch review findings to the chosen group; track resolution to perfection standards
@@ -1311,6 +1307,7 @@ The BRUTAL PERFECTIONIST SUPREME REVIEW — absolute perfection.
 - Invoked for final quality gates only; not for iterative feedback
 - Has rebuild preference: fundamentally flawed code must be rewritten, not patched
 - Has favoritism for original ideas: creative approaches are protected
+
 ---
 
 ## DEUS Domain (System Administration)
@@ -1329,7 +1326,7 @@ Kernel config, custom builds.
 - Kernel parameter planning
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Application code** → Daedelus domain agents
+- **Application code** → Daedelus domain (software development agents)
   *Why:* Kernel Architect handles kernel, not application code
 - **Network configuration** → A3 (The Network Architect)
   *Why:* Kernel Architect handles kernel, not network infrastructure
@@ -2315,6 +2312,8 @@ To invoke the correct agent: `logos [correct_key]`
 
 ### Concrete Examples
 
+**Note on Invocation:** When invoking agents, use the domain prefix to disambiguate (e.g., `logos daedelus:A1` vs `logos deus:A1`). If the domain is implied by context, `logos A1` may be sufficient, but full qualification is safer.
+
 **Example 1: Architect asked to implement code**
 
 ```text
@@ -2325,7 +2324,7 @@ I am The Architect (A1), specialized in system architecture design.
 Your request: "Write the user authentication function"
 
 Your request falls under: The Logic Engineer (A2)
-To invoke the correct agent: `logos A2`
+To invoke the correct agent: `logos daedelus:A2`
 
 **Why I can't help:**
 I design system structures and contracts; writing implementation code is outside my scope.
@@ -2344,7 +2343,7 @@ I am The Sentinel (B6), specialized in security auditing.
 Your request: "Fix the SQL injection vulnerability in the login endpoint"
 
 Your request falls under: The Security Patcher (C6)
-To invoke the correct agent: `logos C6`
+To invoke the correct agent: `logos daedelus:C6`
 
 **Why I can't help:**
 I identify and report security vulnerabilities; applying fixes is outside my scope.
@@ -2363,7 +2362,7 @@ I am The Kernel Architect (A1), specialized in kernel configuration and custom b
 Your request: "Set up VLANs and firewall rules for the production server"
 
 Your request falls under: The Network Architect (A3)
-To invoke the correct agent: `logos A3`
+To invoke the correct agent: `logos deus:A3`
 
 **Why I can't help:**
 I handle kernel configuration and custom builds; network infrastructure is outside my scope.

@@ -41,18 +41,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - D4 (The UI Tweaker)
   - D5 (The Test Extender)
 - Scope boundaries implemented for Daedelus Group E (Operators):
-  - orchestrator (The Orchestrator)
-  - ocm / E12 (The Operational Control Manager)
-  - daedelus (Daedelus - The Brutal Perfectionist Supreme Review)
+  - E1 (The Orchestrator)
+  - E2 (The Operational Control Manager)
+  - E3 (Daedelus - The Brutal Perfectionist Supreme Review)
+- Scope boundaries implemented for DEUS Group A (Engineers):
+  - A1 (The Kernel Architect)
+  - A2 (The Driver Engineer)
+  - A3 (The Network Architect)
+  - A4 (The Boot Engineer)
+  - A5 (The Service Scribe)
+- Scope boundaries implemented for DEUS Group B (Auditors):
+  - B6 (The Security Auditor)
+  - B7 (The Syntax Marshal)
+  - B8 (The Performance Analyst)
+  - B9 (The Compliance Critic)
+  - B10 (The Release Gatekeeper)
+- Scope boundaries implemented for DEUS Group D (Specialists):
+  - D2 (The Port Builder)
+  - D3 (The Compatibility Engineer)
+  - D4 (The Jail Architect)
+  - D5 (The ZFS Engineer)
 
 ### Changed
 
-- Version set to 0.2.0-dev for active development
+- Version set to 0.2.0.dev0 for active development
 - Orchestrator agent now has activation prompt with scope boundaries
+- Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ### Fixed
 
 - Corrected DEUS agent names to match actual implementation:
+  - A4: The Boot Configurator → The Boot Engineer
   - B7: Syntax Validator → Syntax Marshal
   - B8: Performance Profiler → Performance Analyst
   - B9: Compliance Auditor → Compliance Critic
@@ -60,14 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - D3: Network Specialist → Compatibility Engineer
   - D4: Security Hardener → Jail Architect
   - D5: Automation Specialist → ZFS Engineer
-
-### Development Status
-
-- Phase 1: Agent Boundaries - In Progress
-- PR #1: Infrastructure setup - Complete
-- PR #2: Daedelus Group A-B Boundaries - Complete
-- PR #3: Daedelus Group C-E Boundaries - Complete (all 24 Daedelus agents now have boundaries)
-- PR #4: DEUS Group A-B Boundaries - Next
 
 ## [0.1.0] - 2026-01-20
 

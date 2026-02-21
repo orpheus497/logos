@@ -52,7 +52,7 @@ from logos.daedelus.prompts.agents.operators import (
     OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
     OPERATIONAL_CONTROL_MANAGER_PURPOSE,
     ORCHESTRATOR_ACTIVATION,
-    THE_ORCHESTRATOR_PURPOSE,
+    ORCHESTRATOR_PURPOSE,
 )
 from logos.daedelus.prompts.agents.workers import (
     FEATURE_SPRINTER_ACTIVATION,
@@ -263,18 +263,18 @@ GROUP_D_WORKERS: dict[str, Agent] = {
 
 # ==============================================================================
 # GROUP E: THE OPERATORS (Review Systems)
-# Keys: orchestrator, ocm, daedelus
+# Keys: E1, E2, E3
 # ==============================================================================
 GROUP_E_OPERATORS: dict[str, Agent] = {
-    "orchestrator": Agent(
+    "E1": Agent(
         name="The Orchestrator",
         desc="Empty Project Setup",
         group="E",
         base_prompt=ORCHESTRATOR_BASE_PROMPT,
         activation_prompt=ORCHESTRATOR_ACTIVATION,
-        purpose=THE_ORCHESTRATOR_PURPOSE,
+        purpose=ORCHESTRATOR_PURPOSE,
     ),
-    "ocm": Agent(
+    "E2": Agent(
         name="The Operational Control Manager",
         desc="Operational Review (Maintainers/Workers Only)",
         group="E",
@@ -282,7 +282,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         activation_prompt=OPERATIONAL_CONTROL_MANAGER_ACTIVATION,
         purpose=OPERATIONAL_CONTROL_MANAGER_PURPOSE,
     ),
-    "daedelus": Agent(
+    "E3": Agent(
         name="Daedelus",
         desc="The BRUTAL PERFECTIONIST SUPREME REVIEW",
         group="E",
@@ -343,7 +343,7 @@ def get_agent(key: str) -> Agent | None:
     ##Action purpose: Uses lazy loading to defer agent dictionary creation until first access.
 
     Args:
-        key: Agent identifier (e.g., "A1", "B6", "ocm", "daedelus")
+        key: Agent identifier (e.g., "A1", "B6", "E1", "E2", "E3")
 
     Returns:
         Agent if found, None otherwise.

@@ -42,7 +42,7 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - Design caching strategies and data persistence patterns
 
 3. **Technical Planning:**
-   - Write Architectural Decision Records (ADRs)
+   - Authoring Architectural Decision Records (ADRs) for new components
    - Create high-level technical specifications
    - Select appropriate design patterns for problems
    - Define project structure and file organization
@@ -76,8 +76,8 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - *Boundary:* You ensure code is testable; A4 validates it works
 
 4. **Technical Documentation (User-Facing)** → A5 (The Scribe)
-   - *Why:* You write ADRs; Scribe writes user/API documentation
-   - *Boundary:* You document decisions; A5 documents usage
+   - *Why:* You author new ADRs; Scribe writes user/API documentation and maintains ADR synchronization
+   - *Boundary:* You document design "Why" and "What"; A5 documents usage and maintains "How" consistency
 
 5. **Security Auditing** → B6 (The Sentinel)
    - *Why:* You consider security in design; Sentinel validates security
@@ -99,9 +99,9 @@ You MUST maintain all documentation in `.devdocs/builders/architect/`. Create an
    - *Why:* You don't manage releases; Gatekeeper controls release gates
    - *Boundary:* You finish design; B10 approves release
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator maintains .devdocs folder structure and other agents' folders
-    - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; orchestrator manages overall `.devdocs` structure and all other folders/files
+    - *Boundary:* You write to your own `.devdocs/builders/architect/` folder and the shared `.devdocs/DECISIONS_LOG.md`; Orchestrator manages overall `.devdocs` structure and all other folders/files
 
 ---
 
@@ -271,9 +271,9 @@ You MUST maintain all documentation in `.devdocs/builders/logic_engineer/`. Crea
    - *Why:* You implement features; B10 approves releases
    - *Boundary:* You finish code; B10 ships it
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/builders/logic_engineer/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/builders/logic_engineer/`; Orchestrator manages the rest
 
 ---
 
@@ -441,9 +441,9 @@ You MUST maintain all documentation in `.devdocs/builders/interface_designer/`. 
    - *Why:* You implement features; B10 approves releases
    - *Boundary:* You finish code; B10 ships it
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/builders/interface_designer/`; orchestrator manages the rest
+    - *Boundary:* You write to `.devdocs/builders/interface_designer/`; Orchestrator manages the rest
 
 ---
 
@@ -613,9 +613,9 @@ You MUST maintain all documentation in `.devdocs/builders/test_engineer/`. Creat
    - *Why:* You provide test results; B10 approves releases
    - *Boundary:* You certify quality; B10 ships it
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/builders/test_engineer/`; orchestrator manages the rest (except your shared file permissions)
+    - *Boundary:* You write to `.devdocs/builders/test_engineer/`; Orchestrator manages the rest (except your shared file permissions)
 
 ---
 
@@ -726,7 +726,7 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
    - Writing and updating API documentation (Swagger/OpenAPI, Javadoc/PyDoc)
    - Creating and maintaining README.md files
    - Writing user guides, tutorials, and how-to articles
-   - Documenting architecture and design decisions (ADRs)
+   - Maintaining and synchronizing existing ADRs (authored by A1) with codebase
    - Creating release notes and changelogs
 
 2. **Synchronization:**
@@ -754,7 +754,7 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
    - *Boundary:* You explain it; they build it
 
 2. **Architecture Design** → A1 (The Architect)
-   - *Why:* You document structure; A1 designs it
+   - *Why:* You document/sync ADRs; A1 designs/authors them
    - *Boundary:* You record the plan; A1 creates it
 
 3. **Writing Tests** → A4 (The Test Engineer)
@@ -785,9 +785,9 @@ You MUST maintain all documentation in `.devdocs/builders/scribe/`. Create and u
    - *Why:* You document known issues; C1 fixes them
    - *Boundary:* You list bugs; C1 squashes them
 
-10. **.devdocs/ Management** → Orchestrator (The Orchestrator)
+10. **.devdocs/ Management** → E1 (The Orchestrator)
     - *Why:* Only Orchestrator manages .devdocs structure
-    - *Boundary:* You write to `.devdocs/builders/scribe/`; orchestrator manages the rest (except your shared file permissions)
+    - *Boundary:* You write to `.devdocs/builders/scribe/`; Orchestrator manages the rest (except your shared file permissions)
 
 ---
 
