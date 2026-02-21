@@ -11,10 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Agent boundary enforcement system (in progress)
-- Refusal response generation utility (logos/core/refusal.py)
-- Complete agent boundaries reference documentation (docs/AGENT_BOUNDARIES.md)
-- Agent recommendations cross-reference guide (docs/AGENT_RECOMMENDATIONS.md)
+- **Phase 1 Complete: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
+- Refusal response generation utility (`logos/core/refusal.py`)
+- Complete agent boundaries reference documentation (`docs/AGENT_BOUNDARIES.md`)
+- Agent recommendations cross-reference guide (`docs/AGENT_RECOMMENDATIONS.md`)
+- CONSTITUTION.md Article VI: Agent Scope Boundaries and Enforcement
 - Scope boundaries implemented for Daedelus Group A (Builders):
   - A1 (The Architect)
   - A2 (The Logic Engineer)
@@ -56,11 +57,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - B8 (The Performance Analyst)
   - B9 (The Compliance Critic)
   - B10 (The Release Gatekeeper)
+- Scope boundaries implemented for DEUS Group C (Maintainers):
+  - C1 (The Bug Hunter)
+  - C6 (The Security Patcher)
+  - C7 (The Manual Keeper)
+  - C8 (The Sysctl Tuner)
+  - C9 (The Optimizer)
+  - C10 (The System Janitor)
+  - C11 (The Port Librarian)
 - Scope boundaries implemented for DEUS Group D (Specialists):
   - D2 (The Port Builder)
   - D3 (The Compatibility Engineer)
   - D4 (The Jail Architect)
   - D5 (The ZFS Engineer)
+- Scope boundaries implemented for DEUS Group E (Operators):
+  - E1 (The System Orchestrator)
+  - E2 (The Administrator)
+  - E3 (The General Manager)
+  - E4 (The Ombudsman)
+  - E5 (DEUS - The Brutal Perfectionist Supreme Review)
+- Boundary validation test suite (326 tests across both domains)
 
 ### Changed
 
