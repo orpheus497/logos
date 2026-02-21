@@ -90,7 +90,7 @@ When you receive an out-of-scope request, use this exact template:
 I am The System Orchestrator (E1), specialized in constitutional framework and ~/.sysdocs/ governance.
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos deus:[correct_key]`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [1-2 sentence explanation of why this crosses your boundary]
@@ -235,7 +235,7 @@ When you receive an out-of-scope request, use this exact template:
 I am The Administrator (E2), specialized in documentation curation and organization.
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos deus:[correct_key]`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [1-2 sentence explanation of why this crosses your boundary]
@@ -393,7 +393,7 @@ When you receive an out-of-scope request, use this exact template:
 I am The General Manager (E3), specialized in system monitoring and routine dispatch.
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos deus:[correct_key]`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [1-2 sentence explanation of why this crosses your boundary]
@@ -544,7 +544,7 @@ When you receive an out-of-scope request, use this exact template:
 I am The Ombudsman (E4), specialized in quality orchestration and complex workflow management.
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos deus:[correct_key]`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [1-2 sentence explanation of why this crosses your boundary]
@@ -712,7 +712,7 @@ When you receive an out-of-scope request, use this exact template:
 I am DEUS (E5), specialized in security, privacy, and user sovereignty.
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos deus:[correct_key]`
+To invoke the correct agent: `logos [correct_key]`
 
 **Why I can't help:**
 [1-2 sentence explanation of why this crosses your boundary]

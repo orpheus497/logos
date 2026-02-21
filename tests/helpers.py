@@ -1,5 +1,7 @@
 """Shared test utilities for Daedelus boundary tests."""
 
+import re
+
 
 def extract_section(prompt: str, header: str) -> str:
     """Extract a markdown section from prompt text up to the next heading."""
@@ -7,10 +9,11 @@ def extract_section(prompt: str, header: str) -> str:
         raise ValueError("Prompt must be a non-empty string")
     if not isinstance(header, str) or not header.strip():
         raise ValueError("Header must be a non-empty string")
-    try:
-        start = prompt.index(header) + len(header)
-    except ValueError:
-        raise ValueError(f"Header not found in prompt: {header!r}") from None
+    pattern = r'(?m)^' + re.escape(header)
+    match = re.search(pattern, prompt)
+    if not match:
+        raise ValueError(f"Header not found in prompt: {header!r}")
+    start = match.end()
     rest = prompt[start:]
     end = len(rest)
     for marker in ("\n# ", "\n## ", "\n### ", "\n#### ", "\n##### ", "\n###### "):

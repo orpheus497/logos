@@ -10,6 +10,18 @@ using the UI component library.
 
 import textwrap
 
+try:
+    from wcwidth import wcswidth as _wcswidth
+
+    def _display_width(line: str) -> int:
+        """Return terminal display width of a string, falling back to len() if unavailable."""
+        w = _wcswidth(line)
+        return len(line) if w < 0 else w
+except ImportError:
+    def _display_width(line: str) -> int:
+        """Fallback display width using codepoint count."""
+        return len(line)
+
 from logos.core.constants import Colors, UILayout
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity
@@ -74,8 +86,8 @@ def get_logos_banner() -> list[str]:
         "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒  ",
     ]
     ##Action purpose: Ensure all lines are padded to uniform length
-    max_length = max(len(line) for line in banner) if banner else 0
-    banner = [line.ljust(max_length) for line in banner]
+    max_display_width = max(_display_width(line) for line in banner) if banner else 0
+    banner = [line + " " * (max_display_width - _display_width(line)) for line in banner]
     return banner
 
 
