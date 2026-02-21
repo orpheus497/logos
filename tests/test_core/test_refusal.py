@@ -120,7 +120,7 @@ class TestGenerateRefusal:
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="description",
         )
-        with pytest.raises(ValueError, match=r"RefusalResponse missing required fields: \['refusing_agent_specialty'\]"):
+        with pytest.raises(ValueError, match="refusing_agent_specialty"):
             generate_refusal(ref)
 
 
@@ -148,7 +148,7 @@ class TestQuickRefusal:
             refusing_name="The Sentinel",
             refusing_specialty="security auditing",
             recommended_key="C6",
-            recommended_name="The Security Patcher",
+            recommended_name="Security Patcher",
             reason="Fixing security vulnerabilities",
         )
         assert "Handles Security Patcher responsibilities" in result

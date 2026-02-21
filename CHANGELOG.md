@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Phase 1 Complete: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
+- **Phase 1 In Progress: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
 - Refusal response generation utility (`logos/core/refusal.py`)
 - Complete agent boundaries reference documentation (`docs/AGENT_BOUNDARIES.md`)
 - Agent recommendations cross-reference guide (`docs/AGENT_RECOMMENDATIONS.md`)
