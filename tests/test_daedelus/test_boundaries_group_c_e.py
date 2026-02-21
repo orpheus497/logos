@@ -119,12 +119,12 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     devdocs_heading = ".devdocs/ Management"
     if devdocs_heading in prompt:
         block = extract_section(prompt, devdocs_heading)
-        assert "orchestrator" in block.lower() or "e1" in block.lower(), (
+        assert re.search(r'\borchestrator\b', block, re.IGNORECASE) or re.search(r'\bE1\b', block), (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )
     else:
         # Contextual check: ensure "orchestrator" (or E1) appears near ".devdocs" context, not just anywhere
-        match = re.search(r"(?:\.devdocs/).{0,80}(?:orchestrator|E1)|(?:orchestrator|E1).{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE | re.DOTALL)
+        match = re.search(r"(?:\.devdocs/).{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b.{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE | re.DOTALL)
         assert match is not None, (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
         )

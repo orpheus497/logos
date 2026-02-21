@@ -72,7 +72,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert redirects >= len(items), (
         f"Agent {agent_key} has {redirects} redirects, expected at least {len(items)}"
     )
-    why_count = forbidden_text.count("Why:")
+    why_count = len(re.findall(r"\*?Why:\*?", forbidden_text))
     assert why_count >= len(items), (
         f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)}"
     )
@@ -98,7 +98,14 @@ def test_agent_has_refusal_template(agent_key, prompt):
 def test_agent_has_sysdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
-    assert re.search(
-        r"(?:~/\.sysdocs/).{0,80}(?:orchestrator|E1)|(?:(?:orchestrator|E1).{0,80}~/\.sysdocs/)",
-        prompt, re.IGNORECASE | re.DOTALL
-    ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"
+    sysdocs_heading = "~/.sysdocs/ Management"
+    if sysdocs_heading in prompt:
+        block = extract_section(prompt, sysdocs_heading)
+        assert "orchestrator" in block.lower() or "e1" in block.lower(), (
+            f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ boundary"
+        )
+    else:
+        assert re.search(
+            r"(?:~/\.sysdocs/[^\n]{0,80}(?:orchestrator|E1))|(?:(?:orchestrator|E1)[^\n]{0,80}~/\.sysdocs/)",
+            prompt, re.IGNORECASE
+        ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"
