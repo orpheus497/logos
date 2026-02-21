@@ -65,7 +65,6 @@ PORT_BUILDER_ACTIVATION = """
     - *Why:* You build drivers; A2 loads them
     - *Boundary:* You compile `drm-kmod`; A2 loads it
 
-
 ---
 
 ### 🤝 REQUIRES COLLABORATION:
@@ -211,7 +210,6 @@ COMPATIBILITY_ENGINEER_ACTIVATION = """
 10. **Hardware Changes** → A2 (The Driver Engineer)
     - *Why:* You need GPU acceleration; A2 provides drivers
     - *Boundary:* You use /dev/dri; A2 enables it
-
 
 ---
 
@@ -359,7 +357,6 @@ JAIL_ARCHITECT_ACTIVATION = """
 11. **Feature Development** → Daedelus Domain Agents
     - *Why:* You build infrastructure; they build applications
     - *Boundary:* You contain; they code
-
 
 ---
 
@@ -510,7 +507,6 @@ ZFS_ENGINEER_ACTIVATION = """
 11. **Feature Development** → Daedelus Domain Agents
     - *Why:* You manage storage; they build applications
     - *Boundary:* You provision; they code
-
 
 ---
 

@@ -2174,6 +2174,10 @@ Security, privacy, sovereignty — supreme security guardian.
 - System monitoring
 - OS-level tasks
 
+**Documentation Folders:**
+- Daedelus domain: `.devdocs/` for agent documentation
+- DEUS domain: `~/.sysdocs/` for agent documentation
+
 **Forbidden Cross-Domain Actions:**
 - Daedelus agents CANNOT perform system administration tasks
 - DEUS agents CANNOT write application code
@@ -2309,7 +2313,7 @@ Each agent uses this template when receiving out-of-scope requests:
 I am [Agent Name] ([Agent Key]), specialized in [specialty].
 
 Your request falls under: [Correct Agent Name] ([Correct Agent Key])
-To invoke the correct agent: `logos [correct_key]`
+To invoke the correct agent: `logos [domain]:[correct_key]`
 
 **Why I can't help:**
 [Brief 1-sentence explanation of boundary]

@@ -250,7 +250,7 @@ class TestValidateRefusalResponse:
         }
         valid_data[field] = invalid_value
         ref = RefusalResponse(**valid_data)
-        assert validate_refusal_response(ref) == [field]
+        assert set(validate_refusal_response(ref)) == {field}
 
     def test_multiple_invalid_fields_returns_all(self):
         """##Function purpose: Verify multiple invalid fields are all returned."""
@@ -301,4 +301,36 @@ class TestRefusalEdgeCases:
         )
         result = generate_refusal(ref)
         assert long_string in result
+
+    def test_special_characters_preserved(self):
+        """##Function purpose: Verify special characters and control characters are preserved."""
+        special = "tabs\there\nnewlines\there"
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty=special,
+            reason="reason with <html> & \"quotes\"",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="desc with 'single' & \"double\"",
+        )
+        result = generate_refusal(ref)
+        assert special in result
+        assert "<html>" in result
+
+    def test_unicode_and_whitespace_preserved(self):
+        """##Function purpose: Verify unicode and leading/trailing whitespace are preserved."""
+        unicode_name = "Архитектор 🏗️ المهندس"
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name=unicode_name,
+            refusing_agent_specialty="設計 architecture",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="  Padded Name  ",
+            recommended_agent_description="描述 description",
+        )
+        result = generate_refusal(ref)
+        assert unicode_name in result
+        assert "  Padded Name  " in result
 

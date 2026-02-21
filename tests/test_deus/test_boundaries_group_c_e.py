@@ -123,13 +123,13 @@ def test_agent_has_sysdocs_boundary(agent_key, prompt):
     sysdocs_heading = "~/.sysdocs/ Management"
     if sysdocs_heading in prompt:
         block = extract_section(prompt, sysdocs_heading)
-        assert re.search(r'\borchestrator\b', block, re.IGNORECASE) or re.search(r'\bE1\b', block), (
+        assert re.search(r'\borchestrator\b|\bE1\b', block, re.IGNORECASE), (
             f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ boundary"
         )
     else:
         match = re.search(
-            r"(?:~/\.sysdocs/).{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b.{0,80}(?:~/\.sysdocs/)",
-            prompt, re.IGNORECASE | re.DOTALL
+            r"(?:~/\.sysdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:~/\.sysdocs/)",
+            prompt, re.IGNORECASE
         )
         assert match is not None, (
             f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ context"

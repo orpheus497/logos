@@ -55,6 +55,7 @@ from logos.deus.prompts.agents.operators import (
     GENERAL_MANAGER_PURPOSE,
     OMBUDSMAN_ACTIVATION,
     OMBUDSMAN_PURPOSE,
+    SYSTEM_ORCHESTRATOR_ACTIVATION,
     SYSTEM_ORCHESTRATOR_PURPOSE,
 )
 from logos.deus.prompts.agents.specialists import (
@@ -266,7 +267,7 @@ GROUP_D_SPECIALISTS: dict[str, Agent] = {
 
 # ==============================================================================
 # GROUP E: THE OPERATORS (System Governance)
-# Keys: E1-E5 (E1 is special - base context only)
+# Keys: E1-E5
 # ==============================================================================
 GROUP_E_OPERATORS: dict[str, Agent] = {
     "E1": Agent(
@@ -274,7 +275,7 @@ GROUP_E_OPERATORS: dict[str, Agent] = {
         desc="Base context, constitution",
         group="E",
         base_prompt=SYSTEM_ORCHESTRATOR_BASE_PROMPT,
-        activation_prompt="",  # E1 IS the base prompt
+        activation_prompt=SYSTEM_ORCHESTRATOR_ACTIVATION,
         purpose=SYSTEM_ORCHESTRATOR_PURPOSE,
     ),
     "E2": Agent(

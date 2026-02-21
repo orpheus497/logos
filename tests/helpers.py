@@ -17,4 +17,4 @@ def extract_section(prompt: str, header: str) -> str:
         pos = rest.find(marker)
         if pos != -1 and pos < end:
             end = pos
-    return rest[:end]
+    return rest[:end].strip()
