@@ -75,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - E2 (The Administrator)
   - E3 (The General Manager)
   - E4 (The Ombudsman)
-  - E5 (DEUS - The Brutal Perfectionist Supreme Review)
+  - E5 (DEUS - The Supreme Security Guardian)
 - Boundary validation test suite (326 tests across both domains)
 
 ### Changed

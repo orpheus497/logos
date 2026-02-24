@@ -73,7 +73,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert redirects >= len(items), (
         f"Agent {agent_key} has {redirects} redirects or prohibition markers, expected at least {len(items)} (one per forbidden action)"
     )
-    why_count = forbidden_text.count("Why:")
+    why_count = len(re.findall(r"\*?Why:\*?", forbidden_text))
     assert why_count >= len(items), (
         f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)} (one per forbidden action)"
     )

@@ -83,7 +83,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
         f"Agent {agent_key} has {arrow_marker_count} arrow marker(s) (→) for "
         f"{len(items)} FORBIDDEN ACTIONS; expected at least one arrow/redirect marker per item"
     )
-    why_count = forbidden_text.count("Why:")
+    why_count = len(re.findall(r"\*?Why:\*?", forbidden_text))
     assert why_count >= len(items), (
         f"Agent {agent_key} has {why_count} 'Why:' explanation(s) for "
         f"{len(items)} FORBIDDEN ACTIONS; expected at least one explanation per item"
@@ -125,7 +125,7 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
         )
     else:
         # Contextual check: ensure "orchestrator" (or E1) appears near ".devdocs" context, not just anywhere
-        match = re.search(r"(?:\.devdocs/).{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b.{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE | re.DOTALL)
+        match = re.search(r"(?:\.devdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE)
         assert match is not None, (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
         )
