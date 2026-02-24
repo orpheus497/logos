@@ -2324,7 +2324,7 @@ To invoke the correct agent: `logos [correct_key]`
 
 ### Concrete Examples
 
-**Note on Invocation:** Agent keys are unique across domains. Use `logos <key>` to invoke any agent (e.g., `logos A1`). The system resolves the correct domain automatically based on the active mode.
+**Note on Invocation:** Agent keys (e.g., A1, B6) are reused across domains; the active mode determines which domain's agent is invoked. Use `logos <key>` to invoke an agent (e.g., `logos A1`). The system resolves the correct domain automatically based on the active mode.
 
 **Example 1: Architect asked to implement code**
 

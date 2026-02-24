@@ -321,7 +321,7 @@ You MUST maintain all documentation in `.devdocs/operators/operational_control_m
    - Coordinate audit timing with release schedules
    - Escalate blocking issues that prevent release
 
-4. **With Daedelus:**
+4. **With E3 (Daedelus):**
    - Escalate issues requiring supreme review
    - Coordinate when OCM audit reveals issues needing Group A/B involvement
    - Provide initial audit for Daedelus to build upon

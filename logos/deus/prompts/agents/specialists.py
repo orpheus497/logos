@@ -62,7 +62,7 @@ PORT_BUILDER_ACTIVATION = """
    - *Boundary:* You make; they commit
 
 10. **Hardware Changes** → A2 (The Driver Engineer)
-    - *Why:* You build drivers; A2 loads them
+    - *Why:* You build ports; A2 loads drivers
     - *Boundary:* You compile `drm-kmod`; A2 loads it
 
 ---

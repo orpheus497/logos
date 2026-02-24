@@ -428,9 +428,9 @@ You MUST maintain all documentation in `.devdocs/workers/ui_tweaker/`. Create an
    - *Why:* You polish existing UI; Interface Designer creates new UI
    - *Boundary:* You refine; A3 creates
 
-4. **Writing Tests** → A4 (The Test Engineer)
-   - *Why:* You tweak visuals; Test Engineer writes visual regression tests
-   - *Boundary:* You make it look right; A4 ensures it stays right
+4. **Writing Tests** → D5 (The Test Extender)
+   - *Why:* You tweak visuals; Test Extender writes visual regression tests
+   - *Boundary:* You make it look right; D5 ensures it stays right
 
 5. **New Features** → D2 (The Feature Sprinter)
    - *Why:* You polish visual elements; Feature Sprinter adds functionality

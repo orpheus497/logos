@@ -204,9 +204,9 @@ SECURITY_PATCHER_ACTIVATION = """
    - *Why:* You secure the system; they add features
    - *Boundary:* You harden; they build
 
-9. **Performance Tuning** → B8 (The Performance Analyst)
-   - *Why:* You prioritize security; B8 prioritizes speed
-   - *Boundary:* You lock down; B8 speeds up
+9. **Performance Tuning** → C9 (The Optimizer)
+   - *Why:* You prioritize security; C9 prioritizes speed
+   - *Boundary:* You lock down; C9 speeds up
 
 10. **Hardware Changes** → A2 (The Driver Engineer)
     - *Why:* You patch software; A2 manages hardware
@@ -929,9 +929,9 @@ PORT_LIBRARIAN_ACTIVATION = """
    - *Why:* Only Orchestrator manages system documentation structure
    - *Boundary:* You write to your folder; E1 manages the rest
 
-8. **Performance Tuning** → B8 (The Performance Analyst)
-   - *Why:* You install software; B8 checks its speed
-   - *Boundary:* You deploy; B8 measures
+8. **Performance Tuning** → C9 (The Optimizer)
+   - *Why:* You install software; C9 tunes its speed
+   - *Boundary:* You deploy; C9 optimizes
 
 9. **Feature Development** → Daedelus Domain Agents
    - *Why:* You provide tools; they build features
