@@ -10,6 +10,18 @@ using the UI component library.
 
 import textwrap
 
+try:
+    from wcwidth import wcswidth as _wcswidth
+
+    def _display_width(line: str) -> int:
+        """Return terminal display width of a string, falling back to len() if unavailable."""
+        w = _wcswidth(line)
+        return len(line) if w < 0 else w
+except ImportError:
+    def _display_width(line: str) -> int:
+        """Fallback display width using codepoint count."""
+        return len(line)
+
 from logos.core.constants import Colors, UILayout
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity
@@ -48,38 +60,41 @@ def _wrap_text(text: str, width: int) -> list[str]:
     return wrapped_lines if wrapped_lines else [text]
 
 
-##Function purpose: Return ASCII art banner for "LOGOS" word
+##Function purpose: Return Unicode art banner for "LOGOS" word
 def get_logos_banner() -> list[str]:
     """
-    Returns ASCII art banner for "LOGOS" word.
+    Returns Unicode art banner for "LOGOS" word.
 
-    Provides beautiful ASCII art representation of the LOGOS federation name for
-    display at the top of all screens using box-drawing characters.
+    Provides beautiful Unicode art representation of the LOGOS federation name for
+    display at the top of all screens using block-drawing characters (U+2588, U+2592).
 
     Returns:
-        List of strings representing the ASCII art banner
+        List of strings representing the Unicode art banner
     """
-    ##Action purpose: Provides beautiful ASCII art representation of the LOGOS
-    ##Step purpose: federation name for display at the top of all screens using box-drawing characters
-    ##Action purpose: Create impressive ASCII art banner for LOGOS using box-drawing characters
+    ##Action purpose: Provides beautiful Unicode art representation of the LOGOS
+    ##Step purpose: federation name for display at the top of all screens using block-drawing characters
+    ##Action purpose: Create impressive Unicode art banner for LOGOS using block-drawing characters
     ##Action purpose: Clear, readable banner that spells "LOGOS" clearly
     banner = [
-        "█████          ███████      █████████     ███████     █████████ ",
+        "█████          ███████      █████████     ███████     █████████  ",
         "▒▒███         ███▒▒▒▒▒███   ███▒▒▒▒▒███  ███▒▒▒▒▒███  ███▒▒▒▒▒███",
         " ▒███        ███     ▒▒███ ███     ▒▒▒  ███     ▒▒███▒███    ▒▒▒ ",
         " ▒███       ▒███      ▒███▒███         ▒███      ▒███▒▒█████████ ",
         " ▒███       ▒███      ▒███▒███    █████▒███      ▒███ ▒▒▒▒▒▒▒▒███",
         " ▒███      █▒▒███     ███ ▒▒███  ▒▒███ ▒▒███     ███  ███    ▒███",
         " ███████████ ▒▒▒███████▒   ▒▒█████████  ▒▒▒███████▒  ▒▒█████████ ",
-        "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒",
+        "▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒▒▒  ",
     ]
+    ##Action purpose: Ensure all lines are padded to uniform length
+    max_display_width = max(_display_width(line) for line in banner) if banner else 0
+    banner = [line + " " * (max_display_width - _display_width(line)) for line in banner]
     return banner
 
 
-##Function purpose: Display the LOGOS ASCII art banner
+##Function purpose: Display the LOGOS Unicode art banner
 def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> None:
     """
-    Displays the LOGOS ASCII art banner.
+    Displays the LOGOS Unicode art banner.
 
     Prints the LOGOS banner centered within the specified width, using the
     provided color.
@@ -97,7 +112,7 @@ def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> Non
     ##Loop purpose: Print each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Print centered banner line with color
         print(" " * padding + color + line + reset)
     print()  # Extra spacing after banner
@@ -207,7 +222,7 @@ def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: i
     ##Loop purpose: Print each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Print centered logo line with color
         print(" " * padding + color + line + reset)
 
@@ -255,7 +270,7 @@ def _render_logo_row(
             line_parts.append((logo_line, logo_color))
 
         ##Action purpose: Calculate spacing and print combined line
-        total_logo_width = sum(len(part[0]) for part in line_parts)
+        total_logo_width = sum(_display_width(part[0]) for part in line_parts)
         total_spacing = spacing * (len(line_parts) - 1)
         left_padding = (width - total_logo_width - total_spacing) // 2
 
@@ -557,7 +572,7 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     ##Loop purpose: Build each banner line centered
     for line in banner_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Build centered banner line with color
         output_lines.append(" " * padding + color + line + reset)
     output_lines.append("")  # Extra spacing after banner
@@ -599,7 +614,7 @@ def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width
     ##Loop purpose: Build each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Build centered logo line with color
         output_lines.append(" " * padding + color + line + reset)
 

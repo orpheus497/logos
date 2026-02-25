@@ -1,6 +1,6 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.1.0 (Alpha)  
+**Version:** 0.2.0.dev0  
 **License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
 **Author:** orpheus497
 
@@ -10,22 +10,29 @@
 
 ---
 
+## 🚧 Development Notice
+
+LOGOS v0.2.0.dev0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
+
+---
+
 ## Table of Contents
 
 1. [What is LOGOS?](#what-is-logos)
 2. [Why LOGOS? Rationale and Market Position](#why-logos-rationale-and-market-position)
 3. [How LOGOS Works](#how-logos-works)
-4. [Installation](#installation)
-5. [Setup and Configuration](#setup-and-configuration)
-6. [Usage Guide](#usage-guide)
-7. [Technical Architecture](#technical-architecture)
-8. [Maintenance and Troubleshooting](#maintenance-and-troubleshooting)
-9. [FAQs](#faqs)
-10. [Security](#security)
-11. [Performance](#performance)
-12. [Development](#development)
-13. [Documentation](#documentation)
-14. [License](#license)
+4. [Agent Boundaries](#agent-boundaries)
+5. [Installation](#installation)
+6. [Setup and Configuration](#setup-and-configuration)
+7. [Usage Guide](#usage-guide)
+8. [Technical Architecture](#technical-architecture)
+9. [Maintenance and Troubleshooting](#maintenance-and-troubleshooting)
+10. [FAQs](#faqs)
+11. [Security](#security)
+12. [Performance](#performance)
+13. [Development](#development)
+14. [Documentation](#documentation)
+15. [License](#license)
 
 ---
 
@@ -59,13 +66,13 @@ LOGOS serves as an **intelligent prompt composition system** that:
 - **Guardians (B6-B10):** Review code for security, syntax, performance, quality, and release readiness
 - **Maintainers (C1, C6-C11):** Fix bugs, update docs, optimize code, manage dependencies, clean up
 - **Workers (D2-D5):** Implement features, debug issues, extend tests, tweak UI
-- **Operators (orchestrator, ocm, daedelus):** Orchestrate workflows, manage operations, provide ultimate oversight
+- **Operators (E1-E3):** Orchestrate workflows, manage operations, provide ultimate oversight
 
 **DEUS Domain (26 agents):** System administration agents (FreeBSD/Linux)
 - **Engineers (A1-A5):** Design kernel configs, manage drivers, architect networks, configure boot, design services
 - **Auditors (B6-B10):** Audit security, validate syntax, profile performance, ensure compliance, gate releases
 - **Maintainers (C1, C6-C11):** Manage packages, update ports, maintain configs, patch security, optimize systems
-- **Specialists (D2-D5):** Manage ZFS, configure networks, harden security, automate tasks
+- **Specialists (D2-D5):** Custom port compilation, Linux compatibility/Wine, jails and isolation, ZFS storage architecture
 - **Operators (E1-E5):** Administer systems, resolve conflicts, provide ultimate system oversight
 
 ---
@@ -315,6 +322,44 @@ On first run, LOGOS performs a comprehensive system scan:
 - Jail host status (via `jls -q`)
 
 All subprocess calls use a 0.5-second timeout and run in parallel for performance.
+
+---
+
+## Agent Boundaries
+
+Every LOGOS agent operates within clearly defined **scope boundaries**. This system ensures agents stay in their lane, refuse out-of-scope requests gracefully, and redirect users to the correct agent.
+
+### How It Works
+
+Each of the 50 agents has an embedded `SCOPE BOUNDARIES` section in its activation prompt that defines:
+
+- **IN SCOPE:** The specific tasks this agent is designed to handle
+- **FORBIDDEN ACTIONS:** Tasks explicitly outside this agent's responsibility, each with a redirect to the correct agent and an explanation
+- **REQUIRES COLLABORATION:** Work that needs coordination with other agents
+- **REFUSAL TEMPLATE:** A standardized response format when declining out-of-scope requests
+
+### Refusal Mechanism
+
+When an agent receives a request outside its scope, it responds with:
+
+1. A clear statement that the request is out of scope
+2. The reason why it cannot handle the request
+3. The specific agent key to invoke instead (e.g., `logos A1` or `logos B6`)
+4. A brief description of what the recommended agent does
+
+### Checking Agent Scope
+
+- **Quick reference:** See [`docs/AGENT_BOUNDARIES.md`](docs/AGENT_BOUNDARIES.md) for a complete matrix of all 50 agents and their boundaries
+- **Recommendations:** See [`docs/AGENT_RECOMMENDATIONS.md`](docs/AGENT_RECOMMENDATIONS.md) for workflow-aware agent selection guidance
+
+### Boundary Validation
+
+All agent boundaries are validated by automated tests ensuring:
+
+- Every agent has a minimum number of IN SCOPE items
+- Every FORBIDDEN ACTION includes a redirect arrow (`→`) and an explanation (`Why:`)
+- Refusal templates are present and correctly formatted
+- Semantic role-overlap detection is outside the scope of these structural tests
 
 ---
 
@@ -704,7 +749,8 @@ logos/
 │   └── WORKFLOWS.md          # Workflow overview
 │
 ├── blueprint.md             # Project specification
-├── CONSTITUTION.md          # LOGOS Federation Constitution
+├── CHANGELOG.md        # Project version history and changes
+├── CONSTITUTION.md     # Federation Prime Directives and rules
 ├── LICENSE                  # AGPL-3.0 license
 ├── pyproject.toml           # Project configuration
 ├── install.sh               # Installation script
@@ -755,7 +801,7 @@ Agents are organized by domain and group:
 - `GROUP_B_GUARDIANS` - Keys B6-B10
 - `GROUP_C_MAINTAINERS` - Keys C1, C6-C11
 - `GROUP_D_WORKERS` - Keys D2-D5
-- `GROUP_E_OPERATORS` - Keys "orchestrator", "ocm", "daedelus"
+- `GROUP_E_OPERATORS` - Keys E1, E2, E3
 
 **DEUS Agents:**
 - `GROUP_A_ENGINEERS` - Keys A1-A5
@@ -1268,7 +1314,7 @@ pip-audit --fix
 
 ### Project Status
 
-**Current Version:** 0.1.0 (Alpha)
+**Current Version:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
 
 **Completed:**
 - ✅ Core infrastructure (identity, persistence, validation)
@@ -1367,5 +1413,5 @@ If you modify LOGOS and distribute it (including as a service), you must:
 
 ---
 
-**Status:** Alpha - Stable release, ready for production use  
-**Last Updated:** 2026-01-20
+**Status:** v0.2.0.dev0 — in active development on the develop branch (Alpha)
+**Last Updated:** 2026-02-24

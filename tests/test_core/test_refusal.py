@@ -1,0 +1,336 @@
+"""
+##Script function and purpose: Tests for refusal response generation module.
+
+Tests cover RefusalResponse dataclass creation, generate_refusal() output
+formatting, quick_refusal() convenience function, and validate_refusal_response()
+validation logic.
+"""
+
+import pytest
+
+from logos.core.refusal import (
+    RefusalResponse,
+    generate_refusal,
+    quick_refusal,
+    validate_refusal_response,
+)
+
+
+class TestRefusalResponse:
+    """##Class purpose: Test RefusalResponse dataclass creation and field access."""
+
+    def test_create_with_required_fields(self):
+        """##Function purpose: Verify dataclass creation with all required fields."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="system architecture design",
+            reason="I design structures, not implement business logic.",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="Implements business logic and algorithms",
+        )
+        assert ref.refusing_agent_key == "A1"
+        assert ref.refusing_agent_name == "The Architect"
+        assert ref.refusing_agent_specialty == "system architecture design"
+        assert ref.reason == "I design structures, not implement business logic."
+        assert ref.recommended_agent_key == "A2"
+        assert ref.recommended_agent_name == "The Logic Engineer"
+        assert ref.recommended_agent_description == "Implements business logic and algorithms"
+        assert ref.user_request_summary is None
+
+    def test_create_with_optional_summary(self):
+        """##Function purpose: Verify optional user_request_summary field."""
+        ref = RefusalResponse(
+            refusing_agent_key="B6",
+            refusing_agent_name="The Sentinel",
+            refusing_agent_specialty="security auditing",
+            reason="I audit security, not fix vulnerabilities.",
+            recommended_agent_key="C6",
+            recommended_agent_name="The Security Patcher",
+            recommended_agent_description="Applies security patches",
+            user_request_summary="Fix the SQL injection vulnerability",
+        )
+        assert ref.user_request_summary == "Fix the SQL injection vulnerability"
+
+
+class TestGenerateRefusal:
+    """##Class purpose: Test generate_refusal() output formatting."""
+
+    def _make_response(self, **kwargs):
+        """##Function purpose: Helper to create RefusalResponse with defaults."""
+        defaults = {
+            "refusing_agent_key": "A1",
+            "refusing_agent_name": "The Architect",
+            "refusing_agent_specialty": "system architecture design",
+            "reason": "I design structures, not implement business logic.",
+            "recommended_agent_key": "A2",
+            "recommended_agent_name": "The Logic Engineer",
+            "recommended_agent_description": "Implements business logic and algorithms",
+        }
+        defaults.update(kwargs)
+        return RefusalResponse(**defaults)
+
+    def test_contains_out_of_scope_header(self):
+        """##Function purpose: Verify output starts with OUT OF SCOPE marker."""
+        result = generate_refusal(self._make_response())
+        assert result.startswith("⛔ OUT OF SCOPE")
+
+    def test_contains_agent_identity(self):
+        """##Function purpose: Verify output includes refusing agent identity."""
+        result = generate_refusal(self._make_response())
+        assert "I am The Architect (A1), specialized in system architecture design." in result
+
+    def test_contains_recommendation(self):
+        """##Function purpose: Verify output includes recommended agent."""
+        result = generate_refusal(self._make_response())
+        assert "Your request falls under: The Logic Engineer (A2)" in result
+        assert "`logos A2`" in result
+
+    def test_contains_reason(self):
+        """##Function purpose: Verify output includes refusal reason."""
+        result = generate_refusal(self._make_response())
+        assert "I design structures, not implement business logic." in result
+
+    def test_contains_who_can_help(self):
+        """##Function purpose: Verify output includes who can help section."""
+        result = generate_refusal(self._make_response())
+        assert "- The Logic Engineer (A2): Implements business logic and algorithms" in result
+
+    def test_includes_user_request_summary(self):
+        """##Function purpose: Verify user request summary appears when provided."""
+        result = generate_refusal(self._make_response(
+            user_request_summary="Write the login function"
+        ))
+        assert 'Your request: "Write the login function"' in result
+
+    def test_excludes_user_request_summary_when_none(self):
+        """##Function purpose: Verify user request line absent when no summary."""
+        result = generate_refusal(self._make_response())
+        assert "Your request:" not in result
+
+    def test_raises_valueerror_on_invalid_response(self):
+        """##Function purpose: Verify generate_refusal raises ValueError for invalid input."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        with pytest.raises(ValueError, match="refusing_agent_specialty"):
+            generate_refusal(ref)
+
+
+class TestQuickRefusal:
+    """##Class purpose: Test quick_refusal() convenience function."""
+
+    def test_produces_valid_output(self):
+        """##Function purpose: Verify quick_refusal generates proper refusal message."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="system architecture design",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="business logic implementation",
+        )
+        assert "⛔ OUT OF SCOPE" in result
+        assert "I am The Architect (A1)" in result
+        assert "The Logic Engineer (A2)" in result
+
+    def test_auto_generates_description(self):
+        """##Function purpose: Verify auto-generated recommended agent description."""
+        result = quick_refusal(
+            refusing_key="B6",
+            refusing_name="The Sentinel",
+            refusing_specialty="security auditing",
+            recommended_key="C6",
+            recommended_name="Security Patcher",
+            reason="Fixing security vulnerabilities",
+        )
+        assert "Handles Security Patcher responsibilities" in result
+
+    def test_uses_provided_description(self):
+        """##Function purpose: Verify quick_refusal uses provided description."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="architecture",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+            recommended_description="Specialized in backend development",
+        )
+        assert "Specialized in backend development" in result
+
+    def test_strip_the_prefix_from_recommended_name(self):
+        """##Function purpose: Verify 'The ' prefix is stripped from auto-generated description."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="system architecture design",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+        )
+        assert "Handles Logic Engineer responsibilities" in result
+
+    def test_includes_user_request_summary(self):
+        """##Function purpose: Verify user_request_summary is included in quick refusal."""
+        summary = "Create a login button"
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="system architecture design",
+            recommended_key="A2",
+            recommended_name="The Logic Engineer",
+            reason="implementation",
+            user_request_summary=summary,
+        )
+        assert f"Your request: \"{summary}\"" in result
+
+    def test_strips_the_prefix_case_insensitive(self):
+        """##Function purpose: Verify 'the ' prefix is stripped regardless of case."""
+        result = quick_refusal(
+            refusing_key="A1",
+            refusing_name="The Architect",
+            refusing_specialty="architecture",
+            recommended_key="A2",
+            recommended_name="the Logic Engineer",
+            reason="implementation",
+        )
+        assert "Handles Logic Engineer responsibilities" in result
+
+
+class TestValidateRefusalResponse:
+    """##Class purpose: Test validate_refusal_response() validation logic."""
+
+    def test_valid_response_returns_empty_list(self):
+        """##Function purpose: Verify valid response passes validation."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="system architecture design",
+            reason="I design structures, not implement business logic.",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="Implements business logic and algorithms",
+        )
+        assert validate_refusal_response(ref) == []
+
+    @pytest.mark.parametrize("field,invalid_value", [
+        ("refusing_agent_key", ""),
+        ("refusing_agent_key", "   "),
+        ("refusing_agent_name", ""),
+        ("refusing_agent_name", "   "),
+        ("refusing_agent_specialty", ""),
+        ("refusing_agent_specialty", "   "),
+        ("reason", ""),
+        ("reason", "   "),
+        ("recommended_agent_key", ""),
+        ("recommended_agent_key", "   "),
+        ("recommended_agent_name", ""),
+        ("recommended_agent_name", "   "),
+        ("recommended_agent_description", ""),
+        ("recommended_agent_description", "   "),
+    ])
+    def test_invalid_field_returns_field_name(self, field, invalid_value):
+        """##Function purpose: Verify empty or whitespace-only required fields fail validation."""
+        valid_data = {
+            "refusing_agent_key": "A1",
+            "refusing_agent_name": "The Architect",
+            "refusing_agent_specialty": "system architecture design",
+            "reason": "reason",
+            "recommended_agent_key": "A2",
+            "recommended_agent_name": "The Logic Engineer",
+            "recommended_agent_description": "description",
+        }
+        valid_data[field] = invalid_value
+        ref = RefusalResponse(**valid_data)
+        assert set(validate_refusal_response(ref)) == {field}
+
+    def test_multiple_invalid_fields_returns_all(self):
+        """##Function purpose: Verify multiple invalid fields are all returned."""
+        ref = RefusalResponse(
+            refusing_agent_key="",
+            refusing_agent_name="   ",
+            refusing_agent_specialty="system architecture design",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        result = validate_refusal_response(ref)
+        assert "refusing_agent_key" in result
+        assert "refusing_agent_name" in result
+        assert len(result) == 2
+
+
+class TestRefusalEdgeCases:
+    """##Class purpose: Test edge cases for refusal response generation."""
+
+    def test_whitespace_only_summary_ignored(self):
+        """##Function purpose: Verify whitespace-only summary is treated as None."""
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty="architecture",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+            user_request_summary="   ",
+        )
+        result = generate_refusal(ref)
+        assert "Your request:" not in result
+
+    def test_very_long_strings_preserved(self):
+        """##Function purpose: Verify very long strings are handled without truncation."""
+        long_string = "A" * 5000
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty=long_string,
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="description",
+        )
+        result = generate_refusal(ref)
+        assert long_string in result
+
+    def test_special_characters_preserved(self):
+        """##Function purpose: Verify special characters and control characters are preserved."""
+        special = "tabs\there\nnewlines\there"
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name="The Architect",
+            refusing_agent_specialty=special,
+            reason="reason with <html> & \"quotes\"",
+            recommended_agent_key="A2",
+            recommended_agent_name="The Logic Engineer",
+            recommended_agent_description="desc with 'single' & \"double\"",
+        )
+        result = generate_refusal(ref)
+        assert special in result
+        assert "<html>" in result
+
+    def test_unicode_and_whitespace_preserved(self):
+        """##Function purpose: Verify unicode and leading/trailing whitespace are preserved."""
+        unicode_name = "Архитектор 🏗️ المهندس"
+        ref = RefusalResponse(
+            refusing_agent_key="A1",
+            refusing_agent_name=unicode_name,
+            refusing_agent_specialty="設計 architecture",
+            reason="reason",
+            recommended_agent_key="A2",
+            recommended_agent_name="  Padded Name  ",
+            recommended_agent_description="描述 description",
+        )
+        result = generate_refusal(ref)
+        assert unicode_name in result
+        assert "  Padded Name  " in result
+
