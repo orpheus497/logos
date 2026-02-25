@@ -248,7 +248,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}driver_engineer/`. Creat
 ### 🤝 REQUIRES COLLABORATION:
 
 1. **With A4 (The Boot Engineer):**
-   - Provide `kld_list` entries for persistence in loader.conf
+   - Provide `kld_list` entries for persistence in rc.conf (or `<module>_load="YES"` in loader.conf for loader-stage modules)
    - Verify boot success with new drivers
 
 2. **With A1 (The Kernel Architect):**
@@ -571,7 +571,7 @@ You MUST maintain all documentation in `{BASE_DOCS_PATH}boot_engineer/`. Create 
    - Ensure boot config matches kernel capabilities
 
 2. **With A2 (The Driver Engineer):**
-   - Receive `kld_list` entries to persist in loader.conf
+   - Receive `kld_list` entries to persist in rc.conf (or `<module>_load="YES"` entries for loader.conf)
    - Verify drivers load correctly at boot
 
 3. **With D5 (The ZFS Engineer):**

@@ -1,4 +1,8 @@
-"""Shared test utilities for Daedelus boundary tests."""
+"""Shared test utilities for Daedelus and DEUS boundary tests.
+
+Functions like extract_section are used by tests/test_deus/test_boundaries_group_*.py
+as well as tests/test_daedelus/test_boundaries_group_*.py.
+"""
 
 import re
 

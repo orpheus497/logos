@@ -359,7 +359,7 @@ All agent boundaries are validated by automated tests ensuring:
 - Every agent has a minimum number of IN SCOPE items
 - Every FORBIDDEN ACTION includes a redirect arrow (`→`) and an explanation (`Why:`)
 - Refusal templates are present and correctly formatted
-- No role overlap exists between agents in the same domain
+- Semantic role-overlap detection is outside the scope of these structural tests
 
 ---
 

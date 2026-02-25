@@ -6,8 +6,6 @@ generates structured refusal responses with redirect recommendations.
 
 This module is used by LOGOS during prompt composition to provide agents
 with the template and structure for refusing out-of-scope requests.
-
-Script function and purpose: Refusal response generation for out-of-scope agent requests.
 """
 
 import re

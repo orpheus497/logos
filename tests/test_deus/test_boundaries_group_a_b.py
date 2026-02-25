@@ -99,7 +99,7 @@ def test_agent_has_sysdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
     sysdocs_match = re.search(
-        r'(?m)^(?:\#{1,6}\s+|\d+\.\s+\*{0,2})~/\.sysdocs/\s*\w+(?:\s+\w+)*',
+        r'(?m)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*',
         prompt)
     if sysdocs_match:
         block = extract_section(prompt, sysdocs_match.group())
