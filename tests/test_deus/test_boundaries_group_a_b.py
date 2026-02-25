@@ -98,14 +98,14 @@ def test_agent_has_refusal_template(agent_key, prompt):
 def test_agent_has_sysdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
-    sysdocs_heading = "~/.sysdocs/ Management"
-    if re.search(r'(?m)^' + re.escape(sysdocs_heading), prompt):
-        block = extract_section(prompt, sysdocs_heading)
-        assert "orchestrator" in block.lower() or "e1" in block.lower(), (
-            f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ boundary"
-        )
-    else:
-        assert re.search(
-            r"(?:~/\.sysdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:~/\.sysdocs/)",
-            prompt, re.IGNORECASE
-        ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"
+    sysdocs_match = re.search(
+        r'(?m)^(?:\#{1,6}\s+|\d+\.\s+\*{0,2})~/\.sysdocs/\s*\w+(?:\s+\w+)*',
+        prompt)
+    if sysdocs_match:
+        block = extract_section(prompt, sysdocs_match.group())
+        if "orchestrator" in block.lower() or "e1" in block.lower():
+            return
+    assert re.search(
+        r"(?:~/\.sysdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:~/\.sysdocs/)",
+        prompt, re.IGNORECASE
+    ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"

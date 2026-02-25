@@ -187,5 +187,5 @@ def validate_refusal_response(response: RefusalResponse) -> list[str]:
     }
 
     ##Action purpose: Return list of fields that are empty or None
-    return [name for name, val in required_fields.items() if not (val and val.strip())]
+    return [name for name, val in required_fields.items() if val is None or not isinstance(val, str) or not val.strip()]
 

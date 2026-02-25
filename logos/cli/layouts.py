@@ -222,7 +222,7 @@ def display_faction_logo(faction_key: str, color: str = UIColors.WHITE, width: i
     ##Loop purpose: Print each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Print centered logo line with color
         print(" " * padding + color + line + reset)
 
@@ -270,7 +270,7 @@ def _render_logo_row(
             line_parts.append((logo_line, logo_color))
 
         ##Action purpose: Calculate spacing and print combined line
-        total_logo_width = sum(len(part[0]) for part in line_parts)
+        total_logo_width = sum(_display_width(part[0]) for part in line_parts)
         total_spacing = spacing * (len(line_parts) - 1)
         left_padding = (width - total_logo_width - total_spacing) // 2
 
@@ -614,7 +614,7 @@ def _get_faction_logo_lines(faction_key: str, color: str = UIColors.WHITE, width
     ##Loop purpose: Build each logo line centered
     for line in logo_lines:
         ##Action purpose: Calculate padding for centering
-        padding = (width - len(line)) // 2
+        padding = (width - _display_width(line)) // 2
         ##Action purpose: Build centered logo line with color
         output_lines.append(" " * padding + color + line + reset)
 

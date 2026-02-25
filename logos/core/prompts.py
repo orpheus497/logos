@@ -246,7 +246,7 @@ def build_agent_prompt_from_key(
     intelligently adapts prompts based on detected OS.
 
     Args:
-        agent_key: Agent identifier (e.g., "A1", "B6", "ocm")
+        agent_key: Agent identifier (e.g., "A1", "B6", "E2")
         domain: Domain name ("daedelus" or "deus")
         identity: Optional SystemIdentity for context
 
