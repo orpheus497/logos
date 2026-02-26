@@ -272,7 +272,7 @@ GROUP_D_SPECIALISTS: dict[str, Agent] = {
 GROUP_E_OPERATORS: dict[str, Agent] = {
     "E1": Agent(
         name="The System Orchestrator",
-        desc="Base context, constitution",
+        desc="Base context, constitution, & .devdocs Governance",
         group="E",
         base_prompt=SYSTEM_ORCHESTRATOR_BASE_PROMPT,
         activation_prompt=SYSTEM_ORCHESTRATOR_ACTIVATION,

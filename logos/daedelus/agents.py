@@ -268,7 +268,7 @@ GROUP_D_WORKERS: dict[str, Agent] = {
 GROUP_E_OPERATORS: dict[str, Agent] = {
     "E1": Agent(
         name="The Orchestrator",
-        desc="Empty Project Setup",
+        desc="Project Setup & .devdocs Governance",
         group="E",
         base_prompt=ORCHESTRATOR_BASE_PROMPT,
         activation_prompt=ORCHESTRATOR_ACTIVATION,

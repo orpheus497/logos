@@ -1138,31 +1138,31 @@ Adding coverage, fixing flakes.
 #### E1 - The Orchestrator
 
 **Primary Responsibility:**
-Empty project setup — base context foundation.
+Project initialization, .devdocs/ governance, and temporal log management.
 
 **✅ IN SCOPE:**
 - Setting up empty projects from scratch and creating initial directory structures
 - Establishing base context for all agents
 - Creating and maintaining `.devdocs/` folder hierarchy
-- Managing agent documentation folder assignments
-- Archiving stale documentation to `.devdocs/.archive/`
+- **EXCLUSIVE ACCESS** to `.devdocs/.archive/` folder
+- Temporal log management (daily, weekly, monthly archival)
+- Coherence auditing and bloat prevention
+- Managing `DEV_STATE.md` single source of truth
 - Recommending agent invocation order and workflow patterns
 - Establishing Diamond and Funnel workflow patterns
 - Providing base system context and federation rules
-- Verifying .devdocs consistency and detecting documentation drift
-- Preventing .devdocs bloat through archival
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Business logic implementation** → A2 (The Logic Engineer)
-  *Why:* Orchestrator sets up projects; Logic Engineer writes application code
-- **Architecture design** → A1 (The Architect)
-  *Why:* Orchestrator initializes projects; Architect designs architecture
-- **UI implementation** → A3 (The Interface Designer)
-  *Why:* Orchestrator establishes context; Interface Designer creates UI
+- **Product code implementation** → A1-A5 (Builders)
+  *Why:* Orchestrator manages project state, not implements features
+- **Security auditing** → B6 (The Sentinel)
+  *Why:* Orchestrator tracks audit results, not performs audits
+- **Project documentation (content)** → C1 (The Bug Hunter) / C7 (The Doc Updater)
+  *Why:* Orchestrator maintains .devdocs/, not README.md or docs/
+- **System configuration** → DEUS Domain
+  *Why:* Orchestrator manages documentation, not servers
 - **Writing tests** → A4 (The Test Engineer)
   *Why:* Orchestrator coordinates workflows; Test Engineer writes tests
-- **Security auditing** → B6 (The Sentinel)
-  *Why:* Orchestrator manages docs; Sentinel audits security
 - **Code review** → B9 (The Critic)
   *Why:* Orchestrator coordinates; Critic reviews code quality
 - **Release management** → B10 (The Gatekeeper)
@@ -1171,24 +1171,25 @@ Empty project setup — base context foundation.
   *Why:* Orchestrator manages documentation; Bug Hunter fixes code
 - **Performance optimization** → C9 (The Optimizer)
   *Why:* Orchestrator manages context; Optimizer tunes performance
-- **Project documentation (content)** → A5 (The Scribe) / C7 (The Doc Updater)
-  *Why:* Orchestrator manages .devdocs structure; Scribe and Doc Updater write content
+- **Technical decisions** → Appropriate technical agents
+  *Why:* Orchestrator facilitates and documents, not decides
 
 **🤝 REQUIRES COLLABORATION:**
-- **With A1 (The Architect):** Hand off project structure for architecture design after initialization
-- **With All Agents:** Establish and maintain .devdocs folder assignments; coordinate workflow handoffs
-- **With B10 (The Gatekeeper):** Coordinate documentation state for release readiness; archive completed release docs
+- **With ALL agents:** Read their logs to track project state; validate DEV_STATE.md updates
+- **With the user:** Report project health; request permission for archival
+- **With E16-E20 (Operator agents):** Provide DEV_STATE.md context; log decisions
 
 **🔄 TYPICAL WORKFLOW:**
-1. Initializes new project scaffolding
-2. Sets up .devdocs folder and base context
-3. Recommends A1 for architecture design
-4. Diamond Workflow → A2, A3, A4 parallel after A1
+1. Checks if .devdocs/ exists (initializes if NO)
+2. Reads ALL .devdocs/ files
+3. Runs coherence audit and generates health report
+4. Presents report to user and requests archival permission
+5. Executes archival and updates DEV_STATE.md
 
 **📝 NOTES:**
-- First agent invoked for new projects
-- Exclusive manager of .devdocs folder structure
-- Manages structure, not content — A5/C7 write the actual documentation
+- **CONSTITUTIONAL AUTHORITY:** Exclusive authority to manage .devdocs/
+- The hub - all project state flows through the Orchestrator
+- Enforces HIDDEN FOLDER PRIORITY READ rule
 
 ---
 
@@ -1999,38 +2000,58 @@ ZFS pools, datasets, storage architecture.
 #### E1 - The System Orchestrator
 
 **Primary Responsibility:**
-Base context, constitutional framework, ~/.sysdocs/ governance.
+Base context, constitutional framework, and .devdocs/ governance for DEUS.
 
 **✅ IN SCOPE:**
 - System initialization and context
 - Constitutional compliance enforcement
-- Base system setup coordination
-- ~/.sysdocs/ folder hierarchy governance and access control
+- Creating and maintaining `.devdocs/` folder hierarchy
+- **EXCLUSIVE ACCESS** to `.devdocs/.archive/` folder
+- Temporal log management (daily, weekly, monthly archival)
+- Coherence auditing and bloat prevention
+- Managing `DEV_STATE.md` single source of truth
 - Cross-domain boundary enforcement (Daedelus/DEUS)
+- Recommending agent invocation order and workflow patterns
+- Providing base system context and federation rules
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Implementation** → Appropriate engineer or specialist
-  *Why:* System Orchestrator coordinates, not implements
-- **Reviews** → B6-B10 (Auditors)
-  *Why:* System Orchestrator initializes, not reviews
+- **Server configuration** → A2 (The Driver Engineer)
+  *Why:* System Orchestrator manages documentation, not configures servers
+- **Infrastructure design** → A1 (The Kernel Architect)
+  *Why:* System Orchestrator coordinates, not designs architecture
+- **Application code** → Daedelus Domain
+  *Why:* System Orchestrator coordinates DEUS domain, not software development
 - **Security enforcement** → E5 (DEUS)
   *Why:* Orchestrator provides framework; E5 enforces security
+- **Reviews** → B6-B10 (Auditors)
+  *Why:* System Orchestrator initializes, not reviews
+- **Technical decisions** → Appropriate technical agents
+  *Why:* Orchestrator facilitates and documents, not decides
+- **Project documentation (content)** → C7 (The Manual Keeper)
+  *Why:* Orchestrator maintains .devdocs/, not user manuals
+- **Performance tuning** → C8 (The Sysctl Tuner)
+  *Why:* Orchestrator governs state, not optimizes OS
+- **Package management** → C11 (The Port Librarian)
+  *Why:* Orchestrator manages context, not packages
+- **Hardware changes** → A2 (The Driver Engineer)
+  *Why:* Orchestrator manages documentation, not hardware
 
 **🤝 REQUIRES COLLABORATION:**
-- **With E5 (DEUS):** Constitutional security framework alignment
-- **With E4 (Ombudsman):** Hand off complex multi-agent workflows
-- **With A1 (The Kernel Architect):** System architecture design
+- **With ALL DEUS agents:** Read their logs to track project state; validate DEV_STATE.md updates
+- **With the user:** Report project health; request permission for archival
+- **With Daedelus E1 (Orchestrator):** Cross-domain coordination
 
 **🔄 TYPICAL WORKFLOW:**
-1. Initializes system context and constitutional framework
-2. Establishes ~/.sysdocs/ structure and agent folder assignments
-3. A1 designs system architecture
-4. Diamond Workflow → A1 + A3 + A5 in parallel
+1. Checks if .devdocs/ exists (initializes if NO)
+2. Reads ALL .devdocs/ files
+3. Runs coherence audit and generates health report
+4. Presents report to user and requests archival permission
+5. Executes archival and updates DEV_STATE.md
 
 **📝 NOTES:**
-- First agent invoked for new system setup
-- SOLE authority on ~/.sysdocs/ folder hierarchy and structure
-- Equivalent to Daedelus Orchestrator for DEUS domain
+- **CONSTITUTIONAL AUTHORITY:** Exclusive authority to manage .devdocs/ in DEUS domain
+- Replaces legacy ~/.sysdocs/ governance with unified .devdocs/ model
+- Enforces HIDDEN FOLDER PRIORITY READ rule
 
 ---
 

@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Phase 2 In Progress: .devdocs Governance System** — Orchestrator roles refactored and core `.devdocs/` utilities created
+- `logos/core/devdocs.py` with validation and structural management functions for `.devdocs/`
+- Tests for `.devdocs` utilities in `tests/test_core/test_devdocs.py`
+- CONSTITUTION.md Article VII: .DEVDOCS GOVERNANCE
+- `README.md` .devdocs Governance System documentation
+
 - **Phase 1 In Progress: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
 - Refusal response generation utility (`logos/core/refusal.py`)
 - Complete agent boundaries reference documentation (`docs/AGENT_BOUNDARIES.md`)
@@ -80,6 +86,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Enhanced `E1 The Orchestrator` (Daedelus) and `E1 The System Orchestrator` (DEUS) with constitutional authority over `.devdocs/`
+- Updated agent definition descriptions for Orchestrators to emphasize governance
+- Modified `docs/AGENT_BOUNDARIES.md` to explicitly list Orchestrator's `.devdocs` management scope and exclusive `.archive/` access
 - Version set to 0.2.0.dev0 for active development
 - Orchestrator agent now has activation prompt with scope boundaries
 - Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
