@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Phase 2 In Progress: .devdocs Governance System** — Orchestrator roles refactored and core `.devdocs/` utilities created
 - `logos/core/devdocs.py` with validation and structural management functions for `.devdocs/`
+- Standardized templates for `.devdocs/` initialization including `DEV_STATE.md` and workflow tracking structures
 - Tests for `.devdocs` utilities in `tests/test_core/test_devdocs.py`
 - CONSTITUTION.md Article VII: .DEVDOCS GOVERNANCE
 - `README.md` .devdocs Governance System documentation
