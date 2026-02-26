@@ -4,9 +4,9 @@ import pytest
 
 from logos.cli.layouts import _display_width
 
-
 try:
-    from wcwidth import wcswidth as _wcswidth
+    import wcwidth  # noqa: F401
+
     HAS_WCWIDTH = True
 except ImportError:
     HAS_WCWIDTH = False

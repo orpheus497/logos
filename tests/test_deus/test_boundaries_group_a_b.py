@@ -9,19 +9,19 @@ import re
 
 import pytest
 
-from logos.deus.prompts.agents.engineers import (
-    KERNEL_ARCHITECT_ACTIVATION,
-    DRIVER_ENGINEER_ACTIVATION,
-    NETWORK_ARCHITECT_ACTIVATION,
-    BOOT_ENGINEER_ACTIVATION,
-    SERVICE_SCRIBE_ACTIVATION,
-)
 from logos.deus.prompts.agents.auditors import (
+    COMPLIANCE_CRITIC_ACTIVATION,
+    PERFORMANCE_ANALYST_ACTIVATION,
+    RELEASE_GATEKEEPER_ACTIVATION,
     SECURITY_AUDITOR_ACTIVATION,
     SYNTAX_MARSHAL_ACTIVATION,
-    PERFORMANCE_ANALYST_ACTIVATION,
-    COMPLIANCE_CRITIC_ACTIVATION,
-    RELEASE_GATEKEEPER_ACTIVATION,
+)
+from logos.deus.prompts.agents.engineers import (
+    BOOT_ENGINEER_ACTIVATION,
+    DRIVER_ENGINEER_ACTIVATION,
+    KERNEL_ARCHITECT_ACTIVATION,
+    NETWORK_ARCHITECT_ACTIVATION,
+    SERVICE_SCRIBE_ACTIVATION,
 )
 from tests.helpers import extract_section
 
@@ -53,9 +53,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", in_scope_text, flags=re.MULTILINE)
-    assert len(items) >= 3, (
-        f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
-    )
+    assert len(items) >= 3, f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
@@ -65,13 +63,9 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", forbidden_text, flags=re.MULTILINE)
-    assert len(items) >= 10, (
-        f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
-    )
+    assert len(items) >= 10, f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     redirects = forbidden_text.count("→")
-    assert redirects >= len(items), (
-        f"Agent {agent_key} has {redirects} redirects, expected at least {len(items)}"
-    )
+    assert redirects >= len(items), f"Agent {agent_key} has {redirects} redirects, expected at least {len(items)}"
     why_count = len(re.findall(r"\*?Why:\*?", forbidden_text))
     assert why_count >= len(items), (
         f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)}"
@@ -99,13 +93,14 @@ def test_agent_has_sysdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
     sysdocs_match = re.search(
-        r'(?m)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*',
-        prompt)
+        r"(?m)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*", prompt
+    )
     if sysdocs_match:
         block = extract_section(prompt, sysdocs_match.group())
         if "orchestrator" in block.lower() or "e1" in block.lower():
             return
     assert re.search(
         r"(?:~/\.sysdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:~/\.sysdocs/)",
-        prompt, re.IGNORECASE
+        prompt,
+        re.IGNORECASE,
     ), f"Agent {agent_key} missing Orchestrator/E1 reference in ~/.sysdocs/ context"

@@ -4,12 +4,12 @@
 
 name: Test Suite
 
-# Run on push to main, master, and fix branches, and on pull requests
+# Run on push and pull requests to key branches
 on:
   push:
-    branches: [main, master, fix]
+    branches: [main, develop, 'feature/**', 'task*/**']
   pull_request:
-    branches: [main, master, fix]
+    branches: [main, develop, 'feature/**']
 
 # Define jobs to run in parallel
 jobs:
@@ -20,9 +20,9 @@ jobs:
     
     # Test on multiple Python versions
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
-        fail-fast: false
     
     # Setup Python environment
     steps:
@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: security-audit-report
+          name: security-audit-report-${{ matrix.python-version }}
           path: audit.json
           retention-days: 30
       

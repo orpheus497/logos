@@ -95,24 +95,27 @@ def generate_refusal(response: RefusalResponse) -> str:
 
     ##Condition purpose: Add user request summary if provided
     if response.user_request_summary and response.user_request_summary.strip():
-        message_parts.extend([
-            f'Your request: "{response.user_request_summary}"',
-            "",
-        ])
+        message_parts.extend(
+            [
+                f'Your request: "{response.user_request_summary}"',
+                "",
+            ]
+        )
 
     ##Action purpose: Add correct agent recommendation
-    message_parts.extend([
-        f"Your request falls under: {response.recommended_agent_name} "
-        f"({response.recommended_agent_key})",
-        f"To invoke the correct agent: `logos {response.recommended_agent_key}`",
-        "",
-        "**Why I can't help:**",
-        response.reason,
-        "",
-        "**Who can help:**",
-        f"- {response.recommended_agent_name} ({response.recommended_agent_key}): "
-        f"{response.recommended_agent_description}",
-    ])
+    message_parts.extend(
+        [
+            f"Your request falls under: {response.recommended_agent_name} ({response.recommended_agent_key})",
+            f"To invoke the correct agent: `logos {response.recommended_agent_key}`",
+            "",
+            "**Why I can't help:**",
+            response.reason,
+            "",
+            "**Who can help:**",
+            f"- {response.recommended_agent_name} ({response.recommended_agent_key}): "
+            f"{response.recommended_agent_description}",
+        ]
+    )
 
     ##Action purpose: Join all parts with newlines
     return "\n".join(message_parts)
@@ -193,4 +196,3 @@ def validate_refusal_response(response: RefusalResponse) -> list[str]:
 
     ##Action purpose: Return list of fields that are empty or None
     return [name for name, val in required_fields.items() if val is None or not isinstance(val, str) or not val.strip()]
-

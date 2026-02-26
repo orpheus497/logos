@@ -1,16 +1,15 @@
 ##Script function and purpose: .devdocs validation and utility functions for Orchestrator
 
-"""
-Provides utilities for validating .devdocs/ folder structure, enforcing
-standards, and assisting Orchestrator with governance tasks.
+"""Provides utilities for validating .devdocs/ folder structure.
 
+Enforces standards and assists Orchestrator with governance tasks.
 These functions are used by LOGOS during prompt composition or by
 Orchestrator prompts to describe validation logic.
 """
 
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 
 ##Class purpose: .devdocs structure validation result
@@ -18,7 +17,7 @@ from dataclasses import dataclass
 class DevdocsValidation:
     """
     ##Class purpose: Contains results of .devdocs/ structure validation.
-    
+
     Attributes:
         exists: Whether .devdocs/ folder exists
         valid_structure: Whether folder structure is correct
@@ -29,24 +28,25 @@ class DevdocsValidation:
         missing_components: List of missing required components
         errors: List of validation errors
     """
+
     exists: bool
     valid_structure: bool
     has_dev_state: bool
     has_agent_logs: bool
     has_workflow_tracking: bool
     has_archive: bool
-    missing_components: List[str]
-    errors: List[str]
+    missing_components: list[str]
+    errors: list[str]
 
 
 ##Function purpose: Validate .devdocs/ folder structure
 def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidation:
     """
     ##Function purpose: Check if .devdocs/ folder has correct structure.
-    
+
     Args:
         project_path: Path to project root (default: current directory)
-    
+
     Returns:
         DevdocsValidation object with validation results
     """
@@ -56,14 +56,14 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
     agent_logs_path = devdocs_path / "AGENT_LOGS"
     workflow_path = devdocs_path / "WORKFLOW_TRACKING"
     archive_path = devdocs_path / ".archive"
-    
+
     ##Action purpose: Initialize validation result
     missing = []
     errors = []
-    
+
     ##Condition purpose: Check if .devdocs exists
     exists = devdocs_path.exists() and devdocs_path.is_dir()
-    
+
     if not exists:
         return DevdocsValidation(
             exists=False,
@@ -73,15 +73,15 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
             has_workflow_tracking=False,
             has_archive=False,
             missing_components=[".devdocs/ folder"],
-            errors=[".devdocs/ folder does not exist"]
+            errors=[".devdocs/ folder does not exist"],
         )
-    
+
     ##Action purpose: Check required components
     has_dev_state = dev_state_path.exists() and dev_state_path.is_file()
     has_agent_logs = agent_logs_path.exists() and agent_logs_path.is_dir()
     has_workflow = workflow_path.exists() and workflow_path.is_dir()
     has_archive = archive_path.exists() and archive_path.is_dir()
-    
+
     ##Action purpose: Build missing components list
     if not has_dev_state:
         missing.append("DEV_STATE.md")
@@ -91,7 +91,7 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
         missing.append("WORKFLOW_TRACKING/ folder")
     if not has_archive:
         missing.append(".archive/ folder")
-    
+
     ##Action purpose: Check agent log group folders
     if has_agent_logs:
         expected_groups = ["group_a", "group_b", "group_c", "group_d", "group_e"]
@@ -99,10 +99,10 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
             group_path = agent_logs_path / group
             if not group_path.exists():
                 missing.append(f"AGENT_LOGS/{group}/ folder")
-    
+
     ##Action purpose: Determine validity
     valid_structure = len(missing) == 0 and len(errors) == 0
-    
+
     ##Action purpose: Return validation result
     return DevdocsValidation(
         exists=True,
@@ -112,7 +112,7 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
         has_workflow_tracking=has_workflow,
         has_archive=has_archive,
         missing_components=missing,
-        errors=errors
+        errors=errors,
     )
 
 
@@ -120,24 +120,24 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
 def check_devdocs_gitignored(project_path: Path = Path(".")) -> bool:
     """
     ##Function purpose: Verify .devdocs/ is properly ignored by git.
-    
+
     Args:
         project_path: Path to project root
-    
+
     Returns:
         True if .devdocs/ is in .gitignore, False otherwise
     """
     ##Action purpose: Find .gitignore file
     gitignore_path = project_path / ".gitignore"
-    
+
     ##Condition purpose: Check if .gitignore exists
     if not gitignore_path.exists():
         return False
-    
+
     ##Action purpose: Read .gitignore contents
-    with open(gitignore_path, "r", encoding="utf-8") as f:
+    with open(gitignore_path, encoding="utf-8") as f:
         content = f.read()
-    
+
     ##Condition purpose: Check for .devdocs entry (skip comments)
     for line in content.splitlines():
         stripped = line.strip()
@@ -151,7 +151,7 @@ def check_devdocs_gitignored(project_path: Path = Path(".")) -> bool:
 def generate_priority_read_warning() -> str:
     """
     ##Function purpose: Create warning message for agents that skip .devdocs read.
-    
+
     Returns:
         Formatted warning message
     """
@@ -188,7 +188,7 @@ ACTION REQUIRED:
 def enforce_devdocs_priority() -> str:
     """
     ##Function purpose: Generate enforcement text for base prompts.
-    
+
     Returns:
         Text to be inserted in base prompts requiring .devdocs read
     """
@@ -236,36 +236,36 @@ Orchestrator will initialize .devdocs/ structure.
 
 
 ##Function purpose: Get list of outstanding agent assignments
-def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, Any]]:
+def get_outstanding_agents(project_path: Path = Path(".")) -> list[dict[str, Any]]:
     """
     ##Function purpose: Extract outstanding agent assignments from DEV_STATE.md.
-    
+
     Used by system detection to display agents with remaining work.
-    
+
     Args:
         project_path: Path to project root
-    
+
     Returns:
         List of dicts with agent info: [{"key": "A2", "name": "Logic Engineer", "task_count": 3}, ...]
     """
     ##Action purpose: Define DEV_STATE.md path
     dev_state_path = project_path / ".devdocs" / "DEV_STATE.md"
-    
+
     ##Condition purpose: Check if file exists
     if not dev_state_path.exists():
         return []
-    
+
     ##Action purpose: Read DEV_STATE.md
-    with open(dev_state_path, "r", encoding="utf-8") as f:
+    with open(dev_state_path, encoding="utf-8") as f:
         content = f.read()
-    
+
     ##Condition purpose: Check if OUTSTANDING AGENT ASSIGNMENTS section exists
     if "## OUTSTANDING AGENT ASSIGNMENTS" not in content:
         return []
-    
+
     ##Action purpose: Extract section
     section = content.split("## OUTSTANDING AGENT ASSIGNMENTS")[1].split("##")[0]
-    
+
     ##Action purpose: Parse agent lines
     outstanding = []
     for line in section.split("\n"):
@@ -276,12 +276,12 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, Any
             if len(parts) >= 2:
                 agent_part = parts[0]
                 task_info = parts[1]
-                
+
                 ##Action purpose: Parse agent key and name
                 if "(" in agent_part and ")" in agent_part:
                     name = agent_part.split("(")[1].split(")")[0]
                     key = agent_part.split("(")[0].strip()
-                    
+
                     ##Action purpose: Parse task count
                     task_count = 0
                     if "task" in task_info:
@@ -289,14 +289,16 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, Any
                             task_count = int(task_info.split()[0])
                         except ValueError:
                             task_count = 1
-                    
-                    outstanding.append({
-                        "key": key,
-                        "name": name,
-                        "task_count": task_count,
-                        "status": "in progress" if "in progress" in task_info.lower() else "pending"
-                    })
-    
+
+                    outstanding.append(
+                        {
+                            "key": key,
+                            "name": name,
+                            "task_count": task_count,
+                            "status": "in progress" if "in progress" in task_info.lower() else "pending",
+                        }
+                    )
+
     return outstanding
 
 
@@ -304,52 +306,52 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, Any
 def calculate_devdocs_size(project_path: Path = Path(".")) -> float:
     """
     ##Function purpose: Calculate total size of .devdocs/ folder in MB.
-    
+
     Args:
         project_path: Path to project root
-    
+
     Returns:
         Size in megabytes (float)
     """
     ##Action purpose: Define .devdocs path
     devdocs_path = project_path / ".devdocs"
-    
+
     ##Condition purpose: Check if exists
     if not devdocs_path.exists():
         return 0.0
-    
+
     ##Action purpose: Calculate total size
     total_bytes = 0
     for file_path in devdocs_path.rglob("*"):
         if file_path.is_file():
             total_bytes += file_path.stat().st_size
-    
+
     ##Action purpose: Convert to MB
     return total_bytes / (1024 * 1024)
 
 
 ##Function purpose: Validate DEV_STATE.md has required sections
-def validate_dev_state_structure(project_path: Path = Path(".")) -> Tuple[bool, List[str]]:
+def validate_dev_state_structure(project_path: Path = Path(".")) -> tuple[bool, list[str]]:
     """
     ##Function purpose: Check if DEV_STATE.md has all required sections.
-    
+
     Args:
         project_path: Path to project root
-    
+
     Returns:
         Tuple of (valid: bool, missing_sections: List[str])
     """
     ##Action purpose: Define path
     dev_state_path = project_path / ".devdocs" / "DEV_STATE.md"
-    
+
     ##Condition purpose: Check if exists
     if not dev_state_path.exists():
         return False, ["DEV_STATE.md file missing"]
-    
+
     ##Action purpose: Read content
-    with open(dev_state_path, "r", encoding="utf-8") as f:
+    with open(dev_state_path, encoding="utf-8") as f:
         content = f.read()
-    
+
     ##Action purpose: Define required sections
     required_sections = [
         "## PROJECT SNAPSHOT",
@@ -359,14 +361,14 @@ def validate_dev_state_structure(project_path: Path = Path(".")) -> Tuple[bool, 
         "## NEXT IMMEDIATE STEPS",
         "## PROJECT METRICS",
         "## COHERENCE STATUS",
-        "## OUTSTANDING AGENT ASSIGNMENTS"
+        "## OUTSTANDING AGENT ASSIGNMENTS",
     ]
-    
+
     ##Action purpose: Check for missing sections
     missing = []
     for section in required_sections:
         if section not in content:
             missing.append(section)
-    
+
     ##Action purpose: Return validation result
     return len(missing) == 0, missing

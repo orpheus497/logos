@@ -18,9 +18,11 @@ try:
         w = _wcswidth(line)
         return len(line) if w < 0 else w
 except ImportError:
+
     def _display_width(line: str) -> int:
         """Fallback display width using codepoint count."""
         return len(line)
+
 
 from logos.core.constants import Colors, UILayout
 from logos.core.factions import FACTIONS

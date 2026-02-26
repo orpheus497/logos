@@ -108,11 +108,11 @@ You are in **initialization mode**. You MUST:
 
    Tell user:
    "Please add .devdocs/ to your .gitignore:
-   
+
    echo '.devdocs/' >> .gitignore
    git add .gitignore
    git commit -m 'chore: ignore .devdocs folder (AI agent workspace)'
-   
+
    The .devdocs/ folder is agent working space and should never be committed."
    ```
 
