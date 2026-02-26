@@ -1,4 +1,4 @@
-##Script function and purpose: Tests for the .devdocs utility module
+# Script function and purpose: Tests for the .devdocs utility module
 
 import pytest
 from pathlib import Path
@@ -18,7 +18,17 @@ def mock_project(tmp_path):
     devdocs = tmp_path / ".devdocs"
     devdocs.mkdir()
     
-    (devdocs / "DEV_STATE.md").write_text("## OUTSTANDING AGENT ASSIGNMENTS\n- A2 (Logic Engineer) - 3 tasks\n## PROJECT SNAPSHOT\n## RECENT ACTIONS\n## UNIFIED TASK LIST\n## ACTIVE BLOCKERS\n## NEXT IMMEDIATE STEPS\n## PROJECT METRICS\n## COHERENCE STATUS\n")
+    (devdocs / "DEV_STATE.md").write_text(
+        "## OUTSTANDING AGENT ASSIGNMENTS\n"
+        "- A2 (Logic Engineer) - 3 tasks\n"
+        "## PROJECT SNAPSHOT\n"
+        "## RECENT ACTIONS\n"
+        "## UNIFIED TASK LIST\n"
+        "## ACTIVE BLOCKERS\n"
+        "## NEXT IMMEDIATE STEPS\n"
+        "## PROJECT METRICS\n"
+        "## COHERENCE STATUS\n"
+    )
     
     agent_logs = devdocs / "AGENT_LOGS"
     agent_logs.mkdir()
@@ -74,6 +84,7 @@ def test_get_outstanding_agents(mock_project):
 def test_calculate_devdocs_size(mock_project):
     size = calculate_devdocs_size(mock_project)
     assert size > 0.0
+    assert size < 1.0  # Fixture is small, sanity check for MB units
 
 def test_validate_dev_state_structure(mock_project):
     valid, missing = validate_dev_state_structure(mock_project)
@@ -84,3 +95,13 @@ def test_validate_dev_state_structure_missing_file(tmp_path):
     valid, missing = validate_dev_state_structure(tmp_path)
     assert valid is False
     assert "DEV_STATE.md file missing" in missing
+
+def test_validate_dev_state_structure_invalid_content(tmp_path):
+    """Test validation when DEV_STATE.md exists but has missing sections."""
+    devdocs = tmp_path / ".devdocs"
+    devdocs.mkdir()
+    (devdocs / "DEV_STATE.md").write_text("## OUTSTANDING AGENT ASSIGNMENTS\n")
+
+    valid, missing = validate_dev_state_structure(tmp_path)
+    assert valid is False
+    assert len(missing) > 0

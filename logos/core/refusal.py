@@ -11,6 +11,13 @@ with the template and structure for refusing out-of-scope requests.
 import re
 from dataclasses import dataclass
 
+__all__ = [
+    "RefusalResponse",
+    "generate_refusal",
+    "quick_refusal",
+    "validate_refusal_response",
+]
+
 # Pre-compiled regex for stripping "The " prefix
 _THE_PREFIX_PATTERN = re.compile(r"^the\s+", flags=re.IGNORECASE)
 

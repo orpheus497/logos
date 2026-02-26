@@ -2,7 +2,7 @@
 
 **Agent:** [KEY] - [NAME]
 **Specialty:** [SPECIALTY]
-**Last Updated:** YYYY-MM-DD HH:MM
+**Last Updated:** YYYY-MM-DD HH:MM UTC
 
 ---
 
@@ -21,6 +21,8 @@
 
 ## DAILY ENTRIES (Today + Last 6 Days)
 
+> Replicate the following daily block for today and the previous six days (total 7 entries).
+
 ### YYYY-MM-DD (TODAY)
 
 **Session 1: HH:MM**
@@ -36,4 +38,4 @@
 
 ---
 
-**[Older entries archived - see .archive/YYYY-MM-DD/ if needed]**
+**[Older entries archived - see .devdocs/.archive/YYYY-MM-DD/ if needed]**

@@ -32,7 +32,7 @@ class TestDisplayWidth:
         """##Function purpose: String with only combining chars triggers len() fallback."""
         combining_only = "\u0300"
         result = _display_width(combining_only)
-        # wcswidth returns -1 for non-printable → fallback to len()
+        # wcswidth returns -1 for combining-only strings (or wcwidth not installed) → fallback to len()
         assert result == len(combining_only)
 
     @pytest.mark.skipif(not HAS_WCWIDTH, reason="wcwidth not installed")

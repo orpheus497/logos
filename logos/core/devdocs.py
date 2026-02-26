@@ -9,9 +9,8 @@ Orchestrator prompts to describe validation logic.
 """
 
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
-from datetime import datetime
 
 
 ##Class purpose: .devdocs structure validation result
@@ -73,8 +72,8 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
             has_agent_logs=False,
             has_workflow_tracking=False,
             has_archive=False,
-            missing_components=[ ".devdocs/ folder"],
-            errors=[ ".devdocs/ folder does not exist"]
+            missing_components=[".devdocs/ folder"],
+            errors=[".devdocs/ folder does not exist"]
         )
     
     ##Action purpose: Check required components
@@ -136,11 +135,16 @@ def check_devdocs_gitignored(project_path: Path = Path(".")) -> bool:
         return False
     
     ##Action purpose: Read .gitignore contents
-    with open(gitignore_path, "r") as f:
+    with open(gitignore_path, "r", encoding="utf-8") as f:
         content = f.read()
     
-    ##Condition purpose: Check for .devdocs entry
-    return ".devdocs/" in content or ".devdocs" in content
+    ##Condition purpose: Check for .devdocs entry (skip comments)
+    for line in content.splitlines():
+        stripped = line.strip()
+        if stripped and not stripped.startswith("#"):
+            if stripped in (".devdocs/", ".devdocs", ".devdocs/*"):
+                return True
+    return False
 
 
 ##Function purpose: Generate .devdocs priority read warning
@@ -232,7 +236,7 @@ Orchestrator will initialize .devdocs/ structure.
 
 
 ##Function purpose: Get list of outstanding agent assignments
-def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, any]]:
+def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, Any]]:
     """
     ##Function purpose: Extract outstanding agent assignments from DEV_STATE.md.
     
@@ -252,7 +256,7 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, any
         return []
     
     ##Action purpose: Read DEV_STATE.md
-    with open(dev_state_path, "r") as f:
+    with open(dev_state_path, "r", encoding="utf-8") as f:
         content = f.read()
     
     ##Condition purpose: Check if OUTSTANDING AGENT ASSIGNMENTS section exists
@@ -283,7 +287,7 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> List[Dict[str, any
                     if "task" in task_info:
                         try:
                             task_count = int(task_info.split()[0])
-                        except:
+                        except ValueError:
                             task_count = 1
                     
                     outstanding.append({
@@ -343,7 +347,7 @@ def validate_dev_state_structure(project_path: Path = Path(".")) -> Tuple[bool, 
         return False, ["DEV_STATE.md file missing"]
     
     ##Action purpose: Read content
-    with open(dev_state_path, "r") as f:
+    with open(dev_state_path, "r", encoding="utf-8") as f:
         content = f.read()
     
     ##Action purpose: Define required sections

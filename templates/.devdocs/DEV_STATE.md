@@ -1,4 +1,4 @@
-##Script function and purpose: Unified project state and task management - SINGLE SOURCE OF TRUTH
+# Script function and purpose: Unified project state and task management - SINGLE SOURCE OF TRUTH
 
 # DEV_STATE.md - PROJECT STATE SNAPSHOT
 
@@ -23,6 +23,8 @@
 ---
 
 ## 📝 RECENT ACTIONS (Last 5 Only)
+
+> **Policy:** Keep the 5 most recent actions regardless of age. Archive older entries.
 
 ### YYYY-MM-DD HH:MM | [Agent Key] ([Agent Name])
 **Action:** [What was done]
@@ -145,7 +147,7 @@
 
 ### Next Maintenance
 - **Scheduled:** [Date]
-- **Action:** Archive daily entries >7 days, generate weekly summaries
+- **Action:** Archive entries beyond the 5 most recent, generate weekly summaries
 
 ---
 

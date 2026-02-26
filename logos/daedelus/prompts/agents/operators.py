@@ -58,17 +58,17 @@ All other agents are explicitly instructed to IGNORE .archive/.
 │   │   ├── B9.md
 │   │   └── B10.md
 │   ├── group_c/                   # Maintainers
-│   │   └── [C1-C11].md
+│   │   └── {C1,C6,C7,C8,C9,C10,C11}.md
 │   ├── group_d/                   # Workers/Specialists
-│   │   └── [D2-D5].md
+│   │   └── {D2,D3,D4,D5}.md
 │   └── group_e/                   # Operators
-│       └── [E1-E3].md
+│       └── {E0,E16,E17,E18,E19,E20}.md
 ├── WORKFLOW_TRACKING/              # Workflow state files
 │   ├── diamond_workflow.md
 │   ├── funnel_workflow.md
 │   └── maintenance_workflow.md
 └── .archive/                       # 🔒 YOUR EXCLUSIVE DOMAIN
-    ├── 2026-02-19/                 # Date-stamped archives
+    ├── YYYY-MM-DD/                 # Date-stamped archives (e.g., 2026-02-19)
     │   ├── A1.md.old              # Archived agent logs
     │   └── [other archived files]
     └── archival_log.md             # Log of all archival actions
@@ -255,7 +255,7 @@ For each file to archive:
 
 2. **Move file to archive:**
    ```bash
-   mv .devdocs/AGENT_LOGS/group_a/A1.md.old .devdocs/.archive/2026-02-19/A1.md.old
+   mv .devdocs/AGENT_LOGS/group_a/A1.md.old ".devdocs/.archive/$(date +%Y-%m-%d)/A1.md.old"
    ```
 
 3. **Log archival action:**
