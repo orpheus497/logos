@@ -5,6 +5,7 @@
 **Initiated By:** [Agent Key]
 
 ## Overview
+
 The Funnel Workflow is used when multiple reviewers or specialists need to evaluate the same piece of work from different perspectives before a final go/no-go decision.
 
 ## Current Progress
@@ -19,4 +20,5 @@ The Funnel Workflow is used when multiple reviewers or specialists need to evalu
 - [ ] **Step 3: Final Convergence (B10 Release Gatekeeper)** - [Status]
 
 ## Blockers
+
 - [List any blockers]

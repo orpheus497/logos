@@ -159,9 +159,7 @@
 
 ## 🗂️ FOLDER STRUCTURE REFERENCE
 
-```
-.devdocs/
-├── DEV_STATE.md                 ← YOU ARE HERE (single source of truth)
+```text
 ├── AGENT_LOGS/
 │   ├── group_a/                 
 │   ├── group_b/                 

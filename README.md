@@ -368,10 +368,12 @@ All agent boundaries are validated by automated tests ensuring:
 LOGOS uses a sophisticated governance system based on a `.devdocs/` directory to manage context across its multi-agent federation.
 
 ### The Orchestrators (E1)
+
 The **Orchestrator** (Daedelus E1) and **System Orchestrator** (DEUS E1) hold constitutional authority over the `.devdocs/` directory structure. They alone manage the project initialization, maintain the `DEV_STATE.md` (the Single Source of Truth), perform temporal log management, and maintain `.devdocs/.archive/` (which they have EXCLUSIVE access to).
 
 ### Directory Structure
-```
+
+```text
 .devdocs/
 ├── DEV_STATE.md
 ├── AGENT_LOGS/
@@ -385,12 +387,14 @@ The **Orchestrator** (Daedelus E1) and **System Orchestrator** (DEUS E1) hold co
 ```
 
 ### Temporal Log Management System
+
 To prevent context bloat:
 - **Daily:** Logs display today + the last 6 days.
 - **Weekly:** At the end of each week, Orchestrators summarize the week and archive older daily entries.
 - **Monthly:** Summaries roll up into month-long permanent records.
 
 ### Hidden Folder Priority Read
+
 All agents are constitutionally required to read `.devdocs/DEV_STATE.md` before executing tasks. This guarantees no duplicated effort or conflicting code changes occur between agents.
 
 ---
