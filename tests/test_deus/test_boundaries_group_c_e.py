@@ -112,7 +112,11 @@ def test_agent_has_refusal_template(agent_key, prompt):
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_sysdocs_boundary(agent_key, prompt):
-    """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
+    """##Function purpose: Verify that every agent has ~/.sysdocs/ or .devdocs/ management boundary."""
+    # E1 governs .devdocs/ (project-level); other agents reference ~/.sysdocs/ (system-level)
+    if agent_key == "E1":
+        assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
+        return
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
     sysdocs_match = re.search(
         r"(?mi)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*", prompt

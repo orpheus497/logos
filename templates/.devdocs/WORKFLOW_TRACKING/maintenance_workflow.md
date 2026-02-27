@@ -7,7 +7,7 @@
 ## Overview
 The Maintenance Workflow is a sequential cycle of routine care tasks to keep the project healthy, synchronized, and optimized.
 
-> **Agent Legend:** C1=Bug Hunter, C2=Inline Docs, C3/C11=Dependency Mgmt, C4/C10=Refactoring, C5=Tech Debt.
+> **Agent Legend:** C1=Bug Hunter, C6=Security Patcher, C7=Doc Updater, C10=System Janitor, C11=Librarian.
 > Checkboxes track completion; [Status] values: NOT STARTED / IN PROGRESS / BLOCKED / COMPLETE.
 
 ## Current Progress

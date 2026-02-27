@@ -21,15 +21,15 @@ def mock_project(tmp_path):
     devdocs.mkdir()
 
     (devdocs / "DEV_STATE.md").write_text(
-        "## OUTSTANDING AGENT ASSIGNMENTS\n"
-        "- A2 (Logic Engineer) - 3 tasks\n"
-        "## PROJECT SNAPSHOT\n"
-        "## RECENT ACTIONS\n"
-        "## UNIFIED TASK LIST\n"
-        "## ACTIVE BLOCKERS\n"
-        "## NEXT IMMEDIATE STEPS\n"
-        "## PROJECT METRICS\n"
-        "## COHERENCE STATUS\n"
+        "## 📌 OUTSTANDING AGENT ASSIGNMENTS\n"
+        "- **A2 (Logic Engineer)** - 3 tasks\n"
+        "## 📊 PROJECT STATUS\n"
+        "## 📝 RECENT ACTIONS (Last 5 Only)\n"
+        "## 🎯 UNIFIED TASK LIST\n"
+        "## 🚧 ACTIVE BLOCKERS\n"
+        "## 🔜 NEXT IMMEDIATE STEPS\n"
+        "## 📈 PROJECT METRICS\n"
+        "## 🔍 COHERENCE STATUS\n"
     )
 
     agent_logs = devdocs / "AGENT_LOGS"

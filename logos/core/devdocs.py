@@ -7,6 +7,7 @@ These functions are used by LOGOS during prompt composition or by
 Orchestrator prompts to describe validation logic.
 """
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -204,7 +205,7 @@ It contains AI agent context and coordination data.
 [ ] Check if `.devdocs/` folder exists in project root
 [ ] If exists: Read `.devdocs/DEV_STATE.md` completely
 [ ] Read your agent log: `.devdocs/AGENT_LOGS/group_X/[your_key].md`
-[ ] If missing: Recommend user invoke Orchestrator (E0/E1) to initialize
+[ ] If missing: Recommend user invoke Orchestrator (E1) to initialize
 [ ] If corrupted: Report error to user
 
 **Why this matters:**
@@ -225,7 +226,7 @@ It contains AI agent context and coordination data.
 **If .devdocs/ does not exist:**
 You are likely in a project without initialized agent context.
 Recommend user invoke Orchestrator:
-- Daedelus projects: `logos E0`
+- Daedelus projects: `logos E1`
 - DEUS projects: `logos E1`
 
 Orchestrator will initialize .devdocs/ structure.
@@ -260,44 +261,45 @@ def get_outstanding_agents(project_path: Path = Path(".")) -> list[dict[str, Any
         content = f.read()
 
     ##Condition purpose: Check if OUTSTANDING AGENT ASSIGNMENTS section exists
-    if "## OUTSTANDING AGENT ASSIGNMENTS" not in content:
+    if "OUTSTANDING AGENT ASSIGNMENTS" not in content:
         return []
 
-    ##Action purpose: Extract section
-    section = content.split("## OUTSTANDING AGENT ASSIGNMENTS")[1].split("##")[0]
+    ##Action purpose: Extract section (handles emoji-prefixed or plain headings)
+    section_match = re.search(
+        r"##\s+(?:📌\s+)?OUTSTANDING AGENT ASSIGNMENTS\n(.*?)(?=\n##|\Z)",
+        content,
+        re.DOTALL,
+    )
+    if not section_match:
+        return []
+    section = section_match.group(1)
 
-    ##Action purpose: Parse agent lines
+    ##Action purpose: Parse agent lines using regex, stripping markdown emphasis
     outstanding = []
     for line in section.split("\n"):
         ##Condition purpose: Look for agent assignment lines
         if line.strip().startswith("- ") and "(" in line and ")" in line:
-            ##Action purpose: Extract agent key and name
-            parts = line.strip()[2:].split(" - ")
-            if len(parts) >= 2:
-                agent_part = parts[0]
-                task_info = parts[1]
+            ##Action purpose: Strip common markdown emphasis characters
+            clean = re.sub(r"[\*_`]", "", line.strip()[2:])
 
-                ##Action purpose: Parse agent key and name
-                if "(" in agent_part and ")" in agent_part:
-                    name = agent_part.split("(")[1].split(")")[0]
-                    key = agent_part.split("(")[0].strip()
+            ##Action purpose: Match agent key, name, task count, and status
+            agent_match = re.match(
+                r"(\w+)\s+\(([^)]+)\)(?:\s+-\s+(\d+)\s+tasks?)?",
+                clean,
+            )
+            if agent_match:
+                key = agent_match.group(1)
+                name = agent_match.group(2)
+                task_count = int(agent_match.group(3)) if agent_match.group(3) else 1
 
-                    ##Action purpose: Parse task count
-                    task_count = 0
-                    if "task" in task_info:
-                        try:
-                            task_count = int(task_info.split()[0])
-                        except ValueError:
-                            task_count = 1
-
-                    outstanding.append(
-                        {
-                            "key": key,
-                            "name": name,
-                            "task_count": task_count,
-                            "status": "in progress" if "in progress" in task_info.lower() else "pending",
-                        }
-                    )
+                outstanding.append(
+                    {
+                        "key": key,
+                        "name": name,
+                        "task_count": task_count,
+                        "status": "in progress" if "in progress" in clean.lower() else "pending",
+                    }
+                )
 
     return outstanding
 
@@ -354,14 +356,14 @@ def validate_dev_state_structure(project_path: Path = Path(".")) -> tuple[bool, 
 
     ##Action purpose: Define required sections
     required_sections = [
-        "## PROJECT SNAPSHOT",
-        "## RECENT ACTIONS",
-        "## UNIFIED TASK LIST",
-        "## ACTIVE BLOCKERS",
-        "## NEXT IMMEDIATE STEPS",
-        "## PROJECT METRICS",
-        "## COHERENCE STATUS",
-        "## OUTSTANDING AGENT ASSIGNMENTS",
+        "## 📊 PROJECT STATUS",
+        "## 📝 RECENT ACTIONS",
+        "## 🎯 UNIFIED TASK LIST",
+        "## 🚧 ACTIVE BLOCKERS",
+        "## 🔜 NEXT IMMEDIATE STEPS",
+        "## 📈 PROJECT METRICS",
+        "## 🔍 COHERENCE STATUS",
+        "## 📌 OUTSTANDING AGENT ASSIGNMENTS",
     ]
 
     ##Action purpose: Check for missing sections

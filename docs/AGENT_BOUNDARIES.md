@@ -1157,7 +1157,7 @@ Project initialization, .devdocs/ governance, and temporal log management.
   *Why:* Orchestrator manages project state, not implements features
 - **Security auditing** → B6 (The Sentinel)
   *Why:* Orchestrator tracks audit results, not performs audits
-- **Project documentation (content)** → C1 (The Bug Hunter) / C7 (The Doc Updater)
+- **Project documentation (content)** → C7 (The Doc Updater)
   *Why:* Orchestrator maintains .devdocs/, not README.md or docs/
 - **System configuration** → DEUS Domain
   *Why:* Orchestrator manages documentation, not servers
@@ -1177,7 +1177,7 @@ Project initialization, .devdocs/ governance, and temporal log management.
 **🤝 REQUIRES COLLABORATION:**
 - **With ALL agents:** Read their logs to track project state; validate DEV_STATE.md updates
 - **With the user:** Report project health; request permission for archival
-- **With E16-E20 (Operator agents):** Provide DEV_STATE.md context; log decisions
+- **With E1-E3 (Operator agents):** Provide DEV_STATE.md context; log decisions
 
 **🔄 TYPICAL WORKFLOW:**
 1. Checks if .devdocs/ exists (initializes if NO)
@@ -2015,7 +2015,7 @@ Base context, constitutional framework, and .devdocs/ governance for DEUS.
 - Providing base system context and federation rules
 
 **⛔ FORBIDDEN ACTIONS:**
-- **Server configuration** → A2 (The Driver Engineer)
+- **Server configuration** → A5 (The Service Scribe)
   *Why:* System Orchestrator manages documentation, not configures servers
 - **Infrastructure design** → A1 (The Kernel Architect)
   *Why:* System Orchestrator coordinates, not designs architecture

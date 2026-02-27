@@ -62,7 +62,7 @@ All other agents are explicitly instructed to IGNORE .archive/.
 │   ├── group_d/                   # Workers/Specialists
 │   │   └── {D2,D3,D4,D5}.md
 │   └── group_e/                   # Operators
-│       └── {E0,E16,E17,E18,E19,E20}.md
+│       └── {E0,E16,E17,E18}.md
 ├── WORKFLOW_TRACKING/              # Workflow state files
 │   ├── diamond_workflow.md
 │   ├── funnel_workflow.md

@@ -5,7 +5,7 @@
 
 ---
 
-## YYYY-MM-DD HH:MM
+## YYYY-MM-DDTHH:MM:SSZ
 
 **Archived:** `[Path to original file]`
 **Archived To:** `[Path in .archive/ directory]`
