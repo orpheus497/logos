@@ -939,15 +939,19 @@ All agent boundaries SHALL be validated through automated testing that verifies:
 ### ARTICLE VII: .DEVDOCS GOVERNANCE
 
 #### Section 1: The Domain of the Orchestrator
+
 The Orchestrator (E1) agents in both domains possess EXCLUSIVE constitutional authority to govern, modify, structure, and maintain the `.devdocs/` hidden directory within any initialized LOGOS project workspace.
 
 #### Section 2: Folder Priority Read Rule
+
 All non-Orchestrator LOGOS agents MUST check for the presence of the `.devdocs/` directory upon invocation. If present, they MUST perform a complete read of `.devdocs/DEV_STATE.md` before proceeding with any user request to prevent redundant work and workflow conflicts. If absent, the agent must recommend the user invoke the Orchestrator for project initialization.
 
 #### Section 3: Archival Access
+
 The Orchestrator holds exclusive access rights to the `.devdocs/.archive/` directory. All other agents are strictly forbidden from reading archived contextual materials to prevent stale context ingestion.
 
 #### Section 4: Temporal Log Maintenance
+
 The Orchestrator enforces continuous coherence checks, bloat prevention, and a temporal log management system (Daily -> Weekly -> Monthly summarization) to guarantee the `DEV_STATE.md` remains the unified single source of truth without overloading agent token context limits.
 
 ---
