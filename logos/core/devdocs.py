@@ -98,7 +98,7 @@ def validate_devdocs_structure(project_path: Path = Path(".")) -> DevdocsValidat
         expected_groups = ["group_a", "group_b", "group_c", "group_d", "group_e"]
         for group in expected_groups:
             group_path = agent_logs_path / group
-            if not group_path.exists():
+            if not group_path.is_dir():
                 missing.append(f"AGENT_LOGS/{group}/ folder")
 
     ##Action purpose: Determine validity
