@@ -128,3 +128,34 @@ def test_validate_dev_state_structure_invalid_content(tmp_path):
     valid, missing = validate_dev_state_structure(tmp_path)
     assert valid is False
     assert len(missing) > 0
+
+
+def test_validate_devdocs_structure_group_as_file(tmp_path):
+    """##Function purpose: A file at AGENT_LOGS/group_a is treated as missing."""
+    devdocs = tmp_path / ".devdocs"
+    devdocs.mkdir()
+
+    (devdocs / "DEV_STATE.md").write_text(
+        "## 📌 OUTSTANDING AGENT ASSIGNMENTS\n"
+        "## 📊 PROJECT STATUS\n"
+        "## 📝 RECENT ACTIONS (Last 5 Only)\n"
+        "## 🎯 UNIFIED TASK LIST\n"
+        "## 🚧 ACTIVE BLOCKERS\n"
+        "## 🔜 NEXT IMMEDIATE STEPS\n"
+        "## 📈 PROJECT METRICS\n"
+        "## 🔍 COHERENCE STATUS\n"
+    )
+
+    agent_logs = devdocs / "AGENT_LOGS"
+    agent_logs.mkdir()
+    # Create group_a as a regular file instead of a directory
+    (agent_logs / "group_a").write_text("not a directory")
+    for group in ["group_b", "group_c", "group_d", "group_e"]:
+        (agent_logs / group).mkdir()
+
+    (devdocs / "WORKFLOW_TRACKING").mkdir()
+    (devdocs / ".archive").mkdir()
+
+    result = validate_devdocs_structure(tmp_path)
+    assert result.valid_structure is False
+    assert "AGENT_LOGS/group_a/ folder" in result.missing_components

@@ -2197,7 +2197,7 @@ Security, privacy, sovereignty — supreme security guardian.
 
 **Documentation Folders:**
 - Daedelus domain: `.devdocs/` for agent documentation
-- DEUS domain: `.devdocs/` for agent documentation
+- DEUS domain: `~/.sysdocs/` for agent documentation
 
 **Forbidden Cross-Domain Actions:**
 - Daedelus agents CANNOT perform system administration tasks
