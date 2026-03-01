@@ -26,7 +26,7 @@
 
 > **Policy:** Keep the 5 most recent actions regardless of age. Archive older entries.
 
-### YYYY-MM-DD HH:MM | [Agent Key] ([Agent Name])
+### YYYY-MM-DDTHH:MM:SSZ | [Agent Key] ([Agent Name])
 
 **Action:** [What was done]
 **Files:** `[file_paths]`
