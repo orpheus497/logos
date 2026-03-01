@@ -1,7 +1,4 @@
-"""
-##Script function and purpose: Base prompt for all Daedelus Orchestrator agents with .devdocs enforcement
-
-"""
+"""##Script function and purpose: Base prompt for all Daedelus Orchestrator agents with .devdocs enforcement."""
 
 ORCHESTRATOR_BASE_PROMPT = """
 ## CONSTITUTIONAL AUTHORITY: .DEVDOCS/ GOVERNANCE

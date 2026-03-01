@@ -1,7 +1,8 @@
 ##Script function and purpose: Temporal log management for agent logs with automatic archival and summarization
 
 """
-Provides utilities for managing agent log files with temporal structure:
+Provides utilities for managing agent log files with temporal structure.
+
 - Daily entries (today + last 6 days)
 - Weekly summaries (generated before archival)
 - Monthly summaries (permanent project memory)
@@ -21,7 +22,7 @@ from pathlib import Path
 class LogSection:
     """
     ##Class purpose: Contains parsed section from agent log.
-    
+
     Attributes:
         section_type: "month_summary" | "week_summary" | "daily_entry"
         date: Date of the section (datetime object)
@@ -44,7 +45,7 @@ class LogSection:
 class LogAnalysis:
     """
     ##Class purpose: Contains analysis results for an agent log file.
-    
+
     Attributes:
         agent_key: Agent identifier (e.g., "A1")
         file_path: Path to log file
@@ -78,10 +79,10 @@ class LogAnalysis:
 def parse_agent_log(log_path: Path) -> list[LogSection]:
     """
     ##Function purpose: Parse agent log file and extract temporal sections.
-    
+
     Args:
         log_path: Path to agent log file
-    
+
     Returns:
         List of LogSection objects in chronological order
     """
@@ -105,14 +106,16 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
         if re.match(r"### \w+ \d{4} Summary", line):
             ##Action purpose: Save previous section if exists
             if current_section:
-                sections.append(LogSection(
-                    section_type=current_section["type"],
-                    date=current_section["date"],
-                    content="".join(current_lines),
-                    heading=current_section["heading"],
-                    start_line=current_start,
-                    end_line=i - 1
-                ))
+                sections.append(
+                    LogSection(
+                        section_type=current_section["type"],
+                        date=current_section["date"],
+                        content="".join(current_lines),
+                        heading=current_section["heading"],
+                        start_line=current_start,
+                        end_line=i - 1,
+                    )
+                )
 
             ##Action purpose: Start new month summary section
             month_match = re.search(r"(\w+) (\d{4})", line)
@@ -123,11 +126,7 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
                 month_num = datetime.strptime(month_name, "%B").month
                 section_date = datetime(year, month_num, 1)
 
-                current_section = {
-                    "type": "month_summary",
-                    "date": section_date,
-                    "heading": line.strip()
-                }
+                current_section = {"type": "month_summary", "date": section_date, "heading": line.strip()}
                 current_lines = [line]
                 current_start = i
 
@@ -135,25 +134,23 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
         elif re.match(r"\*\*Week of \d{4}-\d{2}-\d{2}", line):
             ##Action purpose: Save previous section
             if current_section:
-                sections.append(LogSection(
-                    section_type=current_section["type"],
-                    date=current_section["date"],
-                    content="".join(current_lines),
-                    heading=current_section["heading"],
-                    start_line=current_start,
-                    end_line=i - 1
-                ))
+                sections.append(
+                    LogSection(
+                        section_type=current_section["type"],
+                        date=current_section["date"],
+                        content="".join(current_lines),
+                        heading=current_section["heading"],
+                        start_line=current_start,
+                        end_line=i - 1,
+                    )
+                )
 
             ##Action purpose: Start new week summary section
             date_match = re.search(r"(\d{4}-\d{2}-\d{2})", line)
             if date_match:
                 section_date = datetime.strptime(date_match.group(1), "%Y-%m-%d")
 
-                current_section = {
-                    "type": "week_summary",
-                    "date": section_date,
-                    "heading": line.strip()
-                }
+                current_section = {"type": "week_summary", "date": section_date, "heading": line.strip()}
                 current_lines = [line]
                 current_start = i
 
@@ -161,25 +158,23 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
         elif re.match(r"### \d{4}-\d{2}-\d{2}", line):
             ##Action purpose: Save previous section
             if current_section:
-                sections.append(LogSection(
-                    section_type=current_section["type"],
-                    date=current_section["date"],
-                    content="".join(current_lines),
-                    heading=current_section["heading"],
-                    start_line=current_start,
-                    end_line=i - 1
-                ))
+                sections.append(
+                    LogSection(
+                        section_type=current_section["type"],
+                        date=current_section["date"],
+                        content="".join(current_lines),
+                        heading=current_section["heading"],
+                        start_line=current_start,
+                        end_line=i - 1,
+                    )
+                )
 
             ##Action purpose: Start new daily entry section
             date_match = re.search(r"(\d{4}-\d{2}-\d{2})", line)
             if date_match:
                 section_date = datetime.strptime(date_match.group(1), "%Y-%m-%d")
 
-                current_section = {
-                    "type": "daily_entry",
-                    "date": section_date,
-                    "heading": line.strip()
-                }
+                current_section = {"type": "daily_entry", "date": section_date, "heading": line.strip()}
                 current_lines = [line]
                 current_start = i
 
@@ -190,14 +185,16 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
 
     ##Action purpose: Save final section
     if current_section:
-        sections.append(LogSection(
-            section_type=current_section["type"],
-            date=current_section["date"],
-            content="".join(current_lines),
-            heading=current_section["heading"],
-            start_line=current_start,
-            end_line=len(lines) - 1
-        ))
+        sections.append(
+            LogSection(
+                section_type=current_section["type"],
+                date=current_section["date"],
+                content="".join(current_lines),
+                heading=current_section["heading"],
+                start_line=current_start,
+                end_line=len(lines) - 1,
+            )
+        )
 
     return sections
 
@@ -206,11 +203,11 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
 def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
     """
     ##Function purpose: Analyze agent log file for temporal management.
-    
+
     Args:
         log_path: Path to agent log file
         agent_key: Agent identifier (e.g., "A1")
-    
+
     Returns:
         LogAnalysis object with complete analysis
     """
@@ -228,7 +225,7 @@ def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
             stale=True,
             bloated=False,
             needs_archival=False,
-            archival_candidates=[]
+            archival_candidates=[],
         )
 
     ##Action purpose: Get file stats
@@ -251,10 +248,7 @@ def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
 
     ##Action purpose: Identify archival candidates (daily entries >7 days old)
     cutoff_date = datetime.now() - timedelta(days=7)
-    archival_candidates = [
-        entry for entry in daily_entries
-        if entry.date < cutoff_date
-    ]
+    archival_candidates = [entry for entry in daily_entries if entry.date < cutoff_date]
     needs_archival = len(archival_candidates) > 0
 
     ##Action purpose: Return analysis
@@ -270,7 +264,7 @@ def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
         stale=stale,
         bloated=bloated,
         needs_archival=needs_archival,
-        archival_candidates=archival_candidates
+        archival_candidates=archival_candidates,
     )
 
 
@@ -278,11 +272,11 @@ def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
 def generate_weekly_summary(daily_entries: list[LogSection], week_start_date: datetime) -> str:
     """
     ##Function purpose: Create weekly summary from week's daily entries.
-    
+
     Args:
         daily_entries: List of daily entry sections for the week
         week_start_date: Start date of the week
-    
+
     Returns:
         Formatted weekly summary markdown
     """
@@ -369,11 +363,11 @@ def generate_weekly_summary(daily_entries: list[LogSection], week_start_date: da
 def generate_monthly_summary(week_summaries: list[LogSection], month_date: datetime) -> str:
     """
     ##Function purpose: Create monthly summary from month's weekly summaries.
-    
+
     Args:
         week_summaries: List of weekly summary sections for the month
         month_date: Date representing the month (datetime with day=1)
-    
+
     Returns:
         Formatted monthly summary markdown
     """
@@ -384,7 +378,6 @@ def generate_monthly_summary(week_summaries: list[LogSection], month_date: datet
     all_accomplishments = []
     all_files = set()
     all_collaborations = set()
-    major_decisions = []
 
     ##Loop purpose: Parse each weekly summary
     for summary in sorted_summaries:
@@ -456,19 +449,15 @@ def generate_monthly_summary(week_summaries: list[LogSection], month_date: datet
 
 
 ##Function purpose: Archive old daily entries from agent log
-def archive_daily_entries(
-    log_path: Path,
-    analysis: LogAnalysis,
-    archive_base_path: Path
-) -> tuple[bool, str]:
+def archive_daily_entries(log_path: Path, analysis: LogAnalysis, archive_base_path: Path) -> tuple[bool, str]:
     """
     ##Function purpose: Archive daily entries >7 days old, generate weekly summary.
-    
+
     Args:
         log_path: Path to agent log file
         analysis: LogAnalysis object from analyze_agent_log()
         archive_base_path: Base path for archives (e.g., .devdocs/.archive/)
-    
+
     Returns:
         Tuple of (success: bool, message: str)
     """
@@ -535,27 +524,23 @@ def archive_daily_entries(
 
 ##Function purpose: Archive weekly summaries and generate monthly summary
 def archive_weekly_summaries(
-    log_path: Path,
-    analysis: LogAnalysis,
-    archive_base_path: Path,
-    month_date: datetime
+    log_path: Path, analysis: LogAnalysis, archive_base_path: Path, month_date: datetime
 ) -> tuple[bool, str]:
     """
     ##Function purpose: Archive weekly summaries when new month starts, generate monthly summary.
-    
+
     Args:
         log_path: Path to agent log file
         analysis: LogAnalysis object
         archive_base_path: Base path for archives
         month_date: Month to archive (datetime with day=1)
-    
+
     Returns:
         Tuple of (success: bool, message: str)
     """
     ##Action purpose: Filter weekly summaries for the month
     month_summaries = [
-        s for s in analysis.week_summaries
-        if s.date.year == month_date.year and s.date.month == month_date.month
+        s for s in analysis.week_summaries if s.date.year == month_date.year and s.date.month == month_date.month
     ]
 
     ##Condition purpose: Check if any summaries to archive
@@ -607,10 +592,10 @@ def archive_weekly_summaries(
 def scan_all_agent_logs(devdocs_path: Path) -> list[LogAnalysis]:
     """
     ##Function purpose: Analyze all agent logs in .devdocs/AGENT_LOGS/.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         List of LogAnalysis objects for all agent logs
     """
