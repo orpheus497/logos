@@ -2,7 +2,7 @@
 
 # DEV_STATE.md - PROJECT STATE SNAPSHOT
 
-**Last Updated:** YYYY-MM-DD HH:MM by E1 (Orchestrator)  
+**Last Updated:** YYYY-MM-DDTHH:MM:SSZ by E1 (Orchestrator)  
 **Current Phase:** [Planning / Development / Testing / Review / Maintenance]  
 **Active Workflow:** [Diamond / Funnel / Maintenance / None]  
 **Project Version:** [Current version]
@@ -27,6 +27,7 @@
 > **Policy:** Keep the 5 most recent actions regardless of age. Archive older entries.
 
 ### YYYY-MM-DD HH:MM | [Agent Key] ([Agent Name])
+
 **Action:** [What was done]
 **Files:** `[file_paths]`
 **Next Steps:** [What should happen next]
@@ -125,6 +126,7 @@
 ## 📈 PROJECT METRICS
 
 ### Task Statistics
+
 - **Total Tasks:** 0
 - **Completed:** 0
 - **In Progress:** 0
@@ -132,20 +134,23 @@
 - **Not Started:** 0
 
 ### Progress
+
 - **Overall Completion:** 0%
 
 ---
 
 ## 🔍 COHERENCE STATUS
 
-**Last Coherence Audit:** YYYY-MM-DD HH:MM by E1 (Orchestrator)
+**Last Coherence Audit:** YYYY-MM-DDTHH:MM:SSZ by E1 (Orchestrator)
 
 **Overall Health:** ✅ **HEALTHY**
 
 ### Issues
+
 - **None detected**
 
 ### Next Maintenance
+
 - **Scheduled:** [Date]
 - **Action:** Archive entries beyond the 5 most recent, generate weekly summaries
 

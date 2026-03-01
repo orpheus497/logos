@@ -94,7 +94,7 @@ def generate_refusal(response: RefusalResponse) -> str:
     ]
 
     ##Condition purpose: Add user request summary if provided
-    if response.user_request_summary and response.user_request_summary.strip():
+    if isinstance(response.user_request_summary, str) and response.user_request_summary.strip():
         message_parts.extend(
             [
                 f'Your request: "{response.user_request_summary}"',

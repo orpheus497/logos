@@ -9,6 +9,8 @@ on:
   push:
     branches: [main, develop, 'feature/**', 'task*/**']
   pull_request:
+    # task*/** branches are source/feature branches (not PR targets), so they
+    # are intentionally omitted here; pushes to task branches are covered above.
     branches: [main, develop, 'feature/**']
 
 # Define jobs to run in parallel
