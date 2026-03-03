@@ -1,7 +1,8 @@
 ##Script function and purpose: .devdocs bloat detection and prevention utilities
 
 """
-Provides utilities for Orchestrator to detect and prevent .devdocs/ folder bloat:
+Provides utilities for Orchestrator to detect and prevent .devdocs/ folder bloat.
+
 - Calculate folder and file sizes
 - Identify oversized files
 - Detect stale content
@@ -12,6 +13,7 @@ Provides utilities for Orchestrator to detect and prevent .devdocs/ folder bloat
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 ##Action purpose: Define bloat thresholds
 WARN_SIZE_MB = 10
@@ -27,14 +29,14 @@ COMPLETED_TASK_ARCHIVE_DAYS = 30
 @dataclass
 class BloatAnalysis:
     """
-    ##Class purpose: Structured bloat analysis results. 
-    
+    ##Class purpose: Structured bloat analysis results.
+
     Attributes:
         total_size_mb: Total size of .devdocs/ folder in MB
         file_count: Number of files in .devdocs/
         oversized_files: List of files exceeding size thresholds
         stale_files: List of files not modified in >STALE_DAYS
-        risk_level: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"
+        risk_level: "LOW" | "MEDIUM" | "CRITICAL"
         recommendations: List of recommended cleanup actions
         agent_log_sizes: Dict of agent_key -> size_kb
         largest_logs: Top 5 largest agent logs
@@ -42,22 +44,22 @@ class BloatAnalysis:
 
     total_size_mb: float
     file_count: int
-    oversized_files: list[dict[str, any]]
-    stale_files: list[dict[str, any]]
+    oversized_files: list[dict[str, Any]]
+    stale_files: list[dict[str, Any]]
     risk_level: str
     recommendations: list[str]
     agent_log_sizes: dict[str, float]
-    largest_logs: list[dict[str, any]]
+    largest_logs: list[dict[str, Any]]
 
 
 ##Function purpose: Calculate total .devdocs/ folder size
 def calculate_devdocs_size(devdocs_path: Path = Path(".devdocs")) -> float:
     """
     ##Function purpose: Recursively calculate .devdocs/ folder size.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         Total size in megabytes (float)
     """
@@ -78,13 +80,13 @@ def calculate_devdocs_size(devdocs_path: Path = Path(".devdocs")) -> float:
 
 
 ##Function purpose: Find files exceeding size thresholds
-def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, any]]:
+def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, Any]]:
     """
     ##Function purpose: Scan .devdocs/ for files exceeding size limits.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         List of dicts: [{"path": str, "size_kb": float, "severity": str}, ...]
     """
@@ -105,23 +107,21 @@ def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str
         ##Condition purpose: Check if file exceeds warning threshold
         if size_kb > FILE_WARN_KB:
             severity = "CRITICAL" if size_kb > FILE_CRITICAL_KB else "WARN"
-            oversized.append({
-                "path": str(file_path.relative_to(devdocs_path)),
-                "size_kb": round(size_kb, 2),
-                "severity": severity
-            })
+            oversized.append(
+                {"path": str(file_path.relative_to(devdocs_path)), "size_kb": round(size_kb, 2), "severity": severity}
+            )
 
     return oversized
 
 
 ##Function purpose: Find files not modified recently
-def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, any]]:
+def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, Any]]:
     """
     ##Function purpose: Find files not modified in >STALE_DAYS.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         List of dicts: [{"path": str, "age_days": int, "last_modified": str}, ...]
     """
@@ -143,11 +143,13 @@ def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, an
         ##Condition purpose: Check if file is older than cutoff
         if modified_time < cutoff_date:
             age_days = (datetime.now() - modified_time).days
-            stale.append({
-                "path": str(file_path.relative_to(devdocs_path)),
-                "age_days": age_days,
-                "last_modified": modified_time.strftime("%Y-%m-%d %H:%M")
-            })
+            stale.append(
+                {
+                    "path": str(file_path.relative_to(devdocs_path)),
+                    "age_days": age_days,
+                    "last_modified": modified_time.strftime("%Y-%m-%d %H:%M"),
+                }
+            )
 
     return stale
 
@@ -156,10 +158,10 @@ def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, an
 def analyze_agent_log_sizes(devdocs_path: Path = Path(".devdocs")) -> dict[str, float]:
     """
     ##Function purpose: Calculate size of each agent log file.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         Dict mapping agent_key to size in KB
     """
@@ -190,10 +192,10 @@ def analyze_agent_log_sizes(devdocs_path: Path = Path(".devdocs")) -> dict[str, 
 def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
     """
     ##Function purpose: Comprehensive .devdocs/ health analysis.
-    
+
     Args:
         devdocs_path: Path to .devdocs/ folder
-    
+
     Returns:
         BloatAnalysis object with complete results
     """
@@ -206,9 +208,7 @@ def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
 
     ##Action purpose: Find largest logs
     largest_logs = sorted(
-        [{"agent": k, "size_kb": v} for k, v in agent_log_sizes.items()],
-        key=lambda x: x["size_kb"],
-        reverse=True
+        [{"agent": k, "size_kb": v} for k, v in agent_log_sizes.items()], key=lambda x: x["size_kb"], reverse=True
     )[:5]
 
     ##Action purpose: Assess risk level
@@ -231,10 +231,14 @@ def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
                 recommendations.append(f"URGENT: {file['path']} is {file['size_kb']}KB (>{FILE_CRITICAL_KB}KB)")
 
     if total_size > WARN_SIZE_MB:
-        recommendations.append(f"Total .devdocs/ size is {round(total_size, 2)}MB (warning threshold: {WARN_SIZE_MB}MB)")
+        recommendations.append(
+            f"Total .devdocs/ size is {round(total_size, 2)}MB (warning threshold: {WARN_SIZE_MB}MB)"
+        )
 
     if total_size > CRITICAL_SIZE_MB:
-        recommendations.append(f"CRITICAL: Total size {round(total_size, 2)}MB exceeds {CRITICAL_SIZE_MB}MB - immediate archival required")
+        recommendations.append(
+            f"CRITICAL: Total size {round(total_size, 2)}MB exceeds {CRITICAL_SIZE_MB}MB - immediate archival required"
+        )
 
     if not recommendations:
         recommendations.append("No bloat detected - .devdocs/ health is good")
@@ -248,7 +252,7 @@ def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
         risk_level=risk_level,
         recommendations=recommendations,
         agent_log_sizes=agent_log_sizes,
-        largest_logs=largest_logs
+        largest_logs=largest_logs,
     )
 
 
@@ -256,20 +260,15 @@ def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
 def generate_health_report(analysis: BloatAnalysis) -> str:
     """
     ##Function purpose: Create formatted health report from analysis.
-    
+
     Args:
         analysis: BloatAnalysis object from analyze_bloat()
-    
+
     Returns:
         Formatted markdown health report
     """
     ##Action purpose: Determine status emoji
-    status_emoji = {
-        "LOW": "✅",
-        "MEDIUM": "⚠️",
-        "HIGH": "🔶",
-        "CRITICAL": "🚨"
-    }
+    status_emoji = {"LOW": "✅", "MEDIUM": "⚠️", "CRITICAL": "🚨"}
 
     ##Action purpose: Build report
     report = f"""

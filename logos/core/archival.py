@@ -2,29 +2,25 @@
 
 """
 Provides functions for archiving .devdocs/ files while maintaining retrievability.
+
 Orchestrator uses these to move obsolete files to .archive/ folder.
 """
 
 import shutil
-from pathlib import Path
 from datetime import datetime, timedelta
-from typing import List, Optional, Dict
+from pathlib import Path
 
 
 ##Function purpose: Archive single file with timestamp
-def archive_file(
-    file_path: Path,
-    archive_base_path: Path,
-    reason: str = "Manual archival"
-) -> bool:
+def archive_file(file_path: Path, archive_base_path: Path, reason: str = "Manual archival") -> bool:
     """
     ##Function purpose: Move file to .archive/ with timestamp prefix.
-    
+
     Args:
         file_path: Path to file to archive (relative to .devdocs/)
         archive_base_path: Path to .archive/ folder
         reason: Reason for archival (logged in archival_log.md)
-    
+
     Returns:
         True if successful, False if failed
     """
@@ -62,7 +58,7 @@ def archive_file(
         filename=file_path.name,
         timestamp=timestamp,
         reason=reason,
-        archive_log_path=archive_base_path / "archival_log.md"
+        archive_log_path=archive_base_path / "archival_log.md",
     )
 
     print(f"✅ Archived {file_path.name} → {destination}")
@@ -70,19 +66,15 @@ def archive_file(
 
 
 ##Function purpose: Archive multiple files in batch
-def archive_files_batch(
-    file_paths: list[Path],
-    archive_base_path: Path,
-    reason: str
-) -> dict[str, bool]:
+def archive_files_batch(file_paths: list[Path], archive_base_path: Path, reason: str) -> dict[str, bool]:
     """
     ##Function purpose: Archive multiple files with single timestamp.
-    
+
     Args:
         file_paths: List of file paths to archive
         archive_base_path: Path to .archive/ folder
         reason: Reason for batch archival
-    
+
     Returns:
         Dict mapping file paths to success status
     """
@@ -97,21 +89,17 @@ def archive_files_batch(
 
 
 ##Function purpose: Retrieve file from archive
-def retrieve_from_archive(
-    filename: str,
-    archive_base_path: Path,
-    target_date: str | None = None
-) -> str | None:
+def retrieve_from_archive(filename: str, archive_base_path: Path, target_date: str | None = None) -> str | None:
     """
     ##Function purpose: Retrieve archived file content.
-    
+
     Operator-only function to retrieve historical context when needed.
-    
+
     Args:
         filename: Name of file to retrieve
         archive_base_path: Path to .archive/ folder
         target_date: Optional date to search (YYYY-MM-DD), searches all if None
-    
+
     Returns:
         File content if found, None if not found
     """
@@ -156,15 +144,10 @@ def retrieve_from_archive(
 
 
 ##Function purpose: Log archival action
-def log_archival(
-    filename: str,
-    timestamp: str,
-    reason: str,
-    archive_log_path: Path
-):
+def log_archival(filename: str, timestamp: str, reason: str, archive_log_path: Path):
     """
     ##Function purpose: Append archival action to governance log.
-    
+
     Args:
         filename: Name of archived file
         timestamp: Date of archival (YYYY-MM-DD)
@@ -195,10 +178,10 @@ def log_archival(
 def list_archived_files(archive_base_path: Path) -> dict[str, list[str]]:
     """
     ##Function purpose: Get list of all archived files organized by date.
-    
+
     Args:
         archive_base_path: Path to .archive/ folder
-    
+
     Returns:
         Dict mapping date (YYYY-MM-DD) to list of filenames
     """
@@ -222,17 +205,14 @@ def list_archived_files(archive_base_path: Path) -> dict[str, list[str]]:
 
 
 ##Function purpose: Clean old archives
-def clean_old_archives(
-    archive_base_path: Path,
-    days_to_keep: int = 90
-) -> Tuple[int, int]:
+def clean_old_archives(archive_base_path: Path, days_to_keep: int = 90) -> tuple[int, int]:
     """
     ##Function purpose: Remove archive directories older than specified days.
-    
+
     Args:
         archive_base_path: Path to .archive/ folder
         days_to_keep: Number of days to retain (default: 90)
-    
+
     Returns:
         Tuple of (directories_removed, files_removed)
     """
@@ -240,7 +220,7 @@ def clean_old_archives(
     if not archive_base_path.exists():
         return 0, 0
 
-    cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+    cutoff_date = (datetime.now() - timedelta(days=days_to_keep)).date()
     dirs_removed = 0
     files_removed = 0
 
@@ -257,7 +237,7 @@ def clean_old_archives(
             continue
 
         ##Condition purpose: Remove if older than cutoff
-        if dir_date < cutoff_date:
+        if dir_date.date() < cutoff_date:
             ##Action purpose: Count files before deletion
             file_count = len(list(date_dir.iterdir()))
 
@@ -271,7 +251,7 @@ def clean_old_archives(
                 filename=f"Cleaned {file_count} files from {date_dir.name}/",
                 timestamp=datetime.now().strftime("%Y-%m-%d"),
                 reason=f"Archive cleanup (>{days_to_keep} days old)",
-                archive_log_path=archive_base_path / "archival_log.md"
+                archive_log_path=archive_base_path / "archival_log.md",
             )
 
     return dirs_removed, files_removed
