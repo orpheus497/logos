@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from logos.core.temporal_logs import (
     LogSection,
@@ -21,7 +21,8 @@ def test_parse_agent_log(tmp_path):
 def test_analyze_agent_log(tmp_path):
     """##Function purpose: Verify analyze_agent_log returns correct analysis for agent."""
     log_file = tmp_path / "A1.md"
-    log_file.write_text("### 2026-02-19\nContent here")
+    old_date = (datetime.now() - timedelta(days=8)).strftime("%Y-%m-%d")
+    log_file.write_text(f"### {old_date}\nContent here")
     analysis = analyze_agent_log(log_file, "A1")
     assert analysis.agent_key == "A1"
     assert analysis.needs_archival

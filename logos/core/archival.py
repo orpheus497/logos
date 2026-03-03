@@ -220,7 +220,7 @@ def clean_old_archives(archive_base_path: Path, days_to_keep: int = 90) -> tuple
     if not archive_base_path.exists():
         return 0, 0
 
-    cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+    cutoff_date = (datetime.now() - timedelta(days=days_to_keep)).date()
     dirs_removed = 0
     files_removed = 0
 
@@ -237,7 +237,7 @@ def clean_old_archives(archive_base_path: Path, days_to_keep: int = 90) -> tuple
             continue
 
         ##Condition purpose: Remove if older than cutoff
-        if dir_date < cutoff_date:
+        if dir_date.date() < cutoff_date:
             ##Action purpose: Count files before deletion
             file_count = len(list(date_dir.iterdir()))
 

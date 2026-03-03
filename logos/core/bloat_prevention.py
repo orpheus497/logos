@@ -13,6 +13,7 @@ Provides utilities for Orchestrator to detect and prevent .devdocs/ folder bloat
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 ##Action purpose: Define bloat thresholds
 WARN_SIZE_MB = 10
@@ -35,7 +36,7 @@ class BloatAnalysis:
         file_count: Number of files in .devdocs/
         oversized_files: List of files exceeding size thresholds
         stale_files: List of files not modified in >STALE_DAYS
-        risk_level: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"
+        risk_level: "LOW" | "MEDIUM" | "CRITICAL"
         recommendations: List of recommended cleanup actions
         agent_log_sizes: Dict of agent_key -> size_kb
         largest_logs: Top 5 largest agent logs
@@ -43,12 +44,12 @@ class BloatAnalysis:
 
     total_size_mb: float
     file_count: int
-    oversized_files: list[dict[str, any]]
-    stale_files: list[dict[str, any]]
+    oversized_files: list[dict[str, Any]]
+    stale_files: list[dict[str, Any]]
     risk_level: str
     recommendations: list[str]
     agent_log_sizes: dict[str, float]
-    largest_logs: list[dict[str, any]]
+    largest_logs: list[dict[str, Any]]
 
 
 ##Function purpose: Calculate total .devdocs/ folder size
@@ -79,7 +80,7 @@ def calculate_devdocs_size(devdocs_path: Path = Path(".devdocs")) -> float:
 
 
 ##Function purpose: Find files exceeding size thresholds
-def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, any]]:
+def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, Any]]:
     """
     ##Function purpose: Scan .devdocs/ for files exceeding size limits.
 
@@ -114,7 +115,7 @@ def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str
 
 
 ##Function purpose: Find files not modified recently
-def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, any]]:
+def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, Any]]:
     """
     ##Function purpose: Find files not modified in >STALE_DAYS.
 
@@ -267,7 +268,7 @@ def generate_health_report(analysis: BloatAnalysis) -> str:
         Formatted markdown health report
     """
     ##Action purpose: Determine status emoji
-    status_emoji = {"LOW": "✅", "MEDIUM": "⚠️", "HIGH": "🔶", "CRITICAL": "🚨"}
+    status_emoji = {"LOW": "✅", "MEDIUM": "⚠️", "CRITICAL": "🚨"}
 
     ##Action purpose: Build report
     report = f"""
