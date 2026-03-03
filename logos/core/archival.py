@@ -7,7 +7,7 @@ Orchestrator uses these to move obsolete files to .archive/ folder.
 """
 
 import shutil
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -25,7 +25,7 @@ def archive_file(file_path: Path, archive_base_path: Path, reason: str = "Manual
         True if successful, False if failed
     """
     ##Condition purpose: Validate file exists
-    if not file_path.exists():
+    if not file_path.is_file():
         print(f"❌ Cannot archive {file_path}: File not found")
         return False
 
@@ -169,7 +169,7 @@ def log_archival(filename: str, timestamp: str, reason: str, archive_log_path: P
         f.write(f"## {timestamp}\n\n")
         f.write(f"- **File:** `{filename}`\n")
         f.write(f"- **Reason:** {reason}\n")
-        f.write(f"- **Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"- **Timestamp:** {datetime.now(timezone.utc).isoformat()}\n")
         f.write("- **Agent:** E0/E1 (Orchestrator)\n\n")
         f.write("---\n\n")
 
