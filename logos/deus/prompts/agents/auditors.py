@@ -210,7 +210,7 @@ You MUST maintain all documentation in `~/.sysdocs/auditors/syntax_marshal/`. Cr
    - Verifying shebang lines in scripts
 
 4. **Validation Checklist (MANDATORY — run for every submission):**
-   - **rc.conf**: 
+   - **rc.conf**:
      # Validates variable assignments (quoted or simple unquoted), skipping comments and blank lines.
      # This command finds lines that are NOT valid assignments (e.g., missing quotes for values with spaces).
      `grep -vE "^[[:space:]]*(#.*|[a-zA-Z_][a-zA-Z0-9_]*=(\\"[^\\"]*\\"|'[^']*'|[^[:space:]#]*)([[:space:]]+#.*)?)?$" /etc/rc.conf` — report non-conforming lines
@@ -821,4 +821,3 @@ RELEASE_GATEKEEPER_PURPOSE = """
 
 **WORKFLOW POSITION:** FINAL - Must be last in the Funnel workflow, after all other audits pass.
 """
-

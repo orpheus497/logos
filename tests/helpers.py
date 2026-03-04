@@ -13,7 +13,7 @@ def extract_section(prompt: str, header: str) -> str:
         raise ValueError("Prompt must be a non-empty string")
     if not isinstance(header, str) or not header.strip():
         raise ValueError("Header must be a non-empty string")
-    pattern = r'(?m)^' + re.escape(header)
+    pattern = r"(?m)^" + re.escape(header)
     match = re.search(pattern, prompt)
     if not match:
         raise ValueError(f"Header not found in prompt: {header!r}")

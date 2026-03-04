@@ -45,6 +45,7 @@ def test_agent_has_scope_boundaries_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains the SCOPE BOUNDARIES section."""
     assert "## SCOPE BOUNDARIES" in prompt, f"Agent {agent_key} missing SCOPE BOUNDARIES section"
 
+
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_in_scope_items(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains at least 3 IN SCOPE items."""
@@ -54,9 +55,8 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", in_scope_text, flags=re.MULTILINE)
-    assert len(items) >= 3, (
-        f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
-    )
+    assert len(items) >= 3, f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 3"
+
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_forbidden_actions(agent_key, prompt):
@@ -66,9 +66,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", forbidden_text, flags=re.MULTILINE)
-    assert len(items) >= 10, (
-        f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
-    )
+    assert len(items) >= 10, f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     redirects = forbidden_text.count("→")
     assert redirects >= len(items), (
         f"Agent {agent_key} has {redirects} redirects or prohibition markers, expected at least {len(items)} (one per forbidden action)"
@@ -78,10 +76,12 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
         f"Agent {agent_key} has {why_count} 'Why:' explanations, expected at least {len(items)} (one per forbidden action)"
     )
 
+
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_collaboration_section(agent_key, prompt):
     """##Function purpose: Verify that the agent prompt contains REQUIRES COLLABORATION."""
     assert "### 🤝 REQUIRES COLLABORATION:" in prompt, f"Agent {agent_key} missing COLLABORATION section"
+
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_refusal_template(agent_key, prompt):

@@ -11,7 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Phase 1 In Progress: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
+- **Phase 2 Complete: .devdocs Governance System**
+- Implemented Temporal Log Management System (`logos/core/temporal_logs.py`) for automated summarization (daily, weekly, monthly) and archival.
+- Implemented `.devdocs` bloat prevention and file archival utilities (`logos/core/bloat_prevention.py`, `logos/core/archival.py`).
+- Enhanced all base prompts (`logos/daedelus/prompts/base_orchestrator.py`, `logos/daedelus/prompts/base_maintenance.py`, `logos/deus/prompts/base_system_orchestrator.py`, `logos/deus/prompts/base_maintenance.py`) with strict constitutional `.devdocs` priority read rules.
+- Orchestrator agents (E1/E0) updated with specific temporal management and bloat prevention routines.
+- `logos/core/devdocs.py` with validation and structural management functions for `.devdocs/`
+- Standardized templates for `.devdocs/` initialization including `DEV_STATE.md` and workflow tracking structures
+- Tests for `.devdocs` utilities in `tests/test_core/test_devdocs.py`
+- CONSTITUTION.md Article VII: .DEVDOCS GOVERNANCE
+- `README.md` .devdocs Governance System documentation
+
+- **Phase 1 Complete: Agent Boundary Enforcement System** — all 50 agents across both domains now have explicit scope boundaries with IN SCOPE, FORBIDDEN ACTIONS, REQUIRES COLLABORATION, and REFUSAL TEMPLATE sections
 - Refusal response generation utility (`logos/core/refusal.py`)
 - Complete agent boundaries reference documentation (`docs/AGENT_BOUNDARIES.md`)
 - Agent recommendations cross-reference guide (`docs/AGENT_RECOMMENDATIONS.md`)
@@ -80,6 +91,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Enhanced `E1 The Orchestrator` (Daedelus) and `E1 The System Orchestrator` (DEUS) with constitutional authority over `.devdocs/`
+- Updated agent definition descriptions for Orchestrators to emphasize governance
+- Modified `docs/AGENT_BOUNDARIES.md` to explicitly list Orchestrator's `.devdocs` management scope and exclusive `.archive/` access
 - Version set to 0.2.0.dev0 for active development
 - Orchestrator agent now has activation prompt with scope boundaries
 - Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).

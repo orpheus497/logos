@@ -67,9 +67,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", in_scope_text, re.MULTILINE)
-    assert len(items) >= 5, (
-        f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
-    )
+    assert len(items) >= 5, f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
@@ -79,9 +77,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", forbidden_text, re.MULTILINE)
-    assert len(items) >= 10, (
-        f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
-    )
+    assert len(items) >= 10, f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     arrow_markers = forbidden_text.count("→")
     assert arrow_markers >= len(items), (
         f"Agent {agent_key} has {arrow_markers} arrow marker(s) (→) for "
@@ -101,9 +97,7 @@ def test_agent_has_collaboration_section(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing COLLABORATION section"
     collab_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", collab_text, re.MULTILINE)
-    assert len(items) >= 3, (
-        f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
-    )
+    assert len(items) >= 3, f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
@@ -118,19 +112,22 @@ def test_agent_has_refusal_template(agent_key, prompt):
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
 def test_agent_has_sysdocs_boundary(agent_key, prompt):
-    """##Function purpose: Verify that every agent has ~/.sysdocs/ management boundary."""
+    """##Function purpose: Verify that every agent has ~/.sysdocs/ or .devdocs/ management boundary."""
+    # E1 governs .devdocs/ (project-level); other agents reference ~/.sysdocs/ (system-level)
+    if agent_key == "E1":
+        assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
+        return
     assert "~/.sysdocs/" in prompt, f"Agent {agent_key} missing ~/.sysdocs/ reference"
     sysdocs_match = re.search(
-        r'(?mi)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*',
-        prompt)
+        r"(?mi)^[ \t]*(?:\#{1,6}\s+|\d+\.\s+\*{0,2}|[-*+]\s+|>\s+)~/\.sysdocs/\s*\w+(?:\s+\w+)*", prompt
+    )
     if sysdocs_match:
         block = extract_section(prompt, sysdocs_match.group())
-        if re.search(r'\borchestrator\b|\bE1\b', block, re.IGNORECASE):
+        if re.search(r"\borchestrator\b|\bE1\b", block, re.IGNORECASE):
             return
     match = re.search(
         r"(?:~/\.sysdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:~/\.sysdocs/)",
-        prompt, re.IGNORECASE
+        prompt,
+        re.IGNORECASE,
     )
-    assert match is not None, (
-        f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ context"
-        )
+    assert match is not None, f"Agent {agent_key} missing Orchestrator reference in ~/.sysdocs/ context"
