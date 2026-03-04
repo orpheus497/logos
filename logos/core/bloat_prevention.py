@@ -64,7 +64,7 @@ def calculate_devdocs_size(devdocs_path: Path = Path(".devdocs")) -> float:
         Total size in megabytes (float)
     """
     ##Condition purpose: Check if folder exists
-    if not devdocs_path.exists():
+    if not devdocs_path.is_dir():
         return 0.0
 
     total_bytes = 0
@@ -93,7 +93,7 @@ def find_oversized_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str
     oversized = []
 
     ##Condition purpose: Check if folder exists
-    if not devdocs_path.exists():
+    if not devdocs_path.is_dir():
         return oversized
 
     ##Loop purpose: Check each file against thresholds
@@ -129,7 +129,7 @@ def find_stale_files(devdocs_path: Path = Path(".devdocs")) -> list[dict[str, An
     cutoff_date = datetime.now() - timedelta(days=STALE_DAYS)
 
     ##Condition purpose: Check if folder exists
-    if not devdocs_path.exists():
+    if not devdocs_path.is_dir():
         return stale
 
     ##Loop purpose: Check modification time of each file
@@ -169,7 +169,7 @@ def analyze_agent_log_sizes(devdocs_path: Path = Path(".devdocs")) -> dict[str, 
     log_sizes = {}
 
     ##Condition purpose: Check if folder exists
-    if not agent_logs_path.exists():
+    if not agent_logs_path.is_dir():
         return log_sizes
 
     ##Loop purpose: Scan all group folders
@@ -201,7 +201,7 @@ def analyze_bloat(devdocs_path: Path = Path(".devdocs")) -> BloatAnalysis:
     """
     ##Action purpose: Gather all metrics
     total_size = calculate_devdocs_size(devdocs_path)
-    file_count = len(list(devdocs_path.rglob("*.md"))) if devdocs_path.exists() else 0
+    file_count = len(list(devdocs_path.rglob("*.md"))) if devdocs_path.is_dir() else 0
     oversized = find_oversized_files(devdocs_path)
     stale = find_stale_files(devdocs_path)
     agent_log_sizes = analyze_agent_log_sizes(devdocs_path)
