@@ -24,9 +24,9 @@ def archive_file(file_path: Path, archive_base_path: Path, reason: str = "Manual
     Returns:
         True if successful, False if failed
     """
-    ##Condition purpose: Validate file exists
+    ##Condition purpose: Validate file exists and is a regular file
     if not file_path.is_file():
-        print(f"❌ Cannot archive {file_path}: File not found")
+        print(f"❌ Cannot archive {file_path}: File not found or is not a regular file")
         return False
 
     ##Action purpose: Create timestamped archive directory

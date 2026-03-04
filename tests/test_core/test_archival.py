@@ -23,6 +23,26 @@ def test_archive_file(tmp_path):
     assert archived_files[0].read_text(encoding="utf-8") == "content"
 
 
+def test_archive_file_rejects_directory(tmp_path):
+    """##Function purpose: Verify archive_file returns False when path is a directory."""
+    dir_path = tmp_path / "not_a_file"
+    dir_path.mkdir()
+
+    archive_base = tmp_path / ".archive"
+    success = archive_file(dir_path, archive_base, "Testing")
+    assert not success
+    assert not archive_base.exists()
+
+
+def test_archive_file_rejects_nonexistent(tmp_path):
+    """##Function purpose: Verify archive_file returns False when path does not exist."""
+    missing = tmp_path / "nonexistent.md"
+    archive_base = tmp_path / ".archive"
+    success = archive_file(missing, archive_base, "Testing")
+    assert not success
+    assert not archive_base.exists()
+
+
 def test_list_archived_files(tmp_path):
     """##Function purpose: Verify list_archived_files returns organized archive contents."""
     archive_base = tmp_path / ".archive"
