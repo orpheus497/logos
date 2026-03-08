@@ -11,6 +11,7 @@ prompt strings ready for AI model consumption.
 
 import re
 
+from logos.core.devdocs import validate_devdocs_structure
 from logos.core.factions import FACTIONS, apply_faction_modifiers
 from logos.core.identity import SystemIdentity
 
@@ -208,6 +209,21 @@ def build_complete_prompt(
     ##Step purpose: and faction modifiers in the correct order for optimal AI model understanding
     ##Action purpose: Start with agent prompt
     complete_prompt = agent_prompt
+
+    ##Action purpose: Validate .devdocs/ structure and add warning if needed
+    devdocs_validation = validate_devdocs_structure()
+    if not devdocs_validation.exists or not devdocs_validation.valid_structure:
+        warning_msg = "\n\n⚠️ **SYSTEM WARNING:** `.devdocs/` "
+        if not devdocs_validation.exists:
+            warning_msg += "folder is MISSING. "
+        else:
+            warning_msg += "structure is INVALID or incomplete. "
+        
+        warning_msg += "The Orchestrator (E1) must be invoked to initialize or repair the project governance structure.\n"
+        if devdocs_validation.missing_components:
+            warning_msg += f"Missing components: {', '.join(devdocs_validation.missing_components)}\n"
+        
+        complete_prompt = warning_msg + complete_prompt
 
     ##Condition purpose: Adapt DEUS prompts for detected OS
     if domain and domain.lower() == "deus" and identity:
