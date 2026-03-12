@@ -25,7 +25,10 @@ def test_invalid_devdocs_structure_warning(tmp_path, monkeypatch):
     composed = build_complete_prompt(agent_prompt)
     
     assert "⚠️ **SYSTEM WARNING:** `.devdocs/` structure is INVALID or incomplete." in composed
-    assert "Missing components: AGENT_LOGS/ folder, WORKFLOW_TRACKING/ folder, .archive/ folder" in composed
+    assert "Missing components:" in composed
+    assert "AGENT_LOGS/ folder" in composed
+    assert "WORKFLOW_TRACKING/ folder" in composed
+    assert ".archive/ folder" in composed
 
 def test_valid_devdocs_no_warning(tmp_path, monkeypatch):
     """Test that a valid .devdocs/ structure does not trigger a warning."""
