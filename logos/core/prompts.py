@@ -192,6 +192,7 @@ def build_complete_prompt(
     intelligently adapts prompts based on detected OS (FreeBSD vs Linux).
 
     Composition order:
+    0. .devdocs/ governance warning (prepended if structure is missing or invalid)
     1. Agent prompt (base + activation) - OS-adapted if DEUS
     2. Identity context (if provided)
     3. Faction modifiers (if provided)
@@ -203,7 +204,9 @@ def build_complete_prompt(
         domain: Optional domain name ("daedelus" or "deus") for OS adaptation
 
     Returns:
-        Complete prompt string ready for AI model
+        Complete prompt string ready for AI model. If the current working directory
+        lacks a valid `.devdocs/` governance structure, a system warning is prepended
+        instructing the Orchestrator (E1) to initialize or repair it.
     """
     ##Action purpose: Composes final prompt by combining agent prompt, identity context,
     ##Step purpose: and faction modifiers in the correct order for optimal AI model understanding
@@ -218,11 +221,13 @@ def build_complete_prompt(
             warning_msg += "folder is MISSING. "
         else:
             warning_msg += "structure is INVALID or incomplete. "
-        
-        warning_msg += "The Orchestrator (E1) must be invoked to initialize or repair the project governance structure.\n"
+
+        warning_msg += (
+            "The Orchestrator (E1) must be invoked to initialize or repair the project governance structure.\n"
+        )
         if devdocs_validation.missing_components:
             warning_msg += f"Missing components: {', '.join(devdocs_validation.missing_components)}\n"
-        
+
         complete_prompt = warning_msg + complete_prompt
 
     ##Condition purpose: Adapt DEUS prompts for detected OS
