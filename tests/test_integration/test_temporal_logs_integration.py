@@ -47,7 +47,7 @@ def test_temporal_log_lifecycle_integration(tmp_path):
     assert len(analysis.daily_entries) == 11
     assert analysis.needs_archival is True
     # The oldest 4 entries (10, 9, 8, 7 days ago) should be archival candidates
-    assert len(analysis.archival_candidates) >= 3
+    assert len(analysis.archival_candidates) == 4
     
     # 2. Archive daily entries (generates weekly summary)
     success, msg = archive_daily_entries(log_path, analysis, archive)
