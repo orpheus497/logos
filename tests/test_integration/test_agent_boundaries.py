@@ -239,13 +239,13 @@ class TestCaseInsensitiveLookup:
     @pytest.mark.parametrize("variant", ["a1", "A1"])
     def test_daedelus_case_insensitive(self, variant):
         """##Function purpose: Verify get_agent accepts lowercase and uppercase Daedelus key variants."""
-        agent = dae_get_agent(variant.strip())
+        agent = dae_get_agent(variant)
         assert agent is not None
 
     @pytest.mark.parametrize("variant", ["e5", "E5"])
     def test_deus_case_insensitive(self, variant):
         """##Function purpose: Verify get_agent accepts lowercase and uppercase DEUS key variants."""
-        agent = deus_get_agent(variant.strip())
+        agent = deus_get_agent(variant)
         assert agent is not None
 
     def test_invalid_key_returns_none_daedelus(self):

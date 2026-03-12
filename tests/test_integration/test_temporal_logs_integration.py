@@ -21,7 +21,7 @@ def test_temporal_log_lifecycle_integration(tmp_path):
     agent_key = "A1"
     log_path = agent_logs / f"{agent_key}.md"
 
-    # Fixed "now" so archival cutoff (>7 days) is deterministic
+    # Fixed "now" so archival cutoff (>= 7 days old) is deterministic
     now = datetime(2023, 10, 27, 12, 0, 0)
     log_content = f"# Agent {agent_key} - Working Log\n\n## DAILY ENTRIES\n\n"
 
@@ -35,7 +35,8 @@ def test_temporal_log_lifecycle_integration(tmp_path):
 
     log_path.write_text(log_content)
 
-    # Patch datetime.now() inside temporal_logs so the cutoff is relative to our fixed `now`
+    # Patch the `datetime` symbol in temporal_logs (not the C type directly, which is immutable)
+    # so that datetime.now() returns our fixed `now`; wraps= keeps all other datetime behaviour.
     with patch("logos.core.temporal_logs.datetime", wraps=datetime) as mock_dt:
         mock_dt.now.return_value = now
 
@@ -45,7 +46,8 @@ def test_temporal_log_lifecycle_integration(tmp_path):
     assert analysis.agent_key == agent_key
     assert len(analysis.daily_entries) == 11
     assert analysis.needs_archival is True
-    # The oldest 4 entries (days 10, 9, 8, 7 ago) should be archival candidates
+    # Entries from days 10, 9, 8, 7 ago are candidates: their midnight timestamps
+    # are < cutoff (noon 7 days ago), so exactly 4 entries are >= 7 days old.
     assert len(analysis.archival_candidates) == 4
 
     # 2. Archive daily entries (generates weekly summary)
