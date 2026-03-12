@@ -25,7 +25,9 @@ def test_temporal_log_lifecycle_integration(tmp_path):
     log_path = agent_logs / f"{agent_key}.md"
     
     # Simulate a log file with > 7 days of daily entries
-    now = datetime.now()
+    now = datetime(2023, 10, 27, 12, 0, 0)
+    # To make this test fully deterministic, consider also patching `datetime.now()`
+    # in `logos.core.temporal_logs` to use this fixed time.
     log_content = f"# Agent {agent_key} - Working Log\n\n## DAILY ENTRIES\n\n"
     
     # Add 10 days of entries
