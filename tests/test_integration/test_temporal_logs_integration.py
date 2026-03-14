@@ -116,7 +116,7 @@ def test_archive_weekly_summaries_preserves_permanent_record_header(tmp_path):
         f"**Week of {week1_start.strftime('%Y-%m-%d')} to {(week1_start + timedelta(days=6)).strftime('%Y-%m-%d')}**\n"
     )
     log_content += "**Accomplishments:**\n- Template header test work\n\n"
-    log_path.write_text(log_content)
+    log_path.write_text(log_content, encoding="utf-8")
 
     with patch("logos.core.temporal_logs.datetime", wraps=datetime) as mock_dt:
         mock_dt.now.return_value = now
