@@ -127,14 +127,14 @@ def retrieve_from_archive(filename: str, archive_base_path: Path, target_date: s
         file_path = dir_path / filename
         if file_path.exists():
             ##Action purpose: Read and return content
-            with open(file_path) as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
             print(f"✅ Retrieved {filename} from archive ({dir_path.name})")
             return content
 
         ##Action purpose: Check for filename with counter suffix
         for archived_file in dir_path.glob(f"{Path(filename).stem}*{Path(filename).suffix}"):
-            with open(archived_file) as f:
+            with open(archived_file, encoding="utf-8") as f:
                 content = f.read()
             print(f"✅ Retrieved {archived_file.name} from archive ({dir_path.name})")
             return content
@@ -159,18 +159,18 @@ def log_archival(filename: str, timestamp: str, reason: str, archive_log_path: P
 
     ##Condition purpose: Initialize log if new file
     if not archive_log_path.exists():
-        with open(archive_log_path, "w") as f:
+        with open(archive_log_path, "w", encoding="utf-8") as f:
             f.write("# .devdocs/ Archival Log\n\n")
             f.write("**Purpose:** Record of all archival actions performed by Orchestrator\n\n")
             f.write("---\n\n")
 
     ##Action purpose: Append log entry
-    with open(archive_log_path, "a") as f:
+    with open(archive_log_path, "a", encoding="utf-8") as f:
         f.write(f"## {timestamp}\n\n")
         f.write(f"- **File:** `{filename}`\n")
         f.write(f"- **Reason:** {reason}\n")
         f.write(f"- **Timestamp:** {datetime.now(timezone.utc).isoformat()}\n")
-        f.write("- **Agent:** E0/E1 (Orchestrator)\n\n")
+        f.write("- **Agent:** E1 (Orchestrator)\n\n")
         f.write("---\n\n")
 
 

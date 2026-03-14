@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented Temporal Log Management System (`logos/core/temporal_logs.py`) for automated summarization (daily, weekly, monthly) and archival.
 - Implemented `.devdocs` bloat prevention and file archival utilities (`logos/core/bloat_prevention.py`, `logos/core/archival.py`).
 - Enhanced all base prompts (`logos/daedelus/prompts/base_orchestrator.py`, `logos/daedelus/prompts/base_maintenance.py`, `logos/deus/prompts/base_system_orchestrator.py`, `logos/deus/prompts/base_maintenance.py`) with strict constitutional `.devdocs` priority read rules.
-- Orchestrator agents (E1/E0) updated with specific temporal management and bloat prevention routines.
+- Orchestrator agent (E1) updated with specific temporal management and bloat prevention routines.
 - `logos/core/devdocs.py` with validation and structural management functions for `.devdocs/`
 - Standardized templates for `.devdocs/` initialization including `DEV_STATE.md` and workflow tracking structures
 - Tests for `.devdocs` utilities in `tests/test_core/test_devdocs.py`

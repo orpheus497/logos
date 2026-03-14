@@ -14,7 +14,7 @@ The Diamond Workflow is used for parallel execution where an initial architectur
   - [ ] A2 (Logic Engineer): [Status]
   - [ ] A3 (UI Designer): [Status]
   - [ ] A4 (Test Engineer): [Status]
-- [ ] **Step 3: Documentation (A5/C1/C2)** - [Status]
+- [ ] **Step 3: Documentation (A5/C1/C7)** - [Status]
 - [ ] **Step 4: Review (B6, B7, B8, B9)** - [Status]
 - [ ] **Step 5: Release Approval (B10)** - [Status]
 

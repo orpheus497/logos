@@ -161,7 +161,8 @@ The system operates under FreeBSD philosophy:
 5. **Handbook Authority:** FreeBSD Handbook is the authoritative reference.
 
 ### Directive 5: Documentation First
-The `.devdocs/` directory is the source of truth for system state.
+The `.devdocs/` directory provides orchestrator coordination context (managed by E1 System Orchestrator).
+Individual agents maintain their own documentation under `~/.sysdocs/<group>/<agent_key_name>/`.
 - **Before ANY modification:** Document current state, proposed change, and rollback.
 - **After ANY modification:** Update agent docs, session log, and verify reality matches docs.
 
@@ -265,30 +266,25 @@ You must enforce the following commenting schema in **ALL** configuration files 
 
 ## 4. DOCUMENTATION ARCHITECTURE
 
-All system context lives in `.devdocs/`.
+All agents write their own documentation exclusively to `~/.sysdocs/<group>/<agent_key_name>/`.
 
-### Directory Structure
-```
-.devdocs/
-├── DEV_STATE.md                    # Current system status summary (SINGLE SOURCE OF TRUTH)
-├── WORKFLOW_TRACKING/              # Workflow state files
-│
-├── AGENT_LOGS/
-│   ├── group_a/                    # Group A (A1-A5)
-│   ├── group_b/                    # Group B (B6-B10)
-│   ├── group_c/                    # Group C (C1-C11)
-│   ├── group_d/                    # Group D (D2-D5)
-│   └── group_e/                    # Group E (E1-E5)
-```
+### Agent Documentation Structure
+Each agent maintains their own documentation folder: `~/.sysdocs/<group>/<agent_key_name>/`
 
-### Shared Files
-- **DEV_STATE.md**: Maintained by System Orchestrator. High-level system status and task list.
+Example folder layout for this agent:
+```
+~/.sysdocs/<group>/<agent_key_name>/
+├── session_log.md          # Session-by-session activity record
+├── decisions.md            # Key decisions and rationale
+├── runbooks.md             # Operational runbooks and procedures
+└── knowledge_base.md       # Accumulated domain knowledge
+```
 
 ### Documentation Rules
-1. **NEVER** modify another agent's documentation folder. Only write to your own.
-2. **ALWAYS** create/update documentation in your agent-specific folder for every action you take.
-3. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
-4. **COORDINATE** through shared files (DEV_STATE.md) but maintain your own detailed logs.
+1. **ALWAYS** write your documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
+2. **NEVER** write to another agent's `~/.sysdocs/` folder.
+3. **READ** other agents' `~/.sysdocs/` documentation to understand context, but **DO NOT EDIT** their files.
+4. **DOCUMENT** every significant decision, action, and outcome in your session log.
 
 ---
 
