@@ -2,7 +2,7 @@
 
 **Agent:** [KEY] - [NAME]
 **Specialty:** [SPECIALTY]
-**Last Updated:** YYYY-MM-DD HH:MM UTC
+**Last Updated:** YYYY-MM-DDTHH:MM:SSZ
 
 ---
 

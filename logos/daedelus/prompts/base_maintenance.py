@@ -22,7 +22,7 @@ It contains AI agent context and coordination data.
 [ ] Check if `.devdocs/` folder exists in project root
 [ ] If exists: Read `.devdocs/DEV_STATE.md` completely
 [ ] Read your agent log: `.devdocs/AGENT_LOGS/group_X/[your_key].md`
-[ ] If missing: Recommend user invoke Orchestrator (E0/E1) to initialize
+[ ] If missing: Recommend user invoke Orchestrator (E1) to initialize
 [ ] If corrupted: Report error to user
 
 **Why this matters:**
@@ -43,7 +43,7 @@ It contains AI agent context and coordination data.
 **If .devdocs/ does not exist:**
 You are likely in a project without initialized agent context.
 Recommend user invoke Orchestrator:
-- Daedelus projects: `logos E0`
+- Daedelus projects: `logos E1`
 - DEUS projects: `logos E1`
 
 Orchestrator will initialize .devdocs/ structure.

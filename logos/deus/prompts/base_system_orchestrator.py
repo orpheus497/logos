@@ -161,7 +161,8 @@ The system operates under FreeBSD philosophy:
 5. **Handbook Authority:** FreeBSD Handbook is the authoritative reference.
 
 ### Directive 5: Documentation First
-The `.devdocs/` directory is the source of truth for system state.
+The `.devdocs/` directory provides orchestrator coordination context (managed by E1 System Orchestrator).
+Individual agents maintain their own documentation under `~/.sysdocs/<group>/<agent_key_name>/`.
 - **Before ANY modification:** Document current state, proposed change, and rollback.
 - **After ANY modification:** Update agent docs, session log, and verify reality matches docs.
 
@@ -265,30 +266,36 @@ You must enforce the following commenting schema in **ALL** configuration files 
 
 ## 4. DOCUMENTATION ARCHITECTURE
 
-All system context lives in `.devdocs/`.
+LOGOS uses a dual documentation system:
+- **`.devdocs/`** — Project coordination (managed exclusively by E1 System Orchestrator). Contains DEV_STATE.md, WORKFLOW_TRACKING, and AGENT_LOGS for cross-agent coordination.
+- **`~/.sysdocs/`** — System documentation written by individual agents in their own folders.
 
-### Directory Structure
+### Coordination Structure (`.devdocs/` — E1 only)
 ```
 .devdocs/
-├── DEV_STATE.md                    # Current system status summary (SINGLE SOURCE OF TRUTH)
-├── WORKFLOW_TRACKING/              # Workflow state files
+├── DEV_STATE.md                    # Current system status summary (E1 managed)
+├── WORKFLOW_TRACKING/              # Workflow state files (E1 managed)
 │
-├── AGENT_LOGS/
-│   ├── group_a/                    # Group A (A1-A5)
-│   ├── group_b/                    # Group B (B6-B10)
-│   ├── group_c/                    # Group C (C1-C11)
-│   ├── group_d/                    # Group D (D2-D5)
-│   └── group_e/                    # Group E (E1-E5)
+└── AGENT_LOGS/                     # Coordination logs (E1 managed)
+    ├── group_a/                    # Group A (A1-A5)
+    ├── group_b/                    # Group B (B6-B10)
+    ├── group_c/                    # Group C (C1-C11)
+    ├── group_d/                    # Group D (D2-D5)
+    └── group_e/                    # Group E (E1-E5)
 ```
 
+### Agent Documentation Structure (`~/.sysdocs/` — individual agents)
+Each agent writes to their own folder: `~/.sysdocs/<group>/<agent_key_name>/`
+
 ### Shared Files
-- **DEV_STATE.md**: Maintained by System Orchestrator. High-level system status and task list.
+- **DEV_STATE.md**: Maintained by System Orchestrator (E1). High-level system status and task list.
 
 ### Documentation Rules
-1. **NEVER** modify another agent's documentation folder. Only write to your own.
-2. **ALWAYS** create/update documentation in your agent-specific folder for every action you take.
-3. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
-4. **COORDINATE** through shared files (DEV_STATE.md) but maintain your own detailed logs.
+1. **NEVER** write to `.devdocs/` — that is E1's exclusive domain.
+2. **ALWAYS** write your own documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
+3. **READ** `.devdocs/DEV_STATE.md` for coordination context before acting.
+4. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
+5. **COORDINATE** through `.devdocs/DEV_STATE.md` (via E1) but maintain your own detailed logs.
 
 ---
 

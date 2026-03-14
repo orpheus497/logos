@@ -95,9 +95,9 @@ Create log file for each agent with header template:
 # For Daedelus domain:
 touch .devdocs/AGENT_LOGS/group_a/{A1,A2,A3,A4,A5}.md
 touch .devdocs/AGENT_LOGS/group_b/{B6,B7,B8,B9,B10}.md
-touch .devdocs/AGENT_LOGS/group_c/{C1,C2,C3,C4,C5}.md
-touch .devdocs/AGENT_LOGS/group_d/{D11,D12,D13,D14,D15}.md
-touch .devdocs/AGENT_LOGS/group_e/{E0,E16,E17,E18}.md
+touch .devdocs/AGENT_LOGS/group_c/{C1,C6,C7,C8,C9,C10,C11}.md
+touch .devdocs/AGENT_LOGS/group_d/{D2,D3,D4,D5}.md
+touch .devdocs/AGENT_LOGS/group_e/{E1,E2,E3}.md
 ```
 
 Each log file should contain initial header:

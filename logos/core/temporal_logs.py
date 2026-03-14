@@ -91,7 +91,7 @@ def parse_agent_log(log_path: Path) -> list[LogSection]:
         return []
 
     ##Action purpose: Read log content
-    with open(log_path) as f:
+    with open(log_path, encoding="utf-8") as f:
         lines = f.readlines()
 
     ##Action purpose: Initialize sections list
@@ -246,9 +246,9 @@ def analyze_agent_log(log_path: Path, agent_key: str) -> LogAnalysis:
     stale = days_since_update > 7
     bloated = file_size_kb > 500
 
-    ##Action purpose: Identify archival candidates (daily entries >7 days old)
+    ##Action purpose: Identify archival candidates (daily entries ≥7 days old; keep today + last 6 days)
     cutoff_date = datetime.now() - timedelta(days=7)
-    archival_candidates = [entry for entry in daily_entries if entry.date < cutoff_date]
+    archival_candidates = [entry for entry in daily_entries if entry.date <= cutoff_date]
     needs_archival = len(archival_candidates) > 0
 
     ##Action purpose: Return analysis
@@ -466,7 +466,7 @@ def archive_daily_entries(log_path: Path, analysis: LogAnalysis, archive_base_pa
         return True, "No archival needed"
 
     ##Action purpose: Read current log content
-    with open(log_path) as f:
+    with open(log_path, encoding="utf-8") as f:
         content = f.read()
 
     ##Action purpose: Group archival candidates by week
@@ -495,7 +495,7 @@ def archive_daily_entries(log_path: Path, analysis: LogAnalysis, archive_base_pa
 
         ##Action purpose: Create archive file
         archive_file = archive_dir / f"{analysis.agent_key}.md.week-{week_key}"
-        with open(archive_file, "w") as f:
+        with open(archive_file, "w", encoding="utf-8") as f:
             f.write(f"# Archived Daily Entries - Week of {week_key}\n\n")
             f.write(f"**Agent:** {analysis.agent_key}\n")
             f.write(f"**Archived:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
@@ -515,7 +515,7 @@ def archive_daily_entries(log_path: Path, analysis: LogAnalysis, archive_base_pa
             content = content.replace(entry.content, "")
 
     ##Action purpose: Write updated log
-    with open(log_path, "w") as f:
+    with open(log_path, "w", encoding="utf-8") as f:
         f.write(content)
 
     ##Action purpose: Return success
@@ -551,14 +551,17 @@ def archive_weekly_summaries(
     monthly_summary = generate_monthly_summary(month_summaries, month_date)
 
     ##Action purpose: Read current log
-    with open(log_path) as f:
+    with open(log_path, encoding="utf-8") as f:
         content = f.read()
 
     ##Action purpose: Insert monthly summary (after MONTH SUMMARIES header)
     if "## MONTH SUMMARIES" in content:
-        parts = content.split("## MONTH SUMMARIES")
-        ##Action purpose: Insert as first month summary
-        content = parts[0] + "## MONTH SUMMARIES\n" + monthly_summary + "\n###" + "###".join(parts[1].split("###")[1:])
+        parts = content.split("## MONTH SUMMARIES", 1)
+        ##Action purpose: Insert as first month summary, preserving all existing content after the header
+        rest = parts[1]
+        ##Condition purpose: Strip leading newlines before existing content
+        rest_stripped = rest.lstrip("\n")
+        content = parts[0] + "## MONTH SUMMARIES\n" + monthly_summary + "\n" + rest_stripped
 
     ##Action purpose: Create archive for weekly summaries
     archive_date = datetime.now().strftime("%Y-%m-%d")
@@ -568,7 +571,7 @@ def archive_weekly_summaries(
     month_key = month_date.strftime("%Y-%m")
     archive_file = archive_dir / f"{analysis.agent_key}.md.month-{month_key}"
 
-    with open(archive_file, "w") as f:
+    with open(archive_file, "w", encoding="utf-8") as f:
         f.write(f"# Archived Weekly Summaries - {month_date.strftime('%B %Y')}\n\n")
         f.write(f"**Agent:** {analysis.agent_key}\n")
         f.write(f"**Archived:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
@@ -582,13 +585,12 @@ def archive_weekly_summaries(
         content = content.replace(summary.content, "")
 
     ##Action purpose: Write updated log
-    with open(log_path, "w") as f:
+    with open(log_path, "w", encoding="utf-8") as f:
         f.write(content)
 
     return True, f"Archived {len(month_summaries)} weekly summaries, generated monthly summary"
 
 
-##Function purpose: Scan all agent logs for temporal management needs
 def scan_all_agent_logs(devdocs_path: Path) -> list[LogAnalysis]:
     """
     ##Function purpose: Analyze all agent logs in .devdocs/AGENT_LOGS/.
