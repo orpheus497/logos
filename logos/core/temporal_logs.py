@@ -572,7 +572,7 @@ def archive_weekly_summaries(
     with open(archive_file, "w", encoding="utf-8") as f:
         f.write(f"# Archived Weekly Summaries - {month_date.strftime('%B %Y')}\n\n")
         f.write(f"**Agent:** {analysis.agent_key}\n")
-        f.write(f"**Archived:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
+        f.write(f"**Archived:** {datetime.now(timezone.utc).isoformat()}\n\n")
 
         for summary in month_summaries:
             f.write(summary.content)
