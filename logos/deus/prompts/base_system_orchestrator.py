@@ -291,8 +291,8 @@ Each agent writes to their own folder: `~/.sysdocs/<group>/<agent_key_name>/`
 - **DEV_STATE.md**: Maintained by System Orchestrator (E1). High-level system status and task list.
 
 ### Documentation Rules
-1. **NEVER** write to `.devdocs/` — that is E1's exclusive domain.
-2. **ALWAYS** write your own documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
+1. **NEVER** modify `.devdocs/` structure, `DEV_STATE.md`, `WORKFLOW_TRACKING/`, or `.archive/` — those are E1's exclusive domain. You may READ and WRITE only to your own agent log at `.devdocs/AGENT_LOGS/<group>/<key>.md`.
+2. **ALWAYS** write your own system documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
 3. **READ** `.devdocs/DEV_STATE.md` for coordination context before acting.
 4. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
 5. **COORDINATE** through `.devdocs/DEV_STATE.md` (via E1) but maintain your own detailed logs.

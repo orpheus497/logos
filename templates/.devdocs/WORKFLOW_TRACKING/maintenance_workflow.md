@@ -12,7 +12,7 @@ The Maintenance Workflow is a sequential cycle of routine care tasks to keep the
 
 ## Current Progress
 
-- [ ] **Step 1: Project Documentation Sync (C1)** - [Status]
+- [ ] **Step 1: Bug Audit & Health Check (C1)** - [Status]
 - [ ] **Step 2: Inline Documentation Update (C7)** - [Status]
 - [ ] **Step 3: Dependency Management (C11)** - [Status]
 - [ ] **Step 4: Refactoring & Cleanup (C9/C10)** - [Status]

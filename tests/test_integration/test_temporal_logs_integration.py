@@ -94,3 +94,42 @@ def test_temporal_log_lifecycle_integration(tmp_path):
     assert "Week 2 work" in final_content
     # The individual weekly summaries should be removed
     assert "**Week of" not in final_content
+
+
+def test_archive_weekly_summaries_preserves_permanent_record_header(tmp_path):
+    """Test that archive_weekly_summaries preserves the full '## MONTH SUMMARIES (Permanent Record)' header."""
+    agent_logs = tmp_path / "AGENT_LOGS" / "group_a"
+    agent_logs.mkdir(parents=True)
+    archive = tmp_path / ".archive"
+    archive.mkdir()
+
+    agent_key = "A1"
+    log_path = agent_logs / f"{agent_key}.md"
+
+    now = datetime(2023, 10, 27, 12, 0, 0)
+    prev_month_date = datetime(2023, 9, 1)
+    week1_start = prev_month_date
+
+    # Use the canonical template header with "(Permanent Record)" suffix
+    log_content = f"# Agent {agent_key} - Working Log\n\n## MONTH SUMMARIES (Permanent Record)\n\n## WEEKLY SUMMARY\n"
+    log_content += (
+        f"**Week of {week1_start.strftime('%Y-%m-%d')} to {(week1_start + timedelta(days=6)).strftime('%Y-%m-%d')}**\n"
+    )
+    log_content += "**Accomplishments:**\n- Template header test work\n\n"
+    log_path.write_text(log_content)
+
+    with patch("logos.core.temporal_logs.datetime", wraps=datetime) as mock_dt:
+        mock_dt.now.return_value = now
+        analysis = analyze_agent_log(log_path, agent_key)
+
+    assert len(analysis.week_summaries) == 1
+
+    success, _msg = archive_weekly_summaries(log_path, analysis, archive, prev_month_date)
+    assert success is True
+
+    final_content = log_path.read_text()
+    # The full header line (with suffix) must be preserved intact
+    assert "## MONTH SUMMARIES (Permanent Record)" in final_content
+    # The generated monthly summary must appear
+    assert f"### {prev_month_date.strftime('%B %Y')} Summary" in final_content
+    assert "Template header test work" in final_content

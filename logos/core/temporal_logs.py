@@ -8,7 +8,7 @@ Provides utilities for managing agent log files with temporal structure.
 - Monthly summaries (permanent project memory)
 - Automatic archival based on age thresholds
 
-Used by Orchestrator (E0/E1) for .devdocs/ maintenance.
+Used by Orchestrator (E1) for .devdocs/ maintenance.
 """
 
 import re
@@ -554,14 +554,12 @@ def archive_weekly_summaries(
     with open(log_path, encoding="utf-8") as f:
         content = f.read()
 
-    ##Action purpose: Insert monthly summary (after MONTH SUMMARIES header)
-    if "## MONTH SUMMARIES" in content:
-        parts = content.split("## MONTH SUMMARIES", 1)
-        ##Action purpose: Insert as first month summary, preserving all existing content after the header
-        rest = parts[1]
-        ##Condition purpose: Strip leading newlines before existing content
-        rest_stripped = rest.lstrip("\n")
-        content = parts[0] + "## MONTH SUMMARIES\n" + monthly_summary + "\n" + rest_stripped
+    ##Action purpose: Insert monthly summary (after MONTH SUMMARIES header line, preserving full header)
+    header_match = re.search(r"^(## MONTH SUMMARIES[^\n]*)", content, re.MULTILINE)
+    if header_match:
+        insert_pos = header_match.end()
+        rest_stripped = content[insert_pos:].lstrip("\n")
+        content = content[:insert_pos] + "\n" + monthly_summary + "\n" + rest_stripped
 
     ##Action purpose: Create archive for weekly summaries
     archive_date = datetime.now().strftime("%Y-%m-%d")
