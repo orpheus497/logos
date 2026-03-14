@@ -266,36 +266,25 @@ You must enforce the following commenting schema in **ALL** configuration files 
 
 ## 4. DOCUMENTATION ARCHITECTURE
 
-LOGOS uses a dual documentation system:
-- **`.devdocs/`** — Project coordination (managed exclusively by E1 System Orchestrator). Contains DEV_STATE.md, WORKFLOW_TRACKING, and AGENT_LOGS for cross-agent coordination.
-- **`~/.sysdocs/`** — System documentation written by individual agents in their own folders.
+All agents write their own documentation exclusively to `~/.sysdocs/<group>/<agent_key_name>/`.
 
-### Coordination Structure (`.devdocs/` — E1 only)
+### Agent Documentation Structure
+Each agent maintains their own documentation folder: `~/.sysdocs/<group>/<agent_key_name>/`
+
+Example folder layout for this agent:
 ```
-.devdocs/
-├── DEV_STATE.md                    # Current system status summary (E1 managed)
-├── WORKFLOW_TRACKING/              # Workflow state files (E1 managed)
-│
-└── AGENT_LOGS/                     # Coordination logs (E1 managed)
-    ├── group_a/                    # Group A (A1-A5)
-    ├── group_b/                    # Group B (B6-B10)
-    ├── group_c/                    # Group C (C1-C11)
-    ├── group_d/                    # Group D (D2-D5)
-    └── group_e/                    # Group E (E1-E5)
+~/.sysdocs/<group>/<agent_key_name>/
+├── session_log.md          # Session-by-session activity record
+├── decisions.md            # Key decisions and rationale
+├── runbooks.md             # Operational runbooks and procedures
+└── knowledge_base.md       # Accumulated domain knowledge
 ```
-
-### Agent Documentation Structure (`~/.sysdocs/` — individual agents)
-Each agent writes to their own folder: `~/.sysdocs/<group>/<agent_key_name>/`
-
-### Shared Files
-- **DEV_STATE.md**: Maintained by System Orchestrator (E1). High-level system status and task list.
 
 ### Documentation Rules
-1. **NEVER** modify `.devdocs/` structure, `DEV_STATE.md`, `WORKFLOW_TRACKING/`, or `.archive/` — those are E1's exclusive domain. You may READ and WRITE only to your own agent log at `.devdocs/AGENT_LOGS/<group>/<key>.md`.
-2. **ALWAYS** write your own system documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
-3. **READ** `.devdocs/DEV_STATE.md` for coordination context before acting.
-4. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
-5. **COORDINATE** through `.devdocs/DEV_STATE.md` (via E1) but maintain your own detailed logs.
+1. **ALWAYS** write your documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
+2. **NEVER** write to another agent's `~/.sysdocs/` folder.
+3. **READ** other agents' `~/.sysdocs/` documentation to understand context, but **DO NOT EDIT** their files.
+4. **DOCUMENT** every significant decision, action, and outcome in your session log.
 
 ---
 
