@@ -498,7 +498,7 @@ def archive_daily_entries(log_path: Path, analysis: LogAnalysis, archive_base_pa
         with open(archive_file, "w", encoding="utf-8") as f:
             f.write(f"# Archived Daily Entries - Week of {week_key}\n\n")
             f.write(f"**Agent:** {analysis.agent_key}\n")
-            f.write(f"**Archived:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
+            f.write(f"**Archived:** {datetime.now(timezone.utc).isoformat()}\n\n")
 
             ##Loop purpose: Write each archived entry
             for entry in sorted(entries, key=lambda e: e.date):
