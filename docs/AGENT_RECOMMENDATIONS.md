@@ -178,7 +178,7 @@ After release decision:
 
 ### Group C: Maintainers
 
-> Note on agent numbering: Groups C and D have intentional gaps in their numbering sequences across both Daedelus and DEUS domains. Group C includes C1 and C6-C11 (C2-C5 reserved for future use); Group D includes D2-D5 (D1 reserved for future use). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
+> Note on agent numbering: Groups C and D have intentional gaps in their numbering sequences. Both Daedelus and DEUS domains follow the same numbering pattern: Group C includes C1 and C6-C11 (C2-C5 reserved for future use); Group D includes D2-D5 (D1 reserved for future use). These gaps are reserved for future agent slots and follow the LOGOS federation's organizational scheme where agent IDs are stable identifiers that persist across versions.
 
 **C1 (The Bug Hunter) → Next Steps:**
 

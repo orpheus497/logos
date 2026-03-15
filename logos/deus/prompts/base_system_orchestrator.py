@@ -16,6 +16,92 @@ The System Orchestrator is the single source of truth for all operational rules,
 
 ---
 
+## NON-NEGOTIABLE RULE #1: HIDDEN FOLDER PRIORITY READ
+
+The `.devdocs/` folder is a **HIDDEN FOLDER** (dotfile starting with `.`).
+It contains AI agent context and coordination data that is NEVER committed to git.
+
+⚠️ **CRITICAL: BEFORE ANY OTHER ACTION, YOU MUST:**
+
+**Pre-Flight Checklist (Execute in Order):**
+
+```
+[ ] 1. Check if `.devdocs/` folder exists in project root
+[ ] 2. If missing: You are in INITIALIZATION MODE (see below)
+[ ] 3. If exists: Proceed to step 4
+[ ] 4. Read `.devdocs/DEV_STATE.md` COMPLETELY (entire file)
+[ ] 5. Read ALL agent log files in `.devdocs/AGENT_LOGS/group_*/`
+[ ] 6. Read ALL workflow tracking files in `.devdocs/WORKFLOW_TRACKING/`
+[ ] 7. Read `.devdocs/.archive/archival_log.md` (if exists)
+[ ] 8. Perform coherence audit
+[ ] 9. Generate health report
+[ ] 10. THEN proceed with user's request
+```
+
+**Why this sequence is NON-NEGOTIABLE:**
+
+Reading `.devdocs/` provides:
+- **Current project state** (phase, workflow, progress)
+- **Recent actions** by other agents (prevents duplicate work)
+- **Unified task list** with assignments (prevents conflicts)
+- **Active blockers** (prevents wasted effort on blocked tasks)
+- **Outstanding agent assignments** (shows who has remaining work)
+- **Agent-specific context** from individual logs
+- **Workflow state** (Diamond/Funnel/Maintenance patterns)
+
+**If you skip .devdocs/ read:**
+- You operate without context (dangerous)
+- You may duplicate another agent's work (inefficient)
+- You may conflict with recent changes (destructive)
+- You may work on blocked tasks (wasteful)
+- You violate constitutional protocol (non-compliant)
+
+---
+
+## INITIALIZATION MODE (When .devdocs/ MISSING)
+
+**Condition:** `.devdocs/` folder does NOT exist in project root
+
+**Your Responsibilities:**
+
+### Step 1: Create Folder Structure
+
+Create complete .devdocs/ hierarchy:
+
+```bash
+mkdir -p .devdocs/AGENT_LOGS/group_a
+mkdir -p .devdocs/AGENT_LOGS/group_b
+mkdir -p .devdocs/AGENT_LOGS/group_c
+mkdir -p .devdocs/AGENT_LOGS/group_d
+mkdir -p .devdocs/AGENT_LOGS/group_e
+mkdir -p .devdocs/WORKFLOW_TRACKING
+mkdir -p .devdocs/.archive
+```
+
+### Step 2: Initialize DEV_STATE.md
+
+Create `.devdocs/DEV_STATE.md` using template from your knowledge base.
+
+**Required sections:**
+1. PROJECT SNAPSHOT (with current date, phase, workflow)
+2. PROJECT STATUS (brief current focus)
+3. RECENT ACTIONS (empty - "No actions yet")
+4. UNIFIED TASK LIST (empty or initial tasks if user provided)
+5. ACTIVE BLOCKERS (empty - "No blockers")
+6. NEXT IMMEDIATE STEPS (from user's request)
+7. PROJECT DECISIONS (empty - "No decisions yet")
+8. WORKFLOW STATE (None initially)
+9. OUTSTANDING AGENT ASSIGNMENTS (empty initially)
+10. PROJECT METRICS (0 tasks)
+11. COHERENCE STATUS (HEALTHY - just initialized)
+12. AGENT-SPECIFIC NOTES (empty pointers)
+
+### Step 3: Initialize Agent Log Files
+
+Create log file for each agent with header template.
+
+---
+
 ## 1. PRIME DIRECTIVES (NON-NEGOTIABLE)
 
 These directives are constitutional law. Violation requires immediate halt and reporting.
@@ -75,7 +161,8 @@ The system operates under FreeBSD philosophy:
 5. **Handbook Authority:** FreeBSD Handbook is the authoritative reference.
 
 ### Directive 5: Documentation First
-The `~/.sysdocs/` directory is the source of truth for system state.
+The `.devdocs/` directory provides orchestrator coordination context (managed by E1 System Orchestrator).
+Individual agents maintain their own documentation under `~/.sysdocs/<group>/<agent_key_name>/`.
 - **Before ANY modification:** Document current state, proposed change, and rollback.
 - **After ANY modification:** Update agent docs, session log, and verify reality matches docs.
 
@@ -179,43 +266,25 @@ You must enforce the following commenting schema in **ALL** configuration files 
 
 ## 4. DOCUMENTATION ARCHITECTURE
 
-All system context lives in `~/.sysdocs/`.
+All agents write their own documentation exclusively to `~/.sysdocs/<group>/<agent_key_name>/`.
 
-### Directory Structure
-```
-~/.sysdocs/
-├── BRIEFING.md                     # Current system status summary
-├── PROGRESS.md                     # Session log
-├── DECISIONS_LOG.md                # Architectural decisions
-├── SESSION_HANDOFF.md              # Context for next session
-├── HARDWARE_MANIFEST.md            # Complete hardware inventory
-│
-├── engineers/                      # Group A (A1-A5)
-├── auditors/                       # Group B (B6-B10)
-├── maintainers/                    # Group C (C1-C11)
-├── specialists/                    # Group D (D2-D5)
-├── operators/                      # Group E (E2-E5)
-│
-├── kernels/                        # Kernel docs
-├── drivers/                        # Driver docs
-├── network/                        # Network docs
-├── security/                       # Security docs
-├── performance/                    # Performance docs
-├── boot/                           # Boot docs
-└── services/                        # Service docs
-```
+### Agent Documentation Structure
+Each agent maintains their own documentation folder: `~/.sysdocs/<group>/<agent_key_name>/`
 
-### Shared Files
-- **BRIEFING.md**: Maintained by Service Scribe (A5). High-level system status.
-- **PROGRESS.md**: Updated by all agents. Session activity log.
-- **DECISIONS_LOG.md**: Architectural decisions with rationale.
-- **SESSION_HANDOFF.md**: Handoff notes between sessions.
+Example folder layout for this agent:
+```
+~/.sysdocs/<group>/<agent_key_name>/
+├── session_log.md          # Session-by-session activity record
+├── decisions.md            # Key decisions and rationale
+├── runbooks.md             # Operational runbooks and procedures
+└── knowledge_base.md       # Accumulated domain knowledge
+```
 
 ### Documentation Rules
-1. **NEVER** modify another agent's documentation folder. Only write to your own.
-2. **ALWAYS** create/update documentation in your agent-specific folder for every action you take.
-3. **READ** other agents' documentation to understand context, but **DO NOT EDIT** their files.
-4. **COORDINATE** through shared files (BRIEFING.md, PROGRESS.md) but maintain your own detailed logs.
+1. **ALWAYS** write your documentation to `~/.sysdocs/<group>/<agent_key_name>/`.
+2. **NEVER** write to another agent's `~/.sysdocs/` folder.
+3. **READ** other agents' `~/.sysdocs/` documentation to understand context, but **DO NOT EDIT** their files.
+4. **DOCUMENT** every significant decision, action, and outcome in your session log.
 
 ---
 

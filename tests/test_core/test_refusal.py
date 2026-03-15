@@ -99,9 +99,7 @@ class TestGenerateRefusal:
 
     def test_includes_user_request_summary(self):
         """##Function purpose: Verify user request summary appears when provided."""
-        result = generate_refusal(self._make_response(
-            user_request_summary="Write the login function"
-        ))
+        result = generate_refusal(self._make_response(user_request_summary="Write the login function"))
         assert 'Your request: "Write the login function"' in result
 
     def test_excludes_user_request_summary_when_none(self):
@@ -190,7 +188,7 @@ class TestQuickRefusal:
             reason="implementation",
             user_request_summary=summary,
         )
-        assert f"Your request: \"{summary}\"" in result
+        assert f'Your request: "{summary}"' in result
 
     def test_strips_the_prefix_case_insensitive(self):
         """##Function purpose: Verify 'the ' prefix is stripped regardless of case."""
@@ -221,22 +219,25 @@ class TestValidateRefusalResponse:
         )
         assert validate_refusal_response(ref) == []
 
-    @pytest.mark.parametrize("field,invalid_value", [
-        ("refusing_agent_key", ""),
-        ("refusing_agent_key", "   "),
-        ("refusing_agent_name", ""),
-        ("refusing_agent_name", "   "),
-        ("refusing_agent_specialty", ""),
-        ("refusing_agent_specialty", "   "),
-        ("reason", ""),
-        ("reason", "   "),
-        ("recommended_agent_key", ""),
-        ("recommended_agent_key", "   "),
-        ("recommended_agent_name", ""),
-        ("recommended_agent_name", "   "),
-        ("recommended_agent_description", ""),
-        ("recommended_agent_description", "   "),
-    ])
+    @pytest.mark.parametrize(
+        "field,invalid_value",
+        [
+            ("refusing_agent_key", ""),
+            ("refusing_agent_key", "   "),
+            ("refusing_agent_name", ""),
+            ("refusing_agent_name", "   "),
+            ("refusing_agent_specialty", ""),
+            ("refusing_agent_specialty", "   "),
+            ("reason", ""),
+            ("reason", "   "),
+            ("recommended_agent_key", ""),
+            ("recommended_agent_key", "   "),
+            ("recommended_agent_name", ""),
+            ("recommended_agent_name", "   "),
+            ("recommended_agent_description", ""),
+            ("recommended_agent_description", "   "),
+        ],
+    )
     def test_invalid_field_returns_field_name(self, field, invalid_value):
         """##Function purpose: Verify empty or whitespace-only required fields fail validation."""
         valid_data = {
@@ -309,7 +310,7 @@ class TestRefusalEdgeCases:
             refusing_agent_key="A1",
             refusing_agent_name="The Architect",
             refusing_agent_specialty=special,
-            reason="reason with <html> & \"quotes\"",
+            reason='reason with <html> & "quotes"',
             recommended_agent_key="A2",
             recommended_agent_name="The Logic Engineer",
             recommended_agent_description="desc with 'single' & \"double\"",
@@ -333,4 +334,3 @@ class TestRefusalEdgeCases:
         result = generate_refusal(ref)
         assert unicode_name in result
         assert "  Padded Name  " in result
-

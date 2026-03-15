@@ -63,9 +63,7 @@ def test_agent_has_in_scope_items(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing IN SCOPE section"
     in_scope_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", in_scope_text, re.MULTILINE)
-    assert len(items) >= 5, (
-        f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
-    )
+    assert len(items) >= 5, f"Agent {agent_key} has {len(items)} IN SCOPE items, expected at least 5"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
@@ -75,9 +73,7 @@ def test_agent_has_forbidden_actions(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing FORBIDDEN ACTIONS section"
     forbidden_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", forbidden_text, re.MULTILINE)
-    assert len(items) >= 10, (
-        f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
-    )
+    assert len(items) >= 10, f"Agent {agent_key} has {len(items)} FORBIDDEN ACTIONS, expected at least 10"
     arrow_marker_count = forbidden_text.count("→")
     assert arrow_marker_count >= len(items), (
         f"Agent {agent_key} has {arrow_marker_count} arrow marker(s) (→) for "
@@ -97,9 +93,7 @@ def test_agent_has_collaboration_section(agent_key, prompt):
     assert header in prompt, f"Agent {agent_key} missing COLLABORATION section"
     collab_text = extract_section(prompt, header)
     items = re.findall(r"^\d+\. \*\*", collab_text, re.MULTILINE)
-    assert len(items) >= 3, (
-        f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
-    )
+    assert len(items) >= 3, f"Agent {agent_key} has {len(items)} COLLABORATION items, expected at least 3"
 
 
 @pytest.mark.parametrize("agent_key,prompt", AGENTS.items(), ids=list(AGENTS.keys()))
@@ -117,15 +111,17 @@ def test_agent_has_devdocs_boundary(agent_key, prompt):
     """##Function purpose: Verify that every agent has .devdocs/ management boundary."""
     assert ".devdocs/" in prompt, f"Agent {agent_key} missing .devdocs/ reference"
     devdocs_heading = ".devdocs/ Management"
-    devdocs_match = re.search(r'(?m)^\d+\.\s+\*{0,2}' + re.escape(devdocs_heading), prompt)
+    devdocs_match = re.search(r"(?m)^\d+\.\s+\*{0,2}" + re.escape(devdocs_heading), prompt)
     if devdocs_match:
         block = extract_section(prompt, devdocs_match.group())
-        assert re.search(r'\borchestrator\b|\bE1\b', block, re.IGNORECASE), (
+        assert re.search(r"\borchestrator\b|\bE1\b", block, re.IGNORECASE), (
             f"Agent {agent_key} missing Orchestrator reference in .devdocs boundary"
         )
     else:
         # Contextual check: ensure "orchestrator" (or E1) appears near ".devdocs" context, not just anywhere
-        match = re.search(r"(?:\.devdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:\.devdocs/)", prompt, re.IGNORECASE)
-        assert match is not None, (
-            f"Agent {agent_key} missing Orchestrator reference in .devdocs context"
+        match = re.search(
+            r"(?:\.devdocs/)[^\n]{0,80}\b(?:orchestrator|E1)\b|\b(?:orchestrator|E1)\b[^\n]{0,80}(?:\.devdocs/)",
+            prompt,
+            re.IGNORECASE,
         )
+        assert match is not None, f"Agent {agent_key} missing Orchestrator reference in .devdocs context"

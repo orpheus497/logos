@@ -4,9 +4,9 @@ import pytest
 
 from logos.cli.layouts import _display_width
 
-
 try:
-    from wcwidth import wcswidth as _wcswidth
+    import wcwidth  # noqa: F401
+
     HAS_WCWIDTH = True
 except ImportError:
     HAS_WCWIDTH = False
@@ -29,11 +29,14 @@ class TestDisplayWidth:
         assert _display_width("世") == 2
 
     def test_combining_character_fallback(self):
-        """##Function purpose: String with only combining chars triggers len() fallback."""
+        """##Function purpose: Combining-only string has display width 0 with wcwidth present."""
         combining_only = "\u0300"
         result = _display_width(combining_only)
-        # wcswidth returns -1 for non-printable → fallback to len()
-        assert result == len(combining_only)
+        # wcswidth returns 0 for combining marks (zero-width); len() fallback only when wcwidth absent
+        if HAS_WCWIDTH:
+            assert result == 0
+        else:
+            assert result == len(combining_only)
 
     @pytest.mark.skipif(not HAS_WCWIDTH, reason="wcwidth not installed")
     def test_mixed_ascii_and_wide(self):
