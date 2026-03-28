@@ -167,10 +167,26 @@ class TestShowPromptPreview:
         assert "20 lines total" in captured.out
 
     def test_empty_prompt(self, capsys):
-        """Empty prompt still produces output."""
+        """Empty prompt shows empty message."""
         _show_prompt_preview("", preview_lines=5)
         captured = capsys.readouterr()
         assert "Preview" in captured.out
+        assert "prompt is empty" in captured.out
+
+    def test_zero_preview_lines(self, capsys):
+        """Zero preview_lines shows omission message."""
+        _show_prompt_preview("line1\nline2", preview_lines=0)
+        captured = capsys.readouterr()
+        assert "omitted" in captured.out
+        assert "preview disabled" in captured.out
+
+    def test_correct_omission_count(self, capsys):
+        """Omission count is correctly calculated."""
+        lines = "\n".join(f"line{i}" for i in range(50))
+        _show_prompt_preview(lines, preview_lines=6)
+        captured = capsys.readouterr()
+        ##Action purpose: 6 budget -> 3 first + 3 last = 6 shown, 44 omitted
+        assert "44 lines omitted" in captured.out
 
 
 class TestDaedelusAgentCoverage:

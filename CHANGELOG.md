@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `logos/core/aliases.py` — Agent alias system with built-in aliases for all 50 agents plus custom user aliases
   - Shell completion scripts for Bash (`completions/bash/logos`), Zsh (`completions/zsh/_logos`), and Fish (`completions/fish/logos.fish`)
   - Prompt preview feature — configurable preview of prompt content before clipboard copy
-  - Recent agents tracking — tracks last 10 agent selections per mode in identity
+  - Recent agents tracking — tracks last 10 agent selections globally (stored as `mode:agent` entries) in identity
   - Alias resolution in agent selection — users can select agents by alias (e.g., `architect` → A1)
   - `docs/CLI_USAGE.md` — Comprehensive CLI usage guide with agent aliases, configuration, and troubleshooting
   - `tests/test_core/test_config.py` — Configuration system tests (24 tests)

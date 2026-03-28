@@ -322,24 +322,40 @@ def _show_prompt_preview(prompt_text: str, preview_lines: int = 10) -> None:
     """
     lines = prompt_text.splitlines()
     total = len(lines)
-    half = max(1, preview_lines // 2)
+    line_budget = max(0, preview_lines or 0)
 
     print(f"\n{Colors.CYAN}{'═' * 60}{Colors.RESET}")
     print(f"{Colors.BOLD}{Colors.CYAN}  Prompt Preview ({total} lines total){Colors.RESET}")
     print(f"{Colors.CYAN}{'═' * 60}{Colors.RESET}")
 
-    if total <= preview_lines:
-        ##Action purpose: Show all lines if short enough
+    if total == 0:
+        ##Action purpose: Handle empty prompt
+        print("  (prompt is empty)")
+    elif line_budget <= 0:
+        ##Action purpose: Preview disabled or zero-length budget
+        print(f"\n  {Colors.YELLOW}... ({total} lines omitted; preview disabled) ...{Colors.RESET}\n")
+    elif total <= line_budget:
+        ##Action purpose: Show all lines if within budget
         for line in lines:
             print(f"  {line}")
     else:
-        ##Action purpose: Show first half
-        for line in lines[:half]:
+        ##Action purpose: Split budget between first and last segments
+        first_count = line_budget // 2
+        last_count = min(line_budget - first_count, max(0, total - first_count))
+        shown = min(total, first_count + last_count)
+        omitted = total - shown
+
+        ##Action purpose: Show first segment
+        for line in lines[:first_count]:
             print(f"  {line}")
-        print(f"\n  {Colors.YELLOW}... ({total - preview_lines} lines omitted) ...{Colors.RESET}\n")
-        ##Action purpose: Show last half
-        for line in lines[-half:]:
-            print(f"  {line}")
+
+        if omitted > 0:
+            print(f"\n  {Colors.YELLOW}... ({omitted} lines omitted) ...{Colors.RESET}\n")
+
+        ##Action purpose: Show last segment
+        if last_count > 0:
+            for line in lines[-last_count:]:
+                print(f"  {line}")
 
     print(f"{Colors.CYAN}{'═' * 60}{Colors.RESET}")
 

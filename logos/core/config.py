@@ -9,29 +9,21 @@ for user-customizable LOGOS settings including default mode, display preferences
 clipboard behavior, and agent aliases.
 """
 
-import logging
 from pathlib import Path
 from typing import Any
 
 from logos.core.persistence import get_config_dir, read_config, write_config
-
-##Action purpose: Initialize logger for configuration operations
-logger = logging.getLogger(__name__)
 
 ##Action purpose: Configuration file name constant
 CONFIG_FILENAME = "config.yaml"
 
 ##Action purpose: Default configuration values
 DEFAULT_CONFIG: dict[str, Any] = {
-    "default_mode": None,  # None = ask each time; "daedelus" or "deus"
+    "default_mode": None,  # None = ask each time; "daedelus" or "deus" (reserved for future use)
     "clipboard": {
         "enabled": True,  # Whether to auto-copy prompts to clipboard
         "show_preview": False,  # Whether to show prompt preview before copying
         "preview_lines": 10,  # Number of lines to show in preview (first + last)
-    },
-    "display": {
-        "color": True,  # Enable color output (respects NO_COLOR env var)
-        "unicode": True,  # Enable Unicode box-drawing characters
     },
     "recent_agents": {
         "enabled": True,  # Track recent agent selections
@@ -164,8 +156,9 @@ def _deep_copy_dict(d: dict[str, Any]) -> dict[str, Any]:
     """
     Creates a deep copy of a dictionary with simple types.
 
-    Handles nested dicts and lists. Suitable for YAML-compatible data
-    (strings, ints, floats, bools, None, lists, dicts).
+    Handles nested dicts and lists (including nested dicts/lists within lists).
+    Suitable for YAML-compatible data (strings, ints, floats, bools, None,
+    lists, dicts).
 
     Args:
         d: Dictionary to copy
@@ -178,7 +171,31 @@ def _deep_copy_dict(d: dict[str, Any]) -> dict[str, Any]:
         if isinstance(value, dict):
             result[key] = _deep_copy_dict(value)
         elif isinstance(value, list):
-            result[key] = list(value)
+            result[key] = _deep_copy_list(value)
         else:
             result[key] = value
+    return result
+
+
+##Function purpose: Deep copy a list (simple types only)
+def _deep_copy_list(lst: list[Any]) -> list[Any]:
+    """
+    Creates a deep copy of a list with simple types.
+
+    Handles nested dicts and lists within list elements.
+
+    Args:
+        lst: List to copy
+
+    Returns:
+        Deep copy of the list
+    """
+    result: list[Any] = []
+    for item in lst:
+        if isinstance(item, dict):
+            result.append(_deep_copy_dict(item))
+        elif isinstance(item, list):
+            result.append(_deep_copy_list(item))
+        else:
+            result.append(item)
     return result

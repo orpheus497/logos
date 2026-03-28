@@ -30,7 +30,7 @@ See [docs/CLI_USAGE.md](docs/CLI_USAGE.md) for CLI usage guide.
 - Agent alias system (50 built-in + custom user aliases)
 - Shell completion scripts (Bash, Zsh, Fish)
 - Prompt preview feature
-- Recent agents tracking (last 10 per mode)
+- Recent agents tracking (last 10, tagged by mode)
 - Comprehensive CLI test suite (101 new tests)
 - CLI usage documentation (`docs/CLI_USAGE.md`)
 

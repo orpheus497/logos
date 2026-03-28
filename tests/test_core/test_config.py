@@ -54,10 +54,6 @@ class TestDefaultConfig:
         """Clipboard is enabled by default."""
         assert DEFAULT_CONFIG["clipboard"]["enabled"] is True
 
-    def test_has_display_section(self):
-        """Default config has display section."""
-        assert "display" in DEFAULT_CONFIG
-
     def test_has_recent_agents_section(self):
         """Default config has recent_agents section."""
         assert "recent_agents" in DEFAULT_CONFIG
@@ -96,6 +92,20 @@ class TestDeepCopyDict:
         copy = _deep_copy_dict(original)
         copy["items"].append(4)
         assert len(original["items"]) == 3
+
+    def test_copies_nested_dicts_in_lists(self):
+        """Deep copy handles dicts nested inside lists."""
+        original = {"items": [{"x": 1}, {"y": 2}]}
+        copy = _deep_copy_dict(original)
+        copy["items"][0]["x"] = 99
+        assert original["items"][0]["x"] == 1
+
+    def test_copies_nested_lists_in_lists(self):
+        """Deep copy handles lists nested inside lists."""
+        original = {"items": [[1, 2], [3, 4]]}
+        copy = _deep_copy_dict(original)
+        copy["items"][0].append(99)
+        assert len(original["items"][0]) == 2
 
 
 class TestDeepMerge:
@@ -174,22 +184,36 @@ class TestGetConfigValue:
 class TestLoadConfig:
     """##Class purpose: Verify config loading with defaults."""
 
-    def test_returns_dict(self):
+    def test_returns_dict(self, tmp_path, monkeypatch):
         """Load config returns a dictionary."""
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: tmp_path / "config.yaml")
         result = load_config()
         assert isinstance(result, dict)
 
-    def test_has_all_default_keys(self):
+    def test_has_all_default_keys(self, tmp_path, monkeypatch):
         """Loaded config has all default configuration keys."""
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: tmp_path / "config.yaml")
         result = load_config()
         for key in DEFAULT_CONFIG:
             assert key in result
 
-    def test_clipboard_section_present(self):
+    def test_clipboard_section_present(self, tmp_path, monkeypatch):
         """Loaded config has clipboard section from defaults."""
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: tmp_path / "config.yaml")
         result = load_config()
         assert "clipboard" in result
         assert "enabled" in result["clipboard"]
+
+    def test_user_config_merges_with_defaults(self, tmp_path, monkeypatch):
+        """User config file merges correctly with defaults."""
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text("default_mode: deus\n")
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: config_file)
+        result = load_config()
+        assert result["default_mode"] == "deus"
+        ##Condition purpose: Verify defaults are preserved for keys not in user config
+        assert "clipboard" in result
+        assert result["clipboard"]["enabled"] is True
 
 
 class TestSaveConfig:

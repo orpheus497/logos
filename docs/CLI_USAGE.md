@@ -118,6 +118,7 @@ LOGOS supports user-level configuration via `~/.logos/config.yaml`.
 
 ```yaml
 # Default mode (null = ask each time, "daedelus" or "deus")
+# Reserved for future use
 default_mode: null
 
 # Clipboard settings
@@ -125,11 +126,6 @@ clipboard:
   enabled: true          # Auto-copy prompts to clipboard
   show_preview: false    # Show prompt preview before copying
   preview_lines: 10      # Lines to show in preview (first + last)
-
-# Display settings
-display:
-  color: true            # Enable ANSI color output
-  unicode: true          # Enable Unicode box-drawing characters
 
 # Recent agents tracking
 recent_agents:
@@ -186,9 +182,9 @@ cp /path/to/logos/completions/fish/logos.fish ~/.config/fish/completions/
 
 ## Recent Agents
 
-LOGOS tracks your last 10 agent selections (per mode). This helps you quickly
-find agents you use frequently. Recent agents are stored in your identity file
-at `~/.logos/identity.yaml`.
+LOGOS tracks your last 10 agent selections across all modes in a single, shared
+list. Each entry is qualified with its mode (for example `daedelus:A1` or
+`deus:A1`) and stored in your identity file at `~/.logos/identity.yaml`.
 
 ## Navigation
 
