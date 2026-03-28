@@ -45,6 +45,6 @@ codebase. A5 (The Scribe) creates new documents; C7 updates existing ones.
 
 ## References
 
-- [DOCUMENTATION_GUIDE.md](DOCUMENTATION_GUIDE.md) — Complete documentation system guide
-- [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) — Cross-reference index
-- [CONTRIBUTING.md](../CONTRIBUTING.md) — Contribution guidelines
+- [DOCUMENTATION_GUIDE.md](../../docs/DOCUMENTATION_GUIDE.md) — Complete documentation system guide
+- [DOCUMENTATION_INDEX.md](../../docs/DOCUMENTATION_INDEX.md) — Cross-reference index
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) — Contribution guidelines
