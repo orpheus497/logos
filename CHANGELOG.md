@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Phase 6: Documentation Consolidation**
+  - `docs/DOCUMENTATION_GUIDE.md` — Comprehensive documentation system guide covering three-domain architecture
+  - `docs/architecture/DOCUMENTATION_ARCHITECTURE.md` — Technical architecture of the documentation system
+  - `docs/examples/ORCHESTRATOR_WORKFLOW.md` — E1 Orchestrator workflow example
+  - `docs/examples/DOC_UPDATER_WORKFLOW.md` — C7 Doc Updater/Manual Keeper workflow example
+  - `docs/DOCUMENTATION_INDEX.md` — Cross-reference index of all project documentation
+  - `CONTRIBUTING.md` — Contribution guidelines with code style, testing, and documentation standards
+  - `templates/.devdocs/README.md` — Template explaining .devdocs/ folder purpose
+  - `templates/docs/README.md` — Template explaining /docs/ folder purpose
+  - `logos/core/doc_audit.py` — Documentation audit utilities (link validation, cross-reference checking)
+  - `tests/test_documentation/test_role_boundaries.py` — Documentation role boundary validation tests (34 tests)
+  - `tests/test_documentation/test_doc_audit.py` — Documentation audit module tests (32 tests)
+  - CONSTITUTION.md Article XI: Documentation Standards and Ownership
+  - E1 Orchestrator prompts enhanced with documentation domain boundary tables (Daedelus + DEUS)
+  - C7 Doc Updater/Manual Keeper prompts enhanced with documentation domain clarification (Daedelus + DEUS)
+  - `docs/AGENT_BOUNDARIES.md` updated with E1/C7 documentation role clarifications
+
 - **Phase 5 Progress: Enhanced CLI & UX**
   - `logos/core/config.py` — User-level configuration file support (`~/.logos/config.yaml`)
   - `logos/core/aliases.py` — Agent alias system with built-in aliases for all 50 agents plus custom user aliases

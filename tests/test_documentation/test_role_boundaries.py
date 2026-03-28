@@ -130,11 +130,7 @@ class TestConstitutionContent:
         assert "documentation" in lower
         # Verify documentation appears in a heading/directive context
         lines = content.splitlines()
-        doc_heading_found = any(
-            "documentation" in line.lower()
-            for line in lines
-            if line.strip().startswith("#")
-        )
+        doc_heading_found = any("documentation" in line.lower() for line in lines if line.strip().startswith("#"))
         assert doc_heading_found, "Expected 'Documentation' in at least one heading or directive"
 
 
