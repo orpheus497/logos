@@ -341,6 +341,7 @@ def _show_prompt_preview(prompt_text: str, preview_lines: int = 10) -> None:
     else:
         ##Action purpose: Split budget between first and last segments
         first_count = line_budget // 2
+        ##Action purpose: last_count is the remaining budget, capped to lines actually available after first segment
         last_count = min(line_budget - first_count, max(0, total - first_count))
         shown = min(total, first_count + last_count)
         omitted = total - shown

@@ -29,6 +29,9 @@ logger = logging.getLogger(__name__)
 ##Action purpose: Subprocess timeout constant for system checks
 SUBPROCESS_TIMEOUT: float = 0.5
 
+##Action purpose: Default maximum number of recent agent entries to track
+DEFAULT_RECENT_AGENTS_MAX: int = 10
+
 ##Action purpose: FreeBSD system info cache (performance optimization - C9)
 ##Step purpose: Cache FreeBSD-specific system information to avoid repeated subprocess calls
 ##Optimization: Reduces system scan time by ~0.5 seconds on subsequent scans (Profiler B8 recommendation)
@@ -541,14 +544,14 @@ def update_session_tracking(
 
     config = load_config()
     recent_enabled = get_config_value(config, "recent_agents.enabled", True)
-    max_count = get_config_value(config, "recent_agents.max_count", 10)
+    max_count = get_config_value(config, "recent_agents.max_count", DEFAULT_RECENT_AGENTS_MAX)
     ##Action purpose: Validate max_count is a positive integer
     try:
         max_count = int(max_count)
     except (TypeError, ValueError):
-        max_count = 10
+        max_count = DEFAULT_RECENT_AGENTS_MAX
     if max_count < 0:
-        max_count = 10
+        max_count = DEFAULT_RECENT_AGENTS_MAX
 
     recent = list(identity.recent_agents)
 
