@@ -137,6 +137,24 @@ I fix bugs in existing components through surgical patches; I do not design or r
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/bug_hunter/`.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Core dumps: `coredumpctl list`, `coredumpctl debug`, `/var/lib/systemd/coredump/`
+- Crash analysis: `dmesg`, `journalctl -k`, `journalctl --since=-1h`
+- Service failures: `systemctl status <service>`, `journalctl -u <service> -e`
+- Debug tools: `gdb`, `strace`, `ltrace`, `valgrind`
+- Kernel panics: `/var/crash/` (if kdump configured), `journalctl -b -1`
+- Log locations: `journalctl` (primary), `/var/log/syslog`, `/var/log/kern.log`
+
+### FreeBSD
+- Core dumps: `/var/crash/`, `kgdb /boot/kernel/kernel /var/crash/vmcore.X`
+- Crash analysis: `dmesg`, `/var/log/messages`, `kgdb` for kernel panics
+- Service failures: `service <name> status`, tail `/var/log/messages`
+- Debug tools: `lldb`, `ktrace`/`kdump`, `truss`, `dtrace`
+- Kernel panics: `/var/crash/vmcore.*`, analyze with `kgdb`
+- Log locations: `/var/log/messages` (primary), `/var/log/security`, `/var/log/auth.log`
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -338,6 +356,26 @@ Security patching takes priority over other maintenance work. If a CVE remediati
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/security_patcher/`.
 ---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Security updates: `apt update && apt upgrade -s` (simulate), `yum update --security`
+- CVE checking: `apt list --upgradable`, `yum updateinfo list security`
+- Patch application: `apt install <package>=<version>`, `yum update <package>`
+- Kernel patches: `apt install linux-image-<version>`, requires reboot
+- Live patching: `kpatch` (RHEL), `livepatch` (Ubuntu) for zero-downtime kernel patches
+- Security advisories: Distribution-specific (DSA for Debian, USN for Ubuntu, RHSA for RHEL)
+- Unattended upgrades: `/etc/apt/apt.conf.d/50unattended-upgrades` (Debian/Ubuntu)
+
+### FreeBSD
+- Security updates: `freebsd-update fetch install` for base system
+- CVE checking: `pkg audit -F` for installed packages
+- Patch application: `pkg upgrade <package>`, `portmaster <port>` for ports
+- Kernel patches: `freebsd-update` for binary patches; rebuild kernel for source patches
+- Security advisories: FreeBSD-SA (Security Advisories), FreeBSD-EN (Errata Notices)
+- Src patching: `fetch` advisory patch → `cd /usr/src && patch < advisory.patch && make`
+- Automated: `freebsd-update cron` for periodic base system checks
 
 ## 🔄 END-OF-TASK PROTOCOL
 
@@ -544,6 +582,24 @@ I document system state and maintain manuals; I do not modify system configurati
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/manual_keeper/`.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Man pages: `/usr/share/man/`, write in `groff`/`mandoc` format
+- Documentation paths: `/usr/share/doc/<package>/`, `/usr/share/info/`
+- Config docs: Document systemd unit files, `/etc/` configuration files
+- System reference: Distribution documentation (wiki, manuals)
+- Runbook format: Reference `systemctl`, `journalctl` commands
+- Help systems: `man`, `info`, `--help` flags, `/usr/share/doc/`
+
+### FreeBSD
+- Man pages: `/usr/share/man/`, write in `mdoc(7)` format (mandatory)
+- Documentation paths: `/usr/share/doc/`, handbook at `/usr/share/doc/handbook/`
+- Config docs: Document `rc.conf` variables, `loader.conf` tunables
+- System reference: FreeBSD Handbook is authoritative (https://docs.freebsd.org)
+- Runbook format: Reference `service`, `sysrc`, `pkg` commands
+- Help systems: `man` (primary), `apropos` for search, handbook for concepts
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -747,6 +803,28 @@ I tune runtime kernel parameters via sysctl.conf; boot-time loader.conf changes 
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/sysctl_tuner/`.
 ---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Sysctl location: `/etc/sysctl.conf`, `/etc/sysctl.d/*.conf` (drop-in directory)
+- Apply changes: `sysctl --system` (load all), `sysctl -p <file>` (specific file)
+- List all: `sysctl -a`, query specific: `sysctl <key>`
+- Network tuning: `net.core.somaxconn`, `net.ipv4.tcp_*`, `net.core.rmem_max`
+- Memory tuning: `vm.swappiness`, `vm.dirty_ratio`, `vm.overcommit_memory`
+- Security tuning: `kernel.randomize_va_space`, `kernel.dmesg_restrict`
+- Filesystem: `fs.file-max`, `fs.inotify.max_user_watches`
+- Namespaced sysctls: Some sysctls are per-cgroup/namespace in containers
+
+### FreeBSD
+- Sysctl location: `/etc/sysctl.conf` (runtime), `/boot/loader.conf` (boot-time)
+- Apply changes: `sysctl <key>=<value>` (immediate), edit files for persistence
+- List all: `sysctl -a`, query specific: `sysctl <key>`
+- Network tuning: `kern.ipc.somaxconn`, `net.inet.tcp.*`, `kern.ipc.maxsockbuf`
+- Memory tuning: `vfs.zfs.arc_max`, `vm.swap_enabled`, `kern.maxvnodes`
+- Security tuning: `security.bsd.*`, `kern.securelevel`, `security.mac.*`
+- ZFS tuning: `vfs.zfs.*` — `arc_max`, `prefetch_disable`, `txg.timeout`
+- Boot-only tunables: Some tunables ONLY work in `loader.conf` (not runtime sysctl)
 
 ## 🔄 END-OF-TASK PROTOCOL
 
@@ -958,6 +1036,28 @@ I optimize resource allocation and application-level performance; kernel sysctl 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/optimizer/`.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- CPU scheduling: `chrt`, `nice`/`renice`, CPU governor via `cpufreq`
+- I/O scheduling: `/sys/block/<dev>/queue/scheduler` (mq-deadline, bfq, none)
+- Memory: Hugepages (`/proc/sys/vm/nr_hugepages`), NUMA via `numactl`
+- Filesystem: Mount options (`noatime`, `discard`), tune2fs for ext4
+- Service optimization: `systemd-analyze blame`, disable unnecessary services
+- Container optimization: cgroup limits, resource quotas
+- Compiler flags: `-O2`, `-march=native` for distribution builds
+- Profiling: `perf`, `valgrind`, `strace` for identifying bottlenecks
+
+### FreeBSD
+- CPU scheduling: `cpuset`, `nice`/`renice`, `rctl` for resource limits
+- I/O scheduling: GEOM layer tuning, `kern.geom.debugflags`
+- Memory: Superpages (automatic), `vm.pmap.pg_ps_enabled`
+- Filesystem: ZFS tuning (recordsize, compression), UFS mount options
+- Service optimization: Disable unused services in `rc.conf`
+- Jail optimization: Resource limits via `rctl`, `cpuset` for CPU pinning
+- Compiler flags: `CFLAGS` in `/etc/make.conf` for ports
+- Profiling: `dtrace`, `pmcstat`, `gstat` for identifying bottlenecks
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -1165,6 +1265,26 @@ Before deleting ANYTHING:
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/system_janitor/`.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Log cleanup: `journalctl --vacuum-time=30d`, `journalctl --vacuum-size=500M`
+- Package cleanup: `apt autoremove`, `apt clean`; `yum clean all`, `dnf autoremove`
+- Temp files: `systemd-tmpfiles --clean`, `/tmp/` auto-cleaned by `tmpfiles.d`
+- Old kernels: `apt autoremove` (Debian), `dnf remove --oldinstallonly` (Fedora)
+- Disk usage: `du -sh /var/*`, `ncdu`, `journalctl --disk-usage`
+- Docker cleanup: `docker system prune -a` (if Docker is used)
+- Cache cleanup: `/var/cache/apt/`, `/var/cache/yum/`, user caches in `~/.cache/`
+
+### FreeBSD
+- Log cleanup: `newsyslog` (automatic rotation), `/etc/newsyslog.conf`
+- Package cleanup: `pkg autoremove`, `pkg clean -a`
+- Temp files: `periodic daily` handles `/tmp/` cleanup via `/etc/periodic.conf`
+- Old packages: `pkg autoremove` for orphaned dependencies
+- Disk usage: `du -sh /var/*`, ZFS `zfs list -o space`
+- Ports cleanup: `make clean` in port directories, `pkg clean` for cached packages
+- Crash dumps: Clean `/var/crash/` after analysis (coordinate with C1)
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -1363,6 +1483,28 @@ I manage pre-built packages via pkg; custom port compilation belongs to D2.
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/port_librarian/`.
 ---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Package install: `apt install` (Debian/Ubuntu), `yum install` (RHEL), `dnf install` (Fedora), `pacman -S` (Arch)
+- Package search: `apt search`, `yum search`, `dnf search`, `pacman -Ss`
+- Package info: `apt show`, `yum info`, `dnf info`, `pacman -Si`
+- Repository management: `/etc/apt/sources.list.d/`, `/etc/yum.repos.d/`
+- Package verification: `dpkg --verify`, `rpm -Va`
+- Dependency resolution: `apt-cache depends`, `yum deplist`, automatic by default
+- Pinning/holding: `apt-mark hold`, `yum versionlock`, `dnf versionlock`
+- Changelog: `apt changelog`, `rpm -q --changelog`
+
+### FreeBSD
+- Package install: `pkg install <name>` (binary packages)
+- Package search: `pkg search <name>`, `pkg search -o <name>` (by origin)
+- Package info: `pkg info <name>`, `pkg info -d <name>` (dependencies)
+- Repository management: `/etc/pkg/`, `/usr/local/etc/pkg/repos/`
+- Package verification: `pkg check -s -a` (checksums), `pkg check -d -a` (deps)
+- Ports tree: `/usr/ports/`, `portsnap fetch update` or `git pull`
+- Port options: `make config` in port directory, `make showconfig`
+- Poudriere: Package building system for custom binary packages
 
 ## 🔄 END-OF-TASK PROTOCOL
 

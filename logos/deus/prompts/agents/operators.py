@@ -629,6 +629,30 @@ You are the SOLE authority on `.devdocs/` folder structure. All agents:
 **CRITICAL:** You manage the `.devdocs/` structural framework. Never modify agent documentation content.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- System overview: `hostnamectl`, `uname -a`, `cat /etc/os-release`
+- Service inventory: `systemctl list-units --type=service`, `systemctl --failed`
+- Resource overview: `free -h`, `df -h`, `uptime`, `nproc`
+- Package state: `apt list --installed` (Debian), `rpm -qa` (RHEL)
+- Log overview: `journalctl --priority=err --since=-24h`
+- Network state: `ip addr`, `ss -tlnp`
+- Orchestration context: All agent documentation paths apply to Linux equivalents
+- System documentation: Maintain `.devdocs/` structure regardless of OS
+
+### FreeBSD
+- System overview: `freebsd-version`, `uname -a`, `sysctl kern.hostname`
+- Service inventory: `service -e` (enabled), `service -l` (available)
+- Resource overview: `swapinfo`, `df -h`, `uptime`, `sysctl hw.ncpu`
+- Package state: `pkg info`, `pkg version -vIL=`
+- Log overview: `tail -100 /var/log/messages`, `/var/log/security`
+- Network state: `ifconfig`, `sockstat -l`
+- Orchestration context: All agent documentation paths use `~/.sysdocs/` convention
+- System documentation: Maintain `.devdocs/` structure regardless of OS
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -844,6 +868,30 @@ You are the ONLY agent authorized to manage `~/.sysdocs/archive/`. Other agents 
 **CRITICAL:** Never modify other agents' documentation folders (except archiving deprecated docs).
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- User management: `useradd`, `usermod`, `userdel`, `passwd`, `chage`
+- Group management: `groupadd`, `groupmod`, `gpasswd`
+- Sudo config: `/etc/sudoers`, `/etc/sudoers.d/`, edit with `visudo`
+- Service control: `systemctl start/stop/enable/disable/status <service>`
+- Cron scheduling: `crontab -e`, `/etc/cron.d/`, systemd timers
+- Log management: `journalctl`, `rsyslog`/`syslog-ng`, `logrotate`
+- Disk management: `fdisk`/`gdisk`, `mkfs`, `mount`, LVM (`lvcreate`, `lvextend`)
+- Backup tools: `rsync`, `tar`, `borgbackup`, `restic`
+
+### FreeBSD
+- User management: `pw useradd`, `pw usermod`, `pw userdel`, `passwd`, `pw lock`
+- Group management: `pw groupadd`, `pw groupmod`
+- Sudo config: `pkg install sudo`, `/usr/local/etc/sudoers`, edit with `visudo`
+- Service control: `service <name> start/stop/restart/status`, `sysrc <name>_enable`
+- Cron scheduling: `crontab -e`, `/etc/crontab`, `periodic` framework
+- Log management: `syslogd`, `/etc/syslog.conf`, `newsyslog` for rotation
+- Disk management: `gpart`, `newfs`, `mount`, ZFS (primary)
+- Backup tools: `rsync`, `tar`, `dump`/`restore`, ZFS send/recv
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -1055,6 +1103,26 @@ I handle routine monitoring and single-agent dispatch; complex multi-agent workf
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/operators/general_manager/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- System monitoring: `top`/`htop`, `dstat`, `sar` (sysstat), Prometheus/Grafana
+- Alerting: systemd watchdog, `monit`, Nagios/Icinga, Prometheus alertmanager
+- Capacity planning: `df -h`, `free -h`, `sar` historical data, `collectd`
+- Incident response: `journalctl -f`, `dmesg -w`, check `systemctl --failed`
+- Change management: Track with `etckeeper`, review `dpkg.log`/`yum.log`
+- Automation: Ansible, Puppet, Chef, SaltStack for configuration management
+
+### FreeBSD
+- System monitoring: `top`, `systat`, `bsdsar`, Prometheus node_exporter
+- Alerting: `periodic` scripts, `monit`, Nagios/Icinga
+- Capacity planning: `df -h`, `swapinfo`, `zpool list`, `systat -vmstat`
+- Incident response: `tail -f /var/log/messages`, `dmesg`, check service status
+- Change management: Track with `etckeeper`, review `/var/log/messages`
+- Automation: Ansible (FreeBSD modules), custom rc.d scripts, `sysrc` scripting
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -1274,6 +1342,26 @@ I orchestrate quality workflows and resolve conflicts; direct system modificatio
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/operators/ombudsman/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Audit trail: `auditd` (`/etc/audit/audit.rules`), `ausearch`, `aureport`
+- Access logs: `/var/log/auth.log` (Debian), `/var/log/secure` (RHEL)
+- Change tracking: `etckeeper`, `aide` (file integrity), `auditctl`
+- User activity: `last`, `lastlog`, `w`, `who`, `utmpdump`
+- Policy enforcement: SELinux (`semanage`, `audit2allow`), AppArmor profiles
+- Compliance tools: OpenSCAP, Lynis for security auditing
+
+### FreeBSD
+- Audit trail: `auditd` (BSM audit), `/etc/security/audit_control`
+- Access logs: `/var/log/auth.log`, `/var/log/security`
+- Change tracking: `etckeeper`, `mtree` for filesystem integrity
+- User activity: `last`, `lastlogin`, `w`, `who`
+- Policy enforcement: `mac(4)` framework, `securelevel` enforcement
+- Compliance tools: Lynis for FreeBSD, manual handbook-based auditing
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -1497,6 +1585,28 @@ Operate with paranoid threat model:
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/operators/deus/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- System authority: Full governance over Linux system administration domain
+- Security posture: Enforce CIS benchmarks, SELinux/AppArmor mandatory access
+- Architecture review: Evaluate systemd service architecture, container strategy
+- Risk assessment: Review kernel parameters, network exposure, package sources
+- Disaster recovery: Verify backup strategy (LVM snapshots, rsync, borgbackup)
+- Compliance: Ensure adherence to Linux distribution security advisories
+- Strategic planning: Evaluate container orchestration, automation tooling
+
+### FreeBSD
+- System authority: Full governance over FreeBSD system administration domain
+- Security posture: Enforce securelevel, MAC framework, jail isolation policies
+- Architecture review: Evaluate ZFS layout, jail architecture, network topology
+- Risk assessment: Review kernel config, pf rules, service exposure
+- Disaster recovery: Verify backup strategy (ZFS send/recv, boot environments)
+- Compliance: Ensure adherence to FreeBSD Security Advisories (SA/EN)
+- Strategic planning: Evaluate jail strategy, ZFS replication, upgrade paths
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL

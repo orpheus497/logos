@@ -15,16 +15,15 @@ See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed phase-by-phase analy
 | 1 | Agent Boundary Enforcement | ✅ Complete |
 | 2 | .devdocs Governance System | ✅ Complete |
 | 3 | Workflow Coordination | ✅ Complete |
-| 4 | OS-Specific Adaptations | ⚠️ Partial (infrastructure only) |
+| 4 | OS-Specific Adaptations | ✅ Complete |
 | 5 | Enhanced CLI & UX | ⚠️ Partial (basic CLI functional) |
 | 6 | Documentation Consolidation | ❌ Not Started |
 | 7 | Integration & Release | ❌ Not Started |
 
-**Tests:** 867 passed, 1 skipped | **Version:** 0.2.0.dev0
+**Tests:** 1074 passed, 2 skipped | **Version:** 0.2.0.dev0
 
 ## Next Steps
 
-1. **Phase 4: OS Adaptations** — Add per-agent OS-SPECIFIC INSTRUCTIONS sections to all 26 DEUS agents
-2. **Phase 5: Enhanced CLI** — Interactive agent selection, shell completion, agent aliases, ASCII logo
+1. **Phase 5: Enhanced CLI** — Interactive agent selection, shell completion, agent aliases, config
 3. **Phase 6: Documentation Consolidation** — Role clarification, CONTRIBUTING.md, documentation guides
 4. **Phase 7: Integration & Release** — Release notes, migration guide, version bump to 0.2.0

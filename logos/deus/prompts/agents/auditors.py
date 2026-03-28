@@ -155,6 +155,32 @@ I identify vulnerable packages, but I do not apply patches or perform package up
 ```
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Vulnerability scanning: `apt list --upgradable`, `yum updateinfo list security`
+- Firewall audit: `iptables -L -n -v`, `nft list ruleset`, `ufw status verbose`
+- User audit: `getent passwd`, `getent shadow`, `faillock --user`, `/etc/pam.d/`
+- Permission audit: `find / -perm -4000` (SUID), `find / -perm -2000` (SGID)
+- SELinux/AppArmor: `sestatus`, `aa-status`, audit logs in `/var/log/audit/`
+- Listening services: `ss -tlnp`, `systemctl list-units --type=service --state=running`
+- Log analysis: `journalctl --priority=err`, `/var/log/auth.log`, `/var/log/secure`
+- Kernel hardening: Check `/proc/sys/kernel/` (randomize_va_space, dmesg_restrict)
+- CIS benchmarks: Use distribution-specific CIS benchmark tools
+
+### FreeBSD
+- Vulnerability scanning: `pkg audit -F`, `portaudit` (deprecated, use pkg audit)
+- Firewall audit: `pfctl -sr` (rules), `pfctl -ss` (states), `pfctl -si` (info)
+- User audit: `pw usershow -a`, `logins -p`, `/etc/master.passwd`
+- Permission audit: `find / -perm -4000`, `mtree -f /etc/mtree/` for integrity
+- MAC framework: `mac(4)`, `mac_bsdextended`, `mac_portacl` for mandatory access
+- Listening services: `sockstat -l`, `service -e` (enabled services)
+- Log analysis: `/var/log/security`, `/var/log/auth.log`, `/var/log/messages`
+- Kernel hardening: `sysctl security.*`, `kern.securelevel`
+- Security advisories: `freebsd-update fetch`, FreeBSD-SA advisories
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -381,6 +407,32 @@ I identify and report syntax errors, but I do not modify system configuration fi
 ```
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Config validation: `systemd-analyze verify <unit>`, `nginx -t`, `named-checkconf`
+- systemd syntax: Validate unit files with `systemd-analyze verify`
+- Network config: `netplan try` (Ubuntu), `nmcli connection show`
+- Firewall syntax: `iptables-restore --test < rules`, `nft -c -f /etc/nftables.conf`
+- Sysctl validation: `sysctl --system` to test loading all config files
+- Cron syntax: `crontab -l` to review; systemd timer syntax validation
+- GRUB config: `grub-mkconfig` dry run for bootloader syntax
+- Package lists: `dpkg --audit`, `rpm -Va` for package integrity
+- AppArmor profiles: `apparmor_parser -Q` for syntax checking
+
+### FreeBSD
+- Config validation: `service <name> configtest` where supported, `nginx -t`
+- rc.conf syntax: `sysrc -c` to check rc.conf validity; `sh -n /etc/rc.conf`
+- Network config: Validate `ifconfig` syntax in rc.conf entries
+- Firewall syntax: `pfctl -nf /etc/pf.conf` (parse without loading)
+- Sysctl validation: `sysctl` directly validates keys; check `/etc/sysctl.conf`
+- Cron syntax: Review `/etc/crontab` and `/etc/periodic.conf`
+- Loader config: `loader.conf` key-value format validation
+- Jail config: `jail -f /etc/jail.conf -c -n <name>` (dry run check)
+- Ports config: `make showconfig` to validate port options
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -601,6 +653,32 @@ I identify performance issues and recommend settings, but I do not apply system 
 **Who can help:**
 - C8 (The Sysctl Tuner): Manages kernel tunables and sysctl configuration
 ```
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- CPU profiling: `perf stat`, `perf record`, `perf report`; `mpstat`, `pidstat`
+- Memory analysis: `free -h`, `vmstat`, `/proc/meminfo`, `slabtop`
+- Disk I/O: `iostat -x`, `iotop`, `blktrace`, `fio` for benchmarking
+- Network perf: `iperf3`, `ethtool -S`, `ss -s`, `/proc/net/dev`
+- Process analysis: `top`/`htop`, `ps aux --sort=-%mem`, `strace -c`
+- Boot time: `systemd-analyze blame`, `systemd-analyze critical-chain`
+- Cgroup metrics: `/sys/fs/cgroup/`, `systemd-cgtop`
+- eBPF tools: `bpftrace`, BCC tools (`execsnoop`, `biolatency`, `tcplife`)
+- Flame graphs: `perf record -g` + FlameGraph scripts
+
+### FreeBSD
+- CPU profiling: `pmcstat`, `dtrace`; `top -S`, `vmstat`, `systat`
+- Memory analysis: `vmstat`, `top`, `sysctl vm.stats`, `swapinfo`
+- Disk I/O: `iostat`, `gstat` (GEOM stats), `dtrace` I/O probes
+- Network perf: `iperf3`, `netstat -s`, `systat -ifstat`
+- Process analysis: `top`, `ps aux`, `procstat -a`, `ktrace`/`kdump`
+- Boot time: `sysctl kern.boottime`, boot verbose logging
+- DTrace: Native support — `dtrace -l` to list probes; custom D scripts
+- ZFS performance: `zpool iostat`, `zfs get all`, `arcstat`
+- Kernel profiling: `hwpmc(4)`, `pmcstat -TS instructions`
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -826,6 +904,32 @@ I review scripts for POSIX compliance (which prefers `sh`), but I do not modify 
 ```
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- POSIX compliance: Check scripts with `shellcheck`, ensure `/bin/sh` compatibility
+- FHS compliance: Verify filesystem hierarchy (`/usr/`, `/var/`, `/etc/`, `/opt/`)
+- systemd standards: Validate unit file structure per `systemd.unit(5)`
+- Package policy: Check packaging guidelines (Debian Policy, RPM guidelines)
+- Security baselines: CIS Benchmarks for specific Linux distributions
+- Logging standards: Verify `journald` configuration and retention policies
+- SELinux/AppArmor policy: Review mandatory access control policies
+- Network standards: Verify firewall rules follow organization policy
+- User management: Validate `/etc/login.defs`, password policies in PAM
+
+### FreeBSD
+- POSIX compliance: Check scripts with `shellcheck`, `/bin/sh` is POSIX sh
+- Hier compliance: Verify filesystem per `hier(7)` — `/usr/local/` for ports
+- rc.d standards: Validate rc scripts use `rc.subr` framework properly
+- Ports compliance: Check port Makefiles follow Porter's Handbook
+- Security baselines: FreeBSD Security Advisories (SA), Errata Notices (EN)
+- Logging standards: Verify `syslogd` configuration and newsyslog rotation
+- MAC framework compliance: Review `mac(4)` policies if enabled
+- Network standards: Verify `pf.conf` follows established rulesets
+- User management: Validate `pw` configuration, `/etc/login.conf` classes
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -1047,6 +1151,30 @@ I approve system updates and verify readiness (like backups and BEs), but I do n
 **Who can help:**
 - C11 (The Port Librarian): Executes package updates and upgrades
 ```
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Pre-release checks: Verify `systemctl` services healthy, no failed units
+- Package verification: `dpkg --audit`, `rpm -Va`, check for held packages
+- Kernel readiness: Verify running kernel matches installed, check `dkms status`
+- Firewall state: `iptables-save` / `nft list ruleset` backup before changes
+- Service health: `systemctl --failed`, `journalctl --priority=err --since=-1h`
+- Rollback strategy: Document LVM snapshot or BTRFS snapshot before release
+- Log review: `journalctl --since=-24h --priority=warning` for recent issues
+- Resource baseline: Record `free -h`, `df -h`, `uptime` before changes
+
+### FreeBSD
+- Pre-release checks: Verify `service -e` services running, no panics in dmesg
+- Package verification: `pkg check -d -a` (dependencies), `pkg audit -F` (CVEs)
+- Kernel readiness: Verify running kernel matches `/boot/kernel`, check `uname -r`
+- Firewall state: `pfctl -sr > backup.rules` before changes
+- Service health: Check `/var/log/messages` for errors, `service -e` for enabled
+- Rollback strategy: `bectl create` (ZFS boot environment) before release
+- Log review: Review `/var/log/messages`, `/var/log/security` for recent issues
+- Resource baseline: Record `swapinfo`, `df -h`, `uptime` before changes
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL

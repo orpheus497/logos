@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Phase 4 Complete: OS-Specific Adaptations**
+- Added OS-SPECIFIC INSTRUCTIONS sections (Linux + FreeBSD) to all 26 DEUS agents across 5 prompt files
+- Created `docs/OS_ADAPTATIONS.md` — OS adaptation architecture overview
+- Created `docs/DEUS_LINUX_REFERENCE.md` — Linux command and configuration quick reference
+- Created `docs/DEUS_FREEBSD_REFERENCE.md` — FreeBSD command and configuration quick reference
+- Added CONSTITUTION.md Article IX: Operating System Adaptations
+- Added `tests/test_deus/test_linux_specifics.py` — validates Linux OS sections for all 26 agents
+- Added `tests/test_deus/test_freebsd_specifics.py` — validates FreeBSD OS sections for all 26 agents
+
 - **Phase 2 Complete: .devdocs Governance System**
 - Implemented Temporal Log Management System (`logos/core/temporal_logs.py`) for automated summarization (daily, weekly, monthly) and archival.
 - Implemented `.devdocs` bloat prevention and file archival utilities (`logos/core/bloat_prevention.py`, `logos/core/archival.py`).
