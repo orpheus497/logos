@@ -80,8 +80,8 @@ All 50 agents across both Daedelus (24) and DEUS (26) domains have explicit scop
 | Deliverable | Status | Notes |
 |---|---|---|
 | OS detection logic | ✅ Complete | `logos/core/identity.py` — FreeBSD/Linux detection, parallel scanning |
-| OS adaptation in prompt composition | ✅ Complete | `logos/core/prompts.py` — 44 pre-compiled regex substitution patterns (FreeBSD→Linux) |
-| Directive 3/4 adaptation | ✅ Complete | "BSD Compliance" → "Linux Standards Compliance" with full rewrite |
+| OS adaptation in prompt composition | ✅ Complete | `logos/core/prompts.py` — 18 pre-compiled regex substitution patterns (FreeBSD→Linux) |
+| Directive 3 adaptation & maintenance-role rewrite | ✅ Complete | `logos/core/prompts.py` — Directive 3 prompt adaptation + maintenance-role rewrite ("BSD Compliance" → "Linux Standards Compliance") |
 | CLI integration (identity.os_name → build_complete_prompt) | ✅ Complete | Wired through `logos/cli/agent_select.py` |
 | Linux-specific DEUS prompt sections | ✅ Complete | All 26 DEUS agents have `### Linux` OS-SPECIFIC INSTRUCTIONS |
 | FreeBSD-specific DEUS prompt sections | ✅ Complete | All 26 DEUS agents have `### FreeBSD` OS-SPECIFIC INSTRUCTIONS |
