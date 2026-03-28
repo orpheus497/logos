@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # LOGOS Shell Completion Installer
 # Installs shell completion scripts for Bash, Zsh, and Fish.
 #

@@ -68,6 +68,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Show LOGOS version and exit",
     )
 
+    parser.add_argument(
+        "agent",
+        nargs="?",
+        default=None,
+        help="Agent key or alias to invoke directly (e.g., A1, architect, kernel)",
+    )
+
     args = parser.parse_args(argv)
 
     ##Action purpose: Set module-level verbosity based on parsed flags

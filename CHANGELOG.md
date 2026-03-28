@@ -27,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Version bumped from 0.2.0.dev0 to 0.2.0
 - Development classifier updated from Pre-Alpha to Beta
 - DEVELOPMENT.md updated with all phases marked complete
+- Enhanced `E1 The Orchestrator` (Daedelus) and `E1 The System Orchestrator` (DEUS) with constitutional authority over `.devdocs/`
+- Updated agent definition descriptions for Orchestrators to emphasize governance
+- Modified `docs/AGENT_BOUNDARIES.md` to explicitly list Orchestrator's `.devdocs` management scope and exclusive `.archive/` access
+- Version set to 0.2.0 for release (previously 0.2.0.dev0 during development)
+- Orchestrator agent now has activation prompt with scope boundaries
+- Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 - **Phase 6: Documentation Consolidation**
   - `docs/DOCUMENTATION_GUIDE.md` — Comprehensive documentation system guide covering three-domain architecture
@@ -156,15 +162,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - E4 (The Ombudsman)
   - E5 (DEUS - The Supreme Security Guardian)
 - Boundary validation test suite (326 tests across both domains)
-
-### Changed
-
-- Enhanced `E1 The Orchestrator` (Daedelus) and `E1 The System Orchestrator` (DEUS) with constitutional authority over `.devdocs/`
-- Updated agent definition descriptions for Orchestrators to emphasize governance
-- Modified `docs/AGENT_BOUNDARIES.md` to explicitly list Orchestrator's `.devdocs` management scope and exclusive `.archive/` access
-- Version set to 0.2.0 for release (previously 0.2.0.dev0 during development)
-- Orchestrator agent now has activation prompt with scope boundaries
-- Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ### Fixed
 
