@@ -103,7 +103,7 @@ def main() -> int:
             return 1
 
         ##Action purpose: Run main mode selection loop
-        return run_mode_selection(identity)
+        return run_mode_selection(identity, agent=args.agent)
 
     except KeyboardInterrupt:
         ##Error purpose: Handle Ctrl+C gracefully (user interruption)

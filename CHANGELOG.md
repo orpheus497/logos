@@ -24,13 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Version bumped from 0.2.0.dev0 to 0.2.0
+- Version updated from 0.2.0.dev0 to 0.2.0 for release
 - Development classifier updated from Pre-Alpha to Beta
 - DEVELOPMENT.md updated with all phases marked complete
 - Enhanced `E1 The Orchestrator` (Daedelus) and `E1 The System Orchestrator` (DEUS) with constitutional authority over `.devdocs/`
 - Updated agent definition descriptions for Orchestrators to emphasize governance
 - Modified `docs/AGENT_BOUNDARIES.md` to explicitly list Orchestrator's `.devdocs` management scope and exclusive `.archive/` access
-- Version set to 0.2.0 for release (previously 0.2.0.dev0 during development)
 - Orchestrator agent now has activation prompt with scope boundaries
 - Note: Current project implementation status can be tracked in [DEVELOPMENT.md](DEVELOPMENT.md).
 

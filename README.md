@@ -12,7 +12,7 @@
 
 ## 🚧 Development Notice
 
-LOGOS v0.2.0 is in active development on the `develop` branch. Current focus: agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
+LOGOS v0.2.0 is the current **Beta** release. Active development for upcoming versions continues on the `develop` branch, with a current focus on agent boundary enforcement and refusal mechanism infrastructure. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ---
 
@@ -1350,7 +1350,7 @@ pip-audit --fix
 
 ### Project Status
 
-**Current Version:** v0.2.0 — in active development on the develop branch (Alpha)
+**Current Version:** v0.2.0 — Beta release (all phases complete)
 
 **Completed:**
 - ✅ Core infrastructure (identity, persistence, validation)
@@ -1449,5 +1449,5 @@ If you modify LOGOS and distribute it (including as a service), you must:
 
 ---
 
-**Status:** v0.2.0 — in active development on the develop branch (Alpha)
-**Last Updated:** 2026-02-24
+**Status:** v0.2.0 — Beta release (all phases complete)
+**Last Updated:** 2026-03-28
