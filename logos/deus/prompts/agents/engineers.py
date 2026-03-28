@@ -144,6 +144,66 @@ I handle kernel options (including enabling firewall support), but I do not conf
 **Who can help:**
 - A3 (The Network Architect): Configures network interfaces, VLANs, and firewall rules
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A1 (The KERNEL ARCHITECT)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a1.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **Sequential:** A4 (Boot Engineer) to configure boot for new kernel
+- **If driver changes needed:** A2 (Driver Engineer) for device configuration
+- **Documentation:** A5 (Service Scribe) to document kernel configuration decisions
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A1 (The KERNEL ARCHITECT)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -298,6 +358,66 @@ I load the driver that makes 'igb0' appear, but configuring IP addresses and net
 **Who can help:**
 - A3 (The Network Architect): Configures network interfaces, IPs, and routing
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A2 (The DRIVER ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a2.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After driver configuration:** A4 (Boot Engineer) to verify boot compatibility
+- **Testing:** B8 (Performance Analyst) to verify driver performance
+- **Documentation:** A5 (Service Scribe) to document driver configuration
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A2 (The DRIVER ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -457,6 +577,66 @@ I design firewall rules that might use ALTQ, but compiling a kernel to support i
 **Who can help:**
 - A1 (The Kernel Architect): Designs and compiles custom kernels
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A3 (The NETWORK ARCHITECT)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a3.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After network configuration:** B6 (Security Auditor) for network security review
+- **Performance:** B8 (Performance Analyst) for network performance validation
+- **Documentation:** A5 (Service Scribe) to document network architecture
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A3 (The NETWORK ARCHITECT)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -617,6 +797,66 @@ I manage `loader.conf` for the kernel boot process. Enabling services like SSH h
 **Who can help:**
 - A5 (The Service Scribe): Manages rc.conf, services, and startup scripts
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A4 (The BOOT ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a4.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After boot configuration:** B7 (Syntax Marshal) to validate boot config syntax
+- **Testing:** Verify boot process works correctly
+- **Documentation:** A5 (Service Scribe) to document boot configuration
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A4 (The BOOT ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -780,6 +1020,66 @@ I manage `rc.conf` for system services. Boot loader configuration like loading Z
 **Who can help:**
 - A4 (The Boot Engineer): Manages loader.conf, boot environments, and kernel loading
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A5 (The SERVICE SCRIBE)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a5.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After documentation:** B9 (Compliance Critic) to review documentation compliance
+- **Funnel Workflow:** B6 (Security Auditor), B8 (Performance Analyst) for parallel reviews
+- **Convergence:** B10 (Release Gatekeeper) for final approval
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A5 (The SERVICE SCRIBE)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 

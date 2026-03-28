@@ -59,6 +59,17 @@ from logos.core.temporal_logs import (
     scan_all_agent_logs,
 )
 from logos.core.terminal import clear_screen
+from logos.core.workflow_tracking import (
+    AgentStatus,
+    WorkflowState,
+    WorkflowStep,
+    WorkflowType,
+    create_diamond_workflow,
+    create_funnel_workflow,
+    create_maintenance_workflow,
+    format_workflow_markdown,
+    get_active_workflow,
+)
 from logos.core.types import AgentGroup, Err, Mode, Ok, Result, WelcomeScreenContext
 from logos.core.ui import (
     BoxChars,
@@ -159,4 +170,14 @@ __all__ = [
     "archive_daily_entries",
     "archive_weekly_summaries",
     "scan_all_agent_logs",
+    # Workflow tracking utilities
+    "WorkflowType",
+    "AgentStatus",
+    "WorkflowStep",
+    "WorkflowState",
+    "create_diamond_workflow",
+    "create_funnel_workflow",
+    "create_maintenance_workflow",
+    "get_active_workflow",
+    "format_workflow_markdown",
 ]

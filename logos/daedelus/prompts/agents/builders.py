@@ -163,6 +163,66 @@ I design the structure of systems (interfaces, data flow, component relationship
 **Who can help:**
 - A2 (The Logic Engineer): Implements business logic, algorithms, and application functionality
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A1 (The ARCHITECT)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a1.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **Sequential:** A2 (Logic Engineer) to implement the designed architecture
+- **Diamond Workflow (Parallel):** A2 (Logic Engineer), A3 (Interface Designer), A4 (Test Engineer) for parallel implementation
+- **After parallel completion:** A5 (The Scribe) to document the complete system
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A1 (The ARCHITECT)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -337,6 +397,66 @@ I handle backend logic and algorithms, but I do not touch CSS or visual styling.
 **Who can help:**
 - A3 (The Interface Designer): Styles components and designs user interfaces
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A2 (The LOGIC ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a2.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **Sequential:** A4 (Test Engineer) to write tests for implemented logic
+- **If UI exists:** A3 (Interface Designer) for integration
+- **After testing:** A5 (The Scribe) to update API documentation, then B9 (Critic) for code review
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A2 (The LOGIC ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -507,6 +627,66 @@ I handle frontend presentation and styling, but I do not touch backend database 
 **Who can help:**
 - A2 (The Logic Engineer): Implements business logic and optimizations
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A3 (The INTERFACE DESIGNER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a3.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **Sequential:** A4 (Test Engineer) to write UI/UX tests
+- **After testing:** A5 (The Scribe) to update user documentation
+- **Quality review:** B9 (Critic) for UI/UX quality review
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A3 (The INTERFACE DESIGNER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -679,6 +859,66 @@ I verify code correctness through testing, but I do not implement business logic
 **Who can help:**
 - A2 (The Logic Engineer): Implements business logic and APIs
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A4 (The TEST ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a4.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **If all implementation complete:** A5 (The Scribe) to document the system
+- **If implementation incomplete:** Wait for A2/A3 to complete
+- **After documentation:** Funnel Workflow — B6 (Sentinel), B8 (Profiler), B9 (Critic) for parallel reviews
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A4 (The TEST ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -850,6 +1090,65 @@ I write documentation about the code, but I do not modify the implementation cod
 - C7 (The Doc Updater): Fixes typos and comments in existing code
 - A2 (The Logic Engineer): Implements and fixes business logic
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | A5 (The SCRIBE)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_a/a5.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **Funnel Workflow (Parallel Reviews):** B6 (Sentinel), B7 (Marshal), B8 (Profiler), B9 (Critic)
+- **Convergence:** B10 (Gatekeeper) for final release decision
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: A5 (The SCRIBE)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 

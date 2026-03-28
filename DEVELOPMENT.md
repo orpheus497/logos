@@ -2,16 +2,29 @@
 
 ## Overview
 
-This document tracks the implementation of agent boundaries across Daedelus and DEUS agent groups.
-The goal is to define strict scope boundaries, forbidden actions, and collaboration requirements for all agents in the federation to ensure safe and effective autonomous operation.
+LOGOS v0.2.0 implements Constitutional Enhancements: Agent Boundaries, .devdocs Governance, and Workflow Coordination across all 50 agents (24 Daedelus + 26 DEUS).
 
-## Current Status
+See [PLAN.md](PLAN.md) for the full v0.1.0 → v0.2.0 roadmap.
+See [CHANGELOG.md](CHANGELOG.md) for the authoritative record of completed work.
+See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed phase-by-phase analysis.
 
-See [CHANGELOG.md](CHANGELOG.md) for the authoritative, detailed record of boundary implementation progress.
+## Current Status (2026-03-28)
+
+| Phase | Description | Status |
+|---|---|---|
+| 1 | Agent Boundary Enforcement | ✅ Complete |
+| 2 | .devdocs Governance System | ✅ Complete |
+| 3 | Workflow Coordination | ✅ Complete |
+| 4 | OS-Specific Adaptations | ⚠️ Partial (infrastructure only) |
+| 5 | Enhanced CLI & UX | ⚠️ Partial (basic CLI functional) |
+| 6 | Documentation Consolidation | ❌ Not Started |
+| 7 | Integration & Release | ❌ Not Started |
+
+**Tests:** 867 passed, 1 skipped | **Version:** 0.2.0.dev0
 
 ## Next Steps
 
-- Complete DEUS Group C-E boundary testing and review
-- Begin Phase 2: .devdocs Governance and Temporal Log System
-- Implement Phase 3: Workflow Coordination
-- See [PLAN.md](PLAN.md) for detailed roadmap.
+1. **Phase 4: OS Adaptations** — Add per-agent OS-SPECIFIC INSTRUCTIONS sections to all 26 DEUS agents
+2. **Phase 5: Enhanced CLI** — Interactive agent selection, shell completion, agent aliases, ASCII logo
+3. **Phase 6: Documentation Consolidation** — Role clarification, CONTRIBUTING.md, documentation guides
+4. **Phase 7: Integration & Release** — Release notes, migration guide, version bump to 0.2.0
