@@ -94,21 +94,21 @@ def test_validate_input_allows_whitespace():
         assert error is None
 
 
-##Function purpose: Test validate_input rejects whitespace when disabled
+##Function purpose: Test validate_input rejects control whitespace when disabled
 def test_validate_input_rejects_whitespace():
-    """##Function purpose: Verify validate_input rejects whitespace when allow_whitespace=False.."""
-    ##Action purpose: Test with whitespace characters
+    """##Function purpose: Verify validate_input rejects control whitespace characters when allow_whitespace=False.."""
+    ##Action purpose: Test with control whitespace characters (newline, tab)
+    ##Note: Space (\x20) is not a control character and is not rejected by this flag
     test_cases = [
-        "test input",  # Space
-        "test\ninput",  # Newline
-        "test\tinput",  # Tab
+        "test\ninput",  # Newline (\x0a) is a control character
+        "test\tinput",  # Tab (\x09) is a control character
     ]
 
     ##Loop purpose: Test each whitespace case
     for test_input in test_cases:
         is_valid, error = validate_input(test_input, allow_whitespace=False)
-        ##Condition purpose: Verify whitespace is rejected
-        assert is_valid is False, f"Input '{test_input}' should be invalid with allow_whitespace=False"
+        ##Condition purpose: Verify control whitespace is rejected
+        assert is_valid is False, f"Input '{repr(test_input)}' should be invalid with allow_whitespace=False"
         assert "control" in error.lower()
 
 

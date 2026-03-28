@@ -8,6 +8,22 @@ both source codebases to eliminate duplication.
 """
 
 from logos.core.agent import Agent
+from logos.core.archival import (
+    archive_file,
+    archive_files_batch,
+    clean_old_archives,
+    list_archived_files,
+    retrieve_from_archive,
+)
+from logos.core.bloat_prevention import (
+    BloatAnalysis,
+    analyze_agent_log_sizes,
+    analyze_bloat,
+    calculate_devdocs_size,
+    find_oversized_files,
+    find_stale_files,
+    generate_health_report,
+)
 from logos.core.clipboard import copy_to_clipboard
 from logos.core.constants import SEPARATOR_WIDTH, AgentGroups, Colors, UILayout
 from logos.core.factions import FACTIONS, Faction, apply_faction_modifiers
@@ -31,6 +47,17 @@ from logos.core.prompts import (
     build_complete_prompt,
     build_identity_context,
 )
+from logos.core.temporal_logs import (
+    LogAnalysis,
+    LogSection,
+    analyze_agent_log,
+    archive_daily_entries,
+    archive_weekly_summaries,
+    generate_monthly_summary,
+    generate_weekly_summary,
+    parse_agent_log,
+    scan_all_agent_logs,
+)
 from logos.core.terminal import clear_screen
 from logos.core.types import AgentGroup, Err, Mode, Ok, Result, WelcomeScreenContext
 from logos.core.ui import (
@@ -48,6 +75,17 @@ from logos.core.ui import (
     print_warning,
 )
 from logos.core.validation import validate_identity_schema, validate_input
+from logos.core.workflow_tracking import (
+    AgentStatus,
+    WorkflowState,
+    WorkflowStep,
+    WorkflowType,
+    create_diamond_workflow,
+    create_funnel_workflow,
+    create_maintenance_workflow,
+    format_workflow_markdown,
+    get_active_workflow,
+)
 
 __all__ = [
     # Agent dataclass
@@ -108,4 +146,38 @@ __all__ = [
     # Validation utilities
     "validate_input",
     "validate_identity_schema",
+    # Archival utilities
+    "archive_file",
+    "archive_files_batch",
+    "retrieve_from_archive",
+    "list_archived_files",
+    "clean_old_archives",
+    # Bloat prevention utilities
+    "BloatAnalysis",
+    "calculate_devdocs_size",
+    "find_oversized_files",
+    "find_stale_files",
+    "analyze_agent_log_sizes",
+    "analyze_bloat",
+    "generate_health_report",
+    # Temporal logs utilities
+    "LogSection",
+    "LogAnalysis",
+    "parse_agent_log",
+    "analyze_agent_log",
+    "generate_weekly_summary",
+    "generate_monthly_summary",
+    "archive_daily_entries",
+    "archive_weekly_summaries",
+    "scan_all_agent_logs",
+    # Workflow tracking utilities
+    "WorkflowType",
+    "AgentStatus",
+    "WorkflowStep",
+    "WorkflowState",
+    "create_diamond_workflow",
+    "create_funnel_workflow",
+    "create_maintenance_workflow",
+    "get_active_workflow",
+    "format_workflow_markdown",
 ]

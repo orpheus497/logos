@@ -9,7 +9,7 @@ DEUS (26-agent FreeBSD system administration) into a single CLI with:
 - Persistent identity across sessions
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "orpheus497"
 
 __all__ = [

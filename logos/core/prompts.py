@@ -11,6 +11,7 @@ prompt strings ready for AI model consumption.
 
 import re
 
+from logos.core.devdocs import validate_devdocs_structure
 from logos.core.factions import FACTIONS, apply_faction_modifiers
 from logos.core.identity import SystemIdentity
 
@@ -191,6 +192,7 @@ def build_complete_prompt(
     intelligently adapts prompts based on detected OS (FreeBSD vs Linux).
 
     Composition order:
+    0. .devdocs/ governance warning (prepended if structure is missing or invalid)
     1. Agent prompt (base + activation) - OS-adapted if DEUS
     2. Identity context (if provided)
     3. Faction modifiers (if provided)
@@ -202,12 +204,31 @@ def build_complete_prompt(
         domain: Optional domain name ("daedelus" or "deus") for OS adaptation
 
     Returns:
-        Complete prompt string ready for AI model
+        Complete prompt string ready for AI model. If the current working directory
+        lacks a valid `.devdocs/` governance structure, a system warning is prepended
+        instructing the Orchestrator (E1) to initialize or repair it.
     """
     ##Action purpose: Composes final prompt by combining agent prompt, identity context,
     ##Step purpose: and faction modifiers in the correct order for optimal AI model understanding
     ##Action purpose: Start with agent prompt
     complete_prompt = agent_prompt
+
+    ##Action purpose: Validate .devdocs/ structure and add warning if needed
+    devdocs_validation = validate_devdocs_structure()
+    if not devdocs_validation.valid_structure:
+        warning_parts = ["⚠️ **SYSTEM WARNING:** `.devdocs/`"]
+        if not devdocs_validation.exists:
+            warning_parts.append(" folder is MISSING. ")
+        else:
+            warning_parts.append(" structure is INVALID or incomplete. ")
+
+        warning_parts.append(
+            "The Orchestrator (E1) must be invoked to initialize or repair the project governance structure.\n"
+        )
+        if devdocs_validation.missing_components:
+            warning_parts.append(f"Missing components: {', '.join(devdocs_validation.missing_components)}\n")
+
+        complete_prompt = "".join(warning_parts) + "\n\n" + complete_prompt
 
     ##Condition purpose: Adapt DEUS prompts for detected OS
     if domain and domain.lower() == "deus" and identity:
@@ -246,7 +267,7 @@ def build_agent_prompt_from_key(
     intelligently adapts prompts based on detected OS.
 
     Args:
-        agent_key: Agent identifier (e.g., "A1", "B6", "ocm")
+        agent_key: Agent identifier (e.g., "A1", "B6", "E2")
         domain: Domain name ("daedelus" or "deus")
         identity: Optional SystemIdentity for context
 

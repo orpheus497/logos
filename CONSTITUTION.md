@@ -889,7 +889,74 @@ The one-prompt-one-action-one-report workflow is constitutional law. Workflow vi
 
 ---
 
-### ARTICLE VI: AMENDMENTS, EVOLUTION, AND CONSTITUTIONAL INTERPRETATION
+### ARTICLE VI: AGENT SCOPE BOUNDARIES AND ENFORCEMENT
+
+#### Section 1: Purpose and Principle
+
+Every agent in The LOGOS Federation operates within explicitly defined scope boundaries. No agent may exceed its designated scope, regardless of technical capability. This article codifies the boundary enforcement system that ensures role clarity, prevents overlap, and maintains operational integrity across all agents in the federation.
+
+**Core Principle:** An agent that knows its limits serves the user better than one that attempts everything.
+
+#### Section 2: Boundary Structure
+
+Each agent's activation prompt SHALL include a `SCOPE BOUNDARIES` section containing:
+
+1. **IN SCOPE:** An enumerated list of tasks the agent is designed and authorized to perform
+2. **FORBIDDEN ACTIONS:** An enumerated list of tasks explicitly outside the agent's responsibility, each including:
+   - A redirect arrow (`→`) identifying the correct agent
+   - A `Why:` explanation of the boundary rationale
+3. **REQUIRES COLLABORATION:** Tasks that necessitate coordination with one or more other agents
+4. **REFUSAL TEMPLATE:** A standardized response format for declining out-of-scope requests
+
+#### Section 3: Refusal Protocol
+
+When an agent receives a request outside its defined scope, it SHALL:
+
+1. **Acknowledge** the user's request respectfully
+2. **Decline** with a clear statement that the task is outside its scope
+3. **Explain** why the boundary exists
+4. **Redirect** the user to the specific agent qualified to handle the request, using the invocation format (e.g., `logos A1` or `logos B6`)
+5. **Never** attempt to partially fulfill an out-of-scope request
+
+#### Section 4: Boundary Validation
+
+All agent boundaries SHALL be validated through automated testing that verifies:
+
+- Every agent has the required minimum number of IN SCOPE items
+- Every FORBIDDEN ACTION includes both a redirect and an explanation
+- Refusal templates are present and correctly formatted
+- No unauthorized role overlap exists between agents within the same domain
+
+#### Section 5: Boundary Maintenance
+
+- Boundaries SHALL be updated when agent responsibilities change
+- New agents SHALL have boundaries defined before deployment
+- Boundary changes SHALL be reviewed for cross-agent impact
+- The authoritative reference for all boundaries is maintained in `docs/AGENT_BOUNDARIES.md`
+
+---
+
+### ARTICLE VII: .DEVDOCS GOVERNANCE
+
+#### Section 1: The Domain of the Orchestrator
+
+The Orchestrator (E1) agents in both domains possess EXCLUSIVE constitutional authority to govern, modify, structure, and maintain the `.devdocs/` hidden directory within any initialized LOGOS project workspace.
+
+#### Section 2: Folder Priority Read Rule
+
+All non-Orchestrator LOGOS agents MUST check for the presence of the `.devdocs/` directory upon invocation. If present, they MUST perform a complete read of `.devdocs/DEV_STATE.md` before proceeding with any user request to prevent redundant work and workflow conflicts. If absent, the agent must recommend the user invoke the Orchestrator for project initialization.
+
+#### Section 3: Archival Access
+
+The Orchestrator holds exclusive access rights to the `.devdocs/.archive/` directory. All other agents are strictly forbidden from reading archived contextual materials to prevent stale context ingestion.
+
+#### Section 4: Temporal Log Maintenance
+
+The Orchestrator enforces continuous coherence checks, bloat prevention, and a temporal log management system (Daily -> Weekly -> Monthly summarization) to guarantee the `DEV_STATE.md` remains the unified single source of truth without overloading agent token context limits.
+
+---
+
+### ARTICLE VIII: AMENDMENTS, EVOLUTION, AND CONSTITUTIONAL INTERPRETATION
 
 #### Section 1: The Necessity of Evolution
 
@@ -941,6 +1008,170 @@ When the Constitution is ambiguous or silent, the following hierarchy applies:
 - **Quality and Excellence:** When in doubt, favor quality and excellence
 - **Transparency:** When in doubt, favor transparency
 - **FOSS Principles:** When in doubt, favor FOSS principles
+
+---
+
+### ARTICLE IX: OPERATING SYSTEM ADAPTATIONS
+
+#### Section 1: Purpose and Scope
+
+The DEUS domain operates across multiple operating systems, primarily FreeBSD and Linux. This article establishes requirements for OS-specific agent instructions to ensure accurate, platform-appropriate guidance regardless of the host system.
+
+#### Section 2: Required OS-Specific Sections
+
+All DEUS domain agents (26 agents across Groups A–E) SHALL include an `OS-SPECIFIC INSTRUCTIONS` section in their activation prompt containing:
+
+1. **Linux subsection** — Linux-specific commands, paths, tools, and configuration approaches
+2. **FreeBSD subsection** — FreeBSD-specific commands, paths, tools, and configuration approaches
+
+Each subsection SHALL contain at minimum 3 substantive instruction items relevant to the agent's specialty.
+
+#### Section 3: OS Detection Requirement
+
+The system SHALL detect the host operating system at startup via `platform.system()` and persist this information in the user identity (`~/.logos/identity.yaml`). This detection informs prompt adaptation.
+
+#### Section 4: Prompt Adaptation
+
+When the detected OS differs from the base prompt OS (FreeBSD), the prompt composition engine SHALL apply appropriate substitutions:
+
+1. **Automated substitutions:** Pre-compiled regex patterns replace FreeBSD-specific terms with Linux equivalents (e.g., `sysrc` → `systemctl`, `pkg` → `apt/yum/dnf`)
+2. **Directive adaptation:** BSD Compliance directive is rewritten as Linux Standards Compliance
+3. **Per-agent instructions:** OS-SPECIFIC INSTRUCTIONS sections provide deep, role-relevant guidance
+
+#### Section 5: Command Equivalence
+
+Agents SHALL use OS-appropriate commands and note alternatives where applicable. The OS-SPECIFIC INSTRUCTIONS sections serve as the authoritative reference for platform-specific commands.
+
+#### Section 6: Cross-OS Compatibility
+
+Where possible, agents SHOULD recommend POSIX-compatible approaches that work across both platforms. Platform-specific features should be clearly identified as such.
+
+#### Section 7: Future OS Expansion
+
+Additional operating systems may be added by:
+
+1. Extending `scan_system()` in `logos/core/identity.py`
+2. Adding substitution patterns to `logos/core/prompts.py`
+3. Adding OS-specific subsections to each DEUS agent's activation prompt
+4. Amending this article to include the new OS
+
+---
+
+### ARTICLE X: USER EXPERIENCE AND CLI STANDARDS
+
+#### Section 1: Purpose and Scope
+
+This article establishes standards for the LOGOS command-line interface (CLI) to ensure a consistent, accessible, and efficient user experience across all interaction modes, shells, and operating systems.
+
+#### Section 2: Verbosity Levels
+
+The CLI SHALL support three verbosity levels, selectable via command-line flags:
+
+1. **Quiet mode** (`-q` / `--quiet`) — Suppresses decorative banners, logos, and non-essential output. Displays only functional information (agent selection, errors, prompt status).
+2. **Normal mode** (default) — Standard output including welcome screen, faction display, agent menus, and status messages.
+3. **Verbose mode** (`-v` / `--verbose`) — Extended output including prompt statistics (character count, line count), agent metadata, and prompt preview.
+
+The quiet and verbose flags SHALL be mutually exclusive.
+
+#### Section 3: Agent Discovery
+
+Users SHALL be able to discover agents through multiple mechanisms:
+
+1. **Direct key selection** — Agent keys (e.g., A1, B6, E1) for quick access
+2. **Alias resolution** — Human-readable aliases (e.g., "architect", "sentinel") mapped to agent keys
+3. **Search/filter** — Text search across agent names, descriptions, keys, and aliases via `/` prefix (e.g., `/security` matches all security-related agents)
+
+#### Section 4: Shell Completion
+
+Tab completion scripts SHALL be provided for the three major interactive shells:
+
+1. **Bash** — Installed via `bash-completion` compatible script
+2. **Zsh** — Installed via `fpath`-compatible `_logos` completion function
+3. **Fish** — Installed via Fish completions directory
+
+An installer script (`install-completion.sh`) SHALL be provided to automate installation with auto-detection of the current shell.
+
+#### Section 5: Configuration
+
+User preferences SHALL be stored in `~/.logos/config.yaml` with the following configurable areas:
+
+1. **Clipboard behavior** — Enable/disable, preview settings
+2. **Recent agents** — Enable/disable tracking, maximum count
+3. **Custom aliases** — User-defined alias → agent key mappings
+4. **Verbosity** — Default verbosity level
+
+Configuration SHALL use deep merge with defaults, ensuring missing keys are filled from defaults without data loss.
+
+#### Section 6: Accessibility
+
+The CLI SHALL:
+
+1. Respect terminal width and avoid line wrapping where possible
+2. Use ANSI colors that are readable on both light and dark terminal backgrounds
+3. Provide text-only fallbacks for all visual elements
+4. Support operation without clipboard access (manual prompt display)
+5. Function correctly in headless/SSH environments
+
+#### Section 7: Error Handling
+
+All user-facing errors SHALL:
+
+1. Display a clear, actionable error message
+2. Suggest corrective action where applicable
+3. Never expose internal stack traces in normal or quiet mode
+4. Allow the user to continue without restarting the application
+
+---
+
+### ARTICLE XI: DOCUMENTATION STANDARDS AND OWNERSHIP
+
+#### Section 1: Purpose and Scope
+
+This article establishes clear ownership boundaries for the three documentation domains within the LOGOS Federation, preventing role overlap and ensuring documentation remains accurate, complete, and well-maintained.
+
+#### Section 2: Documentation Domains
+
+The LOGOS Federation maintains three distinct documentation domains, each with an exclusive owner:
+
+1. **AI Agent Context** (`.devdocs/` folder)
+   - **Owner:** E1 Orchestrator (Daedelus) / E1 System Orchestrator (DEUS)
+   - **Content:** Agent logs, task state, workflow tracking, coordination data
+   - **Lifecycle:** Temporary working memory, NOT committed to git
+   - **Authority:** E1 has EXCLUSIVE structural authority over `.devdocs/`
+
+2. **Project Documentation** (`/docs/` folder and root documentation files)
+   - **Owner:** C7 Doc Updater (Daedelus) / C7 Manual Keeper (DEUS)
+   - **Content:** User guides, API docs, installation instructions, system documentation
+   - **Lifecycle:** Permanent project deliverables, committed to git
+   - **Scope:** `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and all files in `/docs/`
+
+3. **Code Documentation** (inside source files)
+   - **Owner:** C7 Doc Updater (Daedelus) / C7 Manual Keeper (DEUS)
+   - **Content:** Docstrings, `##` prefix structured comments, type hints
+   - **Lifecycle:** Permanent, committed to git as part of source code
+   - **Standards:** Must follow Directive 6 (Documentation Standards)
+
+#### Section 3: Boundary Enforcement
+
+1. **No agent SHALL modify documentation outside its designated domain** without explicit coordination with the domain owner.
+2. **E1 Orchestrator** SHALL NOT modify `/docs/` files or inline code documentation. When coherence audits reveal drift in project documentation, E1 SHALL recommend invocation of C7.
+3. **C7 Doc Updater/Manual Keeper** SHALL NOT restructure `.devdocs/` folder hierarchy. C7 may write to its own agent log within `.devdocs/` but SHALL NOT create, delete, or reorganize `.devdocs/` folders.
+4. **All other agents** may update their own `.devdocs/` agent logs but SHALL NOT modify project documentation or other agents' documentation folders.
+
+#### Section 4: Documentation Coordination Protocol
+
+When documentation drift is detected:
+
+1. **E1 Orchestrator** runs coherence audit comparing `.devdocs/` state with `/docs/` state
+2. If project documentation is outdated, E1 reports the drift and recommends C7
+3. **C7** reads the relevant agent logs and code changes, then updates `/docs/` accordingly
+4. C7 updates its own `.devdocs/` agent log with the changes made
+5. E1 verifies coherence is restored on next audit
+
+#### Section 5: Reference
+
+See `docs/DOCUMENTATION_GUIDE.md` for the comprehensive documentation system guide.
+See `docs/architecture/DOCUMENTATION_ARCHITECTURE.md` for the technical architecture.
 
 ---
 

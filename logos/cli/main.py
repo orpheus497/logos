@@ -2,16 +2,18 @@
 ##Script function and purpose: Main CLI entry point.
 
 Unified CLI that handles first-run, mode selection, and agent selection.
-Phase 4 implementation.
+Phase 5 implementation.
 
 ##Action purpose: Orchestrates the complete LOGOS CLI workflow including first-run
 detection, identity loading, mode selection, and agent selection with full integration
-of identity, faction, and prompt composition systems.
+of identity, faction, and prompt composition systems. Supports -v/--verbose and
+-q/--quiet flags for controlling output verbosity.
 """
 
 import signal
 import sys
 
+from logos.cli.args import is_quiet, parse_args
 from logos.cli.first_run import run_first_run_wizard
 from logos.cli.layouts import display_error
 from logos.cli.mode_select import run_mode_selection
@@ -53,8 +55,9 @@ def main() -> int:
     """
     Main CLI entry point that orchestrates the LOGOS workflow.
 
-    Routes user to first-run wizard or mode selection based on whether identity
-    exists, handling all errors gracefully.
+    Parses CLI arguments, routes user to first-run wizard or mode selection
+    based on whether identity exists, handling all errors gracefully.
+    Supports -v/--verbose and -q/--quiet flags.
 
     Returns:
         Exit code (0 for success, non-zero for failure)
@@ -62,9 +65,20 @@ def main() -> int:
     ##Action purpose: Register signal handler for Ctrl+C (SIGINT)
     signal.signal(signal.SIGINT, _signal_handler)
 
+    ##Action purpose: Parse CLI arguments (sets verbosity level)
+    args = parse_args()
+
+    ##Condition purpose: Handle --version flag
+    if args.version:
+        from logos.core.version import get_version
+
+        print(f"LOGOS {get_version()}")
+        return 0
+
     try:
-        ##Action purpose: Clear screen for clean start
-        clear_screen()
+        ##Action purpose: Clear screen for clean start (skip in quiet mode)
+        if not is_quiet():
+            clear_screen()
 
         ##Condition purpose: Check if this is first run
         if is_first_run():
@@ -89,7 +103,7 @@ def main() -> int:
             return 1
 
         ##Action purpose: Run main mode selection loop
-        return run_mode_selection(identity)
+        return run_mode_selection(identity, agent=args.agent)
 
     except KeyboardInterrupt:
         ##Error purpose: Handle Ctrl+C gracefully (user interruption)
