@@ -77,7 +77,12 @@ def select_faction_for_change() -> str | None:
             choice = input("\nSelect faction (r/d/o/t/u/q): ").strip().lower()
 
             ##Action purpose: Validate input for security
-            is_valid, error = validate_input(choice, max_length=20, allowed_chars="rdotuqexi")
+            is_valid, error = validate_input(
+                choice,
+                max_length=20,
+                allow_whitespace=False,
+                allowed_chars="abcdefghijklmnopqrstuvwxyz",
+            )
             if not is_valid:
                 ##Action purpose: Display validation error and prompt again
                 print(f"Invalid input: {error}")
@@ -452,7 +457,54 @@ def _handle_agent_selection(mode: str, identity: SystemIdentity) -> tuple[int, S
 
 
 ##Function purpose: Main mode selection function
-def run_mode_selection(identity: SystemIdentity) -> int:
+def _resolve_agent_arg(agent_arg: str, identity: SystemIdentity) -> int | None:
+    """
+    ##Function purpose: Resolve a CLI agent argument and run it directly.
+
+    Tries to resolve the agent key/alias in both modes and routes directly
+    to agent handling, bypassing interactive selection.
+
+    Args:
+        agent_arg: Agent key or alias from CLI argument
+        identity: SystemIdentity instance with user context
+
+    Returns:
+        Exit code (0 for success, 1 for failure), or None if unresolvable
+    """
+    from logos.core.aliases import resolve_alias
+    from logos.core.config import get_config_value, load_config
+
+    config = load_config()
+    custom_aliases = get_config_value(config, "aliases", None)
+
+    agent_upper = agent_arg.strip().upper()
+
+    ##Action purpose: Try resolving in both modes
+    for mode in ("daedelus", "deus"):
+        resolved = resolve_alias(agent_arg, mode, custom_aliases)
+        agent_key = resolved or agent_upper
+
+        ##Action purpose: Check if agent exists in this mode
+        if mode == "daedelus":
+            from logos.daedelus.agents import get_daedelus_agents
+
+            agents = get_daedelus_agents()
+        else:
+            from logos.deus.agents import get_deus_agents
+
+            agents = get_deus_agents()
+
+        if agent_key in agents:
+            from logos.cli.agent_select import handle_agent_selection
+
+            success, _ = handle_agent_selection(mode, agent_key, identity)
+            return 0 if success else 1
+
+    display_error("Unknown agent", f"Could not resolve '{agent_arg}' to any agent in either mode.")
+    return 1
+
+
+def run_mode_selection(identity: SystemIdentity, agent: str | None = None) -> int:
     """
     ##Function purpose: Runs the main mode selection loop.
 
@@ -461,10 +513,17 @@ def run_mode_selection(identity: SystemIdentity) -> int:
 
     Args:
         identity: SystemIdentity instance with user context
+        agent: Optional agent key/alias from CLI argument for direct invocation
 
     Returns:
         Exit code (0 for success, non-zero for failure)
     """
+    ##Condition purpose: Handle direct agent invocation from CLI argument
+    if agent is not None:
+        result = _resolve_agent_arg(agent, identity)
+        if result is not None:
+            return result
+
     ##Loop purpose: Main CLI loop until user exits
     while True:
         try:

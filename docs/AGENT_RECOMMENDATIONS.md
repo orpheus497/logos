@@ -609,8 +609,8 @@ After system initialization:
 *Diamond Workflow:*
 - A1 (Kernel) + A3 (Network) + A5 (Services) in parallel
 
-*~/.sysdocs/ Governance:*
-- E1 is the sole authority on ~/.sysdocs/ folder hierarchy
+*.devdocs/ Governance:*
+- E1 is the sole authority on .devdocs/ folder hierarchy
 - All agents write only to their assigned subfolder
 
 ---
