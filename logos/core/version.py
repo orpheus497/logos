@@ -11,7 +11,7 @@ used by CLI --version flag and other components that need version info.
 from typing import Final
 
 ##Action purpose: Version string matches pyproject.toml
-VERSION: Final[str] = "0.2.0.dev0"
+VERSION: Final[str] = "0.2.0"
 
 
 ##Function purpose: Get the current LOGOS version string
@@ -20,6 +20,6 @@ def get_version() -> str:
     Returns the current LOGOS version string.
 
     Returns:
-        Version string (e.g., "0.2.0.dev0")
+        Version string (e.g., "0.2.0")
     """
     return VERSION
