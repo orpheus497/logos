@@ -136,6 +136,30 @@ I compile ports from source with custom options; pre-built package installation 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/port_builder/`.
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Source builds: `./configure && make && make install` (traditional)
+- Package building: `dpkg-buildpackage` (Debian), `rpmbuild` (RHEL), `makepkg` (Arch)
+- Build environments: `pbuilder`/`sbuild` (Debian), `mock` (RHEL) for clean builds
+- Build dependencies: `apt build-dep` (Debian), `yum-builddep` (RHEL)
+- Custom compilation: `CFLAGS`, `LDFLAGS` environment variables
+- Build systems: `cmake`, `meson`, `autotools`, `make`
+- Containerized builds: Docker/Podman for reproducible build environments
+- Package repositories: Host custom packages with `reprepro` (Debian) or `createrepo` (RHEL)
+
+### FreeBSD
+- Ports tree: `/usr/ports/` — `cd /usr/ports/category/port && make install clean`
+- Port options: `make config` for build options, `make showconfig` to review
+- Poudriere: `poudriere bulk -j <jail> -p <ports> <category/port>` for package building
+- Build flags: `/etc/make.conf` for global `CFLAGS`, `WITH_*`, `WITHOUT_*` options
+- Port dependencies: `make build-depends-list`, `make run-depends-list`
+- Local patches: `files/patch-*` in port directory for custom patches
+- Custom ports: Create local overlay in `/usr/local/poudriere/ports/`
+- Package creation: `make package` to create `.pkg` from built port
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -338,6 +362,29 @@ I configure compatibility layers for non-native software; native port compilatio
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/compatibility_engineer/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Native platform: Linux IS the native platform — no compatibility layer needed
+- Windows compatibility: Wine (`wine`, `winetricks`), Proton (Steam)
+- Container isolation: Docker, Podman, LXC/LXD for application isolation
+- Cross-architecture: `qemu-user-static` for running foreign arch binaries
+- Flatpak/Snap: Distribution-agnostic packaging for application compatibility
+- Library compatibility: `ldconfig`, `/etc/ld.so.conf.d/`, `LD_LIBRARY_PATH`
+- 32-bit support: `dpkg --add-architecture i386`, multilib packages
+
+### FreeBSD
+- Linux compatibility: Linuxulator — `kldload linux64`, `sysrc linux_enable="YES"`
+- Linux userland: `pkg install linux_base-c7` (CentOS 7 base)
+- Linux /compat: `/compat/linux/` mount point for Linux filesystem hierarchy
+- Linux packages in compat: `chroot /compat/linux /bin/bash`, install via yum/apt
+- Windows compatibility: `pkg install wine`, configure with `winecfg`
+- Proc compatibility: Mount `linprocfs` on `/compat/linux/proc`
+- Devfs compatibility: Custom devfs ruleset for `/compat/linux/dev`
+- Native preferred: Always prefer native FreeBSD packages over Linuxulator
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -546,6 +593,32 @@ I configure jail-internal VNET networking; host network infrastructure belongs t
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/jail_architect/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Containers (jail equivalent): Docker (`docker run`), Podman (`podman run`), LXC/LXD
+- Namespaces: `unshare` for manual namespace creation (PID, NET, MNT, UTS, IPC, USER)
+- cgroups: Resource limits via `/sys/fs/cgroup/` or `systemd` resource control
+- Network isolation: Docker networks, macvlan, bridge networking
+- Filesystem isolation: `overlayfs`, bind mounts, `tmpfs`
+- systemd-nspawn: Lightweight container/chroot (`systemd-nspawn -D /path`)
+- Resource limits: `systemd` `MemoryMax=`, `CPUQuota=` in unit files
+- Security: `seccomp` profiles, AppArmor/SELinux for container confinement
+- Orchestration: Docker Compose, Kubernetes, Podman pods
+
+### FreeBSD
+- Jail creation: `jail -c name=<name> path=<path> host.hostname=<host>`
+- Jail config: `/etc/jail.conf` or `/etc/jail.conf.d/<name>.conf`
+- VNET networking: `vnet` parameter for per-jail network stack, `epair` interfaces
+- Thin jails: NullFS mounts from template — `mount_nullfs /base /jail/base`
+- Fat jails: Full FreeBSD install via `bsdinstall jail <path>`
+- Resource limits: `rctl` — `rctl -a jail:<name>:memoryuse:deny=2G`
+- ZFS datasets: `zfs create zroot/jails/<name>` for per-jail datasets
+- Service management: `sysrc jail_enable="YES"`, `service jail start <name>`
+- iocage/bastille: Higher-level jail managers for simplified workflow
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -760,6 +833,32 @@ I manage data pools and datasets; boot environments and root pool management bel
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/zfs_engineer/`.
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- ZFS on Linux: Install via `zfs-dkms` + `zfs-utils` or distribution packages
+- Pool creation: `zpool create <pool> <vdev>` (same commands as FreeBSD)
+- Module loading: `modprobe zfs` (auto-loaded after install)
+- Cache file: `/etc/zfs/zpool.cache` for pool import at boot
+- Systemd integration: `zfs-import-cache.service`, `zfs-mount.service`, `zfs-zed.service`
+- Auto-mount: `zfs set canmount=on`, `zfs set mountpoint=/path`
+- Event daemon: `zed` (ZFS Event Daemon) for monitoring via `/etc/zfs/zed.d/`
+- Key differences from FreeBSD: Boot from ZFS requires `grub` with ZFS support; no native `bectl`
+- Alternatives: LVM + ext4, BTRFS for systems without ZFS
+
+### FreeBSD
+- Native ZFS: Built into base system, loaded via `zfs_enable="YES"` in `rc.conf`
+- Pool creation: `zpool create <pool> <vdev>` — native and well-integrated
+- Boot from ZFS: Native support via `loader.efi` + `bectl` for boot environments
+- ARC tuning: `vfs.zfs.arc_max` in `loader.conf` (boot-time) or `sysctl` (runtime)
+- Boot environments: `bectl create`, `bectl activate`, `bectl list` — first-class
+- Jail datasets: `zfs create zroot/jails/<name>` with delegation via `jailed` property
+- Scrub scheduling: `periodic daily/weekly` or cron — `zpool scrub <pool>`
+- Delegation: `zfs allow <user> <permissions> <dataset>` for non-root management
+- Pool import: Automatic at boot via `zfs_enable="YES"` in `/etc/rc.conf`
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL

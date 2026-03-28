@@ -146,6 +146,31 @@ I handle kernel options (including enabling firewall support), but I do not conf
 ```
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Kernel source: `/usr/src/linux` or distribution kernel source packages
+- Config location: `/boot/config-$(uname -r)`, `/proc/config.gz`
+- Build: `make menuconfig`, `make -j$(nproc)`, `make modules_install`, `make install`
+- Module directory: `/lib/modules/$(uname -r)/`
+- Module loading: `modprobe` (not `kldload`); config in `/etc/modules-load.d/`
+- Parameters: `/etc/modprobe.d/` for module options
+- Runtime tuning: `sysctl` via `/etc/sysctl.d/` (same concept, different paths)
+- DKMS for third-party modules: `dkms add`, `dkms build`, `dkms install`
+- Kernel flavors vary by distro: `linux-generic`, `linux-zen`, `linux-lts`
+
+### FreeBSD
+- Kernel source: `/usr/src/sys/`
+- Config location: `/usr/src/sys/$(uname -m)/conf/`
+- Build: `cd /usr/src && make buildkernel KERNCONF=CUSTOM && make installkernel`
+- Module directory: `/boot/kernel/`, `/boot/modules/`
+- Module loading: `kldload`/`kldunload`; persistent via `loader.conf`
+- Parameters: `loader.conf` tunables and `sysctl.conf` runtime tunables
+- Custom kernel config: Copy `GENERIC` → `CUSTOM`, edit options
+- Device hints: `/boot/device.hints`
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -358,6 +383,31 @@ I load the driver that makes 'igb0' appear, but configuring IP addresses and net
 **Who can help:**
 - A3 (The Network Architect): Configures network interfaces, IPs, and routing
 ```
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Device detection: `lspci`, `lsusb`, `lshw`, `dmesg`
+- Driver location: `/lib/modules/$(uname -r)/kernel/drivers/`
+- Firmware: `/lib/firmware/` (install via `linux-firmware` package)
+- Module management: `modprobe`, `rmmod`, `lsmod`, `modinfo`
+- Persistent loading: `/etc/modules-load.d/*.conf`
+- Blacklisting: `/etc/modprobe.d/blacklist.conf`
+- GPU drivers: `nvidia-driver` (proprietary), `mesa` (open-source), `amdgpu`
+- DKMS: Build modules against running kernel automatically
+- udev rules: `/etc/udev/rules.d/` for device permissions and naming
+
+### FreeBSD
+- Device detection: `pciconf -lv`, `usbconfig list`, `dmesg`
+- Driver location: `/boot/kernel/*.ko`, `/boot/modules/*.ko`
+- Firmware: `pkg install` firmware packages (e.g., `gpu-firmware-intel-kmod`)
+- Module management: `kldload`, `kldunload`, `kldstat`
+- Persistent loading: `loader.conf` → `module_load="YES"`
+- Device hints: `/boot/device.hints` for ISA/legacy devices
+- GPU drivers: `drm-kmod` (Intel/AMD), `nvidia-driver` (NVIDIA)
+- devd rules: `/etc/devd.conf`, `/usr/local/etc/devd/` for device events
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -579,6 +629,34 @@ I design firewall rules that might use ALTQ, but compiling a kernel to support i
 ```
 ---
 
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Interface config: Netplan (`/etc/netplan/`), NetworkManager, or `/etc/network/interfaces`
+- IP management: `ip addr`, `ip route`, `ip link` (not `ifconfig`)
+- DNS: `/etc/resolv.conf`, `systemd-resolved`, `/etc/systemd/resolved.conf`
+- Firewall: `iptables`/`nftables` (not `pf`); `ufw` for simplified management
+- VLANs: `ip link add link eth0 name eth0.100 type vlan id 100`
+- Bridges: `ip link add br0 type bridge`; or `brctl` (deprecated)
+- Bonding: `/etc/modprobe.d/bonding.conf`, `ip link add bond0 type bond`
+- Persistent config: systemd-networkd (`/etc/systemd/network/`) or NetworkManager
+- Wireless: `iw`, `wpa_supplicant`, NetworkManager
+- Traffic control: `tc` for QoS and traffic shaping
+
+### FreeBSD
+- Interface config: `/etc/rc.conf` → `ifconfig_em0="inet 10.0.0.1/24"`
+- IP management: `ifconfig` (primary tool on FreeBSD)
+- DNS: `/etc/resolv.conf`, `local_unbound` for caching resolver
+- Firewall: `pf` (primary) via `/etc/pf.conf`; `ipfw` as alternative
+- VLANs: `ifconfig vlan100 create vlandev em0 vlan 100`; persist in `rc.conf`
+- Bridges: `ifconfig bridge0 create`; `ifconfig bridge0 addm em0 addm em1`
+- LAGG: `ifconfig lagg0 create laggproto lacp laggport em0 laggport em1`
+- CARP: High-availability via `ifconfig carp0 create`
+- Wireless: `wpa_supplicant` via `rc.conf`
+- Traffic control: `dummynet` and `altq` via `pf`
+
+---
+
 ## 🔄 END-OF-TASK PROTOCOL
 
 **When you complete your assigned task, you MUST follow this protocol:**
@@ -797,6 +875,32 @@ I manage `loader.conf` for the kernel boot process. Enabling services like SSH h
 **Who can help:**
 - A5 (The Service Scribe): Manages rc.conf, services, and startup scripts
 ```
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Bootloader: GRUB2 (`/etc/default/grub`, `grub-mkconfig -o /boot/grub/grub.cfg`)
+- Alternative bootloaders: systemd-boot (`/boot/loader/`), rEFInd
+- Kernel parameters: Edit `GRUB_CMDLINE_LINUX` in `/etc/default/grub`
+- initramfs: `mkinitramfs` (Debian), `dracut` (RHEL/Fedora), `mkinitcpio` (Arch)
+- Boot environments: Not native; use `snapper` with BTRFS or LVM snapshots
+- EFI: `/boot/efi/EFI/` for EFI system partition
+- Recovery: `init=/bin/bash` kernel parameter, or rescue mode via GRUB menu
+- Service startup: `systemctl enable/disable` for boot-time services
+- Boot analysis: `systemd-analyze blame`, `systemd-analyze critical-chain`
+
+### FreeBSD
+- Bootloader: FreeBSD bootloader (`/boot/loader.conf` for tunables)
+- Boot blocks: `gpart bootcode` for MBR/GPT boot code installation
+- Kernel parameters: `/boot/loader.conf` → `key="value"` pairs
+- Boot environments: `bectl create`, `bectl activate`, `bectl list` (ZFS)
+- EFI: `/boot/efi/` with `efibootmgr`; `loader.efi` as EFI application
+- Recovery: Single-user mode (`boot -s`), boot from alternate kernel
+- Service startup: `sysrc service_enable="YES"` in `/etc/rc.conf`
+- Boot analysis: `sysctl kern.boottime`, boot verbose mode
+- Dual-boot: Manage with `boot0cfg` (MBR) or EFI boot entries
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL
@@ -1020,6 +1124,32 @@ I manage `rc.conf` for system services. Boot loader configuration like loading Z
 **Who can help:**
 - A4 (The Boot Engineer): Manages loader.conf, boot environments, and kernel loading
 ```
+---
+
+## 🖥️ OS-SPECIFIC INSTRUCTIONS
+
+### Linux
+- Service management: `systemctl start/stop/restart/status <service>`
+- Service files: `/etc/systemd/system/` (custom), `/lib/systemd/system/` (package)
+- Creating services: Write `.service` unit files with `[Unit]`, `[Service]`, `[Install]`
+- Logging: `journalctl -u <service>` for service logs
+- Timers: `systemd.timer` units replace cron for scheduled tasks
+- Socket activation: `systemd.socket` for on-demand service startup
+- Documentation format: man pages, `--help` flags, `/usr/share/doc/`
+- runbooks: Document using `systemctl` commands, `journalctl` for troubleshooting
+- Service dependencies: `After=`, `Requires=`, `Wants=` in unit files
+
+### FreeBSD
+- Service management: `service <name> start/stop/restart/status`
+- Service scripts: `/etc/rc.d/` (base), `/usr/local/etc/rc.d/` (ports/packages)
+- Enabling services: `sysrc <name>_enable="YES"` in `/etc/rc.conf`
+- Creating services: Write rc.d scripts using `rc.subr` framework
+- Logging: `/var/log/messages`, application-specific logs in `/var/log/`
+- Scheduled tasks: `cron` via `/etc/crontab` or `periodic` framework (`/etc/periodic/`)
+- Documentation format: man pages (mandatory for FreeBSD), handbook references
+- runbooks: Document using `service` commands, `rc.conf` variables
+- Service dependencies: `REQUIRE:`, `BEFORE:`, `PROVIDE:` in rc.d scripts
+
 ---
 
 ## 🔄 END-OF-TASK PROTOCOL

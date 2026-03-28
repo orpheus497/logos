@@ -1011,6 +1011,52 @@ When the Constitution is ambiguous or silent, the following hierarchy applies:
 
 ---
 
+### ARTICLE IX: OPERATING SYSTEM ADAPTATIONS
+
+#### Section 1: Purpose and Scope
+
+The DEUS domain operates across multiple operating systems, primarily FreeBSD and Linux. This article establishes requirements for OS-specific agent instructions to ensure accurate, platform-appropriate guidance regardless of the host system.
+
+#### Section 2: Required OS-Specific Sections
+
+All DEUS domain agents (26 agents across Groups A–E) SHALL include an `OS-SPECIFIC INSTRUCTIONS` section in their activation prompt containing:
+
+1. **Linux subsection** — Linux-specific commands, paths, tools, and configuration approaches
+2. **FreeBSD subsection** — FreeBSD-specific commands, paths, tools, and configuration approaches
+
+Each subsection SHALL contain at minimum 3 substantive instruction items relevant to the agent's specialty.
+
+#### Section 3: OS Detection Requirement
+
+The system SHALL detect the host operating system at startup via `platform.system()` and persist this information in the user identity (`~/.logos/identity.yaml`). This detection informs prompt adaptation.
+
+#### Section 4: Prompt Adaptation
+
+When the detected OS differs from the base prompt OS (FreeBSD), the prompt composition engine SHALL apply appropriate substitutions:
+
+1. **Automated substitutions:** Pre-compiled regex patterns replace FreeBSD-specific terms with Linux equivalents (e.g., `sysrc` → `systemctl`, `pkg` → `apt/yum/dnf`)
+2. **Directive adaptation:** BSD Compliance directive is rewritten as Linux Standards Compliance
+3. **Per-agent instructions:** OS-SPECIFIC INSTRUCTIONS sections provide deep, role-relevant guidance
+
+#### Section 5: Command Equivalence
+
+Agents SHALL use OS-appropriate commands and note alternatives where applicable. The OS-SPECIFIC INSTRUCTIONS sections serve as the authoritative reference for platform-specific commands.
+
+#### Section 6: Cross-OS Compatibility
+
+Where possible, agents SHOULD recommend POSIX-compatible approaches that work across both platforms. Platform-specific features should be clearly identified as such.
+
+#### Section 7: Future OS Expansion
+
+Additional operating systems may be added by:
+
+1. Extending `scan_system()` in `logos/core/identity.py`
+2. Adding substitution patterns to `logos/core/prompts.py`
+3. Adding OS-specific subsections to each DEUS agent's activation prompt
+4. Amending this article to include the new OS
+
+---
+
 ## PART II: APPENDICES AND REFERENCE MATERIALS
 
 ### APPENDIX A: FACTION DETAILED SPECIFICATIONS

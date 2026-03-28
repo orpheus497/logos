@@ -14,14 +14,11 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 
 ##Class purpose: Workflow type enumeration
 class WorkflowType(Enum):
-    """
-    ##Class purpose: Enumerate available workflow patterns.
-    """
+    """##Class purpose: Enumerate available workflow patterns."""
 
     DIAMOND = "diamond"
     FUNNEL = "funnel"
@@ -30,9 +27,7 @@ class WorkflowType(Enum):
 
 ##Class purpose: Agent status in workflow
 class AgentStatus(Enum):
-    """
-    ##Class purpose: Enumerate agent workflow step statuses.
-    """
+    """##Class purpose: Enumerate agent workflow step statuses."""
 
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
@@ -65,32 +60,23 @@ class WorkflowStep:
     agents: list[str]
     status: AgentStatus = AgentStatus.NOT_STARTED
     agent_statuses: dict[str, AgentStatus] = field(default_factory=dict)
-    started: Optional[datetime] = None
-    completed: Optional[datetime] = None
-    notes: Optional[str] = None
+    started: datetime | None = None
+    completed: datetime | None = None
+    notes: str | None = None
 
     def all_agents_complete(self) -> bool:
-        """
-        ##Method purpose: Check if all agents in this step are complete.
-        """
-        return all(
-            self.agent_statuses.get(agent) == AgentStatus.COMPLETE
-            for agent in self.agents
-        )
+        """##Method purpose: Check if all agents in this step are complete."""
+        return all(self.agent_statuses.get(agent) == AgentStatus.COMPLETE for agent in self.agents)
 
     def update_agent(self, agent_key: str, status: AgentStatus) -> None:
-        """
-        ##Method purpose: Update status for a specific agent in this step.
-        """
+        """##Method purpose: Update status for a specific agent in this step."""
         if agent_key not in self.agents:
             return
         self.agent_statuses[agent_key] = status
         if self.all_agents_complete():
             self.status = AgentStatus.COMPLETE
             self.completed = datetime.now(timezone.utc)
-        elif any(
-            s == AgentStatus.IN_PROGRESS for s in self.agent_statuses.values()
-        ):
+        elif any(s == AgentStatus.IN_PROGRESS for s in self.agent_statuses.values()):
             self.status = AgentStatus.IN_PROGRESS
 
 
@@ -118,7 +104,7 @@ class WorkflowState:
     current_step: int
     steps: list[WorkflowStep]
     overall_status: AgentStatus = AgentStatus.NOT_STARTED
-    completed_at: Optional[datetime] = None
+    completed_at: datetime | None = None
 
     @property
     def total_steps(self) -> int:
@@ -303,7 +289,7 @@ def create_maintenance_workflow(
 
 
 ##Function purpose: Get active workflow from tracking file
-def get_active_workflow(devdocs_path: Path = Path(".devdocs")) -> Optional[WorkflowState]:
+def get_active_workflow(devdocs_path: Path = Path(".devdocs")) -> WorkflowState | None:
     """
     ##Function purpose: Read current active workflow from WORKFLOW_TRACKING/.
 
@@ -329,8 +315,12 @@ def get_active_workflow(devdocs_path: Path = Path(".devdocs")) -> Optional[Workf
             continue
         content = file_path.read_text(encoding="utf-8")
         ##Action purpose: Check status line for active workflows (handles both plain and markdown bold)
-        has_active = ("Status:** ACTIVE" in content or "Status: ACTIVE" in content
-                      or "Status:** IN PROGRESS" in content or "Status: IN PROGRESS" in content)
+        has_active = (
+            "Status:** ACTIVE" in content
+            or "Status: ACTIVE" in content
+            or "Status:** IN PROGRESS" in content
+            or "Status: IN PROGRESS" in content
+        )
         if has_active:
             return parse_workflow_file(content, workflow_type)
 
@@ -414,7 +404,9 @@ def parse_workflow_file(content: str, workflow_type: WorkflowType) -> WorkflowSt
         started_at=datetime.now(timezone.utc),
         current_step=current_step,
         steps=steps,
-        overall_status=AgentStatus.COMPLETE if all(s.status == AgentStatus.COMPLETE for s in steps) else AgentStatus.IN_PROGRESS,
+        overall_status=AgentStatus.COMPLETE
+        if all(s.status == AgentStatus.COMPLETE for s in steps)
+        else AgentStatus.IN_PROGRESS,
     )
 
 
@@ -456,9 +448,11 @@ def format_workflow_markdown(state: WorkflowState) -> str:
     lines.extend(["", "## Blockers", "- None"])
 
     if state.completed_at:
-        lines.extend([
-            "",
-            f"## Completed: {state.completed_at.strftime('%Y-%m-%d %H:%M')} UTC",
-        ])
+        lines.extend(
+            [
+                "",
+                f"## Completed: {state.completed_at.strftime('%Y-%m-%d %H:%M')} UTC",
+            ]
+        )
 
     return "\n".join(lines) + "\n"
