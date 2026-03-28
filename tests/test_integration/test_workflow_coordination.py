@@ -10,10 +10,8 @@ from pathlib import Path
 
 import pytest
 
-from logos.core.agent import Agent
 from logos.core.workflow_tracking import (
     AgentStatus,
-    WorkflowState,
     WorkflowStep,
     WorkflowType,
     create_diamond_workflow,
@@ -28,19 +26,59 @@ from logos.deus import get_agent as deus_get_agent
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DAEDELUS_KEYS = [
-    "A1", "A2", "A3", "A4", "A5",
-    "B6", "B7", "B8", "B9", "B10",
-    "C1", "C6", "C7", "C8", "C9", "C10", "C11",
-    "D2", "D3", "D4", "D5",
-    "E1", "E2", "E3",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "C1",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "E1",
+    "E2",
+    "E3",
 ]
 
 DEUS_KEYS = [
-    "A1", "A2", "A3", "A4", "A5",
-    "B6", "B7", "B8", "B9", "B10",
-    "C1", "C6", "C7", "C8", "C9", "C10", "C11",
-    "D2", "D3", "D4", "D5",
-    "E1", "E2", "E3", "E4", "E5",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "C1",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
 ]
 
 
@@ -150,9 +188,7 @@ class TestEndOfTaskProtocol:
     def test_deus_has_end_of_task(self, key):
         """##Function purpose: Verify each DEUS agent prompt contains END-OF-TASK PROTOCOL."""
         agent = deus_get_agent(key)
-        assert "END-OF-TASK PROTOCOL" in agent.full_prompt, (
-            f"DEUS {key} ({agent.name}) missing END-OF-TASK PROTOCOL"
-        )
+        assert "END-OF-TASK PROTOCOL" in agent.full_prompt, f"DEUS {key} ({agent.name}) missing END-OF-TASK PROTOCOL"
 
     @pytest.mark.parametrize("key", DAEDELUS_KEYS)
     def test_daedelus_end_of_task_has_required_subsections(self, key):

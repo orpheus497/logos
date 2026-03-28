@@ -17,7 +17,12 @@ import json
 import sys
 from pathlib import Path
 
-from logos.core.doc_audit import AuditResult, audit_file, audit_project, find_markdown_files
+##Action purpose: Ensure the project root is on sys.path so the script works standalone
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+from logos.core.doc_audit import AuditResult, audit_file, audit_project, find_markdown_files  # noqa: E402
 
 ##Action purpose: ANSI escape sequences for colored terminal output
 _GREEN = "\033[92m"

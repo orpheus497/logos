@@ -9,18 +9,15 @@ and Phase 7 (Release) to ensure cross-phase consistency.
 import re
 from pathlib import Path
 
-import pytest
-
 from logos.core.agent import Agent
-from logos.core.aliases import resolve_alias, get_all_aliases
-from logos.core.config import DEFAULT_CONFIG, load_config
+from logos.core.aliases import get_all_aliases
+from logos.core.config import DEFAULT_CONFIG
 from logos.core.devdocs import validate_devdocs_structure
-from logos.core.doc_audit import find_markdown_files, audit_file
-from logos.core.identity import scan_system, SystemIdentity
+from logos.core.doc_audit import find_markdown_files
+from logos.core.identity import scan_system
 from logos.core.prompts import (
-    _adapt_deus_prompt_for_os,
-    build_complete_prompt,
     DEUS_OS_SUBSTITUTIONS,
+    _adapt_deus_prompt_for_os,
 )
 from logos.core.refusal import (
     RefusalResponse,
@@ -42,19 +39,59 @@ from logos.deus import get_agent as deus_get_agent
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DAEDELUS_KEYS = [
-    "A1", "A2", "A3", "A4", "A5",
-    "B6", "B7", "B8", "B9", "B10",
-    "C1", "C6", "C7", "C8", "C9", "C10", "C11",
-    "D2", "D3", "D4", "D5",
-    "E1", "E2", "E3",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "C1",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "E1",
+    "E2",
+    "E3",
 ]
 
 DEUS_KEYS = [
-    "A1", "A2", "A3", "A4", "A5",
-    "B6", "B7", "B8", "B9", "B10",
-    "C1", "C6", "C7", "C8", "C9", "C10", "C11",
-    "D2", "D3", "D4", "D5",
-    "E1", "E2", "E3", "E4", "E5",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "C1",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
 ]
 
 
@@ -324,9 +361,7 @@ class TestPhase7Release:
         match = re.search(r'^version\s*=\s*"([^"]+)"', content, re.MULTILINE)
         assert match, "Could not find version in pyproject.toml"
         pyproject_version = match.group(1)
-        assert pyproject_version == VERSION, (
-            f"pyproject.toml version {pyproject_version!r} != version.py {VERSION!r}"
-        )
+        assert pyproject_version == VERSION, f"pyproject.toml version {pyproject_version!r} != version.py {VERSION!r}"
 
     def test_all_required_documentation_present(self):
         """##Function purpose: Verify all documentation required for release exists."""
