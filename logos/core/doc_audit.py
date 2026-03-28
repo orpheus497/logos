@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 ##Action purpose: Default directories to exclude from markdown file discovery
-_DEFAULT_EXCLUDE_DIRS: list[str] = [".git", ".venv", "node_modules", "__pycache__", ".devdocs"]
+_DEFAULT_EXCLUDE_DIRS: tuple[str, ...] = (".git", ".venv", "node_modules", "__pycache__", ".devdocs")
 
 ##Action purpose: Regex for standard markdown links: [text](target)
 _MARKDOWN_LINK_PATTERN: re.Pattern[str] = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
