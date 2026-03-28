@@ -28,22 +28,24 @@ install_bash() {
         return 1
     fi
 
+    FINAL_PATH=""
     # Try system-wide first, fall back to user-level
     if [ -d /etc/bash_completion.d ] && [ -w /etc/bash_completion.d ]; then
-        DEST="/etc/bash_completion.d/logos"
-        cp "$SRC" "$DEST"
-        echo "Installed Bash completion to ${DEST}"
+        FINAL_PATH="/etc/bash_completion.d/logos"
+        cp "$SRC" "$FINAL_PATH"
+        echo "Installed Bash completion to ${FINAL_PATH}"
     elif [ -d "${HOME}/.local/share/bash-completion/completions" ]; then
-        DEST="${HOME}/.local/share/bash-completion/completions/logos"
-        cp "$SRC" "$DEST"
-        echo "Installed Bash completion to ${DEST}"
+        FINAL_PATH="${HOME}/.local/share/bash-completion/completions/logos"
+        cp "$SRC" "$FINAL_PATH"
+        echo "Installed Bash completion to ${FINAL_PATH}"
     else
         DEST="${HOME}/.local/share/bash-completion/completions"
         mkdir -p "$DEST"
-        cp "$SRC" "${DEST}/logos"
-        echo "Installed Bash completion to ${DEST}/logos"
+        FINAL_PATH="${DEST}/logos"
+        cp "$SRC" "$FINAL_PATH"
+        echo "Installed Bash completion to ${FINAL_PATH}"
     fi
-    echo "  Reload with: source ${DEST}/logos"
+    echo "  Reload with: source ${FINAL_PATH}"
 }
 
 install_zsh() {

@@ -5,7 +5,6 @@ import argparse
 from logos.cli.main import is_first_run, main
 
 
-##Function purpose: Create a mock args namespace for testing
 def _mock_parse_args(argv=None):
     """Return a mock argparse.Namespace for testing."""
     return argparse.Namespace(verbose=False, quiet=False, version=False)

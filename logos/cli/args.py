@@ -17,7 +17,9 @@ VERBOSITY_QUIET: Final[str] = "quiet"
 VERBOSITY_NORMAL: Final[str] = "normal"
 VERBOSITY_VERBOSE: Final[str] = "verbose"
 
-##Action purpose: Module-level verbosity state (set by parse_args, read by get_verbosity)
+##Action purpose: Module-level verbosity state (set once by parse_args at CLI startup, read by get_verbosity)
+##Note: parse_args() should only be called once per execution from main(). Tests may call
+##it multiple times to reset state.
 _current_verbosity: str = VERBOSITY_NORMAL
 
 
