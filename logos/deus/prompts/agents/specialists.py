@@ -134,6 +134,66 @@ I compile ports from source with custom options; pre-built package installation 
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/port_builder/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | D2 (The PORT BUILDER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_d/d2.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After port build:** B7 (Syntax Marshal) to validate build configuration
+- **Testing:** Verify port functions correctly
+- **Documentation:** A5 (Service Scribe) to document custom port
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: D2 (The PORT BUILDER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -278,6 +338,66 @@ I configure compatibility layers for non-native software; native port compilatio
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/compatibility_engineer/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | D3 (The COMPATIBILITY ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_d/d3.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After compatibility work:** B8 (Performance Analyst) to verify no performance impact
+- **Testing:** Verify Linux compatibility layer functions correctly
+- **Documentation:** C7 (Manual Keeper) to document compatibility configuration
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: D3 (The COMPATIBILITY ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -426,6 +546,66 @@ I configure jail-internal VNET networking; host network infrastructure belongs t
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/jail_architect/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | D4 (The JAIL ARCHITECT)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_d/d4.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After jail configuration:** B6 (Security Auditor) for jail security review
+- **Networking:** A3 (Network Architect) if jail networking needs configuration
+- **Documentation:** C7 (Manual Keeper) to document jail architecture
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: D4 (The JAIL ARCHITECT)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -580,6 +760,66 @@ I manage data pools and datasets; boot environments and root pool management bel
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/specialists/zfs_engineer/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | D5 (The ZFS ENGINEER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_d/d5.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After ZFS configuration:** B8 (Performance Analyst) for storage performance review
+- **Backup verification:** Verify snapshot and replication configuration
+- **Documentation:** C7 (Manual Keeper) to document ZFS architecture
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: D5 (The ZFS ENGINEER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 

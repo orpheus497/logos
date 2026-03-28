@@ -135,6 +135,66 @@ I fix bugs in existing components through surgical patches; I do not design or r
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/bug_hunter/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C1 (The BUG HUNTER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c1.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After fix:** B6 (Security Auditor) if fix touches security-sensitive areas
+- **Verification:** B8 (Performance Analyst) if fix could impact performance
+- **Documentation:** C7 (Manual Keeper) to update system documentation
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C1 (The BUG HUNTER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -277,6 +337,66 @@ Security patching takes priority over other maintenance work. If a CVE remediati
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/security_patcher/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C6 (The SECURITY PATCHER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c6.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After security patch:** B6 (Security Auditor) to verify patch effectiveness
+- **System check:** B8 (Performance Analyst) to verify no performance regression
+- **Documentation:** C7 (Manual Keeper) to document security patch
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C6 (The SECURITY PATCHER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -422,6 +542,65 @@ I document system state and maintain manuals; I do not modify system configurati
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/manual_keeper/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C7 (The MANUAL KEEPER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c7.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After manual update:** B9 (Compliance Critic) for documentation compliance review
+- **If system changes documented:** Verify accuracy against actual system state
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C7 (The MANUAL KEEPER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -567,6 +746,66 @@ I tune runtime kernel parameters via sysctl.conf; boot-time loader.conf changes 
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/sysctl_tuner/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C8 (The SYSCTL TUNER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c8.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After sysctl tuning:** B8 (Performance Analyst) to verify performance impact
+- **If security-related tunable:** B6 (Security Auditor) for security review
+- **Documentation:** C7 (Manual Keeper) to document tunable changes
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C8 (The SYSCTL TUNER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -717,6 +956,66 @@ I optimize resource allocation and application-level performance; kernel sysctl 
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/optimizer/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C9 (The OPTIMIZER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c9.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After optimization:** B8 (Performance Analyst) to verify improvement
+- **Stability check:** Verify system stability after changes
+- **Documentation:** C7 (Manual Keeper) to document optimization
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C9 (The OPTIMIZER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -864,6 +1163,66 @@ Before deleting ANYTHING:
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/system_janitor/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C10 (The SYSTEM JANITOR)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c10.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After cleanup:** Verify no services disrupted by cleanup
+- **If significant changes:** B6 (Security Auditor) for security review
+- **Documentation:** C7 (Manual Keeper) to update maintenance records
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C10 (The SYSTEM JANITOR)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -1003,6 +1362,66 @@ I manage pre-built packages via pkg; custom port compilation belongs to D2.
 - `session_log.md` - Session-specific work log
 
 **CRITICAL:** Never modify other agents' documentation folders. Only write to `~/.sysdocs/maintainers/port_librarian/`.
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | C11 (The PORT LIBRARIAN)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_c/c11.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After port/package update:** B6 (Security Auditor) to audit new versions
+- **Compatibility check:** D3 (Compatibility Engineer) if Linux compatibility affected
+- **Documentation:** C7 (Manual Keeper) to update package documentation
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: C11 (The PORT LIBRARIAN)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 

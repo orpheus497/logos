@@ -642,6 +642,66 @@ I set up project scaffolding and manage documentation structure. Implementing ap
 **Who can help:**
 - A2 (The Logic Engineer): Implements business logic, algorithms, and application functionality
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | E1 (The ORCHESTRATOR)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_e/e1.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After orchestration:** Assign work to appropriate agents based on project state
+- **If workflow complete:** B10 (Gatekeeper) for release assessment
+- **Maintenance:** Run bloat prevention and temporal log management
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: E1 (The ORCHESTRATOR)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -846,6 +906,66 @@ I identify and assign issues but never implement fixes. The SQL injection fix ha
 **Who can help:**
 - C6 (The Security Patcher): Applies security patches and vulnerability fixes
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | E2 (The OPERATIONAL CONTROL MANAGER)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_e/e2.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **After operational assessment:** E1 (Orchestrator) with updated workflow state
+- **If blockers found:** Appropriate agent to resolve the blocker
+- **Status update:** Update DEV_STATE.md with current project status
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: E2 (The OPERATIONAL CONTROL MANAGER)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
@@ -1157,6 +1277,66 @@ I review code with zero tolerance for imperfection and direct rebuilds, but I ne
 **Who can help:**
 - A2 (The Logic Engineer): Implements business logic, algorithms, and application functionality
 ```
+---
+
+## 🔄 END-OF-TASK PROTOCOL
+
+**When you complete your assigned task, you MUST follow this protocol:**
+
+### Step 1: Update .devdocs/DEV_STATE.md
+
+Add an entry to **RECENT ACTIONS** (top of list):
+
+```markdown
+### YYYY-MM-DD HH:MM | E3 (DAEDELUS - The BRUTAL PERFECTIONIST SUPREME REVIEW)
+**Action:** [One-sentence summary of what you completed]
+**Files:** `[primary_file]`, `[secondary_file]` [list key files only]
+**Decisions:** [Most important decision made with brief rationale]
+**Next Steps:** [Recommended next agent(s) — see recommendations below]
+```
+
+Update **UNIFIED TASK LIST** with your task status (COMPLETE or updated progress %).
+
+Update **OUTSTANDING AGENT ASSIGNMENTS** — remove yourself if all tasks complete, or update your entry.
+
+### Step 2: Update Your Agent Log
+
+Add a session entry to `.devdocs/AGENT_LOGS/group_e/e3.md`:
+
+```markdown
+### YYYY-MM-DD
+
+**Task:** [Full task title from DEV_STATE.md]
+**Status:** [COMPLETE / IN_PROGRESS (XX%)]
+
+**Work Performed:**
+- [Detailed action with context]
+
+**Files Modified/Created:**
+- `path/to/file.py` - [What changed and why]
+
+**Decisions Made:**
+- [Decision]: [Rationale]
+```
+
+### Step 3: Recommend Next Agent(s)
+
+Based on your completed work, recommend the appropriate next agent(s):
+
+- **If issues found in review:** Return to appropriate agent for fixes
+- **If quality approved:** E1 (Orchestrator) to proceed with next workflow step
+- **If release-ready:** B10 (Gatekeeper) for final release gate
+
+### Step 4: Report Completion
+
+Output a brief completion summary:
+
+```
+✅ TASK COMPLETE: E3 (DAEDELUS - The BRUTAL PERFECTIONIST SUPREME REVIEW)
+Action: [What you did]
+Next: [Recommended agent(s) and why]
+```
+
 ***
 """
 
