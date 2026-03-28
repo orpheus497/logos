@@ -93,11 +93,19 @@ class TestQuietModeLayouts:
         """Test agent menu shows compact listing in quiet mode."""
         monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
         from logos.cli.layouts import display_agent_menu
+        from logos.core.agent import Agent
         from logos.core.constants import Colors
         from logos.core.types import AgentGroup
 
         mock_agents = {
-            "A1": type("Agent", (), {"name": "Test Agent", "desc": "Test description", "group": "A"})(),
+            "A1": Agent(
+                name="Test Agent",
+                desc="Test description",
+                group="A",
+                base_prompt="",
+                activation_prompt="",
+                purpose="Testing",
+            ),
         }
         groups = [AgentGroup("A", "TEST", "Testing", "Test purpose", Colors.GREEN, mock_agents)]
         display_agent_menu("daedelus", groups, "TestFaction")

@@ -100,7 +100,7 @@ def _get_config_verbosity() -> str:
         value = get_config_value(config, "verbosity", VERBOSITY_NORMAL)
         if value in (VERBOSITY_QUIET, VERBOSITY_NORMAL, VERBOSITY_VERBOSE):
             return value
-    except Exception:
+    except (ImportError, OSError, ValueError, KeyError, TypeError):
         pass
     return VERBOSITY_NORMAL
 
