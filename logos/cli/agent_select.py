@@ -6,12 +6,13 @@ Phase 5 implementation.
 
 ##Action purpose: Provides agent selection interface with mode-aware agent listing,
 prompt composition with identity and faction context, clipboard integration,
-alias resolution, and prompt preview support.
+alias resolution, search/filter capability, and prompt preview support.
 """
 
+from logos.cli.args import is_verbose
 from logos.cli.layouts import display_agent_menu, display_agent_result, display_error
 from logos.core.agent import Agent
-from logos.core.aliases import resolve_alias, validate_custom_aliases
+from logos.core.aliases import get_all_aliases, resolve_alias, validate_custom_aliases
 from logos.core.clipboard import copy_to_clipboard
 from logos.core.config import get_config_value, load_config
 from logos.core.constants import Colors
@@ -185,13 +186,87 @@ def get_agent_for_mode(mode: str, agent_key: str) -> Agent | None:
     return get_agent(agent_key)
 
 
+##Function purpose: Search agents by name, key, or description
+def search_agents(mode: str, query: str) -> list[tuple[str, Agent]]:
+    """
+    Searches agents by name, key, alias, or description.
+
+    Matches query against agent key, name, description, and aliases.
+    Returns a list of (agent_key, Agent) tuples matching the query.
+
+    Args:
+        mode: Current mode ("daedelus" or "deus")
+        query: Search query string (case-insensitive)
+
+    Returns:
+        List of (agent_key, Agent) tuples matching the search query
+    """
+    ##Action purpose: Get all agent groups for the mode
+    if mode == "daedelus":
+        groups = get_daedelus_groups()
+    elif mode == "deus":
+        groups = get_deus_groups()
+    else:
+        return []
+
+    ##Action purpose: Normalize query for case-insensitive matching
+    query_lower = query.lower().strip()
+    if not query_lower:
+        return []
+
+    ##Action purpose: Get aliases for reverse lookup
+    config = load_config()
+    custom_aliases = validate_custom_aliases(get_config_value(config, "aliases", {}))
+    all_aliases = get_all_aliases(mode, custom_aliases)
+    ##Action purpose: Build reverse map: agent_key -> list of aliases
+    key_to_aliases: dict[str, list[str]] = {}
+    for alias_name, agent_key in all_aliases.items():
+        key_to_aliases.setdefault(agent_key, []).append(alias_name)
+
+    results: list[tuple[str, Agent]] = []
+    for group in groups:
+        for agent_key, agent in group.agents.items():
+            ##Action purpose: Check if query matches key, name, desc, or aliases
+            searchable = f"{agent_key} {agent.name} {agent.desc}".lower()
+            ##Action purpose: Also include aliases in searchable text
+            agent_aliases = key_to_aliases.get(agent_key, [])
+            searchable += " " + " ".join(agent_aliases)
+
+            if query_lower in searchable:
+                results.append((agent_key, agent))
+
+    return results
+
+
+##Function purpose: Display search results to user
+def display_search_results(results: list[tuple[str, Agent]], query: str) -> None:
+    """
+    Displays agent search results in a formatted list.
+
+    Args:
+        results: List of (agent_key, Agent) tuples from search_agents
+        query: Original search query for display
+    """
+    if not results:
+        print(f"\n  {Colors.YELLOW}No agents found matching '{query}'.{Colors.RESET}")
+        return
+
+    print(f"\n  {Colors.CYAN}Search results for '{query}' ({len(results)} found):{Colors.RESET}")
+    print(f"  {Colors.CYAN}{'─' * 56}{Colors.RESET}")
+    for agent_key, agent in results:
+        print(f"  {Colors.BOLD}[{agent_key}]{Colors.RESET} {agent.name} — {agent.desc}")
+    print(f"  {Colors.CYAN}{'─' * 56}{Colors.RESET}")
+    print(f"  {Colors.YELLOW}Enter an agent key to select, or '0' to go back.{Colors.RESET}")
+
+
 ##Function purpose: Handle agent selection input
 def select_agent(mode: str) -> str | None:
     """
     ##Function purpose: Prompts user for agent selection.
 
     ##Action purpose: Displays agent menu and handles user input to select
-    an agent, validating input and resolving aliases. Returns agent key.
+    an agent, validating input, resolving aliases, and supporting search
+    via '/' prefix. Returns agent key.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -214,6 +289,16 @@ def select_agent(mode: str) -> str | None:
                 ##Action purpose: Return None to go back to mode selection
                 return None
 
+            ##Condition purpose: Check for search command (/ prefix)
+            if choice.startswith("/"):
+                query = choice[1:].strip()
+                if query:
+                    results = search_agents(mode, query)
+                    display_search_results(results, query)
+                else:
+                    print(f"  {Colors.YELLOW}Usage: /search_term (e.g., /architect, /security){Colors.RESET}")
+                continue
+
             ##Action purpose: Try direct agent key first (uppercase)
             agent_key = choice.upper()
             agent = get_agent_for_mode(mode, agent_key)
@@ -230,7 +315,7 @@ def select_agent(mode: str) -> str | None:
                     return resolved
 
             ##Action purpose: Invalid selection, prompt again
-            print(f"Invalid selection '{choice}'. Please try again or enter '0' to go back.")
+            print(f"Invalid selection '{choice}'. Use /term to search, or enter '0' to go back.")
         except (EOFError, KeyboardInterrupt):
             ##Error purpose: Handle Ctrl+C or EOF (user interruption)
             return None
@@ -279,9 +364,18 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
     show_preview = get_config_value(config, "clipboard.show_preview", False)
     preview_lines = get_config_value(config, "clipboard.preview_lines", 10)
 
-    ##Condition purpose: Show prompt preview if configured
-    if show_preview:
+    ##Condition purpose: Show prompt preview if configured or verbose mode
+    if show_preview or is_verbose():
         _show_prompt_preview(complete_prompt, preview_lines)
+
+    ##Condition purpose: Show verbose agent details
+    if is_verbose():
+        print(f"\n  {Colors.CYAN}Agent:{Colors.RESET} {agent.name} [{agent_key}]")
+        print(f"  {Colors.CYAN}Group:{Colors.RESET} {agent.group}")
+        print(f"  {Colors.CYAN}Mode:{Colors.RESET} {mode}")
+        print(
+            f"  {Colors.CYAN}Prompt length:{Colors.RESET} {len(complete_prompt)} chars, {len(complete_prompt.splitlines())} lines"
+        )
 
     ##Action purpose: Copy prompt to clipboard
     clipboard_enabled = get_config_value(config, "clipboard.enabled", True)

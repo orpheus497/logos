@@ -1057,6 +1057,72 @@ Additional operating systems may be added by:
 
 ---
 
+### ARTICLE X: USER EXPERIENCE AND CLI STANDARDS
+
+#### Section 1: Purpose and Scope
+
+This article establishes standards for the LOGOS command-line interface (CLI) to ensure a consistent, accessible, and efficient user experience across all interaction modes, shells, and operating systems.
+
+#### Section 2: Verbosity Levels
+
+The CLI SHALL support three verbosity levels, selectable via command-line flags:
+
+1. **Quiet mode** (`-q` / `--quiet`) — Suppresses decorative banners, logos, and non-essential output. Displays only functional information (agent selection, errors, prompt status).
+2. **Normal mode** (default) — Standard output including welcome screen, faction display, agent menus, and status messages.
+3. **Verbose mode** (`-v` / `--verbose`) — Extended output including prompt statistics (character count, line count), agent metadata, and prompt preview.
+
+The quiet and verbose flags SHALL be mutually exclusive.
+
+#### Section 3: Agent Discovery
+
+Users SHALL be able to discover agents through multiple mechanisms:
+
+1. **Direct key selection** — Agent keys (e.g., A1, B6, E1) for quick access
+2. **Alias resolution** — Human-readable aliases (e.g., "architect", "sentinel") mapped to agent keys
+3. **Search/filter** — Text search across agent names, descriptions, keys, and aliases via `/` prefix (e.g., `/security` matches all security-related agents)
+
+#### Section 4: Shell Completion
+
+Tab completion scripts SHALL be provided for the three major interactive shells:
+
+1. **Bash** — Installed via `bash-completion` compatible script
+2. **Zsh** — Installed via `fpath`-compatible `_logos` completion function
+3. **Fish** — Installed via Fish completions directory
+
+An installer script (`install-completion.sh`) SHALL be provided to automate installation with auto-detection of the current shell.
+
+#### Section 5: Configuration
+
+User preferences SHALL be stored in `~/.logos/config.yaml` with the following configurable areas:
+
+1. **Clipboard behavior** — Enable/disable, preview settings
+2. **Recent agents** — Enable/disable tracking, maximum count
+3. **Custom aliases** — User-defined alias → agent key mappings
+4. **Verbosity** — Default verbosity level
+
+Configuration SHALL use deep merge with defaults, ensuring missing keys are filled from defaults without data loss.
+
+#### Section 6: Accessibility
+
+The CLI SHALL:
+
+1. Respect terminal width and avoid line wrapping where possible
+2. Use ANSI colors that are readable on both light and dark terminal backgrounds
+3. Provide text-only fallbacks for all visual elements
+4. Support operation without clipboard access (manual prompt display)
+5. Function correctly in headless/SSH environments
+
+#### Section 7: Error Handling
+
+All user-facing errors SHALL:
+
+1. Display a clear, actionable error message
+2. Suggest corrective action where applicable
+3. Never expose internal stack traces in normal or quiet mode
+4. Allow the user to continue without restarting the application
+
+---
+
 ## PART II: APPENDICES AND REFERENCE MATERIALS
 
 ### APPENDIX A: FACTION DETAILED SPECIFICATIONS

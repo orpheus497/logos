@@ -2,17 +2,14 @@
 # Install: source this file or copy to /etc/bash_completion.d/logos
 
 _logos_completions() {
-    local cur prev opts agents_daedelus agents_deus aliases_daedelus aliases_deus modes
+    local cur prev opts agents_daedelus agents_deus aliases_daedelus aliases_deus
 
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
     # Global options
-    opts="--help --version --mode --list-agents --list-aliases"
-
-    # Mode values
-    modes="daedelus deus"
+    opts="--help --version --verbose -v --quiet -q"
 
     # Daedelus agent keys
     agents_daedelus="A1 A2 A3 A4 A5 B6 B7 B8 B9 B10 C1 C6 C7 C8 C9 C10 C11 D2 D3 D4 D5 E1 E2 E3"
@@ -26,19 +23,7 @@ _logos_completions() {
     # DEUS aliases
     aliases_deus="kernel driver network boot service secaudit audit syntax perf compliance release bughunter bugfix secpatch manual sysctl optimizer janitor portlib portbuild compat jail zfs orchestrator admin manager ombudsman deus"
 
-    case "${prev}" in
-        --mode)
-            COMPREPLY=( $(compgen -W "${modes}" -- "${cur}") )
-            return 0
-            ;;
-        logos)
-            # Complete with options and all agent keys
-            COMPREPLY=( $(compgen -W "${opts} ${agents_daedelus} ${agents_deus} ${aliases_daedelus} ${aliases_deus}" -- "${cur}") )
-            return 0
-            ;;
-    esac
-
-    # Default: complete with options
+    # Default: complete with options and all agent keys/aliases
     COMPREPLY=( $(compgen -W "${opts} ${agents_daedelus} ${agents_deus} ${aliases_daedelus} ${aliases_deus}" -- "${cur}") )
     return 0
 }

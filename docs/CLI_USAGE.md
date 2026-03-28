@@ -12,6 +12,15 @@ copying them to your clipboard for use with AI assistants.
 # Run LOGOS
 logos
 
+# Run with verbose output
+logos -v
+
+# Run with minimal output
+logos -q
+
+# Show version
+logos --version
+
 # Or run as Python module
 python -m logos
 ```
@@ -155,8 +164,21 @@ Custom aliases take precedence over built-in aliases.
 ## Shell Completion
 
 LOGOS provides shell completion scripts for Bash, Zsh, and Fish.
+See [SHELL_COMPLETION.md](SHELL_COMPLETION.md) for detailed installation instructions.
 
-### Bash
+### Quick Install
+
+```bash
+# Auto-detect and install for current shell
+./install-completion.sh
+
+# Install for all detected shells
+./install-completion.sh --all
+```
+
+### Manual Installation
+
+#### Bash
 
 ```bash
 # Add to ~/.bashrc
@@ -195,6 +217,30 @@ list. Each entry is qualified with its mode (for example `daedelus:A1` or
 | `I` | View system info |
 | `S` | View usage statistics |
 | Agent key or alias | Select agent |
+| `/search_term` | Search agents by name, key, or description |
+
+## Agent Search
+
+Use the `/` prefix during agent selection to search across all agents by name, key, alias, or description:
+
+```
+Your choice: /security     → Lists all security-related agents
+Your choice: /architect    → Lists agents matching "architect"
+Your choice: /opt          → Lists agents matching "opt" (e.g., Optimizer)
+```
+
+Search is case-insensitive and matches partial strings.
+
+## Command-Line Flags
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--verbose` | `-v` | Verbose output: shows agent metadata, prompt stats (char/line count), and auto-enables prompt preview |
+| `--quiet` | `-q` | Quiet output: suppresses banners and decorative elements |
+| `--version` | | Shows LOGOS version and exits |
+| `--help` | `-h` | Shows help message and exits |
+
+The `-v` and `-q` flags are mutually exclusive.
 
 ## Prompt Preview
 

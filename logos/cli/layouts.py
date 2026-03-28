@@ -24,6 +24,7 @@ except ImportError:
         return len(line)
 
 
+from logos.cli.args import is_quiet
 from logos.core.constants import Colors, UILayout
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity
@@ -99,12 +100,16 @@ def display_logos_banner(width: int = 100, color: str = UIColors.PRIMARY) -> Non
     Displays the LOGOS Unicode art banner.
 
     Prints the LOGOS banner centered within the specified width, using the
-    provided color.
+    provided color. Suppressed in quiet mode.
 
     Args:
         width: Total width for centering
         color: ANSI color code for the banner
     """
+    ##Condition purpose: Skip banner in quiet mode
+    if is_quiet():
+        return
+
     ##Action purpose: Prints the LOGOS banner centered within the specified width,
     ##Step purpose: using the provided color
     ##Action purpose: Get banner lines
@@ -456,6 +461,15 @@ def display_welcome_screen(
     width = UILayout.DISPLAY_WIDTH
     ui = UIColors
 
+    ##Condition purpose: In quiet mode, show only essential identity info without decorative elements
+    if is_quiet():
+        if username and hostname:
+            print(f"LOGOS — {username}@{hostname}", end="")
+            if faction:
+                print(f" [{faction}]", end="")
+            print()
+        return
+
     ##Step purpose: Display LOGOS banner at top
     display_logos_banner(width, ui.PRIMARY)
 
@@ -510,9 +524,14 @@ def display_mode_selection() -> None:
     Display beautiful mode selection interface.
 
     Creates the Daedelus/DEUS mode selection screen with clear options and
-    descriptions.
+    descriptions. In quiet mode, shows a compact list of options.
 
     """
+    ##Condition purpose: In quiet mode, show compact mode selection
+    if is_quiet():
+        print("[D] Daedelus  [U] DEUS  [F] Faction  [S] Info  [T] Stats  [Q] Quit")
+        return
+
     ##Action purpose: Creates the Daedelus/DEUS mode selection screen
     ##Step purpose: with clear options and descriptions
     width = UILayout.DISPLAY_WIDTH
@@ -555,7 +574,7 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     Gets LOGOS banner lines for batching (performance optimization).
 
     Returns banner lines as a list instead of printing directly, allowing
-    batch output operations for improved performance.
+    batch output operations for improved performance. Returns empty in quiet mode.
 
     Args:
         width: Total width for centering
@@ -564,6 +583,10 @@ def _get_logos_banner_lines(width: int = 100, color: str = UIColors.PRIMARY) -> 
     Returns:
         List of banner lines with formatting
     """
+    ##Condition purpose: Return empty list in quiet mode
+    if is_quiet():
+        return []
+
     ##Action purpose: Returns banner lines as a list instead of printing directly,
     ##Step purpose: allowing batch output operations for improved performance
     ##Action purpose: Get banner lines
@@ -636,7 +659,7 @@ def display_agent_menu(
 
     Creates a formatted agent selection interface with color-coded groups, clear
     organization, and chosen faction logo. Uses batched output (single print
-    operation) for improved performance.
+    operation) for improved performance. In quiet mode, shows a compact agent list.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -644,6 +667,16 @@ def display_agent_menu(
         faction_name: Optional faction name to display
         faction_key: Optional faction key for logo display
     """
+    ##Condition purpose: In quiet mode, show compact agent listing
+    if is_quiet():
+        mode_title = "DAEDELUS" if mode == "daedelus" else "DEUS"
+        print(f"\n{mode_title} Agents:")
+        for group in agent_groups:
+            for key, agent in group.agents.items():
+                print(f"  {key}. {agent.name} — {agent.desc}")
+        print("  0. Back  /term to search")
+        return
+
     ##Action purpose: Creates a formatted agent selection interface
     ##Step purpose: with color-coded groups, clear organization, and chosen faction logo
     width = UILayout.DISPLAY_WIDTH

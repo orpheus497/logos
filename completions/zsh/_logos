@@ -8,9 +8,8 @@ _logos() {
     options=(
         '--help[Show help message]'
         '--version[Show version]'
-        '--mode[Select mode (daedelus or deus)]:mode:(daedelus deus)'
-        '--list-agents[List all agents for current mode]'
-        '--list-aliases[List all available aliases]'
+        {-v,--verbose}'[Enable verbose output]'
+        {-q,--quiet}'[Enable quiet output]'
     )
 
     # Daedelus agents

@@ -30,6 +30,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "max_count": 10,  # Maximum number of recent agents to track
     },
     "aliases": {},  # Custom user-defined aliases (e.g., {"arch": "A1"})
+    "verbosity": "normal",  # "quiet", "normal", or "verbose"
 }
 
 
