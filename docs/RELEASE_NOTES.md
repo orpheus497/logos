@@ -6,7 +6,7 @@
 |---|---|
 | **Version** | 0.2.0 |
 | **Release Date** | TBD |
-| **Release Type** | Major Feature Release (Alpha → Beta) |
+| **Release Type** | Major Feature Release (Pre-Alpha → Beta) |
 | **Previous Version** | 0.1.0 |
 | **Python** | 3.10+ |
 | **License** | AGPL-3.0 |
@@ -15,7 +15,7 @@
 
 ## Summary
 
-LOGOS v0.2.0 is a major feature release that advances the project from Alpha to Beta status.
+LOGOS v0.2.0 is a major feature release that advances the project from Pre-Alpha to Beta status.
 This release completes all seven development phases, adding constitutional governance,
 agent boundary enforcement, OS adaptations, an enhanced CLI experience, and comprehensive
 documentation across all 50 agents in both the Daedelus (software development) and DEUS
@@ -94,7 +94,7 @@ as a cohesive release.
 ### Changed
 
 - Version: 0.1.0 → 0.2.0
-- Status: Alpha → Beta
+- Status: Pre-Alpha → Beta
 - CONSTITUTION.md updated from v1.0 to v2.0 with six new articles
 
 ### Fixed

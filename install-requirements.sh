@@ -61,10 +61,11 @@ detect_python() {
 
 ##Function purpose: Detect pip and set PIP_CMD array
 detect_pip() {
-    if command_exists pip3; then
-        PIP_CMD=(pip3)
-    elif "$PYTHON_CMD" -m pip --version >/dev/null 2>&1; then
+    ##Action purpose: Prefer python -m pip to ensure correct interpreter match
+    if "$PYTHON_CMD" -m pip --version >/dev/null 2>&1; then
         PIP_CMD=("$PYTHON_CMD" -m pip)
+    elif command_exists pip3; then
+        PIP_CMD=(pip3)
     elif command_exists pip; then
         PIP_CMD=(pip)
     else

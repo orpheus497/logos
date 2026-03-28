@@ -68,18 +68,19 @@ detailed instructions.
 
 ## Configuration File
 
-**Invalid YAML in the configuration file will be replaced with defaults.**
+**Invalid YAML in the configuration file causes a silent fallback to defaults.**
 
 The user configuration file at `~/.logos/config.yaml` must be valid YAML.
-If the file contains syntax errors, LOGOS will replace it with default values
-on the next run. A warning message is displayed when this occurs.
+If the file contains syntax errors or is unreadable, LOGOS silently falls back
+to built-in default values for that session. The file is **not** automatically
+overwritten or regenerated.
 
 **Workaround:** Use a YAML linter or validator before editing the config file.
-To reset the configuration, delete the file and run `logos` to regenerate it:
+To reset the configuration, delete the file and recreate it manually:
 
 ```bash
 rm ~/.logos/config.yaml
-logos
+# Then create a fresh config (see docs/MIGRATION_GUIDE.md for the schema)
 ```
 
 ---

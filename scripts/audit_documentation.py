@@ -3,7 +3,7 @@
 ##Script function and purpose: audit_documentation - CLI wrapper for documentation auditing.
 
 Provides a command-line interface around the logos.core.doc_audit module to detect
-broken internal links and missing cross-references in the project's markdown files.
+broken internal links in the project's markdown files.
 Supports single-file and whole-project audits with optional JSON output.
 
 ##Action purpose: Enables developers and CI pipelines to quickly validate documentation

@@ -16,7 +16,7 @@ the new features introduced in v0.2.0 and how to take advantage of them.
 | `.devdocs/` governance | None | Temporal logs, bloat prevention, archival |
 | Workflow coordination | Ad-hoc | END-OF-TASK protocol, 3 workflow patterns |
 | OS adaptations | FreeBSD only | Linux + FreeBSD per-agent instructions |
-| Configuration | None | `~/.logos/config.yaml` (auto-created) |
+| Configuration | None | `~/.logos/config.yaml` (manual) |
 | Agent aliases | None | 50 built-in + custom aliases |
 | Shell completions | None | Bash, Zsh, Fish |
 | CLI flags | None | `-v`, `-q`, `--version` |
@@ -46,21 +46,28 @@ The following features are entirely new and require no changes to existing workf
 
 LOGOS v0.2.0 introduces a user-level configuration file at `~/.logos/config.yaml`.
 
-- **Auto-created:** The file is created automatically on first run with sensible defaults.
-- **No action required:** If you do not need to customize behavior, ignore this file.
-- **To customize:** Edit `~/.logos/config.yaml` to change settings such as:
-  - Default mode (Daedelus or DEUS)
-  - Prompt preview length
+- **Manual creation:** The file is not created automatically. Create it yourself if you
+  want to customise defaults.
+- **No action required:** If you do not need to customize behavior, LOGOS uses sensible
+  built-in defaults.
+- **To customize:** Create `~/.logos/config.yaml` to change settings such as:
+  - Default verbosity (`quiet`, `normal`, or `verbose`)
+  - Clipboard behaviour and prompt preview
+  - Recent agent tracking
   - Custom agent aliases
-  - Quiet/verbose defaults
 
 ```yaml
 # Example ~/.logos/config.yaml
 default_mode: daedelus
-prompt_preview: true
-preview_lines: 5
-quiet: false
-verbose: false
+clipboard:
+  enabled: true
+  show_preview: false
+  preview_lines: 10
+recent_agents:
+  enabled: true
+  max_count: 10
+aliases: {}
+verbosity: normal
 ```
 
 ### Shell Completions
@@ -191,8 +198,8 @@ These articles govern internal agent behavior and do not require user action.
    ```
 
    This will:
-   - Create `~/.logos/config.yaml` if it does not exist
    - Detect and initialize `.devdocs/` in the current project directory
+   - Use built-in defaults (create `~/.logos/config.yaml` manually to customise)
 
 4. **(Optional) Install shell completions:**
 
@@ -230,11 +237,11 @@ These articles govern internal agent behavior and do not require user action.
 
 | Issue | Solution |
 |---|---|
-| `config.yaml` not created | Run `logos` once — it auto-creates on first use |
+| `config.yaml` not found | Create `~/.logos/config.yaml` manually (see example above) |
 | Shell completions not working | Re-run `./install-completion.sh` and restart your shell |
 | Agent alias not recognized | Check spelling; see `docs/CLI_USAGE.md` for the full alias list |
 | `.devdocs/` not initialized | Ensure you are in a project root directory when running `logos` |
-| Invalid YAML in config | Delete `~/.logos/config.yaml` and re-run `logos` to regenerate defaults |
+| Invalid YAML in config | Delete `~/.logos/config.yaml` — LOGOS falls back to built-in defaults |
 
 For additional help, see [docs/CLI_USAGE.md](CLI_USAGE.md) or open an issue on
 [GitHub](https://github.com/orpheus497/logos/issues).
