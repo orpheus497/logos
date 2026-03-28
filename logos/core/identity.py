@@ -29,6 +29,9 @@ logger = logging.getLogger(__name__)
 ##Action purpose: Subprocess timeout constant for system checks
 SUBPROCESS_TIMEOUT: float = 0.5
 
+##Action purpose: Default maximum number of recent agent entries to track
+DEFAULT_RECENT_AGENTS_MAX: int = 10
+
 ##Action purpose: FreeBSD system info cache (performance optimization - C9)
 ##Step purpose: Cache FreeBSD-specific system information to avoid repeated subprocess calls
 ##Optimization: Reduces system scan time by ~0.5 seconds on subsequent scans (Profiler B8 recommendation)
@@ -74,6 +77,28 @@ class SystemIdentity:
     faction_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by user-selected faction
     mode_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by mode (daedelus/deus)
     faction_selected_at: str | None = None  # Timestamp when faction was last selected/changed
+    recent_agents: list[str] = field(default_factory=list)  # Last N agent keys (most recent first)
+
+
+##Function purpose: Normalize recent_agents data from YAML to list[str]
+def _normalize_recent_agents(raw: Any) -> list[str]:
+    """
+    Normalizes recent_agents loaded from YAML.
+
+    Ensures the value is a list of strings. Non-list or null values
+    are coerced to an empty list. Non-string items within a list are filtered out.
+
+    Args:
+        raw: Raw value from YAML (could be None, list, or other type)
+
+    Returns:
+        Validated list of string entries
+    """
+    ##Condition purpose: Return empty list for non-list values (null, int, str, etc.)
+    if not isinstance(raw, list):
+        return []
+    ##Action purpose: Filter to only string entries
+    return [item for item in raw if isinstance(item, str)]
 
 
 ##Function purpose: Get cached FreeBSD info if still valid (performance optimization - C9)
@@ -374,6 +399,7 @@ def load_identity(config_path: Path | None = None) -> SystemIdentity | None:
         faction_prompt_counts=faction_counts if faction_counts else {},
         mode_prompt_counts=mode_counts if mode_counts else {},
         faction_selected_at=faction_data.get("selected"),  # Load faction selection timestamp
+        recent_agents=_normalize_recent_agents(sessions_data.get("recent_agents", [])),
     )
 
 
@@ -422,6 +448,7 @@ def save_identity(identity: SystemIdentity, config_path: Path | None = None) -> 
             "last_agent": identity.last_agent,
             "last_timestamp": identity.last_session,
             "total_sessions": identity.total_sessions,
+            "recent_agents": identity.recent_agents,
         },
         ##Action purpose: Prompt counts section
         "prompt_counts": {
@@ -472,6 +499,7 @@ def create_identity(faction: str, scan_data: dict[str, Any] | None = None) -> Sy
         faction_prompt_counts={},  # Initialize empty counters
         mode_prompt_counts={},  # Initialize empty counters
         faction_selected_at=now,  # Set initial faction selection timestamp
+        recent_agents=[],  # Initialize empty recent agents list
     )
 
 
@@ -511,6 +539,34 @@ def update_session_tracking(
     ##Action purpose: Increment counter for current mode
     updated_mode_counts[mode] = updated_mode_counts.get(mode, 0) + 1
 
+    ##Action purpose: Update recent agents list (most recent first, honoring config)
+    from logos.core.config import get_config_value, load_config
+
+    config = load_config()
+    recent_enabled = get_config_value(config, "recent_agents.enabled", True)
+    max_count = get_config_value(config, "recent_agents.max_count", DEFAULT_RECENT_AGENTS_MAX)
+    ##Action purpose: Validate max_count is a positive integer
+    try:
+        max_count = int(max_count)
+    except (TypeError, ValueError):
+        max_count = DEFAULT_RECENT_AGENTS_MAX
+    if max_count < 0:
+        max_count = DEFAULT_RECENT_AGENTS_MAX
+
+    recent = list(identity.recent_agents)
+
+    if recent_enabled:
+        ##Action purpose: Build mode-qualified agent entry for recent list
+        agent_entry = f"{mode}:{agent}"
+        ##Condition purpose: Remove existing entry if present (to move to front)
+        if agent_entry in recent:
+            recent.remove(agent_entry)
+        ##Action purpose: Insert at front (most recent first)
+        recent.insert(0, agent_entry)
+        ##Action purpose: Trim to configured max entries
+        if max_count > 0:
+            recent = recent[:max_count]
+
     ##Action purpose: Create updated identity with new session info and prompt counts
     return SystemIdentity(
         hostname=identity.hostname,
@@ -525,4 +581,6 @@ def update_session_tracking(
         total_sessions=identity.total_sessions + 1,
         faction_prompt_counts=updated_faction_counts,
         mode_prompt_counts=updated_mode_counts,
+        faction_selected_at=identity.faction_selected_at,
+        recent_agents=recent,
     )

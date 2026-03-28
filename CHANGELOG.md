@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Phase 5 Progress: Enhanced CLI & UX**
+  - `logos/core/config.py` — User-level configuration file support (`~/.logos/config.yaml`)
+  - `logos/core/aliases.py` — Agent alias system with built-in aliases for all 50 agents plus custom user aliases
+  - Shell completion scripts for Bash (`completions/bash/logos`), Zsh (`completions/zsh/_logos`), and Fish (`completions/fish/logos.fish`)
+  - Prompt preview feature — configurable preview of prompt content before clipboard copy
+  - Recent agents tracking — tracks last 10 agent selections globally (stored as `mode:agent` entries) in identity
+  - Alias resolution in agent selection — users can select agents by alias (e.g., `architect` → A1)
+  - `docs/CLI_USAGE.md` — Comprehensive CLI usage guide with agent aliases, configuration, and troubleshooting
+  - `tests/test_core/test_config.py` — Configuration system tests (24 tests)
+  - `tests/test_core/test_aliases.py` — Alias system tests (32 tests)
+  - `tests/test_cli/test_agent_select.py` — Agent selection tests (27 tests)
+  - `tests/test_cli/test_main.py` — CLI entry point tests (6 tests)
+  - `tests/test_core/test_recent_agents.py` — Recent agents tracking tests (12 tests)
+
 - **Phase 4 Complete: OS-Specific Adaptations**
 - Added OS-SPECIFIC INSTRUCTIONS sections (Linux + FreeBSD) to all 26 DEUS agents across 5 prompt files
 - Created `docs/OS_ADAPTATIONS.md` — OS adaptation architecture overview
