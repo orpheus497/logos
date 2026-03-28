@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-28
 **Version:** 0.2.0
-**Tests:** 1451 passed, 2 skipped (all green)
+**Tests:** 1452 passed, 1 skipped (all green)
 **Linting:** All checks passed (ruff)
 
 ---
@@ -184,7 +184,7 @@ All 50 agents across both Daedelus (24) and DEUS (26) domains have explicit scop
 
 2. **Agent naming corrections:** Several DEUS agents were renamed during Phase 1 (documented in CHANGELOG.md).
 
-3. **Test count growth:** Plan estimated ~326 boundary tests; actual suite has 1451 tests — far exceeding expectations.
+3. **Test count growth:** Plan estimated ~326 boundary tests; actual suite has 1452 tests — far exceeding expectations.
 
 4. **Arrow-key navigation deferred:** Interactive arrow-key menu deferred to v0.3.0. Search/filter via `/` prefix provides equivalent discoverability.
 
@@ -200,7 +200,7 @@ All 50 agents across both Daedelus (24) and DEUS (26) domains have explicit scop
 |---|---|
 | Python source files | 58 |
 | Total lines of code | ~17,563 (source) |
-| Test count | 1451 passed, 2 skipped |
+| Test count | 1452 passed, 1 skipped |
 | Test runtime | ~1.5s |
 | Python versions tested | 3.10, 3.11, 3.12 |
 | Linter | ruff (line-length=120, py310) |
@@ -224,4 +224,4 @@ The v0.2.0 roadmap is complete. Potential v0.3.0 work includes:
 ---
 
 **Document updated 2026-03-28 — reflects complete v0.2.0 implementation**
-**For The LOGOS Federation**
+**For the LOGOS Federation**
