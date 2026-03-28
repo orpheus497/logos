@@ -216,7 +216,7 @@ def build_complete_prompt(
     ##Action purpose: Validate .devdocs/ structure and add warning if needed
     devdocs_validation = validate_devdocs_structure()
     if not devdocs_validation.valid_structure:
-        warning_parts = ["\n\n⚠️ **SYSTEM WARNING:** `.devdocs/`"]
+        warning_parts = ["⚠️ **SYSTEM WARNING:** `.devdocs/`"]
         if not devdocs_validation.exists:
             warning_parts.append(" folder is MISSING. ")
         else:
@@ -228,7 +228,7 @@ def build_complete_prompt(
         if devdocs_validation.missing_components:
             warning_parts.append(f"Missing components: {', '.join(devdocs_validation.missing_components)}\n")
 
-        complete_prompt = "".join(warning_parts) + complete_prompt
+        complete_prompt = "".join(warning_parts) + "\n\n" + complete_prompt
 
     ##Condition purpose: Adapt DEUS prompts for detected OS
     if domain and domain.lower() == "deus" and identity:

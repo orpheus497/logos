@@ -1,7 +1,7 @@
 # LOGOS - Unified AI Agent Federation
 
-**Version:** 0.2.0.dev0  
-**License:** GNU Affero General Public License v3.0 (AGPL-3.0)  
+**Version:** 0.2.0
+**License:** GNU Affero General Public License v3.0 (AGPL-3.0)
 **Author:** orpheus497
 
 [![Test Suite](https://github.com/orpheus497/logos/actions/workflows/test.yml/badge.svg)](https://github.com/orpheus497/logos/actions/workflows/test.yml)

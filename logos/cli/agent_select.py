@@ -311,7 +311,8 @@ def select_agent(mode: str) -> str | None:
             if resolved:
                 agent = get_agent_for_mode(mode, resolved)
                 if agent:
-                    print(f"  {Colors.CYAN}→ Resolved alias '{choice}' to {resolved}{Colors.RESET}")
+                    if is_verbose():
+                        print(f"  {Colors.CYAN}→ Resolved alias '{choice}' to {resolved}{Colors.RESET}")
                     return resolved
 
             ##Action purpose: Invalid selection, prompt again

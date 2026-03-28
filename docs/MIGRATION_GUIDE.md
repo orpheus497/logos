@@ -112,12 +112,14 @@ sentinel         → Daedelus B6 (The Sentinel)
 orchestrator     → Daedelus E1 (The Orchestrator)
 ```
 
-Custom aliases can be defined in `~/.logos/config.yaml`:
+Custom aliases can be defined in `~/.logos/config.yaml`. Alias values must be
+bare agent keys (for example `"A1"`, `"B6"`), not mode-qualified values such as
+`"daedelus:A1"`:
 
 ```yaml
 aliases:
-  mybuilder: "daedelus:A1"
-  myauditor: "deus:B6"
+  mybuilder: "A1"      # Daedelus A1 (The Architect)
+  myauditor: "B6"      # DEUS B6 (The Auditor)
 ```
 
 ### CLI Flags

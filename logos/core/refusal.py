@@ -88,8 +88,7 @@ def generate_refusal(response: RefusalResponse) -> str:
     message_parts = [
         "⛔ OUT OF SCOPE",
         "",
-        f"I am {response.refusing_agent_name} ({response.refusing_agent_key}), "
-        f"specialized in {response.refusing_agent_specialty}.",
+        f"I am {response.refusing_agent_name} ({response.refusing_agent_key}), specialized in {response.refusing_agent_specialty}.",
         "",
     ]
 

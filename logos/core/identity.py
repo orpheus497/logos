@@ -564,7 +564,9 @@ def update_session_tracking(
         ##Action purpose: Insert at front (most recent first)
         recent.insert(0, agent_entry)
         ##Action purpose: Trim to configured max entries
-        if max_count > 0:
+        if max_count == 0:
+            recent = []
+        elif max_count > 0:
             recent = recent[:max_count]
 
     ##Action purpose: Create updated identity with new session info and prompt counts

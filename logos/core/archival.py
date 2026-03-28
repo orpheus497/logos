@@ -17,7 +17,7 @@ def archive_file(file_path: Path, archive_base_path: Path, reason: str = "Manual
     ##Function purpose: Move file to .archive/ with timestamp prefix.
 
     Args:
-        file_path: Path to file to archive (relative to .devdocs/)
+        file_path: Path to file to archive (absolute or relative to current working directory)
         archive_base_path: Path to .archive/ folder
         reason: Reason for archival (logged in archival_log.md)
 
