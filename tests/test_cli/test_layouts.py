@@ -5,8 +5,6 @@ Tests layout and display functions including system information display,
 display width helpers, and quiet mode behavior.
 """
 
-import sys
-from io import StringIO
 from unittest.mock import patch
 
 import pytest
@@ -160,7 +158,7 @@ class TestQuietModeLayouts:
 
 
 ##Function purpose: Test display_system_info displays system information
-def test_display_system_info_displays_info():
+def test_display_system_info_displays_info(capsys):
     """##Function purpose: Verify display_system_info displays system information without errors."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -173,39 +171,28 @@ def test_display_system_info_displays_info():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    ##Action purpose: Mock scan_system to return test data
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {
+            "python_version": "3.11.0",
+            "logos_config_exists": True,
+            "devdocs_exists": True,
+            "sysdocs_exists": False,
+        }
 
-    try:
-        ##Action purpose: Mock scan_system to return test data
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {
-                "python_version": "3.11.0",
-                "logos_config_exists": True,
-                "devdocs_exists": True,
-                "sysdocs_exists": False,
-            }
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify output contains expected elements
-            assert "SYSTEM INFORMATION" in output
-            assert "testhost" in output
-            assert "testuser" in output
-            assert "Linux" in output
-            assert "5.15.0" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify output contains expected elements
+        assert "SYSTEM INFORMATION" in output
+        assert "testhost" in output
+        assert "testuser" in output
+        assert "Linux" in output
+        assert "5.15.0" in output
 
 
 ##Function purpose: Test display_system_info displays date and time
-def test_display_system_info_displays_date_time():
+def test_display_system_info_displays_date_time(capsys):
     """##Function purpose: Verify display_system_info displays date and time information."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -218,42 +205,30 @@ def test_display_system_info_displays_date_time():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {
+            "python_version": "3.11.0",
+            "logos_config_exists": True,
+            "devdocs_exists": True,
+            "sysdocs_exists": False,
+        }
 
-    try:
-        ##Action purpose: Mock scan_system
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {
-                "python_version": "3.11.0",
-                "logos_config_exists": True,
-                "devdocs_exists": True,
-                "sysdocs_exists": False,
-            }
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify date and time sections present
-            assert "Date and Time" in output
-            assert "UTC Date" in output
-            assert "UTC Time" in output
-            assert "UTC DateTime" in output
-            assert "Local Date" in output
-            assert "Local Time" in output
-            assert "Local DateTime" in output
-            assert "Timezone" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify date and time sections present
+        assert "Date and Time" in output
+        assert "UTC Date" in output
+        assert "UTC Time" in output
+        assert "UTC DateTime" in output
+        assert "Local Date" in output
+        assert "Local Time" in output
+        assert "Local DateTime" in output
+        assert "Timezone" in output
 
 
 ##Function purpose: Test display_system_info displays timezone
-def test_display_system_info_displays_timezone():
+def test_display_system_info_displays_timezone(capsys):
     """##Function purpose: Verify display_system_info displays timezone information."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -266,35 +241,23 @@ def test_display_system_info_displays_timezone():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {
+            "python_version": "3.11.0",
+            "logos_config_exists": True,
+            "devdocs_exists": True,
+            "sysdocs_exists": False,
+        }
 
-    try:
-        ##Action purpose: Mock scan_system
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {
-                "python_version": "3.11.0",
-                "logos_config_exists": True,
-                "devdocs_exists": True,
-                "sysdocs_exists": False,
-            }
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify timezone information displayed
-            assert "Timezone:" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify timezone information displayed
+        assert "Timezone:" in output
 
 
 ##Function purpose: Test display_system_info displays Python environment
-def test_display_system_info_displays_python_env():
+def test_display_system_info_displays_python_env(capsys):
     """##Function purpose: Verify display_system_info displays Python environment information."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -307,37 +270,25 @@ def test_display_system_info_displays_python_env():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {
+            "python_version": "3.11.0",
+            "logos_config_exists": True,
+            "devdocs_exists": True,
+            "sysdocs_exists": False,
+        }
 
-    try:
-        ##Action purpose: Mock scan_system with Python version
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {
-                "python_version": "3.11.0",
-                "logos_config_exists": True,
-                "devdocs_exists": True,
-                "sysdocs_exists": False,
-            }
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify Python environment section present
-            assert "Python Environment" in output
-            assert "Python Version" in output
-            assert "3.11.0" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify Python environment section present
+        assert "Python Environment" in output
+        assert "Python Version" in output
+        assert "3.11.0" in output
 
 
 ##Function purpose: Test display_system_info displays LOGOS state
-def test_display_system_info_displays_logos_state():
+def test_display_system_info_displays_logos_state(capsys):
     """##Function purpose: Verify display_system_info displays LOGOS state information."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -350,37 +301,25 @@ def test_display_system_info_displays_logos_state():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {
+            "python_version": "3.11.0",
+            "logos_config_exists": True,
+            "devdocs_exists": True,
+            "sysdocs_exists": False,
+        }
 
-    try:
-        ##Action purpose: Mock scan_system with LOGOS state
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {
-                "python_version": "3.11.0",
-                "logos_config_exists": True,
-                "devdocs_exists": True,
-                "sysdocs_exists": False,
-            }
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify LOGOS state section present
-            assert "LOGOS State" in output
-            assert "LOGOS configuration" in output or "LOGOS config" in output
-            assert "Development docs" in output or "devdocs" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify LOGOS state section present
+        assert "LOGOS State" in output
+        assert "LOGOS configuration" in output or "LOGOS config" in output
+        assert "Development docs" in output or "devdocs" in output
 
 
 ##Function purpose: Test display_system_info handles missing scan data
-def test_display_system_info_handles_missing_data():
+def test_display_system_info_handles_missing_data(capsys):
     """##Function purpose: Verify display_system_info handles missing scan data gracefully."""
     ##Action purpose: Create test identity
     identity = SystemIdentity(
@@ -393,28 +332,16 @@ def test_display_system_info_handles_missing_data():
         last_session="2026-01-20T12:00:00Z",
     )
 
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    with patch("logos.core.identity.scan_system") as mock_scan:
+        mock_scan.return_value = {}
 
-    try:
-        ##Action purpose: Mock scan_system to return minimal data
-        with patch("logos.core.identity.scan_system") as mock_scan:
-            mock_scan.return_value = {}
+        display_system_info(identity)
+        output = capsys.readouterr().out
 
-            ##Action purpose: Display system info (should not crash)
-            display_system_info(identity)
-
-            ##Action purpose: Get output
-            output = sys.stdout.getvalue()
-
-            ##Condition purpose: Verify output still contains basic info
-            assert "SYSTEM INFORMATION" in output
-            assert "testhost" in output
-            assert "testuser" in output
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+        ##Condition purpose: Verify output still contains basic info
+        assert "SYSTEM INFORMATION" in output
+        assert "testhost" in output
+        assert "testuser" in output
 
 
 # ─── Text Wrapping Tests ─────────────────────────────────────────────────────
@@ -490,44 +417,22 @@ def test_get_logos_banner_contains_logos():
 
 
 ##Function purpose: Test display_logos_banner displays banner
-def test_display_logos_banner(monkeypatch):
+def test_display_logos_banner(monkeypatch, capsys):
     """##Function purpose: Verify display_logos_banner displays banner without errors.."""
     monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: False)
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    display_logos_banner(width=100)
+    output = capsys.readouterr().out
 
-    try:
-        ##Action purpose: Display LOGOS banner
-        display_logos_banner(width=100)
-
-        ##Action purpose: Get output
-        output = sys.stdout.getvalue()
-
-        ##Condition purpose: Verify output contains banner content
-        assert len(output) > 0
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+    ##Condition purpose: Verify output contains banner content
+    assert len(output) > 0
 
 
 ##Function purpose: Test display_logos_banner with custom width
-def test_display_logos_banner_custom_width(monkeypatch):
+def test_display_logos_banner_custom_width(monkeypatch, capsys):
     """##Function purpose: Verify display_logos_banner respects width parameter.."""
     monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: False)
-    ##Action purpose: Capture stdout
-    old_stdout = sys.stdout
-    sys.stdout = StringIO()
+    display_logos_banner(width=UILayout.DISPLAY_WIDTH)
+    output = capsys.readouterr().out
 
-    try:
-        ##Action purpose: Display LOGOS banner with custom width
-        display_logos_banner(width=UILayout.DISPLAY_WIDTH)
-
-        ##Action purpose: Get output
-        output = sys.stdout.getvalue()
-
-        ##Condition purpose: Verify output is generated
-        assert len(output) > 0
-    finally:
-        ##Action purpose: Restore stdout
-        sys.stdout = old_stdout
+    ##Condition purpose: Verify output is generated
+    assert len(output) > 0

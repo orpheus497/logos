@@ -5,6 +5,8 @@ Tests mode selection functionality including input validation, faction change,
 and system information display.
 """
 
+import sys
+from io import StringIO
 from unittest.mock import patch
 
 from logos.cli.mode_select import (
@@ -95,9 +97,6 @@ def test_select_mode_keyboard_interrupt():
 def test_display_faction_selection_menu():
     """##Function purpose: Verify display_faction_selection_menu displays menu without errors.."""
     ##Action purpose: Capture stdout to verify menu display
-    import sys
-    from io import StringIO
-
     ##Action purpose: Redirect stdout
     old_stdout = sys.stdout
     sys.stdout = StringIO()
@@ -228,11 +227,11 @@ def test_change_faction_all_factions():
     """##Function purpose: Verify change_faction works with all 5 factions.."""
     ##Action purpose: Test each faction change
     faction_tests = [
-        ("revanchist", "r", "revanchist"),
-        ("daedalus", "d", "daedalus"),
-        ("orphic", "o", "orphic"),
-        ("technomancer", "t", "technomancer"),
-        ("deus", "u", "deus"),
+        ("revanchist", "d", "daedalus"),
+        ("daedalus", "o", "orphic"),
+        ("orphic", "t", "technomancer"),
+        ("technomancer", "u", "deus"),
+        ("deus", "r", "revanchist"),
     ]
 
     ##Loop purpose: Test each faction
