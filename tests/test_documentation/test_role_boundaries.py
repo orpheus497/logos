@@ -133,7 +133,7 @@ class TestConstitutionContent:
         doc_heading_found = any(
             "documentation" in line.lower()
             for line in lines
-            if line.strip().startswith("#") or line.strip().startswith("####")
+            if line.strip().startswith("#")
         )
         assert doc_heading_found, "Expected 'Documentation' in at least one heading or directive"
 
