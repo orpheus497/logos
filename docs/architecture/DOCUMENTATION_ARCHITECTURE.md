@@ -72,7 +72,7 @@ tailored to their needs — without conflicts, duplication, or drift.
 ### Purpose
 
 Ephemeral working memory for AI agents. Provides real-time project state that agents read
-before taking action (Folder Priority Read Rule — [CONSTITUTION.md](../CONSTITUTION.md), Article VII).
+before taking action (Folder Priority Read Rule — [CONSTITUTION.md](../../CONSTITUTION.md), Article VII).
 
 ### Architecture
 
@@ -95,7 +95,7 @@ before taking action (Folder Priority Read Rule — [CONSTITUTION.md](../CONSTIT
 
 ### Key Properties
 
-- **Constitutional authority:** E1 holds exclusive governance ([CONSTITUTION.md](../CONSTITUTION.md), Article VII)
+- **Constitutional authority:** E1 holds exclusive governance ([CONSTITUTION.md](../../CONSTITUTION.md), Article VII)
 - **Temporal management:** Daily → Weekly → Monthly archival cycles
 - **Bloat prevention:** E1 prunes stale entries and enforces size limits
 - **Not version-controlled:** `.devdocs/` is excluded from git

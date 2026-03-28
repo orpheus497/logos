@@ -11,6 +11,7 @@ broken internal links and missing cross-references before they reach users.
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -51,8 +52,8 @@ def find_markdown_files(root_path: Path, exclude_dirs: list[str] | None = None) 
     """
     ##Function purpose: Recursively discover all markdown files under *root_path*.
 
-    ##Action purpose: Walks the directory tree, skipping directories listed in
-    *exclude_dirs*, and returns every file ending with ``.md``.
+    ##Action purpose: Walks the directory tree using os.walk with in-place directory
+    pruning so that excluded directories are never entered, avoiding unnecessary I/O.
 
     Args:
         root_path: Root directory to search.
@@ -64,17 +65,22 @@ def find_markdown_files(root_path: Path, exclude_dirs: list[str] | None = None) 
     if exclude_dirs is None:
         exclude_dirs = list(_DEFAULT_EXCLUDE_DIRS)
 
+    exclude_set = set(exclude_dirs)
     md_files: list[Path] = []
 
     if not root_path.is_dir():
         return md_files
 
-    for item in sorted(root_path.rglob("*.md")):
-        ##Condition purpose: Skip files whose path components match any excluded dir name
-        if any(excluded in item.parts for excluded in exclude_dirs):
-            continue
-        md_files.append(item)
+    ##Action purpose: Walk tree with in-place pruning of excluded directories
+    for dirpath, dirnames, filenames in os.walk(root_path):
+        ##Action purpose: Prune excluded dirs in-place so os.walk never descends into them
+        dirnames[:] = [d for d in dirnames if d not in exclude_set]
 
+        for fname in filenames:
+            if fname.endswith(".md"):
+                md_files.append(Path(dirpath) / fname)
+
+    md_files.sort()
     return md_files
 
 
@@ -115,7 +121,8 @@ def validate_internal_links(
 
     ##Action purpose: Skips external (http/https), anchor-only (#…), and empty
     links.  Resolves relative paths against the file's parent and absolute-style
-    paths (starting with ``/``) against *root_path*.
+    paths (starting with ``/``) against *root_path*.  Rejects any resolved path
+    that escapes the project root to prevent directory-traversal issues.
 
     Args:
         file_path: The markdown file that contains the links.
@@ -127,6 +134,7 @@ def validate_internal_links(
         broken internal link.
     """
     broken: list[dict] = []
+    resolved_root = root_path.resolve()
 
     for link_target, line_number in links:
         ##Condition purpose: Skip links that are not internal file references
@@ -147,6 +155,19 @@ def validate_internal_links(
             resolved = file_path.parent / clean_target
 
         resolved = resolved.resolve()
+
+        ##Condition purpose: Reject links that escape the project root (path traversal)
+        try:
+            resolved.relative_to(resolved_root)
+        except ValueError:
+            broken.append(
+                {
+                    "link": link_target,
+                    "line": line_number,
+                    "reason": f"Link escapes project root: {clean_target}",
+                }
+            )
+            continue
 
         if not resolved.exists():
             broken.append(

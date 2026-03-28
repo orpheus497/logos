@@ -47,7 +47,7 @@ C7 receives an assignment from E1 via `DEV_STATE.md`:
 
 2. **Update `docs/CLI_USAGE.md`** — Add the new flag to the CLI reference:
 
-```markdown
+````markdown
 ### Documentation Check
 
 Verify that documentation is in sync with the current codebase:
@@ -58,7 +58,7 @@ logos --doc-check
 
 This flag runs a quick coherence check and reports any documentation
 that may be out of date.
-```
+````
 
 3. **Update the CLI flags table** in the same document:
 

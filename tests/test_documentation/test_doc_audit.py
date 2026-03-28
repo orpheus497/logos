@@ -256,6 +256,16 @@ class TestValidateInternalLinks:
         assert len(broken) == 1
         assert broken[0]["link"] == "nowhere.md#heading"
 
+    def test_rejects_path_traversal_outside_root(self, tmp_path: Path) -> None:
+        """Test that links escaping the project root are flagged as broken."""
+        md = tmp_path / "index.md"
+        md.write_text("")
+
+        broken = validate_internal_links(md, [("../../etc/passwd", 3)], tmp_path)
+
+        assert len(broken) == 1
+        assert "escapes project root" in broken[0]["reason"].lower()
+
 
 # ---------------------------------------------------------------------------
 # 4. audit_file tests
