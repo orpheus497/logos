@@ -2,7 +2,7 @@
 ##Script function and purpose: Tests for CLI argument parsing.
 
 Tests the logos.cli.args module including verbose/quiet flags,
-version flag, and verbosity state management.
+version flag, verbosity state management, and config-driven defaults.
 Phase 5 implementation.
 """
 
@@ -10,6 +10,7 @@ from logos.cli.args import (
     VERBOSITY_NORMAL,
     VERBOSITY_QUIET,
     VERBOSITY_VERBOSE,
+    _get_config_verbosity,
     get_verbosity,
     is_quiet,
     is_verbose,
@@ -100,3 +101,80 @@ class TestVerbosityState:
         parse_args(["-v"])
         assert is_verbose() is True
         assert is_quiet() is False
+
+
+class TestConfigVerbosity:
+    """Tests for config-driven verbosity defaults."""
+
+    def test_config_verbosity_quiet(self, monkeypatch):
+        """Test config verbosity=quiet is used when no CLI flag provided."""
+        monkeypatch.setattr(
+            "logos.cli.args._get_config_verbosity",
+            lambda: VERBOSITY_QUIET,
+        )
+        parse_args([])
+        assert get_verbosity() == VERBOSITY_QUIET
+
+    def test_config_verbosity_verbose(self, monkeypatch):
+        """Test config verbosity=verbose is used when no CLI flag provided."""
+        monkeypatch.setattr(
+            "logos.cli.args._get_config_verbosity",
+            lambda: VERBOSITY_VERBOSE,
+        )
+        parse_args([])
+        assert get_verbosity() == VERBOSITY_VERBOSE
+
+    def test_cli_flag_overrides_config(self, monkeypatch):
+        """Test CLI -v flag overrides config verbosity=quiet."""
+        monkeypatch.setattr(
+            "logos.cli.args._get_config_verbosity",
+            lambda: VERBOSITY_QUIET,
+        )
+        parse_args(["-v"])
+        assert get_verbosity() == VERBOSITY_VERBOSE
+
+    def test_cli_quiet_overrides_config_verbose(self, monkeypatch):
+        """Test CLI -q flag overrides config verbosity=verbose."""
+        monkeypatch.setattr(
+            "logos.cli.args._get_config_verbosity",
+            lambda: VERBOSITY_VERBOSE,
+        )
+        parse_args(["-q"])
+        assert get_verbosity() == VERBOSITY_QUIET
+
+    def test_get_config_verbosity_returns_normal_on_error(self, monkeypatch):
+        """Test _get_config_verbosity returns normal on import error."""
+        monkeypatch.setattr(
+            "logos.cli.args._get_config_verbosity",
+            lambda: VERBOSITY_NORMAL,
+        )
+        result = _get_config_verbosity()
+        assert result == VERBOSITY_NORMAL
+
+    def test_get_config_verbosity_with_valid_config(self, tmp_path, monkeypatch):
+        """Test _get_config_verbosity reads from config file."""
+        import yaml
+
+        from logos.cli.args import _get_config_verbosity
+
+        config_dir = tmp_path / ".logos"
+        config_dir.mkdir()
+        config_file = config_dir / "config.yaml"
+        config_file.write_text(yaml.dump({"verbosity": "quiet"}))
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: config_file)
+        result = _get_config_verbosity()
+        assert result == VERBOSITY_QUIET
+
+    def test_get_config_verbosity_invalid_value(self, tmp_path, monkeypatch):
+        """Test _get_config_verbosity returns normal for invalid verbosity value."""
+        import yaml
+
+        from logos.cli.args import _get_config_verbosity
+
+        config_dir = tmp_path / ".logos"
+        config_dir.mkdir()
+        config_file = config_dir / "config.yaml"
+        config_file.write_text(yaml.dump({"verbosity": "invalid_level"}))
+        monkeypatch.setattr("logos.core.config.get_config_path", lambda: config_file)
+        result = _get_config_verbosity()
+        assert result == VERBOSITY_NORMAL

@@ -4,9 +4,8 @@
 # Global options
 complete -c logos -l help -d "Show help message"
 complete -c logos -l version -d "Show version"
-complete -c logos -l mode -d "Select mode" -xa "daedelus deus"
-complete -c logos -l list-agents -d "List all agents for current mode"
-complete -c logos -l list-aliases -d "List all available aliases"
+complete -c logos -s v -l verbose -d "Enable verbose output"
+complete -c logos -s q -l quiet -d "Enable quiet output"
 
 # Daedelus agent keys
 complete -c logos -a "A1" -d "The Architect - System design"

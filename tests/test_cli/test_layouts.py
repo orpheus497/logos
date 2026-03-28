@@ -1,4 +1,4 @@
-"""Tests for logos.cli.layouts display width helpers."""
+"""Tests for logos.cli.layouts display width helpers and quiet mode."""
 
 import pytest
 
@@ -48,3 +48,78 @@ class TestDisplayWidth:
         if HAS_WCWIDTH:
             pytest.skip("wcwidth is installed; fallback not exercised")
         assert _display_width("世") == len("世")
+
+
+class TestQuietModeLayouts:
+    """Tests for quiet mode suppression of decorative elements in layouts."""
+
+    def test_welcome_screen_quiet_mode(self, capsys, monkeypatch):
+        """Test welcome screen outputs compact single line in quiet mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
+        from logos.cli.layouts import display_welcome_screen
+
+        display_welcome_screen(username="testuser", hostname="testhost", faction="TestFaction")
+        output = capsys.readouterr().out
+        assert "LOGOS" in output
+        assert "testuser@testhost" in output
+        assert "TestFaction" in output
+        # Should NOT contain full banner box characters
+        assert "═" not in output
+
+    def test_welcome_screen_normal_has_banner(self, capsys, monkeypatch):
+        """Test welcome screen includes banner in normal mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: False)
+        from logos.cli.layouts import display_welcome_screen
+
+        display_welcome_screen(username="testuser", hostname="testhost", faction="TestFaction")
+        output = capsys.readouterr().out
+        # Normal mode should have decorative box borders
+        assert "testuser@testhost" in output
+
+    def test_mode_selection_quiet_mode(self, capsys, monkeypatch):
+        """Test mode selection shows compact options in quiet mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
+        from logos.cli.layouts import display_mode_selection
+
+        display_mode_selection()
+        output = capsys.readouterr().out
+        assert "[D]" in output
+        assert "[U]" in output
+        assert "[Q]" in output
+        # Should be compact — no banner
+        assert "█" not in output
+
+    def test_agent_menu_quiet_mode(self, capsys, monkeypatch):
+        """Test agent menu shows compact listing in quiet mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
+        from logos.cli.layouts import display_agent_menu
+        from logos.core.constants import Colors
+        from logos.core.types import AgentGroup
+
+        mock_agents = {
+            "A1": type("Agent", (), {"name": "Test Agent", "desc": "Test description", "group": "A"})(),
+        }
+        groups = [AgentGroup("A", "TEST", "Testing", "Test purpose", Colors.GREEN, mock_agents)]
+        display_agent_menu("daedelus", groups, "TestFaction")
+        output = capsys.readouterr().out
+        assert "A1" in output
+        assert "Test Agent" in output
+        # Should NOT contain banner characters
+        assert "█" not in output
+
+    def test_logos_banner_suppressed_in_quiet(self, capsys, monkeypatch):
+        """Test LOGOS banner is completely suppressed in quiet mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
+        from logos.cli.layouts import display_logos_banner
+
+        display_logos_banner()
+        output = capsys.readouterr().out
+        assert output == ""
+
+    def test_get_logos_banner_lines_empty_in_quiet(self, monkeypatch):
+        """Test _get_logos_banner_lines returns empty list in quiet mode."""
+        monkeypatch.setattr("logos.cli.layouts.is_quiet", lambda: True)
+        from logos.cli.layouts import _get_logos_banner_lines
+
+        result = _get_logos_banner_lines()
+        assert result == []

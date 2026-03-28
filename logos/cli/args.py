@@ -29,7 +29,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     Parses command-line arguments for LOGOS.
 
     Supports -v/--verbose and -q/--quiet flags for controlling output
-    verbosity, plus --version for version display.
+    verbosity, plus --version for version display. When neither flag
+    is provided, falls back to the verbosity setting in config.yaml.
 
     Args:
         argv: Argument list (defaults to sys.argv[1:] if None)
@@ -76,9 +77,32 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     elif args.quiet:
         _current_verbosity = VERBOSITY_QUIET
     else:
-        _current_verbosity = VERBOSITY_NORMAL
+        ##Action purpose: Fall back to config verbosity when no CLI flag provided
+        _current_verbosity = _get_config_verbosity()
 
     return args
+
+
+##Function purpose: Read verbosity default from user config
+def _get_config_verbosity() -> str:
+    """
+    Reads the default verbosity level from user config.
+
+    Falls back to "normal" if the config value is missing or invalid.
+
+    Returns:
+        Verbosity level string ("quiet", "normal", or "verbose")
+    """
+    try:
+        from logos.core.config import get_config_value, load_config
+
+        config = load_config()
+        value = get_config_value(config, "verbosity", VERBOSITY_NORMAL)
+        if value in (VERBOSITY_QUIET, VERBOSITY_NORMAL, VERBOSITY_VERBOSE):
+            return value
+    except Exception:
+        pass
+    return VERBOSITY_NORMAL
 
 
 ##Function purpose: Get current verbosity level

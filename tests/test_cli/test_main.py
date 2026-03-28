@@ -53,6 +53,7 @@ class TestMainFunction:
     def test_main_handles_keyboard_interrupt(self, monkeypatch):
         """KeyboardInterrupt is handled gracefully with exit code 0."""
         monkeypatch.setattr("logos.cli.main.parse_args", _mock_parse_args)
+        monkeypatch.setattr("logos.cli.main.is_quiet", lambda: False)
         monkeypatch.setattr("logos.cli.main.clear_screen", _raise_keyboard_interrupt)
         result = main()
         assert result == 0
@@ -64,6 +65,7 @@ class TestMainFunction:
             raise OSError("test error")
 
         monkeypatch.setattr("logos.cli.main.parse_args", _mock_parse_args)
+        monkeypatch.setattr("logos.cli.main.is_quiet", lambda: False)
         monkeypatch.setattr("logos.cli.main.clear_screen", raise_os_error)
         result = main()
         assert result == 1
@@ -75,6 +77,7 @@ class TestMainFunction:
             raise ValueError("test error")
 
         monkeypatch.setattr("logos.cli.main.parse_args", _mock_parse_args)
+        monkeypatch.setattr("logos.cli.main.is_quiet", lambda: False)
         monkeypatch.setattr("logos.cli.main.clear_screen", raise_value_error)
         result = main()
         assert result == 1

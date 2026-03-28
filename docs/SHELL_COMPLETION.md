@@ -75,7 +75,6 @@ Fish completions are loaded automatically on the next session.
 
 The completion scripts support:
 
-- **Mode selection:** `logos --mode daedelus` / `logos --mode deus`
 - **Agent keys:** Tab-complete agent identifiers (A1–A5, B6–B10, C1, C6–C11, D2–D5, E1–E5)
 - **Agent aliases:** Complete built-in aliases (e.g., `architect`, `kernel`, `sentinel`)
 - **CLI flags:** `--verbose` / `-v`, `--quiet` / `-q`, `--version`, `--help`
