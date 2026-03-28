@@ -2,7 +2,7 @@
 
 ## Overview
 
-LOGOS v0.2.0 implements Constitutional Enhancements: Agent Boundaries, .devdocs Governance, and Workflow Coordination across all 50 agents (24 Daedelus + 26 DEUS).
+LOGOS v0.2.0 implements Constitutional Enhancements: Agent Boundaries and .devdocs Governance across all 50 agents (24 Daedelus + 26 DEUS); Workflow Coordination is planned for Phase 3.
 
 See [PLAN.md](PLAN.md) for the full v0.1.0 → v0.2.0 roadmap.
 See [CHANGELOG.md](CHANGELOG.md) for the authoritative record of completed work.

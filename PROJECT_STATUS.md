@@ -10,7 +10,7 @@
 
 ## Executive Summary
 
-Phases 1 and 2 of the v0.2.0 roadmap are **fully complete** with comprehensive test coverage. Phases 3–7 remain **unimplemented**, representing the bulk of the remaining work: workflow coordination, OS-specific prompt enhancements, CLI/UX improvements, documentation consolidation, and release packaging.
+Phases 1 and 2 of the v0.2.0 roadmap are **fully complete** with comprehensive test coverage. Phases 3, 6, and 7 remain **unimplemented**, while Phases 4 and 5 are **partially implemented**; together these represent the bulk of the remaining work: workflow coordination, OS-specific prompt enhancements, CLI/UX improvements, documentation consolidation, and release packaging.
 
 ---
 
@@ -82,7 +82,7 @@ All 50 agents across both Daedelus (24) and DEUS (26) domains have explicit scop
 | Deliverable | Status | Notes |
 |---|---|---|
 | OS detection logic | ✅ Complete | `logos/core/identity.py` — FreeBSD/Linux detection, parallel scanning |
-| OS adaptation in prompt composition | ✅ Complete | `logos/core/prompts.py` — 13 FreeBSD→Linux substitution patterns |
+| OS adaptation in prompt composition | ✅ Complete | `logos/core/prompts.py` — multiple FreeBSD→Linux substitution patterns |
 | Linux-specific DEUS prompt sections | ❌ Missing | 0 of 26 DEUS agents have "OS-SPECIFIC INSTRUCTIONS (Linux)" sections |
 | FreeBSD-specific DEUS prompt sections | ❌ Missing | 0 of 26 DEUS agents have "OS-SPECIFIC INSTRUCTIONS (FreeBSD)" sections |
 | `docs/OS_ADAPTATIONS.md` | ❌ Missing | |
