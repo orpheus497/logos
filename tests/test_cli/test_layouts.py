@@ -5,7 +5,6 @@ Tests layout and display functions including system information display,
 display width helpers, and quiet mode behavior.
 """
 
-import re
 import sys
 from io import StringIO
 from unittest.mock import patch
