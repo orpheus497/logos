@@ -77,17 +77,13 @@ ALL_DEUS_AGENTS = {
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
 def test_agent_has_os_specific_section(agent_key, prompt):
     """##Function purpose: Verify each DEUS agent has an OS-SPECIFIC INSTRUCTIONS section."""
-    assert "OS-SPECIFIC INSTRUCTIONS" in prompt, (
-        f"Agent {agent_key} missing OS-SPECIFIC INSTRUCTIONS section"
-    )
+    assert "OS-SPECIFIC INSTRUCTIONS" in prompt, f"Agent {agent_key} missing OS-SPECIFIC INSTRUCTIONS section"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
 def test_agent_has_linux_subsection(agent_key, prompt):
     """##Function purpose: Verify each DEUS agent has a Linux subsection in OS-SPECIFIC INSTRUCTIONS."""
-    assert "### Linux" in prompt, (
-        f"Agent {agent_key} missing Linux subsection in OS-SPECIFIC INSTRUCTIONS"
-    )
+    assert "### Linux" in prompt, f"Agent {agent_key} missing Linux subsection in OS-SPECIFIC INSTRUCTIONS"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
@@ -96,7 +92,7 @@ def test_linux_section_has_content(agent_key, prompt):
     linux_idx = prompt.find("### Linux")
     assert linux_idx != -1, f"Agent {agent_key} missing ### Linux header"
     # Extract text between ### Linux and the next ### or ## header
-    after_linux = prompt[linux_idx + len("### Linux"):]
+    after_linux = prompt[linux_idx + len("### Linux") :]
     next_header = len(after_linux)
     for marker in ["### FreeBSD", "## "]:
         idx = after_linux.find(marker)
@@ -105,9 +101,7 @@ def test_linux_section_has_content(agent_key, prompt):
     linux_content = after_linux[:next_header]
     # Count bullet points (lines starting with -)
     bullets = [line for line in linux_content.split("\n") if line.strip().startswith("- ")]
-    assert len(bullets) >= 3, (
-        f"Agent {agent_key} Linux section has {len(bullets)} items, expected at least 3"
-    )
+    assert len(bullets) >= 3, f"Agent {agent_key} Linux section has {len(bullets)} items, expected at least 3"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
@@ -117,6 +111,4 @@ def test_linux_section_before_end_of_task(agent_key, prompt):
     eot_idx = prompt.find("END-OF-TASK PROTOCOL")
     assert os_idx != -1, f"Agent {agent_key} missing OS-SPECIFIC INSTRUCTIONS"
     assert eot_idx != -1, f"Agent {agent_key} missing END-OF-TASK PROTOCOL"
-    assert os_idx < eot_idx, (
-        f"Agent {agent_key} OS-SPECIFIC INSTRUCTIONS must appear before END-OF-TASK PROTOCOL"
-    )
+    assert os_idx < eot_idx, f"Agent {agent_key} OS-SPECIFIC INSTRUCTIONS must appear before END-OF-TASK PROTOCOL"

@@ -77,9 +77,7 @@ ALL_DEUS_AGENTS = {
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
 def test_agent_has_freebsd_subsection(agent_key, prompt):
     """##Function purpose: Verify each DEUS agent has a FreeBSD subsection in OS-SPECIFIC INSTRUCTIONS."""
-    assert "### FreeBSD" in prompt, (
-        f"Agent {agent_key} missing FreeBSD subsection in OS-SPECIFIC INSTRUCTIONS"
-    )
+    assert "### FreeBSD" in prompt, f"Agent {agent_key} missing FreeBSD subsection in OS-SPECIFIC INSTRUCTIONS"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
@@ -88,7 +86,7 @@ def test_freebsd_section_has_content(agent_key, prompt):
     freebsd_idx = prompt.find("### FreeBSD")
     assert freebsd_idx != -1, f"Agent {agent_key} missing ### FreeBSD header"
     # Extract text between ### FreeBSD and the next ## header
-    after_freebsd = prompt[freebsd_idx + len("### FreeBSD"):]
+    after_freebsd = prompt[freebsd_idx + len("### FreeBSD") :]
     next_header = len(after_freebsd)
     for marker in ["## "]:
         idx = after_freebsd.find(marker)
@@ -97,9 +95,7 @@ def test_freebsd_section_has_content(agent_key, prompt):
     freebsd_content = after_freebsd[:next_header]
     # Count bullet points (lines starting with -)
     bullets = [line for line in freebsd_content.split("\n") if line.strip().startswith("- ")]
-    assert len(bullets) >= 3, (
-        f"Agent {agent_key} FreeBSD section has {len(bullets)} items, expected at least 3"
-    )
+    assert len(bullets) >= 3, f"Agent {agent_key} FreeBSD section has {len(bullets)} items, expected at least 3"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
@@ -109,9 +105,7 @@ def test_freebsd_section_after_linux_section(agent_key, prompt):
     freebsd_idx = prompt.find("### FreeBSD")
     assert linux_idx != -1, f"Agent {agent_key} missing ### Linux header"
     assert freebsd_idx != -1, f"Agent {agent_key} missing ### FreeBSD header"
-    assert linux_idx < freebsd_idx, (
-        f"Agent {agent_key} ### Linux should appear before ### FreeBSD"
-    )
+    assert linux_idx < freebsd_idx, f"Agent {agent_key} ### Linux should appear before ### FreeBSD"
 
 
 @pytest.mark.parametrize("agent_key,prompt", ALL_DEUS_AGENTS.items(), ids=list(ALL_DEUS_AGENTS.keys()))
@@ -121,6 +115,4 @@ def test_freebsd_section_before_end_of_task(agent_key, prompt):
     eot_idx = prompt.find("END-OF-TASK PROTOCOL")
     assert freebsd_idx != -1, f"Agent {agent_key} missing ### FreeBSD header"
     assert eot_idx != -1, f"Agent {agent_key} missing END-OF-TASK PROTOCOL"
-    assert freebsd_idx < eot_idx, (
-        f"Agent {agent_key} ### FreeBSD must appear before END-OF-TASK PROTOCOL"
-    )
+    assert freebsd_idx < eot_idx, f"Agent {agent_key} ### FreeBSD must appear before END-OF-TASK PROTOCOL"
