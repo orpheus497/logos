@@ -1,0 +1,100 @@
+#compdef logos
+# Zsh completion for LOGOS - Unified AI Agent Federation
+# Install: copy to a directory in your $fpath (e.g., ~/.zsh/completions/)
+
+_logos() {
+    local -a commands options modes agents_daedelus agents_deus aliases
+
+    options=(
+        '--help[Show help message]'
+        '--version[Show version]'
+        '--mode[Select mode (daedelus or deus)]:mode:(daedelus deus)'
+        '--list-agents[List all agents for current mode]'
+        '--list-aliases[List all available aliases]'
+    )
+
+    # Daedelus agents
+    agents_daedelus=(
+        'A1:The Architect - System design and architecture'
+        'A2:The Logic Engineer - Core logic implementation'
+        'A3:The Interface Designer - UI/UX implementation'
+        'A4:The Test Engineer - Test suite creation'
+        'A5:The Scribe - Documentation creation'
+        'B6:The Sentinel - Security review'
+        'B7:The Marshal - Code style enforcement'
+        'B8:The Profiler - Performance analysis'
+        'B9:The Critic - Code quality review'
+        'B10:The Gatekeeper - Release validation'
+        'C1:The Bug Hunter - Bug identification and fixing'
+        'C6:The Security Patcher - Security patch application'
+        'C7:The Doc Updater - Documentation maintenance'
+        'C8:The Configurator - Configuration management'
+        'C9:The Optimizer - Performance optimization'
+        'C10:The Janitor - Code cleanup and maintenance'
+        'C11:The Librarian - Dependency management'
+        'D2:The Feature Sprinter - Feature development'
+        'D3:The Refactorer - Code refactoring'
+        'D4:The UI Tweaker - UI refinement'
+        'D5:The Test Extender - Test coverage expansion'
+        'E1:The Orchestrator - System orchestration'
+        'E2:The Operational Control Manager'
+        'E3:Daedelus - Domain supreme authority'
+    )
+
+    # DEUS agents
+    agents_deus=(
+        'A1:The Kernel Architect - Kernel configuration'
+        'A2:The Driver Engineer - Device driver management'
+        'A3:The Network Architect - Network configuration'
+        'A4:The Boot Engineer - Boot system configuration'
+        'A5:The Service Scribe - Service documentation'
+        'B6:The Security Auditor - Security audit'
+        'B7:The Syntax Marshal - Configuration syntax check'
+        'B8:The Performance Analyst - System performance'
+        'B9:The Compliance Critic - Compliance review'
+        'B10:The Release Gatekeeper - Release validation'
+        'C1:The Bug Hunter - System bug fixing'
+        'C6:The Security Patcher - Security patching'
+        'C7:The Manual Keeper - Manual maintenance'
+        'C8:The Sysctl Tuner - Sysctl tuning'
+        'C9:The Optimizer - System optimization'
+        'C10:The System Janitor - System cleanup'
+        'C11:The Port Librarian - Port management'
+        'D2:The Port Builder - Port building'
+        'D3:The Compatibility Engineer - Compatibility'
+        'D4:The Jail Architect - Jail management'
+        'D5:The ZFS Engineer - ZFS management'
+        'E1:The System Orchestrator - System orchestration'
+        'E2:The Administrator - System administration'
+        'E3:The General Manager - General management'
+        'E4:The Ombudsman - Conflict resolution'
+        'E5:DEUS - Domain supreme authority'
+    )
+
+    # Built-in aliases (combined)
+    aliases=(
+        'architect' 'logic' 'interface' 'test-engineer' 'scribe'
+        'sentinel' 'security' 'marshal' 'profiler' 'critic' 'gatekeeper'
+        'bughunter' 'bugfix' 'secpatch' 'docupdate' 'configurator'
+        'optimizer' 'janitor' 'librarian' 'sprinter' 'feature' 'refactor'
+        'uitweak' 'testextend' 'orchestrator' 'ocm' 'daedelus'
+        'kernel' 'driver' 'network' 'boot' 'service'
+        'secaudit' 'audit' 'syntax' 'perf' 'compliance' 'release'
+        'manual' 'sysctl' 'portlib' 'portbuild' 'compat' 'jail' 'zfs'
+        'admin' 'manager' 'ombudsman' 'deus'
+    )
+
+    _arguments -s \
+        $options \
+        '*::agent:->agent'
+
+    case $state in
+        agent)
+            _describe 'Daedelus agents' agents_daedelus
+            _describe 'DEUS agents' agents_deus
+            compadd -a aliases
+            ;;
+    esac
+}
+
+_logos "$@"

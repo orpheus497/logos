@@ -74,6 +74,7 @@ class SystemIdentity:
     faction_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by user-selected faction
     mode_prompt_counts: dict[str, int] = field(default_factory=dict)  # Counts by mode (daedelus/deus)
     faction_selected_at: str | None = None  # Timestamp when faction was last selected/changed
+    recent_agents: list[str] = field(default_factory=list)  # Last N agent keys (most recent first)
 
 
 ##Function purpose: Get cached FreeBSD info if still valid (performance optimization - C9)
@@ -374,6 +375,7 @@ def load_identity(config_path: Path | None = None) -> SystemIdentity | None:
         faction_prompt_counts=faction_counts if faction_counts else {},
         mode_prompt_counts=mode_counts if mode_counts else {},
         faction_selected_at=faction_data.get("selected"),  # Load faction selection timestamp
+        recent_agents=sessions_data.get("recent_agents", []),  # Load recent agents list
     )
 
 
@@ -422,6 +424,7 @@ def save_identity(identity: SystemIdentity, config_path: Path | None = None) -> 
             "last_agent": identity.last_agent,
             "last_timestamp": identity.last_session,
             "total_sessions": identity.total_sessions,
+            "recent_agents": identity.recent_agents,
         },
         ##Action purpose: Prompt counts section
         "prompt_counts": {
@@ -472,6 +475,7 @@ def create_identity(faction: str, scan_data: dict[str, Any] | None = None) -> Sy
         faction_prompt_counts={},  # Initialize empty counters
         mode_prompt_counts={},  # Initialize empty counters
         faction_selected_at=now,  # Set initial faction selection timestamp
+        recent_agents=[],  # Initialize empty recent agents list
     )
 
 
@@ -511,6 +515,18 @@ def update_session_tracking(
     ##Action purpose: Increment counter for current mode
     updated_mode_counts[mode] = updated_mode_counts.get(mode, 0) + 1
 
+    ##Action purpose: Update recent agents list (most recent first, max 10)
+    recent = list(identity.recent_agents)
+    ##Action purpose: Build mode-qualified agent entry for recent list
+    agent_entry = f"{mode}:{agent}"
+    ##Condition purpose: Remove existing entry if present (to move to front)
+    if agent_entry in recent:
+        recent.remove(agent_entry)
+    ##Action purpose: Insert at front (most recent first)
+    recent.insert(0, agent_entry)
+    ##Action purpose: Trim to max 10 entries
+    recent = recent[:10]
+
     ##Action purpose: Create updated identity with new session info and prompt counts
     return SystemIdentity(
         hostname=identity.hostname,
@@ -525,4 +541,5 @@ def update_session_tracking(
         total_sessions=identity.total_sessions + 1,
         faction_prompt_counts=updated_faction_counts,
         mode_prompt_counts=updated_mode_counts,
+        recent_agents=recent,
     )

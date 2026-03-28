@@ -2,15 +2,18 @@
 ##Script function and purpose: Agent selection within mode.
 
 Displays appropriate agent menu based on selected mode (Daedelus or DEUS).
-Phase 4 implementation.
+Phase 5 implementation.
 
 ##Action purpose: Provides agent selection interface with mode-aware agent listing,
-prompt composition with identity and faction context, and clipboard integration.
+prompt composition with identity and faction context, clipboard integration,
+alias resolution, and prompt preview support.
 """
 
 from logos.cli.layouts import display_agent_menu, display_agent_result, display_error
 from logos.core.agent import Agent
+from logos.core.aliases import resolve_alias, validate_custom_aliases
 from logos.core.clipboard import copy_to_clipboard
+from logos.core.config import get_config_value, load_config
 from logos.core.constants import Colors
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity, save_identity, update_session_tracking
@@ -188,7 +191,7 @@ def select_agent(mode: str) -> str | None:
     ##Function purpose: Prompts user for agent selection.
 
     ##Action purpose: Displays agent menu and handles user input to select
-    an agent, validating input and returning agent key.
+    an agent, validating input and resolving aliases. Returns agent key.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -196,29 +199,38 @@ def select_agent(mode: str) -> str | None:
     Returns:
         Agent key string, or None if cancelled
     """
+    ##Action purpose: Load config for alias resolution
+    config = load_config()
+    custom_aliases = validate_custom_aliases(get_config_value(config, "aliases", {}))
+
     ##Loop purpose: Handle input until valid selection or cancel
     while True:
         try:
             ##Action purpose: Get user input
-            choice = input("\nYour choice: ").strip().upper()
+            choice = input("\nYour choice: ").strip()
 
             ##Condition purpose: Check for exit command
-            if choice in ["0", "Q", "QUIT", "EXIT", "BACK"]:
+            if choice.upper() in ["0", "Q", "QUIT", "EXIT", "BACK"]:
                 ##Action purpose: Return None to go back to mode selection
                 return None
 
-            ##Action purpose: Normalize choice (handle lowercase)
-            choice = choice.upper()
-
-            ##Action purpose: Get agent to validate key
-            agent = get_agent_for_mode(mode, choice)
-            ##Condition purpose: Check if agent found
+            ##Action purpose: Try direct agent key first (uppercase)
+            agent_key = choice.upper()
+            agent = get_agent_for_mode(mode, agent_key)
             if agent:
                 ##Action purpose: Return valid agent key
-                return choice
-            else:
-                ##Action purpose: Invalid selection, prompt again
-                print(f"Invalid selection '{choice}'. Please try again or enter '0' to go back.")
+                return agent_key
+
+            ##Action purpose: Try alias resolution
+            resolved = resolve_alias(choice, mode, custom_aliases)
+            if resolved:
+                agent = get_agent_for_mode(mode, resolved)
+                if agent:
+                    print(f"  {Colors.CYAN}→ Resolved alias '{choice}' to {resolved}{Colors.RESET}")
+                    return resolved
+
+            ##Action purpose: Invalid selection, prompt again
+            print(f"Invalid selection '{choice}'. Please try again or enter '0' to go back.")
         except (EOFError, KeyboardInterrupt):
             ##Error purpose: Handle Ctrl+C or EOF (user interruption)
             return None
@@ -230,8 +242,9 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
     Handles agent selection, prompt building, and clipboard operations.
 
     Retrieves agent, builds complete prompt with identity and faction,
-    copies to clipboard, and displays result to user. Returns updated identity
-    to ensure state synchronization in the calling loop.
+    optionally shows prompt preview, copies to clipboard, and displays result
+    to user. Returns updated identity to ensure state synchronization
+    in the calling loop.
 
     Args:
         mode: Current mode ("daedelus" or "deus")
@@ -261,8 +274,20 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
         domain=mode,  # Pass mode for OS adaptation (DEUS only)
     )
 
+    ##Action purpose: Load config for preview settings
+    config = load_config()
+    show_preview = get_config_value(config, "clipboard.show_preview", False)
+    preview_lines = get_config_value(config, "clipboard.preview_lines", 10)
+
+    ##Condition purpose: Show prompt preview if configured
+    if show_preview:
+        _show_prompt_preview(complete_prompt, preview_lines)
+
     ##Action purpose: Copy prompt to clipboard
-    clipboard_success = copy_to_clipboard(complete_prompt)
+    clipboard_enabled = get_config_value(config, "clipboard.enabled", True)
+    clipboard_success = False
+    if clipboard_enabled:
+        clipboard_success = copy_to_clipboard(complete_prompt)
 
     ##Action purpose: Update session tracking with agent selection
     updated_identity = update_session_tracking(identity, mode=mode, agent=agent_key)
@@ -281,6 +306,42 @@ def handle_agent_selection(mode: str, agent_key: str, identity: SystemIdentity) 
 
     ##Action purpose: Return success status and updated identity
     return (True, updated_identity)
+
+
+##Function purpose: Display prompt preview
+def _show_prompt_preview(prompt_text: str, preview_lines: int = 10) -> None:
+    """
+    Displays a preview of the prompt before clipboard copy.
+
+    Shows the first and last N/2 lines of the prompt to let the user
+    verify the content before it's copied.
+
+    Args:
+        prompt_text: Full prompt text
+        preview_lines: Total number of lines to show (split between first/last)
+    """
+    lines = prompt_text.splitlines()
+    total = len(lines)
+    half = max(1, preview_lines // 2)
+
+    print(f"\n{Colors.CYAN}{'═' * 60}{Colors.RESET}")
+    print(f"{Colors.BOLD}{Colors.CYAN}  Prompt Preview ({total} lines total){Colors.RESET}")
+    print(f"{Colors.CYAN}{'═' * 60}{Colors.RESET}")
+
+    if total <= preview_lines:
+        ##Action purpose: Show all lines if short enough
+        for line in lines:
+            print(f"  {line}")
+    else:
+        ##Action purpose: Show first half
+        for line in lines[:half]:
+            print(f"  {line}")
+        print(f"\n  {Colors.YELLOW}... ({total - preview_lines} lines omitted) ...{Colors.RESET}\n")
+        ##Action purpose: Show last half
+        for line in lines[-half:]:
+            print(f"  {line}")
+
+    print(f"{Colors.CYAN}{'═' * 60}{Colors.RESET}")
 
 
 ##Function purpose: Run the agent selection loop for specified mode
