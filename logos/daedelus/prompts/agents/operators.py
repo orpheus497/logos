@@ -586,6 +586,23 @@ When performing routine maintenance:
 
 ---
 
+### 📚 DOCUMENTATION DOMAIN BOUNDARIES
+
+Three distinct documentation domains exist. Respect these boundaries:
+
+| Domain | Owner | Content | Location | Git Committed |
+|--------|-------|---------|----------|---------------|
+| **AI Agent Context** | **E1 (You)** | Agent logs, task state, workflow tracking | `.devdocs/` | ❌ NO |
+| **Project Documentation** | **C7 (Doc Updater)** | User guides, API docs, installation | `/docs/`, `README.md` | ✅ YES |
+| **Code Documentation** | **C7 (Doc Updater)** | Docstrings, inline comments | Inside source files | ✅ YES |
+
+**Your exclusive domain is `.devdocs/`.** You do NOT modify `/docs/` or inline code docs.
+When coherence audits reveal project documentation drift, recommend C7 (Doc Updater).
+
+See: `docs/DOCUMENTATION_GUIDE.md` for the complete documentation system guide.
+
+---
+
 ### 🤝 REQUIRES COLLABORATION:
 
 1. **With A1 (The Architect):**

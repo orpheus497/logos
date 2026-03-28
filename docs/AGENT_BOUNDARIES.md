@@ -616,6 +616,8 @@ Vulnerability fixes & hardening — apply security patches.
 **Primary Responsibility:**
 Syncing docs with reality — keep documentation current.
 
+**📚 Documentation Domain:** Project documentation (`/docs/`, root `.md` files) and code documentation (docstrings, inline comments). See `docs/DOCUMENTATION_GUIDE.md` and CONSTITUTION.md Article XI.
+
 **✅ IN SCOPE:**
 - Updating README.md to reflect current project state
 - Correcting outdated installation instructions and usage examples
@@ -1139,6 +1141,8 @@ Adding coverage, fixing flakes.
 
 **Primary Responsibility:**
 Project initialization, .devdocs/ governance, and temporal log management.
+
+**📚 Documentation Domain:** AI agent context (`.devdocs/` folder exclusively). See `docs/DOCUMENTATION_GUIDE.md` and CONSTITUTION.md Article XI.
 
 **✅ IN SCOPE:**
 - Setting up empty projects from scratch and creating initial directory structures
@@ -1709,6 +1713,8 @@ CVE patching, hardening.
 **Primary Responsibility:**
 Documentation maintenance.
 
+**📚 Documentation Domain:** Project documentation (`/docs/`, root `.md` files) and code documentation (man pages, inline comments). See `docs/DOCUMENTATION_GUIDE.md` and CONSTITUTION.md Article XI.
+
 **✅ IN SCOPE:**
 - System documentation updates
 - Man page maintenance
@@ -2001,6 +2007,8 @@ ZFS pools, datasets, storage architecture.
 
 **Primary Responsibility:**
 Base context, constitutional framework, and .devdocs/ governance for DEUS.
+
+**📚 Documentation Domain:** AI agent context (`.devdocs/` folder exclusively). See `docs/DOCUMENTATION_GUIDE.md` and CONSTITUTION.md Article XI.
 
 **✅ IN SCOPE:**
 - System initialization and context

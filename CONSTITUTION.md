@@ -1123,6 +1123,58 @@ All user-facing errors SHALL:
 
 ---
 
+### ARTICLE XI: DOCUMENTATION STANDARDS AND OWNERSHIP
+
+#### Section 1: Purpose and Scope
+
+This article establishes clear ownership boundaries for the three documentation domains within the LOGOS Federation, preventing role overlap and ensuring documentation remains accurate, complete, and well-maintained.
+
+#### Section 2: Documentation Domains
+
+The LOGOS Federation maintains three distinct documentation domains, each with an exclusive owner:
+
+1. **AI Agent Context** (`.devdocs/` folder)
+   - **Owner:** E1 Orchestrator (Daedelus) / E1 System Orchestrator (DEUS)
+   - **Content:** Agent logs, task state, workflow tracking, coordination data
+   - **Lifecycle:** Temporary working memory, NOT committed to git
+   - **Authority:** E1 has EXCLUSIVE structural authority over `.devdocs/`
+
+2. **Project Documentation** (`/docs/` folder and root documentation files)
+   - **Owner:** C7 Doc Updater (Daedelus) / C7 Manual Keeper (DEUS)
+   - **Content:** User guides, API docs, installation instructions, system documentation
+   - **Lifecycle:** Permanent project deliverables, committed to git
+   - **Scope:** `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and all files in `/docs/`
+
+3. **Code Documentation** (inside source files)
+   - **Owner:** C7 Doc Updater (Daedelus) / C7 Manual Keeper (DEUS)
+   - **Content:** Docstrings, `##` prefix structured comments, type hints
+   - **Lifecycle:** Permanent, committed to git as part of source code
+   - **Standards:** Must follow Directive 6 (Documentation Standards)
+
+#### Section 3: Boundary Enforcement
+
+1. **No agent SHALL modify documentation outside its designated domain** without explicit coordination with the domain owner.
+2. **E1 Orchestrator** SHALL NOT modify `/docs/` files or inline code documentation. When coherence audits reveal drift in project documentation, E1 SHALL recommend invocation of C7.
+3. **C7 Doc Updater/Manual Keeper** SHALL NOT restructure `.devdocs/` folder hierarchy. C7 may write to its own agent log within `.devdocs/` but SHALL NOT create, delete, or reorganize `.devdocs/` folders.
+4. **All other agents** may update their own `.devdocs/` agent logs but SHALL NOT modify project documentation or other agents' documentation folders.
+
+#### Section 4: Documentation Coordination Protocol
+
+When documentation drift is detected:
+
+1. **E1 Orchestrator** runs coherence audit comparing `.devdocs/` state with `/docs/` state
+2. If project documentation is outdated, E1 reports the drift and recommends C7
+3. **C7** reads the relevant agent logs and code changes, then updates `/docs/` accordingly
+4. C7 updates its own `.devdocs/` agent log with the changes made
+5. E1 verifies coherence is restored on next audit
+
+#### Section 5: Reference
+
+See `docs/DOCUMENTATION_GUIDE.md` for the comprehensive documentation system guide.
+See `docs/architecture/DOCUMENTATION_ARCHITECTURE.md` for the technical architecture.
+
+---
+
 ## PART II: APPENDICES AND REFERENCE MATERIALS
 
 ### APPENDIX A: FACTION DETAILED SPECIFICATIONS
