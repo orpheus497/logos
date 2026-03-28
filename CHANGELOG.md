@@ -14,15 +14,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Phase 5 Progress: Enhanced CLI & UX**
   - `logos/core/config.py` — User-level configuration file support (`~/.logos/config.yaml`)
   - `logos/core/aliases.py` — Agent alias system with built-in aliases for all 50 agents plus custom user aliases
+  - `logos/cli/args.py` — CLI argument parsing with `-v`/`--verbose` and `-q`/`--quiet` flags, `--version` support
+  - `logos/core/version.py` — Version information module for programmatic version access
   - Shell completion scripts for Bash (`completions/bash/logos`), Zsh (`completions/zsh/_logos`), and Fish (`completions/fish/logos.fish`)
+  - `install-completion.sh` — Shell completion installer with auto-detection and per-shell options
+  - `docs/SHELL_COMPLETION.md` — Dedicated shell completion installation and usage guide
+  - Agent search/filter — `/` prefix in agent selection to search by name, key, alias, or description
   - Prompt preview feature — configurable preview of prompt content before clipboard copy
   - Recent agents tracking — tracks last 10 agent selections globally (stored as `mode:agent` entries) in identity
   - Alias resolution in agent selection — users can select agents by alias (e.g., `architect` → A1)
+  - Verbose mode (`-v`) — shows agent metadata and prompt statistics (character count, line count)
+  - Quiet mode (`-q`) — suppresses decorative banners and non-essential output
+  - CONSTITUTION.md Article X: User Experience and CLI Standards
   - `docs/CLI_USAGE.md` — Comprehensive CLI usage guide with agent aliases, configuration, and troubleshooting
+  - `tests/test_cli/test_args.py` — CLI argument parsing tests (14 tests)
+  - `tests/test_cli/test_search.py` — Agent search/filter tests (16 tests)
+  - `tests/test_cli/test_main.py` — CLI entry point tests (9 tests, updated for argparse support)
+  - `tests/test_core/test_version.py` — Version module tests (4 tests)
   - `tests/test_core/test_config.py` — Configuration system tests (24 tests)
   - `tests/test_core/test_aliases.py` — Alias system tests (32 tests)
   - `tests/test_cli/test_agent_select.py` — Agent selection tests (27 tests)
-  - `tests/test_cli/test_main.py` — CLI entry point tests (6 tests)
   - `tests/test_core/test_recent_agents.py` — Recent agents tracking tests (12 tests)
 
 - **Phase 4 Complete: OS-Specific Adaptations**

@@ -17,11 +17,11 @@ See [docs/CLI_USAGE.md](docs/CLI_USAGE.md) for CLI usage guide.
 | 2 | .devdocs Governance System | ✅ Complete |
 | 3 | Workflow Coordination | ✅ Complete |
 | 4 | OS-Specific Adaptations | ✅ Complete |
-| 5 | Enhanced CLI & UX | ⚠️ ~65% (config, aliases, completions, recent agents, preview, tests) |
+| 5 | Enhanced CLI & UX | ⚠️ ~85% (config, aliases, completions, recent agents, preview, search/filter, verbose/quiet, Article X, tests) |
 | 6 | Documentation Consolidation | ❌ Not Started |
 | 7 | Integration & Release | ❌ Not Started |
 
-**Tests:** 1188 passed, 1 skipped | **Version:** 0.2.0.dev0
+**Tests:** 1232 passed, 1 skipped | **Version:** 0.2.0.dev0
 
 ## Phase 5 Progress
 
@@ -29,19 +29,22 @@ See [docs/CLI_USAGE.md](docs/CLI_USAGE.md) for CLI usage guide.
 - User-level configuration file support (`~/.logos/config.yaml`)
 - Agent alias system (50 built-in + custom user aliases)
 - Shell completion scripts (Bash, Zsh, Fish)
+- Shell completion installer (`install-completion.sh`)
+- Shell completion documentation (`docs/SHELL_COMPLETION.md`)
 - Prompt preview feature
 - Recent agents tracking (last 10, tagged by mode)
-- Comprehensive CLI test suite (101 new tests)
+- Agent search/filter (`/` prefix in agent selection)
+- Verbose/quiet modes (`-v`/`-q` CLI flags via argparse)
+- `--version` flag
+- CONSTITUTION.md Article X (UX Standards)
+- Comprehensive CLI test suite (135 tests across 6 test files)
 - CLI usage documentation (`docs/CLI_USAGE.md`)
 
 ### Remaining
 - Arrow-key interactive navigation (requires `blessed` or `curses`)
-- Agent search/filter capability
-- Verbose/quiet modes (`-v`/`-q` flags)
-- CONSTITUTION.md Article X (UX standards)
 
 ## Next Steps
 
-1. **Phase 5 Remaining** — Arrow-key navigation, search/filter, verbose/quiet modes
+1. **Phase 5 Remaining** — Arrow-key interactive navigation (optional, requires TUI library)
 2. **Phase 6: Documentation Consolidation** — Role clarification, CONTRIBUTING.md, documentation guides
 3. **Phase 7: Integration & Release** — Release notes, migration guide, version bump to 0.2.0
