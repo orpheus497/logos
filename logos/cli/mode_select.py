@@ -18,7 +18,7 @@ from logos.cli.layouts import (
 )
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity, load_identity, save_identity
-from logos.core.terminal import clear_screen
+from logos.core.terminal import clear_screen, wait_for_user
 from logos.core.validation import validate_input
 
 
@@ -149,10 +149,7 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
             faction_name = faction.name if faction else new_faction_key
             ##Action purpose: Inform user they already have this faction
             print(f"\nYou are already a member of {faction_name}.")
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                pass
+            wait_for_user()
             ##Action purpose: Return current identity unchanged (no faction change)
             return identity
 
@@ -185,10 +182,7 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
             display_error(
                 "Failed to save faction change", "Could not save identity configuration. Please check permissions."
             )
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                pass
+            wait_for_user()
             ##Action purpose: Return None if save failed (original identity unchanged)
             return None
 
@@ -198,10 +192,7 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
 
         ##Action purpose: Display success message
         print(f"\n✓ Faction changed to: {faction_name}")
-        try:
-            input("\nPress Enter to continue...")
-        except (EOFError, KeyboardInterrupt):
-            pass
+        wait_for_user()
 
         ##Action purpose: Return updated identity (only after successful save)
         return updated_identity
@@ -212,21 +203,13 @@ def change_faction(identity: SystemIdentity) -> SystemIdentity | None:
     except (OSError, ValueError) as e:
         ##Error purpose: Handle specific expected errors (file I/O, validation)
         display_error("Error in faction change", str(e))
-        try:
-            input("\nPress Enter to continue...")
-        except (EOFError, KeyboardInterrupt):
-            ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-            pass
+        wait_for_user()
         ##Action purpose: Return None on error
         return None
     except Exception as e:
         ##Error purpose: Handle unexpected errors (graceful CLI degradation)
         display_error("Unexpected error in faction change", str(e))
-        try:
-            input("\nPress Enter to continue...")
-        except (EOFError, KeyboardInterrupt):
-            ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-            pass
+        wait_for_user()
         ##Action purpose: Return None on error
         return None
 
@@ -369,10 +352,7 @@ def _handle_stats_display(identity: SystemIdentity) -> None:
         identity.mode_prompt_counts,
     )
     ##Action purpose: Wait for user to continue
-    try:
-        input("\nPress Enter to continue...")
-    except (EOFError, KeyboardInterrupt):
-        pass
+    wait_for_user()
 
 
 ##Function purpose: Handle system information display request
@@ -389,10 +369,7 @@ def _handle_system_info(identity: SystemIdentity) -> None:
     clear_screen()
     display_system_info(identity)
     ##Action purpose: Wait for user to continue
-    try:
-        input("\nPress Enter to continue...")
-    except (EOFError, KeyboardInterrupt):
-        pass
+    wait_for_user()
 
 
 ##Function purpose: Handle faction change request
@@ -572,19 +549,11 @@ def run_mode_selection(identity: SystemIdentity, agent: str | None = None) -> in
             ##Error purpose: Handle specific expected errors (file I/O, validation)
             display_error("Error in mode selection", str(e))
             ##Action purpose: Continue loop after error
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-                pass
+            wait_for_user()
             continue
         except Exception as e:
             ##Error purpose: Handle unexpected errors (graceful CLI degradation)
             display_error("Unexpected error in mode selection", str(e))
             ##Action purpose: Continue loop after error
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-                pass
+            wait_for_user()
             continue

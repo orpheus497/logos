@@ -19,7 +19,7 @@ from logos.core.constants import Colors
 from logos.core.factions import FACTIONS
 from logos.core.identity import SystemIdentity, save_identity, update_session_tracking
 from logos.core.prompts import build_complete_prompt
-from logos.core.terminal import clear_screen
+from logos.core.terminal import clear_screen, wait_for_user
 from logos.core.types import AgentGroup
 from logos.core.ui import UIColors
 
@@ -511,11 +511,7 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
                 continue
 
             ##Action purpose: Wait for user to continue
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                ##Error purpose: Handle Ctrl+C during wait (user interruption)
-                return 1
+            wait_for_user()
 
         except KeyboardInterrupt:
             ##Error purpose: Handle Ctrl+C gracefully (user interruption)
@@ -525,19 +521,11 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
             ##Error purpose: Handle specific expected errors (file I/O, validation, key lookup)
             display_error("Error in agent selection", str(e))
             ##Action purpose: Wait for user acknowledgment
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-                return 1
+            wait_for_user()
             continue
         except Exception as e:
             ##Error purpose: Handle unexpected errors (graceful CLI degradation)
             display_error("Unexpected error in agent selection", str(e))
             ##Action purpose: Wait for user acknowledgment
-            try:
-                input("\nPress Enter to continue...")
-            except (EOFError, KeyboardInterrupt):
-                ##Error purpose: Handle Ctrl+C or EOF during wait (user interruption)
-                return 1
+            wait_for_user()
             continue
