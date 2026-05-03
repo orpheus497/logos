@@ -12,6 +12,11 @@ such as verbosity level, enabling users to control output detail via -v/-q flags
 import argparse
 from typing import Final
 
+from logos.core.logging import get_logger
+
+##Action purpose: Initialize logger
+logger = get_logger(__name__)
+
 ##Action purpose: Valid verbosity levels
 VERBOSITY_QUIET: Final[str] = "quiet"
 VERBOSITY_NORMAL: Final[str] = "normal"
@@ -107,8 +112,8 @@ def _get_config_verbosity() -> str:
         value = get_config_value(config, "verbosity", VERBOSITY_NORMAL)
         if value in (VERBOSITY_QUIET, VERBOSITY_NORMAL, VERBOSITY_VERBOSE):
             return value
-    except (ImportError, OSError, ValueError, KeyError, TypeError):
-        pass
+    except (ImportError, OSError, ValueError, KeyError, TypeError) as e:
+        logger.debug("Failed to read verbosity from config: %s", e)
     return VERBOSITY_NORMAL
 
 

@@ -23,3 +23,18 @@ def clear_screen() -> None:
     ##Step purpose: without shell execution risk (ESC[2J clears screen, ESC[H moves cursor)
     ##Action purpose: Print ANSI escape sequence to clear screen and reset cursor
     print("\033[2J\033[H", end="", flush=True)
+
+
+##Function purpose: Wait for user to press Enter
+def wait_for_user(prompt: str = "\nPress Enter to continue...") -> None:
+    """
+    Waits for the user to press Enter.
+
+    Allows KeyboardInterrupt and EOFError to bubble up for consistent handling
+    at the application level, avoiding silent exception catching.
+
+    Args:
+        prompt: The prompt to display to the user
+    """
+    ##Action purpose: Prompt user and wait for input
+    input(prompt)
