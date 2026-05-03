@@ -513,8 +513,8 @@ def run_agent_selection(mode: str, identity: SystemIdentity) -> int:
             ##Action purpose: Wait for user to continue
             wait_for_user()
 
-        except KeyboardInterrupt:
-            ##Error purpose: Handle Ctrl+C gracefully (user interruption)
+        except (KeyboardInterrupt, EOFError):
+            ##Error purpose: Handle Ctrl+C or EOF gracefully (user interruption)
             print("\n\nReturning to mode selection...")
             return 1
         except (OSError, ValueError, KeyError) as e:
